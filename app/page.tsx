@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
@@ -9,12 +9,7 @@ export default function Home() {
 
       <div className="mt-8 p-4 border rounded-lg bg-secondary/10">
         <h2 className="text-xl font-semibold mb-2">Developer Resources</h2>
-        <Link
-          href="/kitchen-sink"
-          className="inline-block px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
-        >
-          View Component Kitchen Sink
-        </Link>
+        <Button>View Component Kitchen Sink</Button>
       </div>
     </div>
   );

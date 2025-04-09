@@ -1,8 +1,10 @@
-@import "tailwindcss/preflight";
 @import "tailwindcss";
-@import "../styles/tw-animate-import.css";
+@import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+
+@theme static {
+  --color-primary: #1A7F65;
+}
 
 @theme {
   /* Neutral colors */
@@ -14,13 +16,13 @@
   --color-neutral-black: #202020;
 
   /* Primary colors */
-  --color-primary-lightest: #A5F471;
-  --color-primary-light: #80D488;
-  --color-primary-medium: #1A7F65;
-  --color-primary-dark: #086049;
+  --color-brand-lightest: #A5F471;
+  --color-brand-light: #80D488;
+  --color-brand-medium: #1A7F65;
+  --color-brand-dark: #086049;
 
   /* Secondary colors */
-  --color-secondary-danger: #F41F1F;
+  --color-brand-danger: #F41F1F;
 
   /* Category background colors */
   --color-categories-preparedMeals-bg: #EEEAFE;
