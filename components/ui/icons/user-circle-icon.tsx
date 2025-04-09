@@ -1,12 +1,12 @@
 import React, { FC, SVGProps } from "react";
 
-interface UserCircleProps extends SVGProps<SVGSVGElement> {
+interface UserCircleIconProps extends SVGProps<SVGSVGElement> {
   color?: string;
   className?: string;
   focused?: boolean;
 }
 
-export const UserCircle: FC<UserCircleProps> = ({
+export const UserCircleIcon: FC<UserCircleIconProps> = ({
   color = "currentColor",
   className,
   focused = false,

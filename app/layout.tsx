@@ -3,19 +3,16 @@ import { Inter, Nunito, Lato } from "next/font/google";
 import "./globals.css";
 
 const nunito = Nunito({
-  variable: "--font-nunito",
   subsets: ["latin"],
   weight: ["400", "600", "700"],
 });
 
 const lato = Lato({
-  variable: "--font-lato",
   subsets: ["latin"],
   weight: ["400", "700"],
 });
 
 const inter = Inter({
-  variable: "--font-inter",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
@@ -32,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${nunito.variable} ${lato.variable} ${inter.variable} antialiased`}>
+      <body className={`${nunito.className} ${lato.className} ${inter.className} antialiased`}>
         {children}
       </body>
     </html>
