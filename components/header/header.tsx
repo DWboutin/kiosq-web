@@ -37,7 +37,7 @@ export const Header: FC<PropsWithChildren> = ({ children }) => {
       <div className="flex items-start justify-start gap-2">
         <LocationButton />
         <div className="py-2">
-          <Link href="/login" className="flex items-center gap-2 group px-2 py-2">
+          <Link href="/auth/sign-in" className="flex items-center gap-2 group px-2 py-2">
             <UserCircleIcon className="w-6 h-6 text-neutral-darker group-hover:text-brand-medium" />
             <span className="text-base font-medium text-neutral-darker group-hover:text-brand-medium">
               Connexion
