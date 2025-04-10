@@ -7,8 +7,11 @@ import { EmailIcon } from "@/components/ui/icons/email-icon";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { AppleIcon } from "@/components/ui/icons/apple-icon";
+import { useRouter } from "next/navigation";
 
 export const SignIn: FC = () => {
+  const router = useRouter();
+
   const handleGoogleAuth = () => {
     // Handle Google authentication
   };
@@ -23,6 +26,7 @@ export const SignIn: FC = () => {
 
   const handleEmailAuth = () => {
     // Navigate to email signup
+    router.push("/auth/sign-up-email");
   };
 
   return (
