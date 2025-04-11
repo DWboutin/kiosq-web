@@ -35,7 +35,7 @@ export const SignIn: FC = () => {
         <Image src="/images/auth-image.png" alt="Auth" className="h-56" width={225} height={225} />
       </div>
       <div className="flex flex-col items-center justify-center mb-10">
-        <h1 className="text-2xl font-regular text-brand-dark text-center">Créez un compte</h1>
+        <h1 className="text-2xl font-regular text-brand-dark text-center">Connectez-vous</h1>
       </div>
       <div className="flex flex-col gap-4 px-5 w-sm">
         <Button
@@ -62,6 +62,7 @@ export const SignIn: FC = () => {
           <MetaIcon className="mr-2" />
           <span className="flex-1 text-center">Continuer avec Meta</span>
         </Button>
+
         <Button
           variant="outline"
           onClick={handleEmailAuth}

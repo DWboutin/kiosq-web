@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useUserStore } from "@/stores/user-store";
+import { useRouter } from "next/navigation";
 
 const signUpSchema = z.object({
   name: z.string().min(1, "Ce nom n'est pas valide."),
@@ -15,6 +17,10 @@ export type FormData = z.infer<typeof signUpSchema>;
 
 export const useSignUpEmailForm = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const name = useUserStore((state) => state.name);
+  const signInWithOtp = useUserStore((state) => state.signInWithOtp);
+  const updateName = useUserStore((state) => state.updateName);
 
   const {
     control,
@@ -22,7 +28,7 @@ export const useSignUpEmailForm = () => {
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
-      name: "",
+      name: name || "",
       email: "",
     },
     resolver: zodResolver(signUpSchema),
@@ -33,17 +39,13 @@ export const useSignUpEmailForm = () => {
     try {
       setIsLoading(true);
 
-      // In a real implementation, you would:
-      // 1. Call an API to send a verification email
+      if (!name) {
+        updateName(data.name);
+      }
 
-      // Redirect to confirmation page or show success message
-      console.log("Form submitted successfully", data);
+      await signInWithOtp(data.email, data.name);
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Navigate to success page (in a real app, use your router)
-      // router.push(`/auth/email-sent?email=${data.email}`);
+      router.push(`/auth/verify-otp?email=${data.email}`);
     } catch (error) {
       console.error("Error signing in:", error);
     } finally {
