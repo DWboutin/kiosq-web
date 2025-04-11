@@ -5,14 +5,10 @@ import { FC, PropsWithChildren } from "react";
 
 export const HeaderAccountSignOut: FC<PropsWithChildren> = ({ children }) => {
   const disconnectUser = useUserStore((state) => state.disconnectUser);
-  const handleSignOut = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
+
+  const handleSignOut = () => {
     disconnectUser();
   };
 
-  return (
-    <button onClick={handleSignOut} aria-label="Sign out">
-      {children}
-    </button>
-  );
+  return <div onClick={handleSignOut}>{children}</div>;
 };

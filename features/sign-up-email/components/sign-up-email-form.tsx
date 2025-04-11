@@ -7,30 +7,28 @@ import { useSignUpEmailForm } from "../hooks/use-sign-up-email-form";
 
 export const SignUpEmailForm: FC = () => {
   const {
-    selectors: { errors, control, hasExistingName, isLoading },
+    selectors: { errors, control, isLoading },
     actions: { handleFormSubmit },
   } = useSignUpEmailForm();
 
   return (
     <div className="flex items-center justify-center min-h-screen p-4">
       <div className="w-full max-w-sm">
-        <div className="flex flex-col gap-5">
-          {!hasExistingName && (
-            <FormInputContainer
-              inputId="name"
-              label="Nom complet"
-              error={errors.name?.message}
-              required
-            >
-              <Controller
-                name="name"
-                control={control}
-                render={({ field }) => (
-                  <Input id="name" placeholder="John Doe" aria-invalid={!!errors.name} {...field} />
-                )}
-              />
-            </FormInputContainer>
-          )}
+        <form onSubmit={handleFormSubmit} className="flex flex-col gap-5">
+          <FormInputContainer
+            inputId="name"
+            label="Nom complet"
+            error={errors.name?.message}
+            required
+          >
+            <Controller
+              name="name"
+              control={control}
+              render={({ field }) => (
+                <Input id="name" placeholder="John Doe" aria-invalid={!!errors.name} {...field} />
+              )}
+            />
+          </FormInputContainer>
 
           <FormInputContainer
             inputId="email"
@@ -54,11 +52,11 @@ export const SignUpEmailForm: FC = () => {
           </FormInputContainer>
 
           <div className="mt-2">
-            <Button onClick={handleFormSubmit} disabled={isLoading} className="w-full">
+            <Button type="submit" disabled={isLoading} className="w-full">
               {isLoading ? "Chargement..." : "Continuer"}
             </Button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
