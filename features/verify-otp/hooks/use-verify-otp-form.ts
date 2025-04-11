@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useUserStore } from "@/stores/user-store";
 
 const otpSchema = z.object({
@@ -13,26 +13,27 @@ const otpSchema = z.object({
 export type FormData = z.infer<typeof otpSchema>;
 
 export const useVerifyOtpForm = () => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
   const connectWithOtp = useUserStore((state) => state.connectWithOtp);
-  const email = searchParams.get("email");
-
-  console.log("email", email);
+  const emailSearchParam = searchParams.get("email");
 
   const {
     control,
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
   } = useForm<FormData>({
     defaultValues: {
-      email: email || "",
+      email: emailSearchParam || "",
       otp: "",
     },
     resolver: zodResolver(otpSchema),
     mode: "onChange",
   });
+  const email = watch("email");
 
   const handleFormSubmit = handleSubmit(async (data) => {
     try {
@@ -41,7 +42,7 @@ export const useVerifyOtpForm = () => {
       console.log("Verifying OTP:", data.otp);
       await connectWithOtp(email, data.otp);
       // Navigate to the desired page after verification
-      // router.push("/dashboard");
+      router.push("/");
     } catch (error) {
       console.error("Error verifying OTP:", error);
     } finally {

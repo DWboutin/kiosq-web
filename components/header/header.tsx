@@ -7,6 +7,7 @@ import Link from "next/link";
 import { FC, PropsWithChildren } from "react";
 import React from "react";
 import { cva } from "class-variance-authority";
+import { ConnectionHeaderUtils } from "@/features/connection-header-utils/connection-header-utils";
 
 const headerStyles = cva(
   "flex items-center justify-between px-5 border-b border-neutral-light gap-6",
@@ -37,12 +38,7 @@ export const Header: FC<PropsWithChildren> = ({ children }) => {
       <div className="flex items-start justify-start gap-2">
         <LocationButton />
         <div className="py-2">
-          <Link href="/auth/sign-in" className="flex items-center gap-2 group px-2 py-2">
-            <UserCircleIcon className="w-6 h-6 text-neutral-darker group-hover:text-brand-medium" />
-            <span className="text-base font-medium text-neutral-darker group-hover:text-brand-medium">
-              Connexion
-            </span>
-          </Link>
+          <ConnectionHeaderUtils />
         </div>
       </div>
       {children}

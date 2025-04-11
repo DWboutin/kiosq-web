@@ -3,7 +3,7 @@ import { immer } from "zustand/middleware/immer";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { User } from "@/types/app";
 import { Session } from "@supabase/supabase-js";
-import { signInWithOtp, verifyOtpCode } from "@/utils/supabase/client";
+import { signInWithOtp, signOut, verifyOtpCode } from "@/utils/supabase/client";
 import { getUser } from "@/actions/get-user";
 
 type UserState = {

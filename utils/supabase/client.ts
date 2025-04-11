@@ -47,3 +47,13 @@ export const signInWithOtp = async (email: string, name: string) => {
     throw err;
   }
 };
+
+export const signOut = async () => {
+  const supabase = createClient();
+
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    throw error;
+  }
+};
