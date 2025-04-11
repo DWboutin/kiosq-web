@@ -4,6 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useUserStore } from "@/stores/user-store";
+import { toast } from "sonner";
 
 const otpSchema = z.object({
   email: z.string().email("L'email est invalide"),
@@ -17,6 +18,8 @@ export const useVerifyOtpForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
   const connectWithOtp = useUserStore((state) => state.connectWithOtp);
+  const signInWithOtp = useUserStore((state) => state.signInWithOtp);
+  const name = useUserStore((state) => state.name);
   const emailSearchParam = searchParams.get("email");
 
   const {
@@ -54,6 +57,19 @@ export const useVerifyOtpForm = () => {
     setValue("otp", value, { shouldValidate: true });
   };
 
+  const handleAskForNewCode = () => {
+    if (!name) {
+      toast.warning(
+        "Nous en pouvons pas vous envoyer un nouveau code sans votre nom, vous serez redirigé vers la page de connexion"
+      );
+      router.push("/auth/sign-in");
+      return;
+    }
+
+    signInWithOtp(email, name);
+    toast.success("Un nouveau code vous a été envoyé");
+  };
+
   console.log("errors", errors);
 
   return {
@@ -65,6 +81,7 @@ export const useVerifyOtpForm = () => {
     actions: {
       handleFormSubmit,
       handleOtpChange,
+      handleAskForNewCode,
     },
   };
 };

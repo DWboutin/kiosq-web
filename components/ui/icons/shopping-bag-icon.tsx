@@ -1,12 +1,12 @@
 import React, { FC, SVGProps } from "react";
 
-interface ShoppingBagProps extends SVGProps<SVGSVGElement> {
+interface ShoppingBagIconProps extends SVGProps<SVGSVGElement> {
   color?: string;
   className?: string;
   focused?: boolean;
 }
 
-export const ShoppingBag: FC<ShoppingBagProps> = ({
+export const ShoppingBagIcon: FC<ShoppingBagIconProps> = ({
   color = "currentColor",
   className,
   focused = false,

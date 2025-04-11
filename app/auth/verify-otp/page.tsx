@@ -1,12 +1,13 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { useVerifyOtpForm } from "@/features/verify-otp/hooks/use-verify-otp-form";
 
 export default function VerifyOtpPage() {
   const {
     selectors: { isLoading, errors },
-    actions: { handleFormSubmit, handleOtpChange },
+    actions: { handleFormSubmit, handleOtpChange, handleAskForNewCode },
   } = useVerifyOtpForm();
 
   return (
@@ -37,14 +38,19 @@ export default function VerifyOtpPage() {
               <p className="text-sm text-brand-danger text-center">{errors.otp.message}</p>
             )}
           </div>
-
-          <button
-            type="submit"
-            className="w-full bg-primary text-primary-foreground h-9 rounded-md px-3 py-2 text-sm font-medium shadow-xs disabled:opacity-50"
-            disabled={isLoading}
-          >
-            {isLoading ? "Verifying..." : "Verify"}
-          </button>
+          <div className="flex flex-col items-center gap-2">
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? "Verifying..." : "Verify"}
+            </Button>
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={handleAskForNewCode}
+              className="w-full"
+            >
+              Ask for a new code
+            </Button>
+          </div>
         </form>
       </div>
     </div>

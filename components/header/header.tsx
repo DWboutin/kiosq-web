@@ -38,7 +38,7 @@ export const Header: FC<PropsWithChildren> = ({ children }) => {
           <SearchInput />
         </div>
         <Button variant="ghost" size="icon" aria-label="Search" className="min-md:hidden">
-          <MobileMenuIcon className="text-neutral-medium size-6" />
+          <MobileMenuIcon className="text-neutral-dark size-6" />
         </Button>
       </div>
       <div className="flex items-start justify-start gap-2">
