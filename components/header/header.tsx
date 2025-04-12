@@ -10,7 +10,7 @@ import { ConnectionHeaderUtils } from "@/features/connection-header-utils/connec
 import { MobileMenuIcon } from "@/components/ui/icons/mobile-menu-icon";
 
 const headerStyles = cva(
-  "flex items-center justify-between px-5 border-b border-neutral-light gap-6",
+  "flex flex-col items-center justify-between border-b border-neutral-light",
   {
     variants: {
       hasChildren: {
@@ -26,25 +26,27 @@ export const Header: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <header className={headerStyles({ hasChildren })}>
-      <div className="flex flex-1 items-center min-md:gap-6 max-md:flex-row-reverse">
-        <Link
-          href="/"
-          className="flex items-center gap-2 py-3 max-md:flex-1 max-md:justify-center max-md:pl-14"
-        >
-          <KiosqLogo />
-          <span className="text-xl font-lato text-brand-medium">kiosq</span>
-        </Link>
-        <div className="flex min-md:flex-1 items-center gap-2">
-          <SearchInput />
+      <div className="flex flex-row items-center justify-between w-full gap-6  px-5">
+        <div className="flex flex-1 items-center min-md:gap-6 max-md:flex-row-reverse">
+          <Link
+            href="/"
+            className="flex items-center gap-2 py-3 max-md:flex-1 max-md:justify-center max-md:pl-14"
+          >
+            <KiosqLogo />
+            <span className="text-xl font-lato text-brand-medium">kiosq</span>
+          </Link>
+          <div className="flex min-md:flex-1 items-center gap-2">
+            <SearchInput />
+          </div>
+          <Button variant="ghost" size="icon" aria-label="Search" className="min-md:hidden">
+            <MobileMenuIcon className="text-neutral-dark size-6" />
+          </Button>
         </div>
-        <Button variant="ghost" size="icon" aria-label="Search" className="min-md:hidden">
-          <MobileMenuIcon className="text-neutral-dark size-6" />
-        </Button>
-      </div>
-      <div className="flex items-start justify-start gap-2">
-        <LocationButton />
-        <div className="py-2">
-          <ConnectionHeaderUtils />
+        <div className="flex items-start justify-start gap-2">
+          <LocationButton />
+          <div className="py-2">
+            <ConnectionHeaderUtils />
+          </div>
         </div>
       </div>
       {children}
