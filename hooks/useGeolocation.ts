@@ -1,72 +1,46 @@
+import { getGeolocation, type UserGeolocation } from "@/utils/get-geolocation";
+import { getCityFromCoords } from "@/utils/requests/get-city-from-coord";
 import { useQuery } from "@tanstack/react-query";
-
-const getCityFromCoords = async (latitude: number, longitude: number) => {
-  const response = await fetch(
-    `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`,
-    {
-      headers: {
-        "User-Agent": "Kiosq Web App", // Required by Nominatim's usage policy
-      },
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch location data");
-  }
-
-  const data = await response.json();
-  return data.address?.city ?? data.address?.town ?? data.address?.village ?? null;
-};
-
-const getLocation = async (): Promise<string | null> => {
-  return new Promise((resolve, reject) => {
-    if (!navigator.geolocation) {
-      reject(new Error("Geolocation is not supported"));
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        try {
-          const city = await getCityFromCoords(position.coords.latitude, position.coords.longitude);
-          resolve(city);
-        } catch (error) {
-          reject(error);
-        }
-      },
-      (error) => reject(error)
-    );
-  });
-};
+import { useEffect, useState } from "react";
 
 export const useGeolocation = () => {
+  const [coords, setCoords] = useState<UserGeolocation | null>(null);
   const {
     data: city,
     isLoading,
     error,
-    refetch,
   } = useQuery({
     queryKey: ["geolocation"],
-    queryFn: getLocation,
+    queryFn: () => {
+      if (!coords) throw new Error("Coordinates not available");
+      return getCityFromCoords(coords.latitude, coords.longitude);
+    },
     retry: 2,
     staleTime: 1000 * 60 * 60, // 1 hour
+    enabled: !!coords?.latitude && !!coords?.longitude,
   });
 
   const handleRequestLocation = async () => {
-    if (!navigator.geolocation) {
-      return { success: false, error: "Geolocation is not supported" };
-    }
-
     try {
-      await refetch();
-      return { success: true };
+      const localCoords = await getGeolocation();
+
+      if (!localCoords) {
+        throw new Error("Failed to get location");
+      }
+
+      if (!localCoords.latitude || !localCoords.longitude) {
+        throw new Error("Failed to get location");
+      }
+
+      setCoords(localCoords);
     } catch (error) {
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : "Failed to get location",
-      };
+      throw error;
     }
   };
+
+  useEffect(() => {
+    handleRequestLocation();
+  }, []);
 
   return {
     selectors: {
