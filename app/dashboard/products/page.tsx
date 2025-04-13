@@ -1,19 +1,13 @@
 import { DashboardPageHeading } from "@/components/sections/dashboard-page-heading";
-import { Button } from "@/components/ui/button";
-import { PlusSquareIcon } from "@/components/ui/icons/plus-square-icon";
+import { AddProductFormDrawer } from "@/features/add-product-form-drawer/add-product-form-drawer";
 
 export default function ProductsPage() {
   return (
-    <div>
+    <div className="flex flex-col flex-1">
       <DashboardPageHeading
         title="Produits"
         description="Gérer facilement vos produits, leurs inventaire et leur disponibilité selon la saison"
-        cta={
-          <Button>
-            <PlusSquareIcon className="size-5" />
-            Ajouter un produit
-          </Button>
-        }
+        cta={<AddProductFormDrawer />}
       />
     </div>
   );

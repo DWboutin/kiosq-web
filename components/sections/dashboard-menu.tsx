@@ -74,7 +74,7 @@ export const DashboardMenu: FC = () => {
 
   return (
     <div
-      className={`flex flex-col py-5 px-4 bg-neutral-white rounded-xl group transition-all duration-200 ${
+      className={`flex flex-col py-5 px-4 bg-neutral-white rounded-xl max-md:rounded-l-none group transition-all duration-200 ${
         open ? "is-open" : ""
       }`}
       role="navigation"
