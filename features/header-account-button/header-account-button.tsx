@@ -11,6 +11,7 @@ import { DropdownMenu } from "@/components/ui/dropdown-menu";
 import { UserCircleIcon } from "@/components/ui/icons/user-circle-icon";
 import { useUserStore } from "@/stores/user-store";
 import { FC } from "react";
+import Link from "next/link";
 
 export const HeaderAccountButton: FC = () => {
   const disconnectUser = useUserStore((state) => state.disconnectUser);
@@ -25,6 +26,9 @@ export const HeaderAccountButton: FC = () => {
       <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link href="/dashboard">Dashboard</Link>
+        </DropdownMenuItem>
         <DropdownMenuItem
           onSelect={() => {
             disconnectUser();

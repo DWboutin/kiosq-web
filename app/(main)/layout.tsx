@@ -1,4 +1,4 @@
-import { Header } from "@/components/header/header";
+import { Header } from "@/components/sections/header";
 import { CategoryLinks } from "@/components/sections/category-links";
 
 export default function MainLayout({
