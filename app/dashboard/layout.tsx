@@ -12,11 +12,11 @@ export default function DashboardLayout({
       <Header>
         <DashboardBreadcrumb />
       </Header>
-      <div className="relative flex flex-col bg-neutral-lightest border-t border-neutral-light px-24 min-h-screen">
+      <div className="relative flex flex-col bg-neutral-lightest border-t border-neutral-light px-28 min-h-screen">
         <div className="absolute top-6 left-4">
           <DashboardMenu />
         </div>
-        {children}
+        <div className="flex flex-col container mx-auto">{children}</div>
       </div>
     </>
   );
