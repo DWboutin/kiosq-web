@@ -104,40 +104,55 @@ export const DashboardMenu: FC = () => {
             </DashboardMenuLink>
           </li>
           <li role="none">
-            <DashboardMenuLink href="/products" icon={<StorefrontIcon className="size-6" />}>
+            <DashboardMenuLink
+              href="/dashboard/products"
+              icon={<StorefrontIcon className="size-6" />}
+            >
               Produits
             </DashboardMenuLink>
           </li>
           <li role="none">
-            <DashboardMenuLink href="/discounts" icon={<DiscountHandIcon className="size-6" />}>
+            <DashboardMenuLink
+              href="/dashboard/discounts"
+              icon={<DiscountHandIcon className="size-6" />}
+            >
               Rabais et promotions
             </DashboardMenuLink>
           </li>
           <li role="none">
-            <DashboardMenuLink href="/events" icon={<CalendarDotsIcon className="size-6" />}>
+            <DashboardMenuLink
+              href="/dashboard/events"
+              icon={<CalendarDotsIcon className="size-6" />}
+            >
               Événements
             </DashboardMenuLink>
           </li>
           <li role="none">
             <DashboardMenuLink
-              href="/your-store"
+              href="/dashboard/your-store"
               icon={<IdentificationCardIcon className="size-6" />}
             >
               Votre commerce
             </DashboardMenuLink>
           </li>
           <li role="none">
-            <DashboardMenuLink href="/your-kiosqs" icon={<MapPinAreaIcon className="size-6" />}>
+            <DashboardMenuLink
+              href="/dashboard/your-kiosqs"
+              icon={<MapPinAreaIcon className="size-6" />}
+            >
               Vos kiosqs
             </DashboardMenuLink>
           </li>
           <li role="none">
-            <DashboardMenuLink href="/reservations" icon={<ShoppingBagIcon className="size-6" />}>
+            <DashboardMenuLink
+              href="/dashboard/reservations"
+              icon={<ShoppingBagIcon className="size-6" />}
+            >
               Réservations
             </DashboardMenuLink>
           </li>
           <li role="none">
-            <DashboardMenuLink href="/billing" icon={<InvoiceIcon className="size-6" />}>
+            <DashboardMenuLink href="/dashboard/billing" icon={<InvoiceIcon className="size-6" />}>
               Facturation
             </DashboardMenuLink>
           </li>
@@ -148,10 +163,10 @@ export const DashboardMenu: FC = () => {
         role="complementary"
         aria-label="User account actions"
       >
-        <DashboardMenuLink href="/training" icon={<VideoIcon className="size-6" />}>
+        <DashboardMenuLink href="/dashboard/training" icon={<VideoIcon className="size-6" />}>
           Vidéos de formation
         </DashboardMenuLink>
-        <DashboardMenuLink href="/training" icon={<UserCircleIcon className="size-6" />}>
+        <DashboardMenuLink href="/dashboard/account" icon={<UserCircleIcon className="size-6" />}>
           Votre compte
         </DashboardMenuLink>
       </div>
