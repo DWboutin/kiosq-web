@@ -1,9 +1,5 @@
-import { FC, SVGProps } from "react";
-
-interface IconProps extends SVGProps<SVGSVGElement> {
-  color?: string;
-  className?: string;
-}
+import { IconProps } from "@/types/app";
+import React, { FC } from "react";
 
 export const DiscountListingIcon: FC<IconProps> = ({
   color = "currentColor",

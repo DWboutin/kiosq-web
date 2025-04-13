@@ -1,15 +1,7 @@
-import React, { FC, SVGProps } from "react";
+import { IconProps } from "@/types/app";
+import React, { FC } from "react";
 
-interface StorefrontIconProps extends SVGProps<SVGSVGElement> {
-  color?: string;
-  className?: string;
-}
-
-export const StorefrontIcon: FC<StorefrontIconProps> = ({
-  color = "currentColor",
-  className,
-  ...props
-}) => {
+export const StorefrontIcon: FC<IconProps> = ({ color = "currentColor", className, ...props }) => {
   return (
     <svg viewBox="0 0 32 32" fill="none" className={className} {...props}>
       <path

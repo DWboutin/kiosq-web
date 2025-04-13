@@ -1,8 +1,7 @@
-import React, { FC, SVGProps } from "react";
+import { IconProps } from "@/types/app";
+import React, { FC } from "react";
 
-interface MapPinProps extends SVGProps<SVGSVGElement> {
-  color?: string;
-  className?: string;
+interface MapPinProps extends IconProps {
   focused?: boolean;
 }
 

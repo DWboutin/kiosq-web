@@ -1,10 +1,11 @@
-import React, { FC, SVGProps } from "react";
+import { IconProps } from "@/types/app";
+import React, { FC } from "react";
 
-interface IconProps extends SVGProps<SVGSVGElement> {
+interface GoogleIconProps extends Omit<IconProps, "color"> {
   className?: string;
 }
 
-export const GoogleIcon: FC<IconProps> = ({ className, ...props }) => {
+export const GoogleIcon: FC<GoogleIconProps> = ({ className, ...props }) => {
   return (
     <svg width="24" height="24" viewBox="0 0 48 48" className={className} {...props}>
       <g>

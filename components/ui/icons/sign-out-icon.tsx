@@ -1,15 +1,7 @@
-import React, { FC, SVGProps } from "react";
+import { IconProps } from "@/types/app";
+import React, { FC } from "react";
 
-interface SignOutIconProps extends SVGProps<SVGSVGElement> {
-  color?: string;
-  className?: string;
-}
-
-export const SignOutIcon: FC<SignOutIconProps> = ({
-  color = "currentColor",
-  className,
-  ...props
-}) => {
+export const SignOutIcon: FC<IconProps> = ({ color = "currentColor", className, ...props }) => {
   return (
     <svg viewBox="0 0 32 32" fill="none" className={className} {...props}>
       <path

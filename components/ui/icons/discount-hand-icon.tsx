@@ -1,11 +1,7 @@
-import React, { FC, SVGProps } from "react";
+import { IconProps } from "@/types/app";
+import React, { FC } from "react";
 
-interface DiscountHandIconProps extends SVGProps<SVGSVGElement> {
-  color?: string;
-  className?: string;
-}
-
-export const DiscountHandIcon: FC<DiscountHandIconProps> = ({
+export const DiscountHandIcon: FC<IconProps> = ({
   color = "currentColor",
   className,
   ...props

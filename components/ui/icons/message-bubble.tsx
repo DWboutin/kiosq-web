@@ -1,8 +1,7 @@
-import React, { FC, SVGProps } from "react";
+import { IconProps } from "@/types/app";
+import React, { FC } from "react";
 
-interface MessageBubbleProps extends SVGProps<SVGSVGElement> {
-  color?: string;
-  className?: string;
+interface MessageBubbleProps extends IconProps {
   focused?: boolean;
 }
 

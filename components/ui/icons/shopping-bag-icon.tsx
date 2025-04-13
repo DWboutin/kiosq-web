@@ -1,8 +1,7 @@
-import React, { FC, SVGProps } from "react";
+import { IconProps } from "@/types/app";
+import React, { FC } from "react";
 
-interface ShoppingBagIconProps extends SVGProps<SVGSVGElement> {
-  color?: string;
-  className?: string;
+interface ShoppingBagIconProps extends IconProps {
   focused?: boolean;
 }
 

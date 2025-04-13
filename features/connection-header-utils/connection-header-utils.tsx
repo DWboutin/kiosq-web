@@ -2,7 +2,6 @@
 
 import { UserCircleIcon } from "@/components/ui/icons/user-circle-icon";
 import Link from "next/link";
-import { ConnectionHeaderUtilsSignOutButton } from "./components/connection-header-utils-sign-out-button";
 import { FC } from "react";
 import { Button } from "@/components/ui/button";
 import { MessageBubble } from "@/components/ui/icons/message-bubble";

@@ -18,12 +18,10 @@ type UserState = {
 
 type UserActions = {
   updateUser: (user: User | null) => void;
-  updateSession: (session: Session | null) => void;
   updateName: (name: string | null) => void;
   getUser: () => Promise<void>;
   signInWithOtp: (email: string, name: string) => Promise<void>;
   connectWithOtp: (email: string, code: string) => Promise<void>;
-  checkSession: () => Promise<Session | null>;
   disconnectUser: () => Promise<void>;
 };
 
@@ -46,11 +44,6 @@ export const useUserStore = create<UserStore>()(
       updateUser: (user) => {
         set((state) => {
           state.user = user;
-        });
-      },
-      updateSession: (session) => {
-        set((state) => {
-          state.session = session;
         });
       },
       updateName: (name) => {
@@ -107,17 +100,6 @@ export const useUserStore = create<UserStore>()(
             state.isAuthenticating = false;
           });
         }
-      },
-      checkSession: async () => {
-        const session = await checkSession();
-
-        set((state) => {
-          state.session = session;
-          state.user = session?.user || null;
-          state.isAuthenticated = !!session;
-        });
-
-        return session;
       },
       disconnectUser: async () => {
         try {

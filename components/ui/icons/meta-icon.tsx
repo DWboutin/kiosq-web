@@ -1,10 +1,11 @@
-import React, { FC, SVGProps } from "react";
+import { IconProps } from "@/types/app";
+import React, { FC } from "react";
 
-interface IconProps extends SVGProps<SVGSVGElement> {
+interface MetaIconProps extends Omit<IconProps, "color"> {
   className?: string;
 }
 
-export const MetaIcon: FC<IconProps> = ({ className, ...props }) => {
+export const MetaIcon: FC<MetaIconProps> = ({ className, ...props }) => {
   return (
     <svg width="25" height="18" viewBox="0 0 25 18" fill="none" className={className} {...props}>
       <path
