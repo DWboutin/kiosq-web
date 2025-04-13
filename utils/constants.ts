@@ -140,3 +140,5 @@ export const CATEGORIES_ORDER = [
     link: "/categories/selfcare",
   },
 ] as const;
+
+export const UNITS = ["kg", "g", "L", "cl", "ml", "pcs"] as const;

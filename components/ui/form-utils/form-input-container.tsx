@@ -7,6 +7,7 @@ interface FormInputContainerProps {
   error?: string;
   required?: boolean;
   description?: string;
+  className?: string;
 }
 
 export const FormInputContainer: FC<FormInputContainerProps> = ({
@@ -16,12 +17,13 @@ export const FormInputContainer: FC<FormInputContainerProps> = ({
   error,
   required = false,
   description,
+  className,
 }) => {
   const errorId = error ? `${inputId}-error` : undefined;
   const descriptionId = description ? `${inputId}-description` : undefined;
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className={`flex flex-col gap-2 ${className}`}>
       <label className="font-medium text-sm text-neutral-darker" htmlFor={inputId}>
         {label}
         {required && (
