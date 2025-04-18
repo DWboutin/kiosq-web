@@ -11,33 +11,45 @@ export type Database = {
     Tables: {
       categories: {
         Row: {
-          created_at: string
+          created_at: string | null
+          description_translations: Json | null
           id: string
+          image_url: string | null
+          is_active: boolean | null
+          is_deleted: boolean | null
           name_translations: Json
-          order_position: number
+          order_rank: number | null
           parent_id: string | null
-          status: string
-          updated_at: string
+          slug: Json
+          updated_at: string | null
           updated_by: string | null
         }
         Insert: {
-          created_at?: string
+          created_at?: string | null
+          description_translations?: Json | null
           id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          is_deleted?: boolean | null
           name_translations?: Json
-          order_position?: number
+          order_rank?: number | null
           parent_id?: string | null
-          status?: string
-          updated_at?: string
+          slug?: Json
+          updated_at?: string | null
           updated_by?: string | null
         }
         Update: {
-          created_at?: string
+          created_at?: string | null
+          description_translations?: Json | null
           id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          is_deleted?: boolean | null
           name_translations?: Json
-          order_position?: number
+          order_rank?: number | null
           parent_id?: string | null
-          status?: string
-          updated_at?: string
+          slug?: Json
+          updated_at?: string | null
           updated_by?: string | null
         }
         Relationships: [
@@ -52,42 +64,39 @@ export type Database = {
             foreignKeyName: "categories_updated_by_fkey"
             columns: ["updated_by"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "users"
             referencedColumns: ["id"]
           },
         ]
       }
       inventory: {
         Row: {
-          created_at: string
+          created_at: string | null
           id: string
-          low_stock_threshold: number
-          quantity_per_unit: number
-          stock: number
-          unit: string
-          updated_at: string
+          low_stock_threshold: number | null
+          quantity: number
+          unit: string | null
+          updated_at: string | null
           updated_by: string | null
           variant_id: string
         }
         Insert: {
-          created_at?: string
+          created_at?: string | null
           id?: string
-          low_stock_threshold?: number
-          quantity_per_unit?: number
-          stock?: number
-          unit?: string
-          updated_at?: string
+          low_stock_threshold?: number | null
+          quantity?: number
+          unit?: string | null
+          updated_at?: string | null
           updated_by?: string | null
           variant_id: string
         }
         Update: {
-          created_at?: string
+          created_at?: string | null
           id?: string
-          low_stock_threshold?: number
-          quantity_per_unit?: number
-          stock?: number
-          unit?: string
-          updated_at?: string
+          low_stock_threshold?: number | null
+          quantity?: number
+          unit?: string | null
+          updated_at?: string | null
           updated_by?: string | null
           variant_id?: string
         }
@@ -96,7 +105,7 @@ export type Database = {
             foreignKeyName: "inventory_updated_by_fkey"
             columns: ["updated_by"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "users"
             referencedColumns: ["id"]
           },
           {
@@ -110,136 +119,193 @@ export type Database = {
       }
       product_prices: {
         Row: {
-          base_amount: number
-          created_at: string
-          currency: Database["public"]["Enums"]["currency_code"]
-          discount_amount: number
-          effective_end: string | null
-          effective_start: string
-          final_amount: number | null
+          base_price: number
+          created_at: string | null
+          currency: string | null
+          discount_amount: number | null
+          discount_type: string | null
+          effective_from: string
+          effective_to: string | null
+          final_price: number | null
           id: string
-          product_id: string
-          updated_at: string
+          is_tax_inclusive: boolean | null
+          updated_at: string | null
           updated_by: string | null
+          variant_id: string
         }
         Insert: {
-          base_amount: number
-          created_at?: string
-          currency: Database["public"]["Enums"]["currency_code"]
-          discount_amount?: number
-          effective_end?: string | null
-          effective_start: string
-          final_amount?: number | null
+          base_price: number
+          created_at?: string | null
+          currency?: string | null
+          discount_amount?: number | null
+          discount_type?: string | null
+          effective_from?: string
+          effective_to?: string | null
+          final_price?: number | null
           id?: string
-          product_id: string
-          updated_at?: string
+          is_tax_inclusive?: boolean | null
+          updated_at?: string | null
           updated_by?: string | null
+          variant_id: string
         }
         Update: {
-          base_amount?: number
-          created_at?: string
-          currency?: Database["public"]["Enums"]["currency_code"]
-          discount_amount?: number
-          effective_end?: string | null
-          effective_start?: string
-          final_amount?: number | null
+          base_price?: number
+          created_at?: string | null
+          currency?: string | null
+          discount_amount?: number | null
+          discount_type?: string | null
+          effective_from?: string
+          effective_to?: string | null
+          final_price?: number | null
           id?: string
-          product_id?: string
-          updated_at?: string
+          is_tax_inclusive?: boolean | null
+          updated_at?: string | null
           updated_by?: string | null
+          variant_id?: string
         }
         Relationships: [
-          {
-            foreignKeyName: "product_prices_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "product_search_cache"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "product_prices_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "products"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "product_prices_updated_by_fkey"
             columns: ["updated_by"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_prices_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "product_variants"
             referencedColumns: ["id"]
           },
         ]
       }
       product_prices_2025: {
         Row: {
-          base_amount: number
-          created_at: string
-          currency: Database["public"]["Enums"]["currency_code"]
-          discount_amount: number
-          effective_end: string | null
-          effective_start: string
-          final_amount: number | null
+          base_price: number
+          created_at: string | null
+          currency: string | null
+          discount_amount: number | null
+          discount_type: string | null
+          effective_from: string
+          effective_to: string | null
+          final_price: number | null
           id: string
-          product_id: string
-          updated_at: string
+          is_tax_inclusive: boolean | null
+          updated_at: string | null
           updated_by: string | null
+          variant_id: string
         }
         Insert: {
-          base_amount: number
-          created_at?: string
-          currency: Database["public"]["Enums"]["currency_code"]
-          discount_amount?: number
-          effective_end?: string | null
-          effective_start: string
-          final_amount?: number | null
+          base_price: number
+          created_at?: string | null
+          currency?: string | null
+          discount_amount?: number | null
+          discount_type?: string | null
+          effective_from?: string
+          effective_to?: string | null
+          final_price?: number | null
           id?: string
-          product_id: string
-          updated_at?: string
+          is_tax_inclusive?: boolean | null
+          updated_at?: string | null
           updated_by?: string | null
+          variant_id: string
         }
         Update: {
-          base_amount?: number
-          created_at?: string
-          currency?: Database["public"]["Enums"]["currency_code"]
-          discount_amount?: number
-          effective_end?: string | null
-          effective_start?: string
-          final_amount?: number | null
+          base_price?: number
+          created_at?: string | null
+          currency?: string | null
+          discount_amount?: number | null
+          discount_type?: string | null
+          effective_from?: string
+          effective_to?: string | null
+          final_price?: number | null
           id?: string
-          product_id?: string
-          updated_at?: string
+          is_tax_inclusive?: boolean | null
+          updated_at?: string | null
           updated_by?: string | null
+          variant_id?: string
         }
         Relationships: []
       }
+      product_taxes: {
+        Row: {
+          created_at: string | null
+          id: string
+          product_id: string
+          tax_component_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          product_id: string
+          tax_component_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          product_id?: string
+          tax_component_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_taxes_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "product_search"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_taxes_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_taxes_tax_component_id_fkey"
+            columns: ["tax_component_id"]
+            isOneToOne: false
+            referencedRelation: "tax_components"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       product_variants: {
         Row: {
-          created_at: string
+          created_at: string | null
           id: string
+          image_url: string | null
+          is_default: boolean | null
+          is_deleted: boolean | null
           option_values: Json
-          price_adjustment: number
           product_id: string
-          updated_at: string
+          sku: string | null
+          updated_at: string | null
           updated_by: string | null
         }
         Insert: {
-          created_at?: string
+          created_at?: string | null
           id?: string
-          option_values: Json
-          price_adjustment?: number
+          image_url?: string | null
+          is_default?: boolean | null
+          is_deleted?: boolean | null
+          option_values?: Json
           product_id: string
-          updated_at?: string
+          sku?: string | null
+          updated_at?: string | null
           updated_by?: string | null
         }
         Update: {
-          created_at?: string
+          created_at?: string | null
           id?: string
+          image_url?: string | null
+          is_default?: boolean | null
+          is_deleted?: boolean | null
           option_values?: Json
-          price_adjustment?: number
           product_id?: string
-          updated_at?: string
+          sku?: string | null
+          updated_at?: string | null
           updated_by?: string | null
         }
         Relationships: [
@@ -247,7 +313,7 @@ export type Database = {
             foreignKeyName: "product_variants_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
-            referencedRelation: "product_search_cache"
+            referencedRelation: "product_search"
             referencedColumns: ["id"]
           },
           {
@@ -261,59 +327,65 @@ export type Database = {
             foreignKeyName: "product_variants_updated_by_fkey"
             columns: ["updated_by"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "users"
             referencedColumns: ["id"]
           },
         ]
       }
       products: {
         Row: {
-          base_unit: string
-          category_id: string
-          created_at: string
-          description_translations: Json
+          additional_images: Json | null
+          category_id: string | null
+          created_at: string | null
+          description_translations: Json | null
+          features_translations: Json | null
           id: string
-          is_taxable: boolean
+          is_deleted: boolean | null
+          is_featured: boolean | null
+          main_image_url: string | null
+          metadata: Json | null
           name_translations: Json
-          search_vector: unknown | null
-          status: string
-          tax_country: string | null
-          tax_region: string | null
-          updated_at: string
+          slug: string
+          status: string | null
+          updated_at: string | null
           updated_by: string | null
-          vendor_id: string | null
+          user_id: string
         }
         Insert: {
-          base_unit?: string
-          category_id: string
-          created_at?: string
-          description_translations?: Json
+          additional_images?: Json | null
+          category_id?: string | null
+          created_at?: string | null
+          description_translations?: Json | null
+          features_translations?: Json | null
           id?: string
-          is_taxable?: boolean
+          is_deleted?: boolean | null
+          is_featured?: boolean | null
+          main_image_url?: string | null
+          metadata?: Json | null
           name_translations?: Json
-          search_vector?: unknown | null
-          status?: string
-          tax_country?: string | null
-          tax_region?: string | null
-          updated_at?: string
+          slug: string
+          status?: string | null
+          updated_at?: string | null
           updated_by?: string | null
-          vendor_id?: string | null
+          user_id: string
         }
         Update: {
-          base_unit?: string
-          category_id?: string
-          created_at?: string
-          description_translations?: Json
+          additional_images?: Json | null
+          category_id?: string | null
+          created_at?: string | null
+          description_translations?: Json | null
+          features_translations?: Json | null
           id?: string
-          is_taxable?: boolean
+          is_deleted?: boolean | null
+          is_featured?: boolean | null
+          main_image_url?: string | null
+          metadata?: Json | null
           name_translations?: Json
-          search_vector?: unknown | null
-          status?: string
-          tax_country?: string | null
-          tax_region?: string | null
-          updated_at?: string
+          slug?: string
+          status?: string | null
+          updated_at?: string | null
           updated_by?: string | null
-          vendor_id?: string | null
+          user_id?: string
         }
         Relationships: [
           {
@@ -327,80 +399,97 @@ export type Database = {
             foreignKeyName: "products_updated_by_fkey"
             columns: ["updated_by"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "users"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "products_vendor_id_fkey"
-            columns: ["vendor_id"]
+            foreignKeyName: "products_user_id_fkey"
+            columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: "vendor_profiles"
+            referencedRelation: "users"
             referencedColumns: ["id"]
           },
         ]
       }
       profiles: {
         Row: {
-          created_at: string
+          banner_image: string | null
+          created_at: string | null
           id: string
-          role: string
-          updated_at: string
+          is_deleted: boolean | null
+          name_translations: Json | null
+          slug_translations: Json | null
+          type: string | null
+          updated_at: string | null
         }
         Insert: {
-          created_at?: string
+          banner_image?: string | null
+          created_at?: string | null
           id: string
-          role?: string
-          updated_at?: string
+          is_deleted?: boolean | null
+          name_translations?: Json | null
+          slug_translations?: Json | null
+          type?: string | null
+          updated_at?: string | null
         }
         Update: {
-          created_at?: string
+          banner_image?: string | null
+          created_at?: string | null
           id?: string
-          role?: string
-          updated_at?: string
+          is_deleted?: boolean | null
+          name_translations?: Json | null
+          slug_translations?: Json | null
+          type?: string | null
+          updated_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       tax_components: {
         Row: {
-          country_code: string
-          created_at: string
-          currency_code: string
-          effective_end: string | null
-          effective_start: string
+          code: string
+          created_at: string | null
+          effective_from: string
+          effective_to: string | null
           id: string
-          is_included_in_price: boolean
+          is_active: boolean | null
+          name: string
           rate: number
-          region_code: string | null
-          tax_type: string
-          updated_at: string
+          region: string
+          updated_at: string | null
           updated_by: string | null
         }
         Insert: {
-          country_code: string
-          created_at?: string
-          currency_code: string
-          effective_end?: string | null
-          effective_start: string
+          code: string
+          created_at?: string | null
+          effective_from?: string
+          effective_to?: string | null
           id?: string
-          is_included_in_price?: boolean
+          is_active?: boolean | null
+          name: string
           rate: number
-          region_code?: string | null
-          tax_type: string
-          updated_at?: string
+          region: string
+          updated_at?: string | null
           updated_by?: string | null
         }
         Update: {
-          country_code?: string
-          created_at?: string
-          currency_code?: string
-          effective_end?: string | null
-          effective_start?: string
+          code?: string
+          created_at?: string | null
+          effective_from?: string
+          effective_to?: string | null
           id?: string
-          is_included_in_price?: boolean
+          is_active?: boolean | null
+          name?: string
           rate?: number
-          region_code?: string | null
-          tax_type?: string
-          updated_at?: string
+          region?: string
+          updated_at?: string | null
           updated_by?: string | null
         }
         Relationships: [
@@ -408,106 +497,75 @@ export type Database = {
             foreignKeyName: "tax_components_updated_by_fkey"
             columns: ["updated_by"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "users"
             referencedColumns: ["id"]
           },
         ]
       }
       users: {
         Row: {
-          accepted_terms_at: string | null
-          avatar_url: string
           created_at: string | null
+          display_name: string | null
           email: string
-          email_opt_in: boolean | null
           id: string
-          name: string | null
-          type: string | null
+          is_deleted: boolean | null
+          role: Database["public"]["Enums"]["user_role"]
           updated_at: string | null
         }
         Insert: {
-          accepted_terms_at?: string | null
-          avatar_url: string
           created_at?: string | null
+          display_name?: string | null
           email: string
-          email_opt_in?: boolean | null
           id: string
-          name?: string | null
-          type?: string | null
+          is_deleted?: boolean | null
+          role?: Database["public"]["Enums"]["user_role"]
           updated_at?: string | null
         }
         Update: {
-          accepted_terms_at?: string | null
-          avatar_url?: string
           created_at?: string | null
+          display_name?: string | null
           email?: string
-          email_opt_in?: boolean | null
           id?: string
-          name?: string | null
-          type?: string | null
+          is_deleted?: boolean | null
+          role?: Database["public"]["Enums"]["user_role"]
           updated_at?: string | null
         }
         Relationships: []
       }
-      vendor_profiles: {
-        Row: {
-          banner_image: string | null
-          created_at: string
-          id: string
-          name_translations: Json
-          slug: string
-          status: string
-          updated_at: string
-          user_id: string
-        }
-        Insert: {
-          banner_image?: string | null
-          created_at?: string
-          id?: string
-          name_translations?: Json
-          slug: string
-          status?: string
-          updated_at?: string
-          user_id: string
-        }
-        Update: {
-          banner_image?: string | null
-          created_at?: string
-          id?: string
-          name_translations?: Json
-          slug?: string
-          status?: string
-          updated_at?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "vendor_profiles_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
     }
     Views: {
-      product_search_cache: {
+      product_search: {
         Row: {
+          category_name: Json | null
+          category_slug: Json | null
+          description_translations: Json | null
           id: string | null
-          lowest_price: number | null
+          is_featured: boolean | null
+          main_image_url: string | null
+          max_price: number | null
+          min_price: number | null
           name_translations: Json | null
-          search_vector: unknown | null
-          variant_count: number | null
+          profile_type: string | null
+          slug: string | null
+          status: string | null
+          total_inventory: number | null
+          vendor_name: string | null
+          vendor_slug: string | null
         }
         Relationships: []
       }
     }
     Functions: {
-      [_ in never]: never
+      has_role_permission: {
+        Args: {
+          user_id: string
+          required_role: Database["public"]["Enums"]["user_role"]
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      currency_code: "CAD" | "USD"
+      user_role: "admin" | "vendor-admin" | "vendor-manager" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -623,7 +681,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      currency_code: ["CAD", "USD"],
+      user_role: ["admin", "vendor-admin", "vendor-manager", "user"],
     },
   },
 } as const
