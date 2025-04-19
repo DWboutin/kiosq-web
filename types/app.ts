@@ -9,5 +9,9 @@ export interface IconProps extends SVGProps<SVGSVGElement> {
   className?: string;
 }
 
+export type InsertWithLocale<T> = T & {
+  locale: string;
+};
+
 export type ProductCategory = Database["public"]["Tables"]["categories"]["Row"];
 export type ProductCategoryInsert = Database["public"]["Tables"]["categories"]["Insert"];

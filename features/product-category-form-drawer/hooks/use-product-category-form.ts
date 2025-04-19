@@ -1,5 +1,7 @@
 import { useForm } from "react-hook-form";
 import { ProductCategory } from "@/types/app";
+import { useLocale } from "next-intl";
+import { addProductCategory } from "@/actions/add-product-category";
 
 export type ProductCategoryFormValues = Omit<
   ProductCategory,
@@ -24,6 +26,7 @@ export type ProductCategoryFormValues = Omit<
 };
 
 export const useProductCategoryForm = () => {
+  const locale = useLocale();
   const {
     control,
     handleSubmit,
@@ -38,8 +41,11 @@ export const useProductCategoryForm = () => {
     },
   });
 
-  const onSubmit = (data: ProductCategoryFormValues) => {
-    console.log(data);
+  const onSubmit = async (data: ProductCategoryFormValues) => {
+    await addProductCategory({
+      ...data,
+      locale,
+    });
   };
 
   const handleFormSubmit = handleSubmit(onSubmit);
