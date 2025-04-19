@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "update-types": "npx supabase gen types typescript --project-id \"sauzpiomootgmjmeuynq\" --schema public > types/supabase.ts"
+    "update-types": "npx supabase gen types typescript --project-id \"sauzpiomootgmjmeuynq\" --schema public > types/supabase.ts",
+    "db:push": "npx supabase db push",
+    "db:reset": "echo \"y\" | npx supabase db reset --linked",
+    "db:disable-trigger": "npx supabase db execute --file ./supabase/scripts/disable_trigger.sql",
+    "db:enable-trigger": "npx supabase db execute --file ./supabase/scripts/reenable_trigger.sql"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
@@ -46,6 +50,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
+    "supabase": "^2.20.12",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

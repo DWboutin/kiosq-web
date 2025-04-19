@@ -6,7 +6,6 @@ import { ProductFormValues } from "@/features/add-product-form-drawer/hooks/use-
 import { FieldErrors, Control } from "react-hook-form";
 import { FC } from "react";
 import { Textarea } from "@/components/ui/textarea";
-import { CategoryDropdown } from "@/components/ui/form-utils/category-dropdown";
 import { ControlledSelect } from "@/components/ui/form-utils/controlled-select";
 import { CATEGORIES_ORDER } from "@/utils/constants";
 
