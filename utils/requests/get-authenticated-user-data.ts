@@ -4,7 +4,7 @@ export const getAuthenticatedUserData = async (): Promise<UserData | null> => {
   const response = await fetch(`/api/users/current`);
 
   if (!response.ok) {
-    throw new Error("Failed to fetch location data");
+    throw new Error("Failed to fetch user data");
   }
 
   const data = await response.json();
