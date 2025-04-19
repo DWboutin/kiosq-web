@@ -34,7 +34,7 @@ export const SideDrawer: FC<SideDrawerProps> = ({
   const [open, setOpen] = useState(false);
 
   return (
-    <Drawer open={open} onOpenChange={setOpen} direction="right">
+    <Drawer open={open} onOpenChange={setOpen} direction="right" autoFocus={open}>
       <DrawerTrigger>{trigger}</DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
