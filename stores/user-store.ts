@@ -108,6 +108,7 @@ export const useUserStore = create<UserStore>()(
           });
 
           await signOut();
+          window.location.href = "/";
         } catch (error) {
           set((state) => {
             state.error = error as string;
