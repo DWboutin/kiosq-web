@@ -47,7 +47,9 @@ export const SideDrawer: FC<SideDrawerProps> = ({
         <DrawerFooter>
           <div className="flex flex-row justify-end gap-2 pt-4 border-t border-neutral-lightest">
             <DrawerClose>
-              <Button variant="outline">{buttonCancelLabel}</Button>
+              <Button variant="outline" asChild>
+                <span>{buttonCancelLabel}</span>
+              </Button>
             </DrawerClose>
             <Button onClick={handleSubmit}>{buttonSubmitLabel}</Button>
           </div>

@@ -22,9 +22,11 @@ export const AddProductFormDrawer: FC = () => {
       buttonCancelLabel="Annuler"
       handleSubmit={handleFormSubmit}
       trigger={
-        <Button tabIndex={-1}>
-          <PlusSquareIcon className="size-5" />
-          Ajouter un produit
+        <Button tabIndex={-1} asChild>
+          <span>
+            <PlusSquareIcon className="size-5" />
+            Ajouter un produit
+          </span>
         </Button>
       }
     >
