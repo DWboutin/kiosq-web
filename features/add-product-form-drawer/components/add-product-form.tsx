@@ -7,6 +7,8 @@ import { FieldErrors, Control } from "react-hook-form";
 import { FC } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { CategoryDropdown } from "@/components/ui/form-utils/category-dropdown";
+import { ControlledSelect } from "@/components/ui/form-utils/controlled-select";
+import { CATEGORIES_ORDER } from "@/utils/constants";
 
 type AddProductFormProps = {
   control: Control<ProductFormValues>;
@@ -64,11 +66,15 @@ export const AddProductForm: FC<AddProductFormProps> = ({ control, errors }) => 
           name="category"
           control={control}
           render={({ field }) => (
-            <CategoryDropdown
+            <ControlledSelect
               id="category"
               placeholder="Fruits"
               value={field.value}
               onChange={field.onChange}
+              options={CATEGORIES_ORDER.map((category) => ({
+                label: category.name,
+                value: category.name,
+              }))}
             />
           )}
         />

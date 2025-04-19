@@ -1,7 +1,7 @@
 import { DashboardPageHeading } from "@/components/sections/dashboard-page-heading";
 import { AddProductFormDrawer } from "@/features/add-product-form-drawer/add-product-form-drawer";
 
-export default function ProductsPage() {
+export default function DashboardProductsPage() {
   return (
     <div className="flex flex-col flex-1">
       <DashboardPageHeading

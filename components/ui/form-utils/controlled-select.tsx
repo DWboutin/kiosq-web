@@ -5,23 +5,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CATEGORIES_ORDER } from "@/utils/constants";
 import { FC } from "react";
 
-type CategoryDropdownProps = {
+type ControlledSelectProps = {
   id: string;
   placeholder: string;
   value: string;
   onChange: (value: string) => void;
+  options: {
+    label: string;
+    value: string;
+  }[];
 };
 
-const categories = CATEGORIES_ORDER.slice(1);
-
-export const CategoryDropdown: FC<CategoryDropdownProps> = ({
+export const ControlledSelect: FC<ControlledSelectProps> = ({
   id,
   placeholder,
   value,
   onChange,
+  options,
 }) => {
   return (
     <Select onValueChange={onChange} value={value}>
@@ -29,9 +31,9 @@ export const CategoryDropdown: FC<CategoryDropdownProps> = ({
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
-        {categories.map((category) => (
-          <SelectItem key={category.name} value={category.name}>
-            {category.name}
+        {options.map((option) => (
+          <SelectItem key={option.value} value={option.value}>
+            {option.label}
           </SelectItem>
         ))}
       </SelectContent>

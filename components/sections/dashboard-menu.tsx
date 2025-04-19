@@ -15,6 +15,7 @@ import { ShoppingBagIcon } from "@/components/ui/icons/shopping-bag-icon";
 import { InvoiceIcon } from "@/components/ui/icons/invoice-icon";
 import { VideoIcon } from "@/components/ui/icons/video-icon";
 import { UserCircleIcon } from "@/components/ui/icons/user-circle-icon";
+import { KeyholeIcon } from "@/components/ui/icons/keyhole-icon";
 
 const DashboardMenuLink = memo(
   ({
@@ -52,12 +53,12 @@ export const DashboardMenu: FC = () => {
   const [open, setOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const toggleButtonRef = useRef<HTMLButtonElement>(null);
+  const pathname = usePathname();
 
   const handleToggleMenu = () => {
     setOpen((prev) => !prev);
   };
 
-  // Handle keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && open) {
@@ -71,6 +72,12 @@ export const DashboardMenu: FC = () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [open]);
+
+  useEffect(() => {
+    if (open) {
+      setOpen(false);
+    }
+  }, [pathname]);
 
   return (
     <div
@@ -154,6 +161,11 @@ export const DashboardMenu: FC = () => {
           <li role="none">
             <DashboardMenuLink href="/dashboard/billing" icon={<InvoiceIcon className="size-6" />}>
               Facturation
+            </DashboardMenuLink>
+          </li>
+          <li role="none">
+            <DashboardMenuLink href="/dashboard/admin" icon={<KeyholeIcon className="size-6" />}>
+              Admin
             </DashboardMenuLink>
           </li>
         </ul>
