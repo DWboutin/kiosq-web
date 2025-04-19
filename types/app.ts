@@ -3,7 +3,8 @@ import { Session } from "@supabase/supabase-js";
 import { SVGProps } from "react";
 
 export type User = Session["user"];
-
+export type UserData = Database["public"]["Tables"]["users"]["Row"];
+export type UserRole = Database["public"]["Enums"]["user_role"];
 export interface IconProps extends SVGProps<SVGSVGElement> {
   color?: string;
   className?: string;

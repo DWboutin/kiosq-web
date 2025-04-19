@@ -16,36 +16,57 @@ import { InvoiceIcon } from "@/components/ui/icons/invoice-icon";
 import { VideoIcon } from "@/components/ui/icons/video-icon";
 import { UserCircleIcon } from "@/components/ui/icons/user-circle-icon";
 import { KeyholeIcon } from "@/components/ui/icons/keyhole-icon";
+import { useUserStore } from "@/stores/user-store";
+import { UserRole } from "@/types/app";
 
-const DashboardMenuLink = memo(
-  ({
-    href,
-    icon,
-    children,
-  }: {
-    href: string;
-    icon: React.ReactNode;
-    children: React.ReactNode;
-  }) => {
-    const pathname = usePathname();
-    const isActive = pathname === href;
+type DashboardMenuProtectedLinkProps = {
+  role: UserRole;
+} & DashboardMenuLinkProps;
 
-    return (
-      <Link
-        href={href}
-        className={`flex items-center hover:bg-neutral-lightest rounded-md ${
-          isActive ? "text-brand-medium" : "text-neutral-darker hover:text-neutral-black"
-        }`}
-        aria-current={isActive ? "page" : undefined}
-      >
-        <Button variant="ghost" size="icon" tabIndex={-1}>
-          {icon}
-        </Button>
-        <p className="font-inter text-base pl-2 group-[.is-open]:inline-block hidden">{children}</p>
-      </Link>
-    );
+const DashboardMenuProtectedLink: FC<DashboardMenuProtectedLinkProps> = ({
+  role,
+  href,
+  icon,
+  children,
+}) => {
+  const userData = useUserStore((state) => state.userData);
+
+  if (userData?.role !== role) {
+    return null;
   }
-);
+
+  return (
+    <DashboardMenuLink href={href} icon={icon}>
+      {children}
+    </DashboardMenuLink>
+  );
+};
+
+type DashboardMenuLinkProps = {
+  href: string;
+  icon: React.ReactNode;
+  children: React.ReactNode;
+};
+
+const DashboardMenuLink = memo(({ href, icon, children }: DashboardMenuLinkProps) => {
+  const pathname = usePathname();
+  const isActive = pathname === href;
+
+  return (
+    <Link
+      href={href}
+      className={`flex items-center hover:bg-neutral-lightest rounded-md ${
+        isActive ? "text-brand-medium" : "text-neutral-darker hover:text-neutral-black"
+      }`}
+      aria-current={isActive ? "page" : undefined}
+    >
+      <Button variant="ghost" size="icon" tabIndex={-1}>
+        {icon}
+      </Button>
+      <p className="font-inter text-base pl-2 group-[.is-open]:inline-block hidden">{children}</p>
+    </Link>
+  );
+});
 
 DashboardMenuLink.displayName = "DashboardMenuLink";
 
@@ -164,9 +185,13 @@ export const DashboardMenu: FC = () => {
             </DashboardMenuLink>
           </li>
           <li role="none">
-            <DashboardMenuLink href="/dashboard/admin" icon={<KeyholeIcon className="size-6" />}>
+            <DashboardMenuProtectedLink
+              role="admin"
+              href="/dashboard/admin"
+              icon={<KeyholeIcon className="size-6" />}
+            >
               Admin
-            </DashboardMenuLink>
+            </DashboardMenuProtectedLink>
           </li>
         </ul>
       </nav>

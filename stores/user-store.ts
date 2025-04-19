@@ -1,16 +1,18 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { User } from "@/types/app";
+import { User, UserData } from "@/types/app";
 import { Session } from "@supabase/supabase-js";
 import { signInWithOtp, signOut, verifyOtpCode } from "@/utils/supabase/client";
 import { getUser } from "@/actions/get-user";
+import { getAuthenticatedUserData } from "@/utils/requests/get-authenticated-user-data";
 
 type UserState = {
   isAuthenticating: boolean;
   isAuthenticated: boolean;
   isSigningWithOtp: boolean;
   user: User | null;
+  userData: UserData | null;
   session: Session | null;
   name: string | null;
   error: string | null;
@@ -30,6 +32,7 @@ const initialState: UserState = {
   isAuthenticated: false,
   isSigningWithOtp: false,
   user: null,
+  userData: null,
   session: null,
   name: null,
   error: null,
@@ -58,6 +61,13 @@ export const useUserStore = create<UserStore>()(
           state.user = user;
         });
       },
+      getUserData: async () => {
+        const userData = await getAuthenticatedUserData();
+
+        set((state) => {
+          state.userData = userData;
+        });
+      },
       signInWithOtp: async (email, name) => {
         try {
           set((state) => {
@@ -84,11 +94,12 @@ export const useUserStore = create<UserStore>()(
           });
 
           const session = await verifyOtpCode(email, code);
-          await get().getUser();
+          const userData = await getAuthenticatedUserData();
 
           set((state) => {
             state.session = session || null;
             state.user = session?.user || null;
+            state.userData = userData || null;
             state.isAuthenticated = true;
           });
         } catch (error) {
