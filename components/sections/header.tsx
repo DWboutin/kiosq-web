@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { KiosqLogo } from "@/components/ui/kiosq-logo/kiosq-logo";
 import { LocationButton } from "@/components/ui/location-button";
 import { SearchInput } from "@/components/ui/search-input";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { FC, PropsWithChildren } from "react";
 import React from "react";
 import { cva } from "class-variance-authority";

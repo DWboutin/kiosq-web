@@ -1,6 +1,6 @@
 import { ProductCategoryCard } from "@/components/ui/product-category-card";
+import { Link } from "@/i18n/navigation";
 import { CATEGORIES_ORDER } from "@/utils/constants";
-import Link from "next/link";
 
 export const CategoryLinks = () => {
   return (

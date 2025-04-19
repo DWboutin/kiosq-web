@@ -11,7 +11,7 @@ import { DropdownMenu } from "@/components/ui/dropdown-menu";
 import { UserCircleIcon } from "@/components/ui/icons/user-circle-icon";
 import { useUserStore } from "@/stores/user-store";
 import { FC } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 export const HeaderAccountButton: FC = () => {
   const disconnectUser = useUserStore((state) => state.disconnectUser);

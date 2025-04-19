@@ -3,7 +3,7 @@
 import { FC, memo, useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { SubMenuIcon } from "@/components/ui/icons/sub-menu-icon";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { DashboardIcon } from "@/components/ui/icons/dashboard-icon";
 import { StorefrontIcon } from "@/components/ui/icons/storefront-icon";
 import { DiscountHandIcon } from "@/components/ui/icons/discount-hand-icon";

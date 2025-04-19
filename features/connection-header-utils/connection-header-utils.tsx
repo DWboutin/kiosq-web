@@ -1,7 +1,7 @@
 "use client";
 
 import { UserCircleIcon } from "@/components/ui/icons/user-circle-icon";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { FC } from "react";
 import { Button } from "@/components/ui/button";
 import { MessageBubble } from "@/components/ui/icons/message-bubble";
