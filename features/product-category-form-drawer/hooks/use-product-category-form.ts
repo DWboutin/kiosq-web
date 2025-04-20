@@ -44,7 +44,7 @@ export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) 
   const locale = useLocale() as Locales;
   const initialData = useCategoriesStore((state) => state.initialData);
   const selectedId = useCategoriesStore((state) => state.selectedId);
-  const resetInitialData = useCategoriesStore((state) => state.resetInitialData);
+  const lastSelected = useCategoriesStore((state) => state.lastSelected);
   const isDrawerOpen = sideDrawerRef?.current?.isOpen;
   const previousIsDrawerOpen = usePrevious(isDrawerOpen);
   const {
@@ -64,8 +64,6 @@ export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) 
       slug_translations: {},
     },
   });
-
-  console.log({ selectedId });
 
   const onSubmit = async (data: ProductCategoryFormValues) => {
     try {
@@ -110,14 +108,14 @@ export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) 
         name: initialData.name[locale],
         description: initialData.description[locale],
         slug: initialData.slug[locale],
-        parentId: initialData.parentId || "",
+        parentId: initialData.parentId || "false",
         orderRank: initialData.orderRank || 0,
         name_translations: nameTranslations,
         description_translations: descriptionTranslations,
         slug_translations: slugTranslations,
       });
     }
-  }, [initialData, reset, locale]);
+  }, [initialData, lastSelected, reset, locale]);
 
   useEffect(() => {
     if (!isDrawerOpen && previousIsDrawerOpen) {
@@ -125,22 +123,20 @@ export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) 
         name: "",
         description: "",
         slug: "",
-        parentId: "",
+        parentId: "false",
         orderRank: 0,
         name_translations: {},
         description_translations: {},
         slug_translations: {},
       });
-
-      resetInitialData();
     }
-  }, [isDrawerOpen, previousIsDrawerOpen, reset, resetInitialData]);
+  }, [isDrawerOpen, previousIsDrawerOpen, reset]);
 
   useEffect(() => {
     if (initialData && !isDrawerOpen) {
       sideDrawerRef?.current?.open();
     }
-  }, [initialData, selectedId, isDrawerOpen, sideDrawerRef]);
+  }, [initialData, lastSelected, isDrawerOpen, sideDrawerRef]);
 
   return {
     selectors: { control, errors, isUpdating: !!selectedId },
