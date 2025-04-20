@@ -17,12 +17,15 @@ export const addProductCategory = async (category: AddProductCategoryArgs) => {
     const { data, error } = await supabase.from("categories").insert({
       name_translations: {
         [category.locale]: category.name,
+        ...category.name_translations,
       },
       description_translations: {
         [category.locale]: category.description,
+        ...category.description_translations,
       },
       slug: {
         [category.locale]: category.slug,
+        ...category.slug_translations,
       },
       parent_id: category.parentId === "false" ? null : category.parentId,
       order_rank: category.orderRank,

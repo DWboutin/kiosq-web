@@ -17,6 +17,11 @@ export type InsertWithLocale<T> = T & {
   locale: string;
 };
 
+export type UpdateWithLocale<T> = T &
+  InsertWithLocale<T> & {
+    id: string;
+  };
+
 export type ProductCategory = Database["public"]["Tables"]["categories"]["Row"];
 export type ProductCategoryWithTranslations = Omit<
   ProductCategory,

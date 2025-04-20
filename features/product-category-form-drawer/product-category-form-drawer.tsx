@@ -10,16 +10,20 @@ import { useProductCategoryForm } from "@/features/product-category-form-drawer/
 export const ProductCategoryFormDrawer: FC = () => {
   const drawerRef = useRef<SideDrawerRef>(null);
   const {
-    selectors: { control, errors },
+    selectors: { control, errors, isUpdating },
     actions: { handleFormSubmit },
   } = useProductCategoryForm(drawerRef as RefObject<SideDrawerRef>);
 
   return (
     <SideDrawer
       ref={drawerRef}
-      title="Ajouter une catégorie pour les produits"
-      description="Entrez les informations de la catégorie et cliquez sur 'Ajouter'."
-      buttonSubmitLabel="Ajouter"
+      title={isUpdating ? "Modifier une catégorie" : "Ajouter une catégorie"}
+      description={
+        isUpdating
+          ? "Entrez les informations de la catégorie et cliquez sur 'Modifier'."
+          : "Entrez les informations de la catégorie et cliquez sur 'Ajouter'."
+      }
+      buttonSubmitLabel={isUpdating ? "Modifier" : "Ajouter"}
       buttonCancelLabel="Annuler"
       handleSubmit={handleFormSubmit}
       trigger={

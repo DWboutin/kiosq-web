@@ -7,6 +7,7 @@ import { useEffect, RefObject } from "react";
 import { useCategoriesStore } from "@/stores/categories-store";
 import { usePrevious } from "@/utils/hooks/use-previous";
 import { LOCALES } from "@/utils/constants";
+import { updateProductCategory } from "@/actions/update-product-category";
 
 export type ProductCategoryFormValues = Omit<
   ProductCategory,
@@ -56,7 +57,7 @@ export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) 
       name: "",
       description: "",
       slug: "",
-      parentId: "",
+      parentId: "false",
       orderRank: 0,
       name_translations: {},
       description_translations: {},
@@ -64,13 +65,22 @@ export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) 
     },
   });
 
+  console.log({ selectedId });
+
   const onSubmit = async (data: ProductCategoryFormValues) => {
     try {
-      console.log(data);
-      await addProductCategory({
-        ...data,
-        locale,
-      });
+      if (selectedId) {
+        await updateProductCategory({
+          ...data,
+          locale,
+          id: selectedId,
+        });
+      } else {
+        await addProductCategory({
+          ...data,
+          locale,
+        });
+      }
       sideDrawerRef?.current?.close();
       reset();
     } catch (error) {
@@ -133,7 +143,7 @@ export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) 
   }, [initialData, selectedId, isDrawerOpen, sideDrawerRef]);
 
   return {
-    selectors: { control, errors },
+    selectors: { control, errors, isUpdating: !!selectedId },
     actions: { handleFormSubmit },
   };
 };
