@@ -6,6 +6,7 @@ import { FC } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { ProductCategoryFormValues } from "@/features/product-category-form-drawer/hooks/use-product-category-form";
 import { ControlledSelect } from "@/components/ui/form-utils/controlled-select";
+import { AddTranslationField } from "@/components/ui/form-utils/add-translaction-field";
 
 type ProductCategoryFormProps = {
   control: Control<ProductCategoryFormValues>;
@@ -34,6 +35,7 @@ export const ProductCategoryForm: FC<ProductCategoryFormProps> = ({ control, err
           )}
         />
       </FormInputContainer>
+      <AddTranslationField name="name" control={control} />
       <FormInputContainer
         inputId="description"
         label="Description"
@@ -53,6 +55,7 @@ export const ProductCategoryForm: FC<ProductCategoryFormProps> = ({ control, err
           )}
         />
       </FormInputContainer>
+      <AddTranslationField name="description" control={control} fieldType="textarea" />
       <FormInputContainer inputId="slug" label="Slug" error={errors.slug?.message} required>
         <Controller
           name="slug"
@@ -67,6 +70,7 @@ export const ProductCategoryForm: FC<ProductCategoryFormProps> = ({ control, err
           )}
         />
       </FormInputContainer>
+      <AddTranslationField name="slug" control={control} />
       <FormInputContainer
         inputId="parentId"
         label="Parent"

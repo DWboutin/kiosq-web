@@ -27,6 +27,15 @@ export type ProductCategoryFormValues = Omit<
   slug: string;
   parentId: string;
   orderRank: number;
+  name_translations: {
+    [key: string]: string;
+  };
+  description_translations: {
+    [key: string]: string;
+  };
+  slug_translations: {
+    [key: string]: string;
+  };
 };
 
 export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) => {
@@ -48,11 +57,15 @@ export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) 
       slug: "",
       parentId: "",
       orderRank: 0,
+      name_translations: {},
+      description_translations: {},
+      slug_translations: {},
     },
   });
 
   const onSubmit = async (data: ProductCategoryFormValues) => {
     try {
+      console.log(data);
       await addProductCategory({
         ...data,
         locale,

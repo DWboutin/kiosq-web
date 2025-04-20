@@ -10,6 +10,7 @@ import { SelfcareIcon } from "@/components/ui/icons/selfcare-icon";
 import { AlcoholIcon } from "@/components/ui/icons/alcohol-icon";
 import { DiscountListingIcon } from "@/components/ui/icons/discount-listing-icon";
 import { IconProps } from "@/types/app";
+import { AppConfig } from "@/app-config";
 
 export type ProductCategory = {
   name: string;
@@ -136,3 +137,5 @@ export const CATEGORIES_ORDER = [
 ] as const;
 
 export const UNITS = ["kg", "g", "L", "cl", "ml", "pcs"] as const;
+
+export const LOCALES = AppConfig.locales;
