@@ -1,8 +1,7 @@
-import { ProductCategoryFormValues } from "@/features/product-category-form-drawer/hooks/use-product-category-form";
 import { LOCALES } from "@/utils/constants";
 import { useLocale } from "next-intl";
 import { useCallback } from "react";
-import { Control, Path, useController } from "react-hook-form";
+import { Control, Path, useController, FieldValues } from "react-hook-form";
 
 export interface AddTranslationFieldSelectors {
   translationsField: Record<string, string>;
@@ -22,15 +21,15 @@ export interface AddTranslationFieldHook {
   actions: AddTranslationFieldActions;
 }
 
-export function useAddTranslationField({
+export function useAddTranslationField<TFieldValues extends FieldValues>({
   name,
   control,
 }: {
   name: string;
-  control: Control<ProductCategoryFormValues>;
+  control: Control<TFieldValues>;
 }): AddTranslationFieldHook {
   const currentLocale = useLocale();
-  const translationsFieldName = `${name}_translations` as Path<ProductCategoryFormValues>;
+  const translationsFieldName = `${name}_translations` as Path<TFieldValues>;
   const { field } = useController({
     name: translationsFieldName,
     control,

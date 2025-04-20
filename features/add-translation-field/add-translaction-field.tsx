@@ -1,9 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { PlusSquareIcon } from "@/components/ui/icons/plus-square-icon";
-import { Control } from "react-hook-form";
+import { Control, FieldValues } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ProductCategoryFormValues } from "@/features/product-category-form-drawer/hooks/use-product-category-form";
 import {
   Select,
   SelectContent,
@@ -15,14 +14,19 @@ import { CloseIcon } from "@/components/ui/icons/close-icon";
 import { cn } from "@/lib/utils";
 import { useAddTranslationField } from "@/features/add-translation-field/hooks/use-add-translation-field";
 
-type Props = {
+type Props<TFieldValues extends FieldValues> = {
   name: string;
-  control: Control<ProductCategoryFormValues>;
+  control: Control<TFieldValues>;
   fieldType?: "input" | "textarea";
   className?: string;
 };
 
-export const AddTranslationField = ({ name, control, fieldType = "input", className }: Props) => {
+export const AddTranslationField = <TFieldValues extends FieldValues>({
+  name,
+  control,
+  fieldType = "input",
+  className,
+}: Props<TFieldValues>) => {
   const {
     selectors: { translationsField, remainingLocales, hasAvailableTranslations },
     actions: {
@@ -31,7 +35,7 @@ export const AddTranslationField = ({ name, control, fieldType = "input", classN
       removeTranslation,
       getRemainingLocales,
     },
-  } = useAddTranslationField({ name, control });
+  } = useAddTranslationField<TFieldValues>({ name, control });
 
   const renderField = (locale: string, value: string) =>
     fieldType === "input" ? (
