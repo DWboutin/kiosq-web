@@ -1,11 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { PlusSquareIcon } from "@/components/ui/icons/plus-square-icon";
-import { Control, Path, useController } from "react-hook-form";
+import { Control } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ProductCategoryFormValues } from "@/features/product-category-form-drawer/hooks/use-product-category-form";
-import { useLocale } from "next-intl";
-import { LOCALES } from "@/utils/constants";
 import {
   Select,
   SelectContent,
