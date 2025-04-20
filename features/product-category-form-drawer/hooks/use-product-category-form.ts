@@ -6,8 +6,8 @@ import { SideDrawerRef } from "@/components/ui/side-drawer";
 import { useEffect, RefObject } from "react";
 import { useCategoriesStore } from "@/stores/categories-store";
 import { usePrevious } from "@/utils/hooks/use-previous";
-import { LOCALES } from "@/utils/constants";
 import { updateProductCategory } from "@/actions/update-product-category";
+import { extractTranslations } from "@/utils/extract-translations";
 
 export type ProductCategoryFormValues = Omit<
   ProductCategory,
@@ -45,6 +45,7 @@ export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) 
   const initialData = useCategoriesStore((state) => state.initialData);
   const selectedId = useCategoriesStore((state) => state.selectedId);
   const lastSelected = useCategoriesStore((state) => state.lastSelected);
+  const resetInitialData = useCategoriesStore((state) => state.resetInitialData);
   const isDrawerOpen = sideDrawerRef?.current?.isOpen;
   const previousIsDrawerOpen = usePrevious(isDrawerOpen);
   const {
@@ -81,6 +82,7 @@ export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) 
       }
       sideDrawerRef?.current?.close();
       reset();
+      resetInitialData();
     } catch (error) {
       console.error(error);
     }
@@ -90,19 +92,14 @@ export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) 
 
   useEffect(() => {
     if (initialData) {
-      const otherLocales = LOCALES.filter((key) => key !== locale);
-      const nameTranslations = otherLocales.reduce((acc, key) => {
-        acc[key] = initialData.name[key];
-        return acc;
-      }, {} as Record<string, string>);
-      const descriptionTranslations = otherLocales.reduce((acc, key) => {
-        acc[key] = initialData.description[key];
-        return acc;
-      }, {} as Record<string, string>);
-      const slugTranslations = otherLocales.reduce((acc, key) => {
-        acc[key] = initialData.slug[key];
-        return acc;
-      }, {} as Record<string, string>);
+      const excludeLocale = [locale];
+      const nameTranslations = extractTranslations(initialData, "name", excludeLocale);
+      const descriptionTranslations = extractTranslations(
+        initialData,
+        "description",
+        excludeLocale
+      );
+      const slugTranslations = extractTranslations(initialData, "slug", excludeLocale);
 
       reset({
         name: initialData.name[locale],
