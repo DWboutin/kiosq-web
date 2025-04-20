@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/select";
 import { CloseIcon } from "@/components/ui/icons/close-icon";
 import { cn } from "@/lib/utils";
+import { useAddTranslationField } from "@/features/add-translation-field/hooks/use-add-translation-field";
 
 type Props = {
   name: string;
@@ -24,57 +25,15 @@ type Props = {
 };
 
 export const AddTranslationField = ({ name, control, fieldType = "input", className }: Props) => {
-  const currentLocale = useLocale();
-  const translationsFieldName = `${name}_translations` as Path<ProductCategoryFormValues>;
-  const { field } = useController({
-    name: translationsFieldName,
-    control,
-  });
-
-  const translationsField = (field.value as Record<string, string>) || {};
-
-  const getRemainingLocales = (excludeLocale = "") =>
-    LOCALES.filter(
-      (locale) =>
-        locale !== currentLocale && (locale === excludeLocale || !(locale in translationsField))
-    );
-
-  const handleLocaleChange = (rowLocale: string, newLocale: string) => {
-    if (rowLocale && rowLocale in translationsField) {
-      const updatedTranslations = { ...translationsField };
-      const value = updatedTranslations[rowLocale];
-      delete updatedTranslations[rowLocale];
-
-      if (!(newLocale in updatedTranslations)) {
-        updatedTranslations[newLocale] = value;
-      }
-
-      field.onChange(updatedTranslations);
-    } else if (!(newLocale in translationsField)) {
-      field.onChange({
-        ...translationsField,
-        [newLocale]: "",
-      });
-    }
-  };
-
-  const handleTranslationChange = (locale: string, value: string) => {
-    if (!locale) return;
-
-    field.onChange({
-      ...translationsField,
-      [locale]: value,
-    });
-  };
-
-  const removeTranslation = (locale: string) => {
-    const updatedTranslations = { ...translationsField };
-    delete updatedTranslations[locale];
-    field.onChange(updatedTranslations);
-  };
-
-  const remainingLocales = getRemainingLocales();
-  const hasAvailableTranslations = remainingLocales.length > 0;
+  const {
+    selectors: { translationsField, remainingLocales, hasAvailableTranslations },
+    actions: {
+      handleTranslationChange,
+      handleLocaleChange,
+      removeTranslation,
+      getRemainingLocales,
+    },
+  } = useAddTranslationField({ name, control });
 
   const renderField = (locale: string, value: string) =>
     fieldType === "input" ? (
@@ -104,9 +63,9 @@ export const AddTranslationField = ({ name, control, fieldType = "input", classN
                 <SelectValue placeholder="Select language" />
               </SelectTrigger>
               <SelectContent>
-                {getRemainingLocales(locale).map((l) => (
-                  <SelectItem key={l} value={l}>
-                    {l}
+                {getRemainingLocales(locale).map((fieldLocale) => (
+                  <SelectItem key={fieldLocale} value={fieldLocale}>
+                    {fieldLocale}
                   </SelectItem>
                 ))}
               </SelectContent>

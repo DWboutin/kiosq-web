@@ -6,7 +6,7 @@ import { FC } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { ProductCategoryFormValues } from "@/features/product-category-form-drawer/hooks/use-product-category-form";
 import { ControlledSelect } from "@/components/ui/form-utils/controlled-select";
-import { AddTranslationField } from "@/components/ui/form-utils/add-translaction-field";
+import { AddTranslationField } from "@/features/add-translation-field/add-translaction-field";
 
 type ProductCategoryFormProps = {
   control: Control<ProductCategoryFormValues>;
