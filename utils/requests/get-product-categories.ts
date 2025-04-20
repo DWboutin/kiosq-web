@@ -1,6 +1,7 @@
 import { Locales } from "@/types/app";
 import { productCategoriesFactory } from "@/utils/factories/product-categories-factory";
 import { cacheKeys } from "@/utils/cache-keys";
+
 export const getProductCategories = async (locale: Locales) => {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_CURRENT_ORIGIN || "http://localhost:3000";

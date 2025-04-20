@@ -2,9 +2,9 @@ import { Locales, ProductCategoryWithTranslations } from "@/types/app";
 
 export type FormattedProductCategory = {
   id: string;
-  name: string;
-  description: string;
-  slug: string;
+  name: Record<Locales, string>;
+  description: Record<Locales, string>;
+  slug: Record<Locales, string>;
   parentId: string | null;
   imageUrl: string | null;
   orderRank: number | null;
@@ -12,6 +12,7 @@ export type FormattedProductCategory = {
   isDeleted: boolean;
   createdAt: string;
   updatedAt: string;
+  locale: Locales;
 };
 
 export const productCategoriesFactory = (
@@ -20,9 +21,9 @@ export const productCategoriesFactory = (
 ): FormattedProductCategory[] => {
   return categories.map((category) => ({
     id: category.id,
-    name: category.name_translations[locale] || "no translation",
-    description: category.description_translations[locale] || "no translation",
-    slug: category.slug[locale] || "no translation",
+    name: category.name_translations,
+    description: category.description_translations,
+    slug: category.slug,
     parentId: category.parent_id,
     imageUrl: category.image_url,
     orderRank: category.order_rank,
@@ -30,5 +31,6 @@ export const productCategoriesFactory = (
     isDeleted: category.is_deleted,
     createdAt: category.created_at,
     updatedAt: category.updated_at,
+    locale,
   }));
 };

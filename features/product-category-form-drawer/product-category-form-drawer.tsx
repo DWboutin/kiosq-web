@@ -1,20 +1,26 @@
 "use client";
 
-import { FC } from "react";
-import { SideDrawer } from "@/components/ui/side-drawer";
+import { FC, useRef } from "react";
+import { SideDrawer, SideDrawerRef } from "@/components/ui/side-drawer";
 import { Button } from "@/components/ui/button";
 import { PlusSquareIcon } from "@/components/ui/icons/plus-square-icon";
 import { ProductCategoryForm } from "@/features/product-category-form-drawer/components/product-category-form";
 import { useProductCategoryForm } from "@/features/product-category-form-drawer/hooks/use-product-category-form";
 
 export const ProductCategoryFormDrawer: FC = () => {
+  const drawerRef = useRef<SideDrawerRef>(null);
   const {
     selectors: { control, errors },
     actions: { handleFormSubmit },
-  } = useProductCategoryForm();
+  } = useProductCategoryForm({
+    onSuccess: () => {
+      drawerRef.current?.close();
+    },
+  });
 
   return (
     <SideDrawer
+      ref={drawerRef}
       title="Ajouter une catégorie pour les produits"
       description="Entrez les informations de la catégorie et cliquez sur 'Ajouter'."
       buttonSubmitLabel="Ajouter"

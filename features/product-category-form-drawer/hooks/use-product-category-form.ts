@@ -25,7 +25,7 @@ export type ProductCategoryFormValues = Omit<
   orderRank: number;
 };
 
-export const useProductCategoryForm = () => {
+export const useProductCategoryForm = ({ onSuccess }: { onSuccess: () => void }) => {
   const locale = useLocale();
   const {
     control,
@@ -47,6 +47,7 @@ export const useProductCategoryForm = () => {
         ...data,
         locale,
       });
+      onSuccess();
     } catch (error) {
       console.error(error);
     }
