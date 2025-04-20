@@ -6,6 +6,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { FC } from "react";
 import { TranslationDisplay } from "@/components/ui/table-utils/translation-display";
 import { useCategoriesStore } from "@/stores/categories-store";
+import { Button } from "@/components/ui/button";
+import { deleteProductCategory } from "@/actions/delete-product-category";
+import { toast } from "sonner";
 
 type CategoriesTableProps = {
   data: FormattedProductCategory[];
@@ -51,6 +54,26 @@ const columns: ColumnDef<FormattedProductCategory, unknown>[] = [
   {
     header: "Actions",
     accessorKey: "actions",
+    cell: ({ row }) => (
+      <div className="flex items-center gap-2">
+        <Button
+          variant="destructive"
+          size="sm"
+          onClick={async (e) => {
+            e.stopPropagation();
+            try {
+              await deleteProductCategory(row.original.id);
+              toast.success("Category deleted successfully");
+            } catch (error) {
+              console.error(error);
+              toast.error("Failed to delete category");
+            }
+          }}
+        >
+          Delete
+        </Button>
+      </div>
+    ),
   },
 ];
 
