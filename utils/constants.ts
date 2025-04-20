@@ -1,19 +1,4 @@
-import { FC, SVGProps } from "react";
-
-interface IconProps extends SVGProps<SVGSVGElement> {
-  color?: string;
-  className?: string;
-  focused?: boolean;
-}
-
-export type ProductCategory = {
-  name: string;
-  backgroundColor: string;
-  contentColor: string;
-  text: string;
-  icon: FC<IconProps>;
-};
-
+import { FC } from "react";
 import { PreparedMealsIcon } from "@/components/ui/icons/prepared-meals-icon";
 import { ClothesIcon } from "@/components/ui/icons/clothes-icon";
 import { FruitsIcon } from "@/components/ui/icons/fruits-icon";
@@ -24,6 +9,15 @@ import { CoffeeShopIcon } from "@/components/ui/icons/coffee-shop-icon";
 import { SelfcareIcon } from "@/components/ui/icons/selfcare-icon";
 import { AlcoholIcon } from "@/components/ui/icons/alcohol-icon";
 import { DiscountListingIcon } from "@/components/ui/icons/discount-listing-icon";
+import { IconProps } from "@/types/app";
+
+export type ProductCategory = {
+  name: string;
+  backgroundColor: string;
+  contentColor: string;
+  text: string;
+  icon: FC<IconProps>;
+};
 
 export const PRODUCT_CATEGORIES: Record<string, ProductCategory> = {
   discountListing: {

@@ -26,6 +26,8 @@ BEGIN
       display_name,
       is_vendor,
       vendor_name_translations,
+      created_at,
+      updated_at,
       is_deleted
     )
     VALUES (
@@ -39,13 +41,15 @@ BEGIN
       ),
       FALSE,
       '{}'::jsonb,
+      NOW(),
+      NOW(),
       FALSE
     );
 
     -- Check if profile already exists (to handle potential duplicates)
     IF NOT EXISTS (SELECT 1 FROM public.profiles WHERE id = NEW.id) THEN
-      INSERT INTO public.profiles (id, role, metadata, is_deleted)
-      VALUES (NEW.id, 'user', '{}'::jsonb, FALSE);
+      INSERT INTO public.profiles (id, role, metadata, created_at, updated_at, is_deleted)
+      VALUES (NEW.id, 'user', '{}'::jsonb, NOW(), NOW(), FALSE);
     END IF;
   END IF;
   

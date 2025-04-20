@@ -42,10 +42,14 @@ export const useProductCategoryForm = () => {
   });
 
   const onSubmit = async (data: ProductCategoryFormValues) => {
-    await addProductCategory({
-      ...data,
-      locale,
-    });
+    try {
+      await addProductCategory({
+        ...data,
+        locale,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleFormSubmit = handleSubmit(onSubmit);

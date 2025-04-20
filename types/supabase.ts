@@ -11,45 +11,45 @@ export type Database = {
     Tables: {
       categories: {
         Row: {
-          created_at: string | null
+          created_at: string
           description_translations: Json | null
           id: string
           image_url: string | null
-          is_active: boolean | null
-          is_deleted: boolean | null
+          is_active: boolean
+          is_deleted: boolean
           name_translations: Json
           order_rank: number | null
           parent_id: string | null
           slug: Json
-          updated_at: string | null
+          updated_at: string
           updated_by: string | null
         }
         Insert: {
-          created_at?: string | null
+          created_at?: string
           description_translations?: Json | null
           id?: string
           image_url?: string | null
-          is_active?: boolean | null
-          is_deleted?: boolean | null
+          is_active?: boolean
+          is_deleted?: boolean
           name_translations?: Json
           order_rank?: number | null
           parent_id?: string | null
           slug?: Json
-          updated_at?: string | null
+          updated_at?: string
           updated_by?: string | null
         }
         Update: {
-          created_at?: string | null
+          created_at?: string
           description_translations?: Json | null
           id?: string
           image_url?: string | null
-          is_active?: boolean | null
-          is_deleted?: boolean | null
+          is_active?: boolean
+          is_deleted?: boolean
           name_translations?: Json
           order_rank?: number | null
           parent_id?: string | null
           slug?: Json
-          updated_at?: string | null
+          updated_at?: string
           updated_by?: string | null
         }
         Relationships: [
@@ -71,32 +71,32 @@ export type Database = {
       }
       inventory: {
         Row: {
-          created_at: string | null
+          created_at: string
           id: string
           low_stock_threshold: number | null
           quantity: number
           unit: string | null
-          updated_at: string | null
+          updated_at: string
           updated_by: string | null
           variant_id: string
         }
         Insert: {
-          created_at?: string | null
+          created_at?: string
           id?: string
           low_stock_threshold?: number | null
           quantity?: number
           unit?: string | null
-          updated_at?: string | null
+          updated_at?: string
           updated_by?: string | null
           variant_id: string
         }
         Update: {
-          created_at?: string | null
+          created_at?: string
           id?: string
           low_stock_threshold?: number | null
           quantity?: number
           unit?: string | null
-          updated_at?: string | null
+          updated_at?: string
           updated_by?: string | null
           variant_id?: string
         }
@@ -120,7 +120,7 @@ export type Database = {
       product_prices: {
         Row: {
           base_price: number
-          created_at: string | null
+          created_at: string
           currency: string | null
           discount_amount: number | null
           discount_type: string | null
@@ -129,13 +129,13 @@ export type Database = {
           final_price: number | null
           id: string
           is_tax_inclusive: boolean | null
-          updated_at: string | null
+          updated_at: string
           updated_by: string | null
           variant_id: string
         }
         Insert: {
           base_price: number
-          created_at?: string | null
+          created_at?: string
           currency?: string | null
           discount_amount?: number | null
           discount_type?: string | null
@@ -144,13 +144,13 @@ export type Database = {
           final_price?: number | null
           id?: string
           is_tax_inclusive?: boolean | null
-          updated_at?: string | null
+          updated_at?: string
           updated_by?: string | null
           variant_id: string
         }
         Update: {
           base_price?: number
-          created_at?: string | null
+          created_at?: string
           currency?: string | null
           discount_amount?: number | null
           discount_type?: string | null
@@ -159,7 +159,7 @@ export type Database = {
           final_price?: number | null
           id?: string
           is_tax_inclusive?: boolean | null
-          updated_at?: string | null
+          updated_at?: string
           updated_by?: string | null
           variant_id?: string
         }
@@ -183,7 +183,7 @@ export type Database = {
       product_prices_2025: {
         Row: {
           base_price: number
-          created_at: string | null
+          created_at: string
           currency: string | null
           discount_amount: number | null
           discount_type: string | null
@@ -192,13 +192,13 @@ export type Database = {
           final_price: number | null
           id: string
           is_tax_inclusive: boolean | null
-          updated_at: string | null
+          updated_at: string
           updated_by: string | null
           variant_id: string
         }
         Insert: {
           base_price: number
-          created_at?: string | null
+          created_at?: string
           currency?: string | null
           discount_amount?: number | null
           discount_type?: string | null
@@ -207,13 +207,13 @@ export type Database = {
           final_price?: number | null
           id?: string
           is_tax_inclusive?: boolean | null
-          updated_at?: string | null
+          updated_at?: string
           updated_by?: string | null
           variant_id: string
         }
         Update: {
           base_price?: number
-          created_at?: string | null
+          created_at?: string
           currency?: string | null
           discount_amount?: number | null
           discount_type?: string | null
@@ -222,7 +222,7 @@ export type Database = {
           final_price?: number | null
           id?: string
           is_tax_inclusive?: boolean | null
-          updated_at?: string | null
+          updated_at?: string
           updated_by?: string | null
           variant_id?: string
         }
@@ -230,19 +230,19 @@ export type Database = {
       }
       product_taxes: {
         Row: {
-          created_at: string | null
+          created_at: string
           id: string
           product_id: string
           tax_component_id: string
         }
         Insert: {
-          created_at?: string | null
+          created_at?: string
           id?: string
           product_id: string
           tax_component_id: string
         }
         Update: {
-          created_at?: string | null
+          created_at?: string
           id?: string
           product_id?: string
           tax_component_id?: string
@@ -273,39 +273,39 @@ export type Database = {
       }
       product_variants: {
         Row: {
-          created_at: string | null
+          created_at: string
           id: string
           image_url: string | null
           is_default: boolean | null
-          is_deleted: boolean | null
+          is_deleted: boolean
           option_values: Json
           product_id: string
           sku: string | null
-          updated_at: string | null
+          updated_at: string
           updated_by: string | null
         }
         Insert: {
-          created_at?: string | null
+          created_at?: string
           id?: string
           image_url?: string | null
           is_default?: boolean | null
-          is_deleted?: boolean | null
+          is_deleted?: boolean
           option_values?: Json
           product_id: string
           sku?: string | null
-          updated_at?: string | null
+          updated_at?: string
           updated_by?: string | null
         }
         Update: {
-          created_at?: string | null
+          created_at?: string
           id?: string
           image_url?: string | null
           is_default?: boolean | null
-          is_deleted?: boolean | null
+          is_deleted?: boolean
           option_values?: Json
           product_id?: string
           sku?: string | null
-          updated_at?: string | null
+          updated_at?: string
           updated_by?: string | null
         }
         Relationships: [
@@ -336,54 +336,54 @@ export type Database = {
         Row: {
           additional_images: Json | null
           category_id: string | null
-          created_at: string | null
+          created_at: string
           description_translations: Json | null
           features_translations: Json | null
           id: string
-          is_deleted: boolean | null
+          is_deleted: boolean
           is_featured: boolean | null
           main_image_url: string | null
           metadata: Json | null
           name_translations: Json
           slug: string
           status: string | null
-          updated_at: string | null
+          updated_at: string
           updated_by: string | null
           user_id: string
         }
         Insert: {
           additional_images?: Json | null
           category_id?: string | null
-          created_at?: string | null
+          created_at?: string
           description_translations?: Json | null
           features_translations?: Json | null
           id?: string
-          is_deleted?: boolean | null
+          is_deleted?: boolean
           is_featured?: boolean | null
           main_image_url?: string | null
           metadata?: Json | null
           name_translations?: Json
           slug: string
           status?: string | null
-          updated_at?: string | null
+          updated_at?: string
           updated_by?: string | null
           user_id: string
         }
         Update: {
           additional_images?: Json | null
           category_id?: string | null
-          created_at?: string | null
+          created_at?: string
           description_translations?: Json | null
           features_translations?: Json | null
           id?: string
-          is_deleted?: boolean | null
+          is_deleted?: boolean
           is_featured?: boolean | null
           main_image_url?: string | null
           metadata?: Json | null
           name_translations?: Json
           slug?: string
           status?: string | null
-          updated_at?: string | null
+          updated_at?: string
           updated_by?: string | null
           user_id?: string
         }
@@ -414,33 +414,33 @@ export type Database = {
       profiles: {
         Row: {
           banner_image: string | null
-          created_at: string | null
+          created_at: string
           id: string
-          is_deleted: boolean | null
+          is_deleted: boolean
           name_translations: Json | null
           slug_translations: Json | null
           type: string | null
-          updated_at: string | null
+          updated_at: string
         }
         Insert: {
           banner_image?: string | null
-          created_at?: string | null
+          created_at?: string
           id: string
-          is_deleted?: boolean | null
+          is_deleted?: boolean
           name_translations?: Json | null
           slug_translations?: Json | null
           type?: string | null
-          updated_at?: string | null
+          updated_at?: string
         }
         Update: {
           banner_image?: string | null
-          created_at?: string | null
+          created_at?: string
           id?: string
-          is_deleted?: boolean | null
+          is_deleted?: boolean
           name_translations?: Json | null
           slug_translations?: Json | null
           type?: string | null
-          updated_at?: string | null
+          updated_at?: string
         }
         Relationships: [
           {
@@ -455,41 +455,41 @@ export type Database = {
       tax_components: {
         Row: {
           code: string
-          created_at: string | null
+          created_at: string
           effective_from: string
           effective_to: string | null
           id: string
-          is_active: boolean | null
+          is_active: boolean
           name: string
           rate: number
           region: string
-          updated_at: string | null
+          updated_at: string
           updated_by: string | null
         }
         Insert: {
           code: string
-          created_at?: string | null
+          created_at?: string
           effective_from?: string
           effective_to?: string | null
           id?: string
-          is_active?: boolean | null
+          is_active?: boolean
           name: string
           rate: number
           region: string
-          updated_at?: string | null
+          updated_at?: string
           updated_by?: string | null
         }
         Update: {
           code?: string
-          created_at?: string | null
+          created_at?: string
           effective_from?: string
           effective_to?: string | null
           id?: string
-          is_active?: boolean | null
+          is_active?: boolean
           name?: string
           rate?: number
           region?: string
-          updated_at?: string | null
+          updated_at?: string
           updated_by?: string | null
         }
         Relationships: [
@@ -504,31 +504,31 @@ export type Database = {
       }
       users: {
         Row: {
-          created_at: string | null
+          created_at: string
           display_name: string | null
           email: string
           id: string
-          is_deleted: boolean | null
+          is_deleted: boolean
           role: Database["public"]["Enums"]["user_role"]
-          updated_at: string | null
+          updated_at: string
         }
         Insert: {
-          created_at?: string | null
+          created_at?: string
           display_name?: string | null
           email: string
           id: string
-          is_deleted?: boolean | null
+          is_deleted?: boolean
           role?: Database["public"]["Enums"]["user_role"]
-          updated_at?: string | null
+          updated_at?: string
         }
         Update: {
-          created_at?: string | null
+          created_at?: string
           display_name?: string | null
           email?: string
           id?: string
-          is_deleted?: boolean | null
+          is_deleted?: boolean
           role?: Database["public"]["Enums"]["user_role"]
-          updated_at?: string | null
+          updated_at?: string
         }
         Relationships: []
       }

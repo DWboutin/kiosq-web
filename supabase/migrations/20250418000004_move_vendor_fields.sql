@@ -73,12 +73,16 @@ BEGIN
       id, 
       email, 
       display_name,
+      created_at,
+      updated_at,
       is_deleted
     )
     VALUES (
       NEW.id, 
       COALESCE(NEW.email, ''),
       _display_name,
+      NOW(),
+      NOW(),
       FALSE
     );
 
@@ -90,6 +94,8 @@ BEGIN
         banner_image,
         name_translations,
         slug_translations,
+        created_at,
+        updated_at,
         is_deleted
       )
       VALUES (
@@ -98,6 +104,8 @@ BEGIN
         NULL,
         jsonb_build_object('en', _display_name),
         jsonb_build_object('en', _slug),
+        NOW(),
+        NOW(),
         FALSE
       );
     END IF;

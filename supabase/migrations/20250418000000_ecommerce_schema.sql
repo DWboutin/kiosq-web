@@ -21,9 +21,9 @@ CREATE TABLE users (
   vendor_banner_image TEXT,
   vendor_name_translations JSONB DEFAULT '{}',
   vendor_slug TEXT UNIQUE,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW(),
-  is_deleted BOOLEAN DEFAULT FALSE
+  created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  is_deleted BOOLEAN DEFAULT FALSE NOT NULL
 );
 
 -- Profiles Table
@@ -31,9 +31,9 @@ CREATE TABLE profiles (
   id UUID PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
   role VARCHAR(20) DEFAULT 'user' CHECK (role IN ('user','vendor','admin')),
   metadata JSONB DEFAULT '{}',
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW(),
-  is_deleted BOOLEAN DEFAULT FALSE
+  created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  is_deleted BOOLEAN DEFAULT FALSE NOT NULL
 );
 
 -- Categories Table
@@ -44,11 +44,11 @@ CREATE TABLE categories (
   description_translations JSONB DEFAULT '{}',
   slug TEXT UNIQUE NOT NULL,
   image_url TEXT,
-  is_active BOOLEAN DEFAULT TRUE,
+  is_active BOOLEAN DEFAULT TRUE NOT NULL,
   order_rank INTEGER DEFAULT 0,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW(),
-  is_deleted BOOLEAN DEFAULT FALSE
+  created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  is_deleted BOOLEAN DEFAULT FALSE NOT NULL
 );
 
 -- Products Table
@@ -65,9 +65,9 @@ CREATE TABLE products (
   status VARCHAR(20) DEFAULT 'draft' CHECK (status IN ('draft', 'published', 'archived')),
   is_featured BOOLEAN DEFAULT FALSE,
   metadata JSONB DEFAULT '{}',
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW(),
-  is_deleted BOOLEAN DEFAULT FALSE
+  created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  is_deleted BOOLEAN DEFAULT FALSE NOT NULL
 );
 
 -- Product Variants Table
@@ -78,9 +78,9 @@ CREATE TABLE product_variants (
   option_values JSONB NOT NULL DEFAULT '{}',
   image_url TEXT,
   is_default BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW(),
-  is_deleted BOOLEAN DEFAULT FALSE
+  created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  is_deleted BOOLEAN DEFAULT FALSE NOT NULL
 );
 
 -- Inventory Table
@@ -90,8 +90,8 @@ CREATE TABLE inventory (
   quantity NUMERIC(10,2) NOT NULL DEFAULT 0,
   unit VARCHAR(20) DEFAULT 'piece' CHECK (unit IN ('piece', 'gram', 'kilogram', 'milliliter', 'liter')),
   low_stock_threshold NUMERIC(10,2) DEFAULT 5,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
+  created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
 );
 
 -- Product Prices Table (Partitioned)
@@ -112,8 +112,8 @@ CREATE TABLE product_prices (
   is_tax_inclusive BOOLEAN DEFAULT FALSE,
   effective_from TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   effective_to TIMESTAMPTZ,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
   PRIMARY KEY (id, effective_from)
 ) PARTITION BY RANGE (effective_from);
 
@@ -128,11 +128,11 @@ CREATE TABLE tax_components (
   code VARCHAR(20) NOT NULL,
   rate NUMERIC(5,2) NOT NULL,
   region VARCHAR(50) NOT NULL,
-  is_active BOOLEAN DEFAULT TRUE,
+  is_active BOOLEAN DEFAULT TRUE NOT NULL,
   effective_from TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   effective_to TIMESTAMPTZ,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
+  created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
 );
 
 -- Product Tax Associations
@@ -140,7 +140,7 @@ CREATE TABLE product_taxes (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE,
   tax_component_id UUID NOT NULL REFERENCES tax_components(id) ON DELETE CASCADE,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
+  created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
   UNIQUE(product_id, tax_component_id)
 );
 

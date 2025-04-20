@@ -23,16 +23,19 @@ CREATE OR REPLACE FUNCTION basic_user_creation()
 RETURNS TRIGGER AS $$
 BEGIN
   -- Very minimal user creation with just the ID
-  INSERT INTO public.users (id, email, display_name)
+  INSERT INTO public.users (id, email, display_name, created_at, updated_at, is_deleted)
   VALUES (
     NEW.id, 
     COALESCE(NEW.email, ''),
-    COALESCE(NEW.raw_user_meta_data->>'name', 'New User')
+    COALESCE(NEW.raw_user_meta_data->>'name', 'New User'),
+    NOW(),
+    NOW(),
+    FALSE
   );
   
   -- Very minimal profile creation with just the ID
-  INSERT INTO public.profiles (id, role)
-  VALUES (NEW.id, 'user');
+  INSERT INTO public.profiles (id, role, created_at, updated_at, is_deleted)
+  VALUES (NEW.id, 'user', NOW(), NOW(), FALSE);
   
   RETURN NEW;
 EXCEPTION WHEN OTHERS THEN

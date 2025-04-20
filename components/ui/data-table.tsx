@@ -7,6 +7,10 @@ import {
   getSortedRowModel,
   SortingState,
   useReactTable,
+  RowSelectionState,
+  VisibilityState,
+  Table as TableInstance,
+  Row,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -17,63 +21,192 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useState } from "react";
+import { ChevronDown, ChevronUp, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  isLoading?: boolean;
+  onRowClick?: (row: TData) => void;
+  onSelectionChange?: (rows: TData[]) => void;
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+  isLoading = false,
+  onRowClick,
+  onSelectionChange,
+}: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+
+  // Add selection column if onSelectionChange is provided
+  const selectionColumn = {
+    id: "select",
+    header: ({ table }: { table: TableInstance<TData> }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+        className="translate-y-[2px]"
+      />
+    ),
+    cell: ({ row }: { row: Row<TData> }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+        onClick={(e) => e.stopPropagation()}
+        className="translate-y-[2px]"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  };
+
+  const allColumns = onSelectionChange
+    ? [selectionColumn as ColumnDef<TData, TValue>, ...columns]
+    : columns;
+
   const table = useReactTable({
     data,
-    columns,
+    columns: allColumns,
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onRowSelectionChange: setRowSelection,
+    onColumnVisibilityChange: setColumnVisibility,
     state: {
       sorting,
+      rowSelection,
+      columnVisibility,
     },
   });
 
+  // Update parent component with selected rows when selection changes
+  const selectedRows = table.getSelectedRowModel().rows.map((row) => row.original);
+
+  if (onSelectionChange && Object.keys(rowSelection).length > 0) {
+    onSelectionChange(selectedRows as TData[]);
+  }
+
+  const handleRowClick = (row: TData) => {
+    if (onRowClick) {
+      onRowClick(row);
+    }
+  };
+
   return (
-    <div className="rounded-md border">
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())}
-                  </TableHead>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
+    <div className="w-full overflow-auto">
+      <div className="rounded-md border bg-white overflow-hidden">
+        <Table>
+          <TableHeader className="[&_tr:first-child]:overflow-hidden [&_tr:first-child]:rounded-t-md">
+            {table.getHeaderGroups().map((headerGroup, index) => (
+              <TableRow
+                key={headerGroup.id}
+                className={cn(
+                  "bg-neutral-50 border-b",
+                  index === 0 && "[&_th:first-child]:rounded-tl-md [&_th:last-child]:rounded-tr-md"
+                )}
+              >
+                {headerGroup.headers.map((header) => {
+                  const isSorted = header.column.getIsSorted();
+                  return (
+                    <TableHead
+                      key={header.id}
+                      className={cn(
+                        "font-medium text-neutral-600 px-6 py-3",
+                        header.column.getCanSort() && "cursor-pointer select-none"
+                      )}
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      <div className="flex items-center gap-1">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(header.column.columnDef.header, header.getContext())}
+                        {header.column.getCanSort() && (
+                          <div className="ml-1">
+                            {isSorted === "asc" ? (
+                              <ChevronUp className="h-4 w-4" />
+                            ) : isSorted === "desc" ? (
+                              <ChevronDown className="h-4 w-4" />
+                            ) : (
+                              <ChevronsUpDown className="h-4 w-4 opacity-50" />
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </TableHead>
+                  );
+                })}
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {isLoading ? (
+              <TableRow>
+                <TableCell colSpan={columns.length} className="h-24 text-center">
+                  <div className="flex items-center justify-center">
+                    <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent"></div>
+                    <span className="ml-2">Loading...</span>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ) : table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                  className={cn(
+                    "transition-colors hover:bg-neutral-50 cursor-pointer",
+                    row.getIsSelected() && "bg-neutral-100"
+                  )}
+                  onClick={() => handleRowClick(row.original as TData)}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id} className="px-6 py-3">
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={columns.length} className="h-24 text-center">
+                  <div className="flex flex-col items-center justify-center text-neutral-500">
+                    <div className="mb-2 rounded-full border p-2">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="h-5 w-5"
+                      >
+                        <rect width="8" height="14" x="8" y="5" rx="1" />
+                        <path d="M4 7v7" />
+                        <path d="M16 5v14" />
+                        <path d="M20 10v6" />
+                      </svg>
+                    </div>
+                    <p>No results found.</p>
+                  </div>
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }
