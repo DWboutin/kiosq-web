@@ -4,9 +4,8 @@ import { DataTable } from "@/components/ui/data-table";
 import { FormattedProductCategory } from "@/utils/factories/product-categories-factory";
 import { ColumnDef } from "@tanstack/react-table";
 import { FC } from "react";
-import { Badge } from "@/components/ui/badge";
-import { AppConfig } from "@/app-config";
 import { TranslationDisplay } from "@/components/ui/table-utils/translation-display";
+import { useCategoriesStore } from "@/stores/categories-store";
 
 type CategoriesTableProps = {
   data: FormattedProductCategory[];
@@ -56,5 +55,11 @@ const columns: ColumnDef<FormattedProductCategory, unknown>[] = [
 ];
 
 export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
-  return <DataTable columns={columns} data={data} />;
+  const selectCategory = useCategoriesStore((state) => state.selectCategory);
+
+  const handleRowClick = (row: FormattedProductCategory) => {
+    selectCategory(row);
+  };
+
+  return <DataTable columns={columns} data={data} onRowClick={handleRowClick} />;
 };

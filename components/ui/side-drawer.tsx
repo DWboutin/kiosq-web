@@ -23,6 +23,7 @@ type SideDrawerProps = {
 } & PropsWithChildren;
 
 export type SideDrawerRef = {
+  isOpen: boolean;
   close: () => void;
   open: () => void;
 };
@@ -35,6 +36,7 @@ export const SideDrawer = forwardRef<SideDrawerRef, SideDrawerProps>(
     const [open, setOpen] = useState(false);
 
     useImperativeHandle(ref, () => ({
+      isOpen: open,
       open: () => setOpen(true),
       close: () => setOpen(false),
     }));

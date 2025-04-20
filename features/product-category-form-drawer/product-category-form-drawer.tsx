@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useRef } from "react";
+import { FC, useRef, RefObject } from "react";
 import { SideDrawer, SideDrawerRef } from "@/components/ui/side-drawer";
 import { Button } from "@/components/ui/button";
 import { PlusSquareIcon } from "@/components/ui/icons/plus-square-icon";
@@ -12,11 +12,7 @@ export const ProductCategoryFormDrawer: FC = () => {
   const {
     selectors: { control, errors },
     actions: { handleFormSubmit },
-  } = useProductCategoryForm({
-    onSuccess: () => {
-      drawerRef.current?.close();
-    },
-  });
+  } = useProductCategoryForm(drawerRef as RefObject<SideDrawerRef>);
 
   return (
     <SideDrawer
@@ -27,7 +23,7 @@ export const ProductCategoryFormDrawer: FC = () => {
       buttonCancelLabel="Annuler"
       handleSubmit={handleFormSubmit}
       trigger={
-        <Button tabIndex={-1} asChild>
+        <Button asChild>
           <span>
             <PlusSquareIcon className="size-5" />
             Ajouter une catégorie

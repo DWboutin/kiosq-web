@@ -1,7 +1,11 @@
 import { useForm } from "react-hook-form";
-import { ProductCategory } from "@/types/app";
+import { Locales, ProductCategory } from "@/types/app";
 import { useLocale } from "next-intl";
 import { addProductCategory } from "@/actions/add-product-category";
+import { SideDrawerRef } from "@/components/ui/side-drawer";
+import { useEffect, RefObject } from "react";
+import { useCategoriesStore } from "@/stores/categories-store";
+import { usePrevious } from "@/utils/hooks/use-previous";
 
 export type ProductCategoryFormValues = Omit<
   ProductCategory,
@@ -25,12 +29,18 @@ export type ProductCategoryFormValues = Omit<
   orderRank: number;
 };
 
-export const useProductCategoryForm = ({ onSuccess }: { onSuccess: () => void }) => {
-  const locale = useLocale();
+export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) => {
+  const locale = useLocale() as Locales;
+  const initialData = useCategoriesStore((state) => state.initialData);
+  const selectedId = useCategoriesStore((state) => state.selectedId);
+  const resetInitialData = useCategoriesStore((state) => state.resetInitialData);
+  const isDrawerOpen = sideDrawerRef?.current?.isOpen;
+  const previousIsDrawerOpen = usePrevious(isDrawerOpen);
   const {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<ProductCategoryFormValues>({
     defaultValues: {
       name: "",
@@ -47,13 +57,38 @@ export const useProductCategoryForm = ({ onSuccess }: { onSuccess: () => void })
         ...data,
         locale,
       });
-      onSuccess();
+      sideDrawerRef?.current?.close();
+      reset();
     } catch (error) {
       console.error(error);
     }
   };
 
   const handleFormSubmit = handleSubmit(onSubmit);
+
+  useEffect(() => {
+    if (initialData) {
+      reset({
+        name: initialData.name[locale],
+        description: initialData.description[locale],
+        slug: initialData.slug[locale],
+        parentId: initialData.parentId || "",
+        orderRank: initialData.orderRank || 0,
+      });
+    }
+  }, [initialData, reset, locale]);
+
+  useEffect(() => {
+    if (!isDrawerOpen && previousIsDrawerOpen) {
+      resetInitialData();
+    }
+  }, [isDrawerOpen, previousIsDrawerOpen, resetInitialData]);
+
+  useEffect(() => {
+    if (initialData && !isDrawerOpen) {
+      sideDrawerRef?.current?.open();
+    }
+  }, [initialData, selectedId, isDrawerOpen, sideDrawerRef]);
 
   return {
     selectors: { control, errors },
