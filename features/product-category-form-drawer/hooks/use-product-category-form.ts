@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Locales, ProductCategory } from "@/types/app";
+import { Locales } from "@/types/app";
 import { useLocale } from "next-intl";
 import { addProductCategory } from "@/actions/add-product-category";
 import { SideDrawerRef } from "@/components/ui/side-drawer";
@@ -8,37 +8,11 @@ import { useCategoriesStore } from "@/stores/categories-store";
 import { usePrevious } from "@/utils/hooks/use-previous";
 import { updateProductCategory } from "@/actions/update-product-category";
 import { extractTranslations } from "@/utils/extract-translations";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createProductCategorySchema } from "@/features/product-category-form-drawer/utils/product-category-validation-schema";
 
-export type ProductCategoryFormValues = Omit<
-  ProductCategory,
-  | "id"
-  | "created_at"
-  | "updated_at"
-  | "updated_by"
-  | "is_deleted"
-  | "is_active"
-  | "slug"
-  | "name_translations"
-  | "description_translations"
-  | "image_url"
-  | "order_rank"
-  | "parent_id"
-> & {
-  name: string;
-  description: string;
-  slug: string;
-  parentId: string;
-  orderRank: number;
-  name_translations: {
-    [key: string]: string;
-  };
-  description_translations: {
-    [key: string]: string;
-  };
-  slug_translations: {
-    [key: string]: string;
-  };
-};
+export type ProductCategoryFormValues = z.infer<ReturnType<typeof createProductCategorySchema>>;
 
 export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) => {
   const locale = useLocale() as Locales;
@@ -48,6 +22,8 @@ export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) 
   const resetInitialData = useCategoriesStore((state) => state.resetInitialData);
   const isDrawerOpen = sideDrawerRef?.current?.isOpen;
   const previousIsDrawerOpen = usePrevious(isDrawerOpen);
+  const validationSchema = createProductCategorySchema(locale);
+
   const {
     control,
     handleSubmit,
@@ -64,7 +40,10 @@ export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) 
       description_translations: {},
       slug_translations: {},
     },
+    resolver: zodResolver(validationSchema),
   });
+
+  console.log(errors);
 
   const onSubmit = async (data: ProductCategoryFormValues) => {
     try {

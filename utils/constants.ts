@@ -139,3 +139,5 @@ export const CATEGORIES_ORDER = [
 export const UNITS = ["kg", "g", "L", "cl", "ml", "pcs"] as const;
 
 export const LOCALES = AppConfig.locales;
+
+export const SLUG_REGEX = /^[a-z0-9-]+$/;

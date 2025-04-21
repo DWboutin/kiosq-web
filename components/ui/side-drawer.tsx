@@ -44,7 +44,7 @@ export const SideDrawer = forwardRef<SideDrawerRef, SideDrawerProps>(
     return (
       <Drawer open={open} onOpenChange={setOpen} direction="right" autoFocus={open}>
         <DrawerTrigger>{trigger}</DrawerTrigger>
-        <DrawerContent>
+        <DrawerContent className="data-[vaul-drawer-direction=right]:w-4/5 data-[vaul-drawer-direction=right]:sm:max-w-md data-[vaul-drawer-direction=right]:min-md:max-w-2xl">
           <DrawerHeader>
             <div className="flex flex-col justify-between gap-2 pb-4 border-b border-neutral-lightest">
               <DrawerTitle className="text-lg font-bold pt-1.5">{title}</DrawerTitle>
