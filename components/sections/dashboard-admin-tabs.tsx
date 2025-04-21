@@ -8,15 +8,15 @@ export const DashboardAdminTabs: FC = () => {
   const pathname = usePathname();
 
   const tabs = [
+    { label: "Important info", href: "/dashboard/admin" },
     { label: "Categories", href: "/dashboard/admin/categories" },
-    { label: "Prices", href: "/dashboard/admin/prices" },
   ];
 
   return (
     <nav className="flex border-b border-neutral-light" aria-label="Admin navigation">
       <div className="flex space-x-2">
         {tabs.map((tab) => {
-          const isActive = pathname === tab.href;
+          const isActive = pathname.endsWith(tab.href);
 
           return (
             <Link

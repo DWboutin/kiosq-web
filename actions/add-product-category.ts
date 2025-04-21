@@ -12,8 +12,6 @@ export const addProductCategory = async (category: AddProductCategoryArgs) => {
   try {
     const supabase = await createClient();
 
-    console.log("category", category);
-
     const { data, error } = await supabase.from("categories").insert({
       name_translations: {
         [category.locale]: category.name,

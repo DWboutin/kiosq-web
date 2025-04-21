@@ -48,6 +48,7 @@ export const useVerifyOtpForm = () => {
       router.push("/");
     } catch (error) {
       console.error("Error verifying OTP:", error);
+      toast.error("Le code OTP est invalide");
     } finally {
       setIsLoading(false);
     }
@@ -57,7 +58,7 @@ export const useVerifyOtpForm = () => {
     setValue("otp", value, { shouldValidate: true });
   };
 
-  const handleAskForNewCode = () => {
+  const handleAskForNewCode = async () => {
     if (!name) {
       toast.warning(
         "Nous en pouvons pas vous envoyer un nouveau code sans votre nom, vous serez redirigé vers la page de connexion"
@@ -66,11 +67,14 @@ export const useVerifyOtpForm = () => {
       return;
     }
 
-    signInWithOtp(email, name);
-    toast.success("Un nouveau code vous a été envoyé");
+    try {
+      await signInWithOtp(email, name);
+      toast.success("Un nouveau code vous a été envoyé");
+    } catch (error) {
+      console.error("Error asking for new code:", error);
+      toast.error("Une erreur est survenue lors de la demande de nouveau code");
+    }
   };
-
-  console.log("errors", errors);
 
   return {
     selectors: {
