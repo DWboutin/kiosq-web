@@ -9,7 +9,7 @@ import { FC } from "react";
 
 type ControlledSelectProps = {
   id: string;
-  placeholder: string;
+  placeholder?: string;
   value: string;
   onChange: (value: string) => void;
   options: {

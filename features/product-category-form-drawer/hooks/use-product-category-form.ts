@@ -59,8 +59,6 @@ export const useProductCategoryForm = (
     resolver: zodResolver(validationSchema),
   });
 
-  console.log(errors);
-
   const onSubmit = handleSubmit(async (data) => {
     try {
       if (selectedId) {

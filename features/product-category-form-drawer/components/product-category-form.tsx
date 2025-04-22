@@ -88,7 +88,6 @@ export const ProductCategoryForm: FC<ProductCategoryFormProps> = ({ control, err
           render={({ field }) => (
             <ControlledSelect
               id="parentId"
-              placeholder={t("parentPlaceholder")}
               aria-invalid={!!errors.parentId}
               {...field}
               options={[
@@ -111,13 +110,7 @@ export const ProductCategoryForm: FC<ProductCategoryFormProps> = ({ control, err
           name="orderRank"
           control={control}
           render={({ field }) => (
-            <Input
-              id="orderRank"
-              type="number"
-              placeholder={t("orderRankPlaceholder")}
-              aria-invalid={!!errors.orderRank}
-              {...field}
-            />
+            <Input id="orderRank" type="number" aria-invalid={!!errors.orderRank} {...field} />
           )}
         />
       </FormInputContainer>
