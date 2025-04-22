@@ -8,6 +8,7 @@ import React from "react";
 import { cva } from "class-variance-authority";
 import { ConnectionHeaderUtils } from "@/features/connection-header-utils/connection-header-utils";
 import { MobileMenuIcon } from "@/components/ui/icons/mobile-menu-icon";
+import { getTranslations } from "next-intl/server";
 
 const headerStyles = cva(
   "flex flex-col items-center justify-between border-b border-neutral-light",
@@ -21,8 +22,9 @@ const headerStyles = cva(
   }
 );
 
-export const Header: FC<PropsWithChildren> = ({ children }) => {
+export const Header: FC<PropsWithChildren> = async ({ children }) => {
   const hasChildren = React.Children.count(children) > 0;
+  const t = await getTranslations("Header");
 
   return (
     <header className={headerStyles({ hasChildren })}>
@@ -38,7 +40,12 @@ export const Header: FC<PropsWithChildren> = ({ children }) => {
           <div className="flex min-md:flex-1 items-center gap-2">
             <SearchInput />
           </div>
-          <Button variant="ghost" size="icon" aria-label="Search" className="min-md:hidden">
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label={t("mobileMenuButtonAriaLabel")}
+            className="min-md:hidden"
+          >
             <MobileMenuIcon className="text-neutral-dark size-6" />
           </Button>
         </div>

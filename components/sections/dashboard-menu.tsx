@@ -1,23 +1,16 @@
 "use client";
 
-import { FC, memo, useState, useRef, useEffect } from "react";
+import { FC, memo, useState, useRef, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { SubMenuIcon } from "@/components/ui/icons/sub-menu-icon";
-import { Link } from "@/i18n/navigation";
-import { DashboardIcon } from "@/components/ui/icons/dashboard-icon";
-import { StorefrontIcon } from "@/components/ui/icons/storefront-icon";
-import { DiscountHandIcon } from "@/components/ui/icons/discount-hand-icon";
-import { usePathname } from "next/navigation";
-import { CalendarDotsIcon } from "@/components/ui/icons/calendar-dots-icon";
-import { IdentificationCardIcon } from "@/components/ui/icons/identification-card-icon";
-import { MapPinAreaIcon } from "@/components/ui/icons/map-pin-area-icon";
-import { ShoppingBagIcon } from "@/components/ui/icons/shopping-bag-icon";
-import { InvoiceIcon } from "@/components/ui/icons/invoice-icon";
+import { Link, usePathname } from "@/i18n/navigation";
 import { VideoIcon } from "@/components/ui/icons/video-icon";
 import { UserCircleIcon } from "@/components/ui/icons/user-circle-icon";
-import { KeyholeIcon } from "@/components/ui/icons/keyhole-icon";
 import { useUserStore } from "@/stores/user-store";
 import { UserRole } from "@/types/app";
+import classNames from "classnames";
+import { useTranslations } from "next-intl";
+import { DASHBOARD_LINKS, DASHBOARD_UTILS_LINKS } from "@/utils/dashboard-navigation";
 
 type DashboardMenuProtectedLinkProps = {
   role: UserRole;
@@ -28,7 +21,10 @@ const DashboardMenuProtectedLink: FC<DashboardMenuProtectedLinkProps> = ({
   href,
   icon,
   children,
+  ariaLabel,
 }) => {
+  const pathname = usePathname();
+  const isActive = pathname === href;
   const userData = useUserStore((state) => state.userData);
 
   if (userData?.role !== role) {
@@ -36,7 +32,12 @@ const DashboardMenuProtectedLink: FC<DashboardMenuProtectedLinkProps> = ({
   }
 
   return (
-    <DashboardMenuLink href={href} icon={icon}>
+    <DashboardMenuLink
+      href={href}
+      icon={icon}
+      ariaLabel={ariaLabel}
+      aria-current={isActive ? "page" : undefined}
+    >
       {children}
     </DashboardMenuLink>
   );
@@ -46,35 +47,55 @@ type DashboardMenuLinkProps = {
   href: string;
   icon: React.ReactNode;
   children: React.ReactNode;
+  ariaLabel?: string;
+  role?: UserRole;
 };
 
-const DashboardMenuLink = memo(({ href, icon, children }: DashboardMenuLinkProps) => {
-  const pathname = usePathname();
-  const isActive = pathname === href;
+const DashboardMenuLink = memo(
+  ({ href, icon, children, ariaLabel, role }: DashboardMenuLinkProps) => {
+    const pathname = usePathname();
+    const isActive = pathname === href;
 
-  return (
-    <Link
-      href={href}
-      className={`flex items-center hover:bg-neutral-lightest rounded-md ${
-        isActive ? "text-brand-medium" : "text-neutral-darker hover:text-neutral-black"
-      }`}
-      aria-current={isActive ? "page" : undefined}
-    >
-      <Button variant="ghost" size="icon" tabIndex={-1}>
-        {icon}
-      </Button>
-      <p className="font-inter text-base pl-2 group-[.is-open]:inline-block hidden">{children}</p>
-    </Link>
-  );
-});
+    if (role) {
+      return (
+        <DashboardMenuProtectedLink href={href} icon={icon} ariaLabel={ariaLabel} role={role}>
+          {children}
+        </DashboardMenuProtectedLink>
+      );
+    }
+
+    return (
+      <Link
+        href={href}
+        className={`flex items-center hover:bg-neutral-lightest rounded-md ${
+          isActive ? "text-brand-medium" : "text-neutral-darker hover:text-neutral-black"
+        }`}
+        aria-current={isActive ? "page" : undefined}
+        aria-label={ariaLabel}
+      >
+        <Button variant="ghost" size="icon" tabIndex={-1}>
+          {icon}
+        </Button>
+        <p className="font-inter text-base pl-2 group-[.is-open]:inline-block hidden">{children}</p>
+      </Link>
+    );
+  }
+);
 
 DashboardMenuLink.displayName = "DashboardMenuLink";
 
 export const DashboardMenu: FC = () => {
+  const t = useTranslations();
   const [open, setOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const toggleButtonRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
+  const links = useMemo(() => {
+    return Object.values(DASHBOARD_LINKS);
+  }, []);
+  const utilsLinks = useMemo(() => {
+    return Object.values(DASHBOARD_UTILS_LINKS);
+  }, []);
 
   const handleToggleMenu = () => {
     setOpen((prev) => !prev);
@@ -102,9 +123,10 @@ export const DashboardMenu: FC = () => {
 
   return (
     <div
-      className={`flex flex-col py-5 px-4 bg-neutral-white rounded-xl max-md:rounded-l-none group transition-all duration-200 ${
-        open ? "is-open" : ""
-      }`}
+      className={classNames(
+        "relative z-10 flex flex-col py-5 px-4 bg-neutral-white rounded-xl max-md:rounded-l-none group",
+        open ? "is-open shadow-lg shadow-neutral-400/20" : "shadow-none"
+      )}
       role="navigation"
       aria-label="Dashboard navigation"
     >
@@ -121,78 +143,24 @@ export const DashboardMenu: FC = () => {
           <SubMenuIcon className="size-6 text-neutral-darker" open={open} />
         </Button>
         <p className="pl-2 text-neutral-darker font-inter text-base font-semibold group-[.is-open]:block hidden">
-          Navigation
+          {t("DashboardMenu.navigation")}
         </p>
       </div>
       <nav className="flex flex-col flex-1 pt-10" id="dashboard-navigation-menu" ref={navRef}>
         <ul className="flex flex-col gap-3" role="menu">
-          <li role="none">
-            <DashboardMenuLink href="/dashboard" icon={<DashboardIcon className="size-6" />}>
-              Tableau de bord
-            </DashboardMenuLink>
-          </li>
-          <li role="none">
-            <DashboardMenuLink
-              href="/dashboard/products"
-              icon={<StorefrontIcon className="size-6" />}
-            >
-              Produits
-            </DashboardMenuLink>
-          </li>
-          <li role="none">
-            <DashboardMenuLink
-              href="/dashboard/discounts"
-              icon={<DiscountHandIcon className="size-6" />}
-            >
-              Rabais et promotions
-            </DashboardMenuLink>
-          </li>
-          <li role="none">
-            <DashboardMenuLink
-              href="/dashboard/events"
-              icon={<CalendarDotsIcon className="size-6" />}
-            >
-              Événements
-            </DashboardMenuLink>
-          </li>
-          <li role="none">
-            <DashboardMenuLink
-              href="/dashboard/your-store"
-              icon={<IdentificationCardIcon className="size-6" />}
-            >
-              Votre commerce
-            </DashboardMenuLink>
-          </li>
-          <li role="none">
-            <DashboardMenuLink
-              href="/dashboard/your-kiosqs"
-              icon={<MapPinAreaIcon className="size-6" />}
-            >
-              Vos kiosqs
-            </DashboardMenuLink>
-          </li>
-          <li role="none">
-            <DashboardMenuLink
-              href="/dashboard/reservations"
-              icon={<ShoppingBagIcon className="size-6" />}
-            >
-              Réservations
-            </DashboardMenuLink>
-          </li>
-          <li role="none">
-            <DashboardMenuLink href="/dashboard/billing" icon={<InvoiceIcon className="size-6" />}>
-              Facturation
-            </DashboardMenuLink>
-          </li>
-          <li role="none">
-            <DashboardMenuProtectedLink
-              role="admin"
-              href="/dashboard/admin"
-              icon={<KeyholeIcon className="size-6" />}
-            >
-              Admin
-            </DashboardMenuProtectedLink>
-          </li>
+          {links.map((link) => (
+            <li key={`dashboard-link-${link.labelKey}`} role="none">
+              <DashboardMenuLink
+                key={link.path}
+                href={link.path}
+                icon={link.icon}
+                ariaLabel={t(link.labelKey)}
+                role={link.role}
+              >
+                {t(link.labelKey)}
+              </DashboardMenuLink>
+            </li>
+          ))}
         </ul>
       </nav>
       <div
@@ -200,12 +168,17 @@ export const DashboardMenu: FC = () => {
         role="complementary"
         aria-label="User account actions"
       >
-        <DashboardMenuLink href="/dashboard/training" icon={<VideoIcon className="size-6" />}>
-          Vidéos de formation
-        </DashboardMenuLink>
-        <DashboardMenuLink href="/dashboard/account" icon={<UserCircleIcon className="size-6" />}>
-          Votre compte
-        </DashboardMenuLink>
+        {utilsLinks.map((link) => (
+          <DashboardMenuLink
+            key={`dashboard-utils-${link.labelKey}`}
+            href={link.path}
+            icon={link.icon}
+            ariaLabel={t(link.labelKey)}
+            role={link.role}
+          >
+            {t(link.labelKey)}
+          </DashboardMenuLink>
+        ))}
       </div>
     </div>
   );

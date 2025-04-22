@@ -1,12 +1,15 @@
+"use client";
+
 import { FormInputContainer } from "@/components/ui/form-utils/form-input-container";
 import { Input } from "@/components/ui/input";
-import { Controller } from "react-hook-form";
-import { FieldErrors, Control } from "react-hook-form";
+import { Control, Controller } from "react-hook-form";
+import { FieldErrors } from "react-hook-form";
 import { FC } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { ProductCategoryFormValues } from "@/features/product-category-form-drawer/hooks/use-product-category-form";
 import { ControlledSelect } from "@/components/ui/form-utils/controlled-select";
 import { AddTranslationField } from "@/features/add-translation-field/add-translation-field";
+import { useTranslations } from "next-intl";
 
 type ProductCategoryFormProps = {
   control: Control<ProductCategoryFormValues>;
@@ -14,21 +17,18 @@ type ProductCategoryFormProps = {
 };
 
 export const ProductCategoryForm: FC<ProductCategoryFormProps> = ({ control, errors }) => {
+  const t = useTranslations("ProductCategoryForm");
+
   return (
     <>
-      <FormInputContainer
-        inputId="name"
-        label="Nom du produit"
-        error={errors.name?.message}
-        required
-      >
+      <FormInputContainer inputId="name" label={t("name")} error={errors.name?.message} required>
         <Controller
           name="name"
           control={control}
           render={({ field }) => (
             <Input
               id="name"
-              placeholder="Fraise des champs"
+              placeholder={t("namePlaceholder")}
               aria-invalid={!!errors.name}
               {...field}
             />
@@ -38,7 +38,7 @@ export const ProductCategoryForm: FC<ProductCategoryFormProps> = ({ control, err
       <AddTranslationField name="name" control={control} errors={errors} />
       <FormInputContainer
         inputId="description"
-        label="Description"
+        label={t("description")}
         error={errors.description?.message}
         required
       >
@@ -48,7 +48,7 @@ export const ProductCategoryForm: FC<ProductCategoryFormProps> = ({ control, err
           render={({ field }) => (
             <Textarea
               id="description"
-              placeholder="Mon produit est un..."
+              placeholder={t("descriptionPlaceholder")}
               aria-invalid={!!errors.description}
               {...field}
             />
@@ -61,14 +61,14 @@ export const ProductCategoryForm: FC<ProductCategoryFormProps> = ({ control, err
         fieldType="textarea"
         errors={errors}
       />
-      <FormInputContainer inputId="slug" label="Slug" error={errors.slug?.message} required>
+      <FormInputContainer inputId="slug" label={t("slug")} error={errors.slug?.message} required>
         <Controller
           name="slug"
           control={control}
           render={({ field }) => (
             <Input
               id="slug"
-              placeholder="fraise-des-champs"
+              placeholder={t("slugPlaceholder")}
               aria-invalid={!!errors.slug}
               {...field}
             />
@@ -78,7 +78,7 @@ export const ProductCategoryForm: FC<ProductCategoryFormProps> = ({ control, err
       <AddTranslationField name="slug" control={control} errors={errors} />
       <FormInputContainer
         inputId="parentId"
-        label="Parent"
+        label={t("parent")}
         error={errors.parentId?.message}
         required
       >
@@ -88,12 +88,12 @@ export const ProductCategoryForm: FC<ProductCategoryFormProps> = ({ control, err
           render={({ field }) => (
             <ControlledSelect
               id="parentId"
-              placeholder="Parent category"
+              placeholder={t("parentPlaceholder")}
               aria-invalid={!!errors.parentId}
               {...field}
               options={[
                 {
-                  label: "No parent category",
+                  label: t("noParentCategory"),
                   value: "false",
                 },
               ]}
@@ -103,7 +103,7 @@ export const ProductCategoryForm: FC<ProductCategoryFormProps> = ({ control, err
       </FormInputContainer>
       <FormInputContainer
         inputId="orderRank"
-        label="Order rank"
+        label={t("orderRank")}
         error={errors.orderRank?.message}
         required
       >
@@ -114,7 +114,7 @@ export const ProductCategoryForm: FC<ProductCategoryFormProps> = ({ control, err
             <Input
               id="orderRank"
               type="number"
-              placeholder="1"
+              placeholder={t("orderRankPlaceholder")}
               aria-invalid={!!errors.orderRank}
               {...field}
             />

@@ -8,8 +8,10 @@ import { MessageBubble } from "@/components/ui/icons/message-bubble";
 import { HeaderAccountButton } from "@/features/header-account-button/header-account-button";
 import { useUserStore } from "@/stores/user-store";
 import { ShoppingBagIcon } from "@/components/ui/icons/shopping-bag-icon";
+import { useTranslations } from "next-intl";
 
 export const ConnectionHeaderUtils: FC = () => {
+  const t = useTranslations("Header");
   const user = useUserStore((state) => state.user);
 
   if (!user) {
@@ -17,7 +19,7 @@ export const ConnectionHeaderUtils: FC = () => {
       <Link href="/auth/sign-in" className="flex items-center gap-2 group px-2 py-3.5">
         <UserCircleIcon className="w-6 h-6 text-neutral-dark group-hover:text-brand-medium" />
         <span className="text-base font-medium text-neutral-dark group-hover:text-brand-medium">
-          Connexion
+          {t("connectionButton")}
         </span>
       </Link>
     );
@@ -26,7 +28,7 @@ export const ConnectionHeaderUtils: FC = () => {
   return (
     <div className="flex items-center px-2 py-2">
       <HeaderAccountButton />
-      <Button variant="ghost" size="icon" aria-label="Réservations">
+      <Button variant="ghost" size="icon" aria-label={t("reservationButton")}>
         <ShoppingBagIcon className="text-neutral-dark size-6" />
       </Button>
       <Button
@@ -35,7 +37,7 @@ export const ConnectionHeaderUtils: FC = () => {
         onClick={() => {
           console.log("sign out");
         }}
-        aria-label="Sign out"
+        aria-label={t("signOutButton")}
       >
         <MessageBubble className="text-neutral-dark size-6" />
       </Button>

@@ -24,6 +24,7 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useTranslations } from "next-intl";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -40,11 +41,10 @@ export function DataTable<TData, TValue>({
   onRowClick,
   onSelectionChange,
 }: DataTableProps<TData, TValue>) {
+  const t = useTranslations("DataTable");
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-
-  // Add selection column if onSelectionChange is provided
   const selectionColumn = {
     id: "select",
     header: ({ table }: { table: TableInstance<TData> }) => (
@@ -53,7 +53,7 @@ export function DataTable<TData, TValue>({
           table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
+        aria-label={t("selectAll")}
         className="translate-y-[2px]"
       />
     ),
@@ -61,7 +61,7 @@ export function DataTable<TData, TValue>({
       <Checkbox
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
+        aria-label={t("selectRow")}
         onClick={(e) => e.stopPropagation()}
         className="translate-y-[2px]"
       />
@@ -104,7 +104,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="w-full overflow-auto">
-      <div className="rounded-md border bg-white overflow-hidden">
+      <div className="rounded-md border bg-white overflow-hidden relative z-0">
         <Table>
           <TableHeader className="[&_tr:first-child]:overflow-hidden [&_tr:first-child]:rounded-t-md">
             {table.getHeaderGroups().map((headerGroup, index) => (

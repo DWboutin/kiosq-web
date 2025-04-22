@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { Control, FieldErrors, useForm } from "react-hook-form";
 import { Locales } from "@/types/app";
 import { useLocale } from "next-intl";
 import { addProductCategory } from "@/actions/add-product-category";
@@ -14,7 +14,23 @@ import { createProductCategorySchema } from "@/features/product-category-form-dr
 
 export type ProductCategoryFormValues = z.infer<ReturnType<typeof createProductCategorySchema>>;
 
-export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) => {
+type ProductCategoryFormActions = {
+  handleFormSubmit: () => void;
+};
+
+type ProductCategoryFormSelectors = {
+  control: Control<ProductCategoryFormValues>;
+  errors: FieldErrors<ProductCategoryFormValues>;
+  isUpdating: boolean;
+};
+type ProductCategoryFormHook = {
+  selectors: ProductCategoryFormSelectors;
+  actions: ProductCategoryFormActions;
+};
+
+export const useProductCategoryForm = (
+  sideDrawerRef: RefObject<SideDrawerRef>
+): ProductCategoryFormHook => {
   const locale = useLocale() as Locales;
   const initialData = useCategoriesStore((state) => state.initialData);
   const selectedId = useCategoriesStore((state) => state.selectedId);
@@ -29,13 +45,13 @@ export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) 
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<ProductCategoryFormValues>({
+  } = useForm({
     defaultValues: {
       name: "",
       description: "",
       slug: "",
       parentId: "false",
-      orderRank: 0,
+      orderRank: "0",
       name_translations: {},
       description_translations: {},
       slug_translations: {},
@@ -45,7 +61,7 @@ export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) 
 
   console.log(errors);
 
-  const onSubmit = async (data: ProductCategoryFormValues) => {
+  const onSubmit = handleSubmit(async (data) => {
     try {
       if (selectedId) {
         await updateProductCategory({
@@ -65,9 +81,7 @@ export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) 
     } catch (error) {
       console.error(error);
     }
-  };
-
-  const handleFormSubmit = handleSubmit(onSubmit);
+  });
 
   useEffect(() => {
     if (initialData) {
@@ -85,7 +99,7 @@ export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) 
         description: initialData.description[locale],
         slug: initialData.slug[locale],
         parentId: initialData.parentId || "false",
-        orderRank: initialData.orderRank || 0,
+        orderRank: String(initialData.orderRank || 0),
         name_translations: nameTranslations,
         description_translations: descriptionTranslations,
         slug_translations: slugTranslations,
@@ -100,7 +114,7 @@ export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) 
         description: "",
         slug: "",
         parentId: "false",
-        orderRank: 0,
+        orderRank: "0",
         name_translations: {},
         description_translations: {},
         slug_translations: {},
@@ -115,7 +129,11 @@ export const useProductCategoryForm = (sideDrawerRef: RefObject<SideDrawerRef>) 
   }, [initialData, lastSelected, isDrawerOpen, sideDrawerRef]);
 
   return {
-    selectors: { control, errors, isUpdating: !!selectedId },
-    actions: { handleFormSubmit },
+    selectors: {
+      control: control as Control<ProductCategoryFormValues>,
+      errors,
+      isUpdating: !!selectedId,
+    },
+    actions: { handleFormSubmit: onSubmit },
   };
 };

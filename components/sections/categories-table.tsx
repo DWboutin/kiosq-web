@@ -9,80 +9,82 @@ import { useCategoriesStore } from "@/stores/categories-store";
 import { Button } from "@/components/ui/button";
 import { deleteProductCategory } from "@/actions/delete-product-category";
 import { toast } from "sonner";
-
+import { useTranslations } from "next-intl";
 type CategoriesTableProps = {
   data: FormattedProductCategory[];
 };
 
-const columns: ColumnDef<FormattedProductCategory, unknown>[] = [
-  {
-    header: "Name",
-    accessorKey: "name",
-    cell: ({ row }) => (
-      <TranslationDisplay translations={row.original.name} currentLocale={row.original.locale} />
-    ),
-  },
-  {
-    header: "Description",
-    accessorKey: "description",
-    cell: ({ row }) => (
-      <TranslationDisplay
-        translations={row.original.description}
-        currentLocale={row.original.locale}
-      />
-    ),
-  },
-  {
-    header: "Slug",
-    accessorKey: "slug",
-    cell: ({ row }) => (
-      <TranslationDisplay translations={row.original.slug} currentLocale={row.original.locale} />
-    ),
-  },
-  {
-    header: "Parent",
-    accessorKey: "parent",
-  },
-  {
-    header: "Created At",
-    accessorKey: "createdAt",
-  },
-  {
-    header: "Updated At",
-    accessorKey: "updatedAt",
-  },
-  {
-    header: "Actions",
-    accessorKey: "actions",
-    cell: ({ row }) => (
-      <div className="flex items-center gap-2">
-        <Button
-          variant="destructive"
-          size="sm"
-          onClick={async (e) => {
-            e.stopPropagation();
-            try {
-              await deleteProductCategory(row.original.id);
-              toast.success("Category deleted successfully");
-            } catch (error) {
-              console.error(error);
-              toast.error("Failed to delete category");
-            }
-          }}
-        >
-          Delete
-        </Button>
-      </div>
-    ),
-  },
-];
-
 export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
+  const t = useTranslations("CategoriesTable");
   const selectCategory = useCategoriesStore((state) => state.selectCategory);
 
   const handleRowClick = (row: FormattedProductCategory) => {
     selectCategory(row);
   };
+
+  const columns: ColumnDef<FormattedProductCategory, unknown>[] = [
+    {
+      header: t("name"),
+      accessorKey: "name",
+      cell: ({ row }) => (
+        <TranslationDisplay translations={row.original.name} currentLocale={row.original.locale} />
+      ),
+    },
+    {
+      header: t("description"),
+      accessorKey: "description",
+      cell: ({ row }) => (
+        <TranslationDisplay
+          translations={row.original.description}
+          currentLocale={row.original.locale}
+        />
+      ),
+    },
+    {
+      header: t("slug"),
+      accessorKey: "slug",
+      cell: ({ row }) => (
+        <TranslationDisplay translations={row.original.slug} currentLocale={row.original.locale} />
+      ),
+    },
+    {
+      header: t("parent"),
+      accessorKey: "parent",
+    },
+    {
+      header: t("createdAt"),
+      accessorKey: "createdAt",
+    },
+    {
+      header: t("updatedAt"),
+      accessorKey: "updatedAt",
+    },
+    {
+      header: t("actions"),
+      accessorKey: "actions",
+      cell: ({ row }) => (
+        <div className="flex items-center gap-2">
+          <Button
+            variant="destructive"
+            size="sm"
+            aria-label={t("delete")}
+            onClick={async (e) => {
+              e.stopPropagation();
+              try {
+                await deleteProductCategory(row.original.id);
+                toast.success(t("categoryDeleted"));
+              } catch (error) {
+                console.error(error);
+                toast.error(t("categoryDeleteError"));
+              }
+            }}
+          >
+            {t("delete")}
+          </Button>
+        </div>
+      ),
+    },
+  ];
 
   return <DataTable columns={columns} data={data} onRowClick={handleRowClick} />;
 };

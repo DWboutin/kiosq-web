@@ -1,6 +1,102 @@
 {
-  "HomePage": {
-    "title": "Bonjour le monde!",
-    "about": "Aller à la page à propos"
+  "Header": {
+    "searchPlaceholder": "Rechercher sur kiosq",
+    "searchButtonAriaLabel": "Rechercher",
+    "mobileMenuButtonAriaLabel": "Menu mobile",
+    "locationButton": "Changer de localité",
+    "locationButtonSearching": "Recherche de localité...",
+    "locationButtonUnavailable": "Localité non disponible",
+    "connectionButton": "Connexion",
+    "reservationButton": "Réservations",
+    "signOutButton": "Déconnexion"
+  },
+  "Categories": {
+    "discountListing": "Rabais & Aubaines",
+    "preparedMeals": "Repas préparés",
+    "clothes": "Vêtements",
+    "fruits": "Fruits",
+    "vegetables": "Légumes",
+    "craftsmanship": "Artisanat",
+    "bakery": "Boulangerie",
+    "coffeeShop": "Cafés & Torréfacteurs",
+    "selfcare": "Soins & Beauté",
+    "alcohol": "Vins, Bières & Spiritueux"
+  },
+  "DashboardMenu": {
+    "navigation": "Navigation",
+    "dashboard": "Tableau de bord",
+    "products": "Produits",
+    "discounts": "Rabais",
+    "orders": "Commandes",
+    "settings": "Paramètres",
+    "events": "Événements",
+    "yourStore": "Votre commerce",
+    "yourKiosqs": "Vos kiosqs",
+    "reservations": "Réservations",
+    "billing": "Facturation",
+    "admin": "Administration",
+    "learningVideos": "Vidéos de formation",
+    "yourAccount": "Votre compte"
+  },
+  "DashboardAdminTabs": {
+    "importantInformation": "Informations importantes",
+    "categories": "Catégories"
+  },
+  "DashboardAdminHeader": {
+    "title": "Administration",
+    "description": "Gestions des données de l'application Kiosq"
+  },
+  "DashboardAdminCategoriesHeader": {
+    "title": "Catégories",
+    "description": "Gestion des catégories"
+  },
+  "ProductCategoryFormDrawer": {
+    "openingButton": "Ajouter une catégorie",
+    "addTitle": "Ajouter une catégorie",
+    "addDescription": "Entrez les informations de la catégorie et cliquez sur 'Ajouter'.",
+    "addButton": "Ajouter",
+    "editTitle": "Modifier une catégorie",
+    "editDescription": "Entrez les informations de la catégorie et cliquez sur 'Modifier'.",
+    "editButton": "Modifier",
+    "cancelButton": "Annuler"
+  },
+  "ProductCategoryForm": {
+    "name": "Nom",
+    "namePlaceholder": "Fruit de la saison",
+    "description": "Description",
+    "descriptionPlaceholder": "Le meilleur fruit de la saison directement de la ferme",
+    "slug": "Slug",
+    "slugPlaceholder": "fruit-de-la-saison",
+    "parent": "Parent",
+    "noParentCategory": "Aucune catégorie parente",
+    "orderRank": "Ordre"
+  },
+  "DataTable": {
+    "selectAll": "Tout sélectionner",
+    "selectRow": "Sélectionner une ligne"
+  },
+  "CategoriesTable": {
+    "selectAll": "Tout sélectionner",
+    "name": "Nom",
+    "description": "Description",
+    "slug": "Slug",
+    "parent": "Parent",
+    "createdAt": "Créé le",
+    "updatedAt": "Mis à jour le",
+    "actions": "Actions",
+    "delete": "Supprimer",
+    "categoryDeleted": "Catégorie supprimée avec succès",
+    "categoryDeleteError": "Échec de la suppression de la catégorie"
+  },
+  "HeaderAccountButton": {
+    "myAccount": "Mon compte",
+    "dashboard": "Tableau de bord",
+    "signOut": "Déconnexion"
+  },
+  "DashboardBreadcrumb": {
+    "managementSystem": "Système de gestion"
+  },
+  "AddTranslationField": {
+    "addTranslation": "Ajouter une traduction"
   }
 }

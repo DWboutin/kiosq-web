@@ -2,6 +2,7 @@ import { type NextRequest } from "next/server";
 import createIntlMiddleware from "next-intl/middleware";
 import { updateSession } from "@/utils/supabase/middleware";
 import { AppConfig } from "@/app-config";
+import { Locales } from "@/types/app";
 
 export async function middleware(request: NextRequest) {
   // First, check authentication
@@ -15,7 +16,7 @@ export async function middleware(request: NextRequest) {
   // Otherwise, handle i18n routing
   const handleI18nRouting = createIntlMiddleware({
     locales: AppConfig.locales,
-    defaultLocale: AppConfig.defaultLocale,
+    defaultLocale: AppConfig.defaultLocale as Locales,
     localePrefix: AppConfig.localePrefix as "always" | "as-needed" | "never",
   });
 

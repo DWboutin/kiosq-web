@@ -6,8 +6,10 @@ import { Button } from "@/components/ui/button";
 import { PlusSquareIcon } from "@/components/ui/icons/plus-square-icon";
 import { ProductCategoryForm } from "@/features/product-category-form-drawer/components/product-category-form";
 import { useProductCategoryForm } from "@/features/product-category-form-drawer/hooks/use-product-category-form";
+import { useTranslations } from "next-intl";
 
 export const ProductCategoryFormDrawer: FC = () => {
+  const t = useTranslations("ProductCategoryFormDrawer");
   const drawerRef = useRef<SideDrawerRef>(null);
   const {
     selectors: { control, errors, isUpdating },
@@ -17,20 +19,16 @@ export const ProductCategoryFormDrawer: FC = () => {
   return (
     <SideDrawer
       ref={drawerRef}
-      title={isUpdating ? "Modifier une catégorie" : "Ajouter une catégorie"}
-      description={
-        isUpdating
-          ? "Entrez les informations de la catégorie et cliquez sur 'Modifier'."
-          : "Entrez les informations de la catégorie et cliquez sur 'Ajouter'."
-      }
-      buttonSubmitLabel={isUpdating ? "Modifier" : "Ajouter"}
-      buttonCancelLabel="Annuler"
+      title={isUpdating ? t("editTitle") : t("addTitle")}
+      description={isUpdating ? t("editDescription") : t("addDescription")}
+      buttonSubmitLabel={isUpdating ? t("editButton") : t("addButton")}
+      buttonCancelLabel={t("cancelButton")}
       handleSubmit={handleFormSubmit}
       trigger={
         <Button asChild>
           <span>
             <PlusSquareIcon className="size-5" />
-            Ajouter une catégorie
+            {t("openingButton")}
           </span>
         </Button>
       }

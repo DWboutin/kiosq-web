@@ -16,7 +16,6 @@ export type ProductCategory = {
   name: string;
   backgroundColor: string;
   contentColor: string;
-  text: string;
   icon: FC<IconProps>;
 };
 
@@ -25,70 +24,60 @@ export const PRODUCT_CATEGORIES: Record<string, ProductCategory> = {
     name: "discountListing",
     backgroundColor: "bg-brand-medium",
     contentColor: "text-white",
-    text: "Rabais & Aubaines",
     icon: DiscountListingIcon,
   },
   preparedMeals: {
     name: "preparedMeals",
     backgroundColor: "bg-categories-preparedMeals-bg",
     contentColor: "text-categories-preparedMeals-text",
-    text: "Plats préparés & Restaurants",
     icon: PreparedMealsIcon,
   },
   clothes: {
     name: "clothes",
     backgroundColor: "bg-categories-clothes-bg",
     contentColor: "text-categories-clothes-text",
-    text: "Vêtements",
     icon: ClothesIcon,
   },
   fruits: {
     name: "fruits",
     backgroundColor: "bg-categories-fruits-bg",
     contentColor: "text-categories-fruits-text",
-    text: "Fruits",
     icon: FruitsIcon,
   },
   vegetables: {
     name: "vegetables",
     backgroundColor: "bg-categories-vegetables-bg",
     contentColor: "text-categories-vegetables-text",
-    text: "Légumes",
     icon: VegetablesIcon,
   },
   craftsmanship: {
     name: "craftsmanship",
     backgroundColor: "bg-categories-craftsmanship-bg",
     contentColor: "text-categories-craftsmanship-text",
-    text: "Artisanat & Créateurs",
     icon: CraftsmanshipIcon,
   },
   bakery: {
     name: "bakery",
     backgroundColor: "bg-categories-bakery-bg",
     contentColor: "text-categories-bakery-text",
-    text: "Boulangeries & Pâtisseries",
     icon: BakeryIcon,
   },
   coffeeShop: {
     name: "coffeeShop",
     backgroundColor: "bg-categories-coffeeShop-bg",
     contentColor: "text-categories-coffeeShop-text",
-    text: "Cafés & Torréfacteurs",
     icon: CoffeeShopIcon,
   },
   selfcare: {
     name: "selfcare",
     backgroundColor: "bg-categories-selfcare-bg",
     contentColor: "text-categories-selfcare-text",
-    text: "Soins & Beauté",
     icon: SelfcareIcon,
   },
   alcohol: {
     name: "alcohol",
     backgroundColor: "bg-categories-alcohol-bg",
     contentColor: "text-categories-alcohol-text",
-    text: "Vins, Bières & Spiritueux",
     icon: AlcoholIcon,
   },
 };

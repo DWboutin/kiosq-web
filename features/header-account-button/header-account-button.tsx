@@ -12,8 +12,9 @@ import { UserCircleIcon } from "@/components/ui/icons/user-circle-icon";
 import { useUserStore } from "@/stores/user-store";
 import { FC } from "react";
 import { Link } from "@/i18n/navigation";
-
+import { useTranslations } from "next-intl";
 export const HeaderAccountButton: FC = () => {
+  const t = useTranslations("HeaderAccountButton");
   const disconnectUser = useUserStore((state) => state.disconnectUser);
 
   return (
@@ -24,17 +25,17 @@ export const HeaderAccountButton: FC = () => {
         </span>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>{t("myAccount")}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href="/dashboard">Dashboard</Link>
+          <Link href="/dashboard">{t("dashboard")}</Link>
         </DropdownMenuItem>
         <DropdownMenuItem
           onSelect={() => {
             disconnectUser();
           }}
         >
-          Sign out
+          {t("signOut")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

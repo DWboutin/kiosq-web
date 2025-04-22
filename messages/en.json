@@ -1,6 +1,102 @@
 {
-  "HomePage": {
-    "title": "Hello world!",
-    "about": "Go to the about page"
+  "Header": {
+    "searchPlaceholder": "Search on kiosq",
+    "searchButtonAriaLabel": "Search",
+    "mobileMenuButtonAriaLabel": "Mobile menu",
+    "locationButton": "Change location",
+    "locationButtonSearching": "Searching for location...",
+    "locationButtonUnavailable": "Location unavailable",
+    "connectionButton": "Connection",
+    "reservationButton": "Reservations",
+    "signOutButton": "Sign out"
+  },
+  "Categories": {
+    "discountListing": "Discounts & Sales",
+    "preparedMeals": "Prepared Meals",
+    "clothes": "Clothes",
+    "fruits": "Fruits",
+    "vegetables": "Vegetables",
+    "craftsmanship": "Craftsmanship",
+    "bakery": "Bakery",
+    "coffeeShop": "Coffee & Roasters",
+    "selfcare": "Selfcare",
+    "alcohol": "Wine, Beer & Spirits"
+  },
+  "DashboardMenu": {
+    "navigation": "Navigation",
+    "dashboard": "Dashboard",
+    "products": "Products",
+    "discounts": "Discounts",
+    "orders": "Orders",
+    "settings": "Settings",
+    "events": "Events",
+    "yourStore": "Your store",
+    "yourKiosqs": "Your kiosqs",
+    "reservations": "Reservations",
+    "billing": "Billing",
+    "admin": "Admin",
+    "learningVideos": "Learning videos",
+    "yourAccount": "Your account"
+  },
+  "DashboardAdminTabs": {
+    "importantInformation": "Important information",
+    "categories": "Categories"
+  },
+  "DashboardAdminHeader": {
+    "title": "Admin",
+    "description": "Manage the data of the Kiosq application"
+  },
+  "DashboardAdminCategoriesHeader": {
+    "title": "Categories",
+    "description": "Manage the categories"
+  },
+  "ProductCategoryFormDrawer": {
+    "openingButton": "Add a category",
+    "addTitle": "Add a category",
+    "addDescription": "Enter the category information and click on 'Add'.",
+    "addButton": "Add",
+    "editTitle": "Edit a category",
+    "editDescription": "Enter the category information and click on 'Edit'.",
+    "editButton": "Edit",
+    "cancelButton": "Cancel"
+  },
+  "ProductCategoryForm": {
+    "name": "Name",
+    "namePlaceholder": "Fruit of the season",
+    "description": "Description",
+    "descriptionPlaceholder": "The best fruit of the season directly from the farm",
+    "slug": "Slug",
+    "slugPlaceholder": "fruit-of-the-season",
+    "parent": "Parent",
+    "noParentCategory": "No parent category",
+    "orderRank": "Order rank"
+  },
+  "DataTable": {
+    "selectAll": "Select all",
+    "selectRow": "Select row"
+  },
+  "CategoriesTable": {
+    "selectAll": "Select all",
+    "name": "Name",
+    "description": "Description",
+    "slug": "Slug",
+    "parent": "Parent",
+    "createdAt": "Created At",
+    "updatedAt": "Updated At",
+    "actions": "Actions",
+    "delete": "Delete",
+    "categoryDeleted": "Category deleted successfully",
+    "categoryDeleteError": "Failed to delete category"
+  },
+  "HeaderAccountButton": {
+    "myAccount": "My account",
+    "dashboard": "Dashboard",
+    "signOut": "Sign out"
+  },
+  "DashboardBreadcrumb": {
+    "managementSystem": "Management System"
+  },
+  "AddTranslationField": {
+    "addTranslation": "Add translation"
   }
 }

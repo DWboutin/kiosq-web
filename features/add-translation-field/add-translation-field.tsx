@@ -14,6 +14,7 @@ import { CloseIcon } from "@/components/ui/icons/close-icon";
 import { cn } from "@/lib/utils";
 import { useAddTranslationField } from "@/features/add-translation-field/hooks/use-add-translation-field";
 import { FormInputContainer } from "@/components/ui/form-utils/form-input-container";
+import { useTranslations } from "next-intl";
 
 type Props<TFieldValues extends FieldValues> = {
   name: string;
@@ -30,6 +31,7 @@ export const AddTranslationField = <TFieldValues extends FieldValues>({
   className,
   errors,
 }: Props<TFieldValues>) => {
+  const t = useTranslations("AddTranslationField");
   const {
     selectors: { translationsField, remainingLocales, hasAvailableTranslations },
     actions: {
@@ -95,6 +97,7 @@ export const AddTranslationField = <TFieldValues extends FieldValues>({
           variant="outline"
           size="sm"
           className="mt-2"
+          aria-label={t("addTranslation")}
           onMouseDown={() => {
             if (remainingLocales.length > 0) {
               handleLocaleChange("", remainingLocales[0]);
@@ -102,7 +105,7 @@ export const AddTranslationField = <TFieldValues extends FieldValues>({
           }}
         >
           <PlusSquareIcon className="mr-1" />
-          <span>Add translation</span>
+          <span>{t("addTranslation")}</span>
         </Button>
       )}
     </div>

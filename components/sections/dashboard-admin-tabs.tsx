@@ -3,25 +3,24 @@
 import { Link } from "@/i18n/navigation";
 import { usePathname } from "next/navigation";
 import { FC } from "react";
+import { useTranslations } from "next-intl";
+import { DASHBOARD_ADMIN_TABS } from "@/utils/dashboard-navigation";
 
 export const DashboardAdminTabs: FC = () => {
+  const t = useTranslations();
   const pathname = usePathname();
-
-  const tabs = [
-    { label: "Important info", href: "/dashboard/admin" },
-    { label: "Categories", href: "/dashboard/admin/categories" },
-  ];
+  const tabs = Object.values(DASHBOARD_ADMIN_TABS);
 
   return (
     <nav className="flex border-b border-neutral-light" aria-label="Admin navigation">
       <div className="flex space-x-2">
         {tabs.map((tab) => {
-          const isActive = pathname.endsWith(tab.href);
+          const isActive = pathname.endsWith(tab.path);
 
           return (
             <Link
-              key={tab.href}
-              href={tab.href}
+              key={tab.path}
+              href={tab.path}
               className={`px-4 py-2 font-medium text-sm inline-flex items-center transition-colors
                 ${
                   isActive
@@ -30,7 +29,7 @@ export const DashboardAdminTabs: FC = () => {
                 }`}
               aria-current={isActive ? "page" : undefined}
             >
-              {tab.label}
+              {t(tab.labelKey)}
             </Link>
           );
         })}

@@ -3,8 +3,11 @@
 import { LocationPinIcon } from "@/components/ui/icons/location-pin-icon";
 import { FC } from "react";
 import { useGeolocation } from "@/hooks/useGeolocation";
+import { useTranslations } from "next-intl";
 
 export const LocationButton: FC = () => {
+  const t = useTranslations("Header");
+
   const {
     selectors: { city, isLoading, error },
     actions: { handleRequestLocation },
@@ -15,15 +18,17 @@ export const LocationButton: FC = () => {
       <LocationPinIcon className="w-6 h-6 text-neutral-white" />
       <div className="flex flex-col w-full">
         <span className="text-sm font-medium text-neutral-white mb-0.5 overflow-hidden text-ellipsis whitespace-nowrap">
-          {isLoading ? "Locating..." : error || city || "Location unavailable"}
+          {isLoading
+            ? t("locationButtonSearching")
+            : error || city || t("locationButtonUnavailable")}
         </span>
         <button
           type="button"
-          data-label="changer de location"
+          aria-label={t("locationButton")}
           className="text-sm font-medium text-neutral-white underline text-left"
           onClick={handleRequestLocation}
         >
-          changer de location
+          {t("locationButton")}
         </button>
       </div>
     </div>

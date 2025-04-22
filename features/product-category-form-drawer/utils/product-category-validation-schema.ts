@@ -20,15 +20,15 @@ export const createProductCategorySchema = (locale: string) => {
       .min(1, "Slug is required")
       .regex(SLUG_REGEX, "Slug must contain only lowercase letters, numbers, and hyphens"),
     parentId: z.string(),
-    orderRank: z
-      .union([
-        z.string().transform((val) => {
-          const parsed = parseInt(val, 10);
-          return isNaN(parsed) ? 0 : parsed;
-        }),
-        z.number(),
-      ])
-      .pipe(z.number().int()),
+    orderRank: z.union([
+      z.string().refine((val) => !isNaN(parseInt(val, 10)) && Number.isInteger(Number(val)), {
+        message: "Order rank must be a valid integer",
+      }),
+      z
+        .number()
+        .int()
+        .transform((val) => val.toString()),
+    ]),
     name_translations: createTranslationValidator(locale),
     description_translations: createTranslationValidator(locale),
     slug_translations: createSlugTranslationValidator(locale),
