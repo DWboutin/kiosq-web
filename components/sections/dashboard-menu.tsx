@@ -4,8 +4,6 @@ import { FC, memo, useState, useRef, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { SubMenuIcon } from "@/components/ui/icons/sub-menu-icon";
 import { Link, usePathname } from "@/i18n/navigation";
-import { VideoIcon } from "@/components/ui/icons/video-icon";
-import { UserCircleIcon } from "@/components/ui/icons/user-circle-icon";
 import { useUserStore } from "@/stores/user-store";
 import { UserRole } from "@/types/app";
 import classNames from "classnames";
