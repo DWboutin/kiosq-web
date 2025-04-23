@@ -24,9 +24,9 @@ export const DashboardBreadcrumb: FC = () => {
   }, [paths, t]);
 
   return (
-    <div className="w-full py-5 px-5 overflow-hidden">
-      <div className="flex flex-row justify-start items-center w-full gap-2 overflow-x-auto whitespace-nowrap pb-2">
-        <span className="text-xl font-inter font-semibold text-neutral-dark flex-shrink-0">
+    <div className="w-full py-4 px-5 max-md:py-2 overflow-hidden">
+      <div className="flex flex-row justify-start items-center w-full gap-2 overflow-x-auto whitespace-nowrap pb-2 text-lg max-md:text-base">
+        <span className="font-inter font-semibold text-neutral-dark flex-shrink-0">
           {t("DashboardBreadcrumb.managementSystem")}
         </span>
         <CaretRightIcon className="w-4 h-4 flex-shrink-0" />
@@ -40,7 +40,7 @@ export const DashboardBreadcrumb: FC = () => {
                 aria-current={index === links.length - 1 ? "page" : undefined}
               >
                 {link.icon}
-                <span className="text-xl font-inter font-semibold">{t(link.labelKey)}</span>
+                <span className="font-inter font-semibold">{t(link.labelKey)}</span>
               </Link>
               {index < links.length - 1 && <CaretRightIcon className="w-4 h-4 flex-shrink-0" />}
             </React.Fragment>
