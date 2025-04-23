@@ -32,7 +32,7 @@ export const Header: FC<PropsWithChildren> = async ({ children }) => {
         <div className="flex flex-1 items-center min-md:gap-6 max-md:flex-row-reverse">
           <Link
             href="/"
-            className="flex items-center gap-2 py-3 max-md:flex-1 max-md:justify-center max-md:pl-14"
+            className="flex items-center gap-2 py-3 max-md:flex-1 max-md:justify-center max-md:pl-28"
           >
             <KiosqLogo />
             <span className="text-xl font-lato text-brand-medium">kiosq</span>
