@@ -69,7 +69,13 @@
     "slugPlaceholder": "fruit-of-the-season",
     "parent": "Parent",
     "noParentCategory": "No parent category",
-    "orderRank": "Order rank"
+    "orderRank": "Order rank",
+    "validationNameRequired": "The name is required",
+    "validationDescriptionRequired": "The description is required",
+    "validationDescriptionMinWords": "The description must contain at least 10 words",
+    "validationSlugRequired": "The slug is required",
+    "validationSlugFormat": "The slug must be in lowercase and contain only letters, numbers and dashes",
+    "validationOrderRankValidInteger": "Order rank must be a valid integer"
   },
   "DataTable": {
     "selectAll": "Select all",
@@ -97,6 +103,10 @@
     "managementSystem": "Management System"
   },
   "AddTranslationField": {
-    "addTranslation": "Add translation"
+    "addTranslation": "Add translation",
+    "validationTranslationRequired": "Translation is required",
+    "validationSlugTranslationRequired": "Slug translation is required",
+    "validationSlugTranslationFormat": "Slug translation must be in lowercase and contain only letters, numbers and dashes",
+    "validationTranslationKeysSupportedLocales": "Translation keys must be supported locales and cannot include current locale"
   }
 }

@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { LOCALES, SLUG_REGEX } from "@/utils/constants";
 
-export const createTranslationValidator = (currentLocale: string) =>
+export const createTranslationValidator = (currentLocale: string, t: (key: string) => string) =>
   z
-    .record(z.string(), z.string().min(1, "Translation cannot be empty"))
+    .record(z.string(), z.string().min(1, t("AddTranslationField.validationTranslationRequired")))
     .optional()
     .transform((val) => val || {})
     .refine(
@@ -12,17 +12,17 @@ export const createTranslationValidator = (currentLocale: string) =>
         Object.keys(translations).every(
           (key) => key !== currentLocale && LOCALES.includes(key as (typeof LOCALES)[number])
         ),
-      { message: "Translation keys must be supported locales and cannot include current locale" }
+      { message: t("AddTranslationField.validationTranslationKeysSupportedLocales") }
     );
 
-export const createSlugTranslationValidator = (currentLocale: string) =>
+export const createSlugTranslationValidator = (currentLocale: string, t: (key: string) => string) =>
   z
     .record(
       z.string(),
       z
         .string()
-        .min(1, "Translation cannot be empty")
-        .regex(SLUG_REGEX, "Slug must contain only lowercase letters, numbers, and hyphens")
+        .min(1, t("AddTranslationField.validationSlugTranslationRequired"))
+        .regex(SLUG_REGEX, t("AddTranslationField.validationSlugTranslationFormat"))
     )
     .optional()
     .transform((val) => val || {})
@@ -32,5 +32,5 @@ export const createSlugTranslationValidator = (currentLocale: string) =>
         Object.keys(translations).every(
           (key) => key !== currentLocale && LOCALES.includes(key as (typeof LOCALES)[number])
         ),
-      { message: "Translation keys must be supported locales and cannot include current locale" }
+      { message: t("AddTranslationField.validationTranslationKeysSupportedLocales") }
     );

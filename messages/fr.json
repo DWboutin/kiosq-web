@@ -69,7 +69,13 @@
     "slugPlaceholder": "fruit-de-la-saison",
     "parent": "Parent",
     "noParentCategory": "Aucune catégorie parente",
-    "orderRank": "Ordre"
+    "orderRank": "Ordre",
+    "validationNameRequired": "Le nom est requis",
+    "validationDescriptionRequired": "La description est requise",
+    "validationDescriptionMinWords": "La description doit contenir au moins 10 mots",
+    "validationSlugRequired": "Le slug est requis",
+    "validationSlugFormat": "Le slug doit être en minuscules et contenir uniquement des lettres, des chiffres et des tirets",
+    "validationOrderRankValidInteger": "L'ordre doit être un entier valide"
   },
   "DataTable": {
     "selectAll": "Tout sélectionner",
@@ -97,6 +103,10 @@
     "managementSystem": "Système de gestion"
   },
   "AddTranslationField": {
-    "addTranslation": "Ajouter une traduction"
+    "addTranslation": "Ajouter une traduction",
+    "validationTranslationRequired": "La traduction est requise",
+    "validationSlugTranslationRequired": "La traduction du slug est requise",
+    "validationSlugTranslationFormat": "Le slug doit être en minuscules et contenir uniquement des lettres, des chiffres et des tirets",
+    "validationTranslationKeysSupportedLocales": "Les clés de traduction doivent être des locales supportées et ne doivent pas inclure la locale actuelle"
   }
 }

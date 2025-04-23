@@ -1,6 +1,6 @@
 import { Control, FieldErrors, useForm } from "react-hook-form";
 import { Locales } from "@/types/app";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { addProductCategory } from "@/actions/add-product-category";
 import { SideDrawerRef } from "@/components/ui/side-drawer";
 import { useEffect, RefObject } from "react";
@@ -11,6 +11,7 @@ import { extractTranslations } from "@/utils/extract-translations";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createProductCategorySchema } from "@/features/product-category-form-drawer/utils/product-category-validation-schema";
+import { slugify } from "@/utils/slugify";
 
 export type ProductCategoryFormValues = z.infer<ReturnType<typeof createProductCategorySchema>>;
 
@@ -31,6 +32,7 @@ type ProductCategoryFormHook = {
 export const useProductCategoryForm = (
   sideDrawerRef: RefObject<SideDrawerRef>
 ): ProductCategoryFormHook => {
+  const t = useTranslations();
   const locale = useLocale() as Locales;
   const initialData = useCategoriesStore((state) => state.initialData);
   const selectedId = useCategoriesStore((state) => state.selectedId);
@@ -38,13 +40,15 @@ export const useProductCategoryForm = (
   const resetInitialData = useCategoriesStore((state) => state.resetInitialData);
   const isDrawerOpen = sideDrawerRef?.current?.isOpen;
   const previousIsDrawerOpen = usePrevious(isDrawerOpen);
-  const validationSchema = createProductCategorySchema(locale);
+  const validationSchema = createProductCategorySchema(locale, t);
 
   const {
     control,
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
+    setValue,
   } = useForm({
     defaultValues: {
       name: "",
@@ -58,6 +62,9 @@ export const useProductCategoryForm = (
     },
     resolver: zodResolver(validationSchema),
   });
+  const name = watch("name");
+  const name_translations = watch("name_translations");
+  const slug_translations = watch("slug_translations");
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -125,6 +132,29 @@ export const useProductCategoryForm = (
       sideDrawerRef?.current?.open();
     }
   }, [initialData, lastSelected, isDrawerOpen, sideDrawerRef]);
+
+  useEffect(() => {
+    if (name) {
+      setValue("slug", slugify(name));
+    }
+  }, [name]);
+
+  useEffect(() => {
+    if (name_translations && Object.keys(name_translations).length > 0) {
+      const updatedSlugs = Object.keys(name_translations).reduce<Record<string, string>>(
+        (acc, nameLocale) => ({
+          ...acc,
+          [nameLocale]: slugify(name_translations[nameLocale]),
+        }),
+        {}
+      );
+
+      setValue("slug_translations", {
+        ...(slug_translations || {}),
+        ...updatedSlugs,
+      });
+    }
+  }, [name_translations]);
 
   return {
     selectors: {
