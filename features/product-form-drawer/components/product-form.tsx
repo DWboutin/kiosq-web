@@ -2,19 +2,19 @@ import { FormInputContainer } from "@/components/ui/form-utils/form-input-contai
 import { UnitDropdown } from "@/components/ui/form-utils/unit-dropdown";
 import { Input } from "@/components/ui/input";
 import { Controller } from "react-hook-form";
-import { ProductFormValues } from "@/features/add-product-form-drawer/hooks/use-add-product-form";
+import { ProductFormValues } from "@/features/product-form-drawer/hooks/use-product-form";
 import { FieldErrors, Control } from "react-hook-form";
 import { FC } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { ControlledSelect } from "@/components/ui/form-utils/controlled-select";
 import { CATEGORIES_ORDER } from "@/utils/constants";
 
-type AddProductFormProps = {
+type ProductFormProps = {
   control: Control<ProductFormValues>;
   errors: FieldErrors<ProductFormValues>;
 };
 
-export const AddProductForm: FC<AddProductFormProps> = ({ control, errors }) => {
+export const ProductForm: FC<ProductFormProps> = ({ control, errors }) => {
   return (
     <>
       <FormInputContainer

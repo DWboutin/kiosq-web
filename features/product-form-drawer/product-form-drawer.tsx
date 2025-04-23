@@ -4,15 +4,15 @@ import { FC } from "react";
 import { SideDrawer } from "@/components/ui/side-drawer";
 import { Button } from "@/components/ui/button";
 import { PlusSquareIcon } from "@/components/ui/icons/plus-square-icon";
-import { useAddProductForm } from "@/features/add-product-form-drawer/hooks/use-add-product-form";
-import { AddProductFormChecklist } from "@/features/add-product-form-drawer/components/add-product-form-checklist";
-import { AddProductForm } from "@/features/add-product-form-drawer/components/add-product-form";
+import { useProductForm } from "@/features/product-form-drawer/hooks/use-product-form";
+import { ProductFormChecklist } from "@/features/product-form-drawer/components/product-form-checklist";
+import { ProductForm } from "@/features/product-form-drawer/components/product-form";
 
-export const AddProductFormDrawer: FC = () => {
+export const ProductFormDrawer: FC = () => {
   const {
     selectors: { control, errors, fields },
     actions: { handleFormSubmit, addChecklistItem, remove },
-  } = useAddProductForm();
+  } = useProductForm();
 
   return (
     <SideDrawer
@@ -31,8 +31,8 @@ export const AddProductFormDrawer: FC = () => {
       }
     >
       <div className="flex flex-col gap-4">
-        <AddProductForm control={control} errors={errors} />
-        <AddProductFormChecklist
+        <ProductForm control={control} errors={errors} />
+        <ProductFormChecklist
           fields={fields}
           addChecklistItem={addChecklistItem}
           remove={remove}

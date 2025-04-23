@@ -1,5 +1,5 @@
 import { DashboardPageHeading } from "@/components/sections/dashboard-page-heading";
-import { AddProductFormDrawer } from "@/features/add-product-form-drawer/add-product-form-drawer";
+import { ProductFormDrawer } from "@/features/add-product-form-drawer/add-product-form-drawer";
 
 export default function DashboardProductsPage() {
   return (
@@ -7,7 +7,7 @@ export default function DashboardProductsPage() {
       <DashboardPageHeading
         title="Produits"
         description="Gérer facilement vos produits, leurs inventaire et leur disponibilité selon la saison"
-        cta={<AddProductFormDrawer />}
+        cta={<ProductFormDrawer />}
       />
     </div>
   );

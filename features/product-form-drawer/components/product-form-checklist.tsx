@@ -2,18 +2,18 @@ import { Button } from "@/components/ui/button";
 import { CloseIcon } from "@/components/ui/icons/close-icon";
 import { PlusSquareIcon } from "@/components/ui/icons/plus-square-icon";
 import { Input } from "@/components/ui/input";
-import { ProductFormValues } from "@/features/add-product-form-drawer/hooks/use-add-product-form";
+import { ProductFormValues } from "@/features/product-form-drawer/hooks/use-product-form";
 import { FC } from "react";
 import { FieldArrayWithId, Control, Controller } from "react-hook-form";
 
-type AddProductFormChecklistProps = {
+type ProductFormChecklistProps = {
   fields: FieldArrayWithId<ProductFormValues, "checklist", "id">[];
   addChecklistItem: () => void;
   remove: (index: number) => void;
   control: Control<ProductFormValues>;
 };
 
-export const AddProductFormChecklist: FC<AddProductFormChecklistProps> = ({
+export const ProductFormChecklist: FC<ProductFormChecklistProps> = ({
   fields,
   addChecklistItem,
   remove,

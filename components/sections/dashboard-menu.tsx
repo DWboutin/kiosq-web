@@ -114,6 +114,24 @@ export const DashboardMenu: FC = () => {
   }, [open]);
 
   useEffect(() => {
+    if (!open) return;
+
+    const handleFocusOut = (e: FocusEvent) => {
+      const target = e.target as Node;
+      const menuContainer = navRef.current?.parentElement;
+
+      if (menuContainer && !menuContainer.contains(target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("focusin", handleFocusOut);
+    return () => {
+      document.removeEventListener("focusin", handleFocusOut);
+    };
+  }, [open]);
+
+  useEffect(() => {
     if (open) {
       setOpen(false);
     }

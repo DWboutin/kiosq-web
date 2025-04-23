@@ -12,7 +12,7 @@ export type ProductFormValues = {
   checklist: ChecklistItem[];
 };
 
-export const useAddProductForm = () => {
+export const useProductForm = () => {
   const {
     control,
     handleSubmit,
