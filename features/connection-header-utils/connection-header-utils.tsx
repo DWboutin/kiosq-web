@@ -9,6 +9,7 @@ import { HeaderAccountButton } from "@/features/header-account-button/header-acc
 import { useUserStore } from "@/stores/user-store";
 import { ShoppingBagIcon } from "@/components/ui/icons/shopping-bag-icon";
 import { useTranslations } from "next-intl";
+import { HeaderLocaleButton } from "@/features/header-locale-button/header-locale-button";
 
 export const ConnectionHeaderUtils: FC = () => {
   const t = useTranslations("Header");
@@ -27,6 +28,7 @@ export const ConnectionHeaderUtils: FC = () => {
 
   return (
     <div className="flex items-center px-2 py-2">
+      <HeaderLocaleButton />
       <HeaderAccountButton />
       <Button variant="ghost" size="icon" aria-label={t("reservationButton")}>
         <ShoppingBagIcon className="text-neutral-dark size-6" />

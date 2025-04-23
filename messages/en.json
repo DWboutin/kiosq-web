@@ -1,4 +1,9 @@
 {
+  "Locales": {
+    "en": "English",
+    "fr": "Français",
+    "localeButton": "Language"
+  },
   "Header": {
     "searchPlaceholder": "Search on kiosq",
     "searchButtonAriaLabel": "Search",

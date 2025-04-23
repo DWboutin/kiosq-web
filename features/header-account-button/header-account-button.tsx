@@ -13,16 +13,17 @@ import { useUserStore } from "@/stores/user-store";
 import { FC } from "react";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
 export const HeaderAccountButton: FC = () => {
   const t = useTranslations("HeaderAccountButton");
   const disconnectUser = useUserStore((state) => state.disconnectUser);
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <span className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-inter font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-brand-danger/20 aria-invalid:border-brand-danger hover:bg-accent hover:text-accent-foreground size-9 appearance-none select-none cursor-pointer focus:outline-none">
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon" aria-label={t("accountButton")}>
           <UserCircleIcon className="text-neutral-dark size-6" />
-        </span>
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>{t("myAccount")}</DropdownMenuLabel>
