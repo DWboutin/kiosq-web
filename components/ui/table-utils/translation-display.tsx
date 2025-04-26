@@ -7,12 +7,14 @@ type TranslationDisplayProps = {
   translations: Record<string, string>;
   currentLocale: string;
   disabledTooltip?: boolean;
+  disableHoverableContent?: boolean;
 };
 
 export const TranslationDisplay: FC<TranslationDisplayProps> = ({
   translations,
   currentLocale,
   disabledTooltip,
+  disableHoverableContent = true,
 }) => {
   const missingLocales = AppConfig.locales.filter((locale) => !translations[locale]?.trim());
 
@@ -21,6 +23,7 @@ export const TranslationDisplay: FC<TranslationDisplayProps> = ({
       <TooltipContainer
         content={translations[currentLocale]}
         open={disabledTooltip ? false : undefined}
+        disableHoverableContent={disableHoverableContent}
       >
         <div className="truncate max-w-full">{translations[currentLocale]}</div>
       </TooltipContainer>

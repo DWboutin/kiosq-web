@@ -16,6 +16,7 @@ import {
   formatCategoriesWithChildren,
   getFlattenedData,
 } from "@/utils/factories/hierarchical-categories-factory";
+import { LocaleFullDate } from "@/components/ui/locale-date";
 
 type CategoriesTableProps = {
   data: FormattedProductCategory[];
@@ -115,10 +116,12 @@ export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
       {
         header: t("DataTable.createdAt"),
         accessorKey: "createdAt",
+        cell: ({ row }) => <LocaleFullDate date={row.original.createdAt} />,
       },
       {
         header: t("DataTable.updatedAt"),
         accessorKey: "updatedAt",
+        cell: ({ row }) => <LocaleFullDate date={row.original.updatedAt} />,
       },
       {
         header: t("DataTable.actions"),
