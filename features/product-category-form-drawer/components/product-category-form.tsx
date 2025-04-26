@@ -4,12 +4,15 @@ import { FormInputContainer } from "@/components/ui/form-utils/form-input-contai
 import { Input } from "@/components/ui/input";
 import { Control, Controller } from "react-hook-form";
 import { FieldErrors } from "react-hook-form";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { ProductCategoryFormValues } from "@/features/product-category-form-drawer/hooks/use-product-category-form";
 import { ControlledSelect } from "@/components/ui/form-utils/controlled-select";
 import { AddTranslationField } from "@/features/add-translation-field/add-translation-field";
 import { useTranslations } from "next-intl";
+import { useProductCategories } from "@/hooks/useProductCategories";
+import { Locales } from "@/types/app";
+import { useLocale } from "next-intl";
 
 type ProductCategoryFormProps = {
   control: Control<ProductCategoryFormValues>;
@@ -17,7 +20,23 @@ type ProductCategoryFormProps = {
 };
 
 export const ProductCategoryForm: FC<ProductCategoryFormProps> = ({ control, errors }) => {
+  const locale = useLocale() as Locales;
   const t = useTranslations("ProductCategoryForm");
+  const {
+    selectors: { categories },
+  } = useProductCategories();
+  const parentCategories = useMemo(() => {
+    if (!categories) {
+      return [];
+    }
+
+    return categories
+      ?.filter((category) => !category.parentId)
+      .map((category) => ({
+        label: category.name[locale],
+        value: category.id,
+      }));
+  }, [categories, locale]);
 
   return (
     <>
@@ -90,12 +109,7 @@ export const ProductCategoryForm: FC<ProductCategoryFormProps> = ({ control, err
               id="parentId"
               aria-invalid={!!errors.parentId}
               {...field}
-              options={[
-                {
-                  label: t("noParentCategory"),
-                  value: "false",
-                },
-              ]}
+              options={parentCategories}
             />
           )}
         />

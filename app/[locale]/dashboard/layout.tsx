@@ -16,7 +16,7 @@ export default function DashboardLayout({
         <div className="absolute top-6 left-4 max-md:left-0">
           <DashboardMenu />
         </div>
-        <div className="flex flex-col">{children}</div>
+        <div className="flex flex-col pb-20">{children}</div>
       </div>
     </>
   );

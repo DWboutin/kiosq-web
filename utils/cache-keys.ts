@@ -21,6 +21,11 @@ export const cacheKeys = {
       tag: "product-categories",
       queryKey: ["productCategories", "list"] as const,
     } satisfies CacheKeyConfig,
+    listByLocale: (locale: string): CacheKeyConfig => ({
+      revalidate: 86400, // 1 day
+      tag: `product-categories-${locale}`,
+      queryKey: ["productCategories", "list", locale] as const,
+    }),
     detail: (id: string | number): CacheKeyConfig => ({
       revalidate: 86400, // 1 day
       tag: `product-category-${id}`,

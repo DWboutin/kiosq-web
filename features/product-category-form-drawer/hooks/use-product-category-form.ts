@@ -36,8 +36,8 @@ export const useProductCategoryForm = (
   const locale = useLocale() as Locales;
   const initialData = useCategoriesStore((state) => state.initialData);
   const selectedId = useCategoriesStore((state) => state.selectedId);
+  const resetCategory = useCategoriesStore((state) => state.resetCategory);
   const lastSelected = useCategoriesStore((state) => state.lastSelected);
-  const resetInitialData = useCategoriesStore((state) => state.resetInitialData);
   const isDrawerOpen = sideDrawerRef?.current?.isOpen;
   const previousIsDrawerOpen = usePrevious(isDrawerOpen);
   const validationSchema = createProductCategorySchema(locale, t);
@@ -82,7 +82,7 @@ export const useProductCategoryForm = (
       }
       sideDrawerRef?.current?.close();
       reset();
-      resetInitialData();
+      resetCategory();
     } catch (error) {
       console.error(error);
     }

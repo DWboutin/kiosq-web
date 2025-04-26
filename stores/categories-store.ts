@@ -6,8 +6,8 @@ type CategoriesState = {
   selectedId: string | null;
   lastSelected: number;
   setInitialData: (data: FormattedProductCategory) => void;
-  resetInitialData: () => void;
   selectCategory: (category: FormattedProductCategory) => void;
+  resetCategory: () => void;
 };
 
 export const useCategoriesStore = create<CategoriesState>((set) => ({
@@ -15,11 +15,16 @@ export const useCategoriesStore = create<CategoriesState>((set) => ({
   selectedId: null,
   lastSelected: 0,
   setInitialData: (data) => set({ initialData: data }),
-  resetInitialData: () => set({ initialData: null }),
   selectCategory: (category) =>
     set({
       initialData: { ...category },
       selectedId: category.id,
       lastSelected: Date.now(),
+    }),
+  resetCategory: () =>
+    set({
+      initialData: null,
+      selectedId: null,
+      lastSelected: 0,
     }),
 }));

@@ -100,6 +100,7 @@
     "categoryDeleteError": "Échec de la suppression de la catégorie"
   },
   "HeaderAccountButton": {
+    "accountButton": "Menu de votre compte",
     "myAccount": "Mon compte",
     "dashboard": "Tableau de bord",
     "signOut": "Déconnexion"

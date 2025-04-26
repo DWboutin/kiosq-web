@@ -100,6 +100,7 @@
     "categoryDeleteError": "Failed to delete category"
   },
   "HeaderAccountButton": {
+    "accountButton": "Your account menu",
     "myAccount": "My account",
     "dashboard": "Dashboard",
     "signOut": "Sign out"
