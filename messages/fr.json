@@ -100,7 +100,8 @@
     "categoryDeleted": "Catégorie supprimée avec succès",
     "categoryDeleteError": "Échec de la suppression de la catégorie",
     "categoryAdded": "Catégorie ajoutée avec succès",
-    "categoryAddError": "Échec de l'ajout de la catégorie"
+    "categoryAddError": "Échec de l'ajout de la catégorie",
+    "slugExists": "Le slug existe déjà. Veuillez choisir un autre slug."
   },
   "HeaderAccountButton": {
     "accountButton": "Menu de votre compte",

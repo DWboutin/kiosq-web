@@ -12,7 +12,7 @@ export const ProductCategoryFormDrawer: FC = () => {
   const t = useTranslations("ProductCategoryFormDrawer");
   const drawerRef = useRef<SideDrawerRef>(null);
   const {
-    selectors: { control, errors, isUpdating },
+    selectors: { control, errors, isUpdating, hasErrors },
     actions: { handleFormSubmit },
   } = useProductCategoryForm(drawerRef as RefObject<SideDrawerRef>);
 
@@ -24,6 +24,7 @@ export const ProductCategoryFormDrawer: FC = () => {
       buttonSubmitLabel={isUpdating ? t("editButton") : t("addButton")}
       buttonCancelLabel={t("cancelButton")}
       handleSubmit={handleFormSubmit}
+      formHasErrors={hasErrors}
       trigger={
         <Button asChild>
           <span>

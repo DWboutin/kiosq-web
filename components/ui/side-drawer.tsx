@@ -12,6 +12,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type SideDrawerProps = {
   title: string;
@@ -20,6 +21,7 @@ type SideDrawerProps = {
   buttonSubmitLabel: string;
   buttonCancelLabel: string;
   handleSubmit: () => void;
+  formHasErrors?: boolean;
 } & PropsWithChildren;
 
 export type SideDrawerRef = {
@@ -30,7 +32,16 @@ export type SideDrawerRef = {
 
 export const SideDrawer = forwardRef<SideDrawerRef, SideDrawerProps>(
   (
-    { children, title, description, trigger, buttonSubmitLabel, buttonCancelLabel, handleSubmit },
+    {
+      children,
+      title,
+      description,
+      trigger,
+      buttonSubmitLabel,
+      buttonCancelLabel,
+      handleSubmit,
+      formHasErrors,
+    },
     ref
   ) => {
     const [open, setOpen] = useState(false);
@@ -59,7 +70,9 @@ export const SideDrawer = forwardRef<SideDrawerRef, SideDrawerProps>(
                   <span>{buttonCancelLabel}</span>
                 </Button>
               </DrawerClose>
-              <Button onClick={handleSubmit}>{buttonSubmitLabel}</Button>
+              <Button onClick={handleSubmit} className={cn(formHasErrors && "animate-shake")}>
+                {buttonSubmitLabel}
+              </Button>
             </div>
           </DrawerFooter>
         </DrawerContent>

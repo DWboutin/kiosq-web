@@ -30,6 +30,10 @@ export const addProductCategory = async (category: AddProductCategoryArgs) => {
     });
 
     if (error) {
+      // Check for slug uniqueness error
+      if (error.code === "P0001" && error.message.includes("Slug")) {
+        throw new Error(`Slug Error: ${error.message}`);
+      }
       throw new Error(error.message);
     }
 
@@ -37,7 +41,12 @@ export const addProductCategory = async (category: AddProductCategoryArgs) => {
 
     return data;
   } catch (error) {
-    console.error(error);
+    if (error instanceof Error && error.message.includes("Slug")) {
+      throw error;
+    }
+    if (error instanceof Error && error.message) {
+      throw error;
+    }
     throw new Error("Failed to add product category");
   }
 };

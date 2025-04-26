@@ -1,7 +1,7 @@
 "use server";
 
 import { ProductCategoryFormValues } from "@/features/product-category-form-drawer/hooks/use-product-category-form";
-import { InsertWithLocale, UpdateWithLocale } from "@/types/app";
+import { UpdateWithLocale } from "@/types/app";
 import { cacheKeys } from "@/utils/cache-keys";
 import { createClient } from "@/utils/supabase/server";
 import { revalidateTag } from "next/cache";
@@ -33,6 +33,10 @@ export const updateProductCategory = async (category: UpdateProductCategoryArgs)
       .eq("id", category.id);
 
     if (error) {
+      // Check for slug uniqueness error
+      if (error.code === "P0001" && error.message.includes("Slug")) {
+        throw new Error(`Slug Error: ${error.message}`);
+      }
       throw new Error(error.message);
     }
 
@@ -40,7 +44,12 @@ export const updateProductCategory = async (category: UpdateProductCategoryArgs)
 
     return data;
   } catch (error) {
-    console.error(error);
-    throw new Error("Failed to add product category");
+    if (error instanceof Error && error.message.includes("Slug")) {
+      throw error;
+    }
+    if (error instanceof Error && error.message) {
+      throw error;
+    }
+    throw new Error("Failed to update product category");
   }
 };

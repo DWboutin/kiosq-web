@@ -24,7 +24,9 @@ type ProductCategoryFormSelectors = {
   control: Control<ProductCategoryFormValues>;
   errors: FieldErrors<ProductCategoryFormValues>;
   isUpdating: boolean;
+  hasErrors: boolean;
 };
+
 type ProductCategoryFormHook = {
   selectors: ProductCategoryFormSelectors;
   actions: ProductCategoryFormActions;
@@ -50,6 +52,7 @@ export const useProductCategoryForm = (
     reset,
     watch,
     setValue,
+    setError,
   } = useForm({
     defaultValues: {
       name: "",
@@ -86,8 +89,25 @@ export const useProductCategoryForm = (
       resetCategory();
       toast.success(t("CategoriesTable.categoryAdded"));
     } catch (error) {
-      console.error(error);
-      toast.error(t("CategoriesTable.categoryAddError"));
+      if (error instanceof Error && error.message.includes("Slug")) {
+        // Extract language information if available
+        const languageMatch = error.message.match(/language "([^"]+)"/);
+        const language = languageMatch ? languageMatch[1] : null;
+
+        if (language && language !== locale) {
+          // If the error is for a translation
+          const translationKey = `slug_translations.${language}`;
+          setError(translationKey as `slug_translations.${string}`, {
+            message: t("CategoriesTable.slugExists"),
+          });
+        } else {
+          // Default case: set error on the main slug field
+          setError("slug", { message: t("CategoriesTable.slugExists") });
+        }
+      } else {
+        console.error(error);
+        toast.error(t("CategoriesTable.categoryAddError"));
+      }
     }
   });
 
@@ -179,6 +199,7 @@ export const useProductCategoryForm = (
     selectors: {
       control: control as Control<ProductCategoryFormValues>,
       errors,
+      hasErrors: errors ? Object.keys(errors).length > 0 : false,
       isUpdating: !!selectedId,
     },
     actions: { handleFormSubmit: onSubmit },

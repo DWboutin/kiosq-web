@@ -100,7 +100,8 @@
     "categoryDeleted": "Category deleted successfully",
     "categoryDeleteError": "Failed to delete category",
     "categoryAdded": "Category added successfully",
-    "categoryAddError": "Failed to add category"
+    "categoryAddError": "Failed to add category",
+    "slugExists": "Slug already exists. Please choose a different slug."
   },
   "HeaderAccountButton": {
     "accountButton": "Your account menu",
