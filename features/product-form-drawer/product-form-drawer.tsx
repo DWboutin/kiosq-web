@@ -1,7 +1,7 @@
 "use client";
 
 import { FC } from "react";
-import { SideDrawer } from "@/components/ui/side-form-drawer";
+import { SideFormDrawer } from "@/components/ui/side-form-drawer";
 import { Button } from "@/components/ui/button";
 import { PlusSquareIcon } from "@/components/ui/icons/plus-square-icon";
 import { useProductForm } from "@/features/product-form-drawer/hooks/use-product-form";
@@ -15,7 +15,7 @@ export const ProductFormDrawer: FC = () => {
   } = useProductForm();
 
   return (
-    <SideDrawer
+    <SideFormDrawer
       title="Ajouter un produit"
       description='Entrez les informations du produit et cliquez sur "Ajouter".'
       buttonSubmitLabel="Ajouter"
@@ -39,6 +39,6 @@ export const ProductFormDrawer: FC = () => {
           control={control}
         />
       </div>
-    </SideDrawer>
+    </SideFormDrawer>
   );
 };

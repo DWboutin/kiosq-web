@@ -1,5 +1,5 @@
 import { DashboardPageHeading } from "@/components/sections/dashboard-page-heading";
-import { ProductFormDrawer } from "@/features/add-product-form-drawer/add-product-form-drawer";
+import { ProductFormDrawer } from "@/features/product-form-drawer/product-form-drawer";
 
 export default function DashboardProductsPage() {
   return (
