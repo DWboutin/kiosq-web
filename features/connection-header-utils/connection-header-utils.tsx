@@ -9,7 +9,6 @@ import { HeaderAccountButton } from "@/features/header-account-button/header-acc
 import { useUserStore } from "@/stores/user-store";
 import { ShoppingBagIcon } from "@/components/ui/icons/shopping-bag-icon";
 import { useTranslations } from "next-intl";
-import { HeaderLocaleButton } from "@/features/header-locale-button/header-locale-button";
 
 export const ConnectionHeaderUtils: FC = () => {
   const t = useTranslations("Header");

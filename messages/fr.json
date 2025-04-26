@@ -110,7 +110,9 @@
     "signOut": "Déconnexion"
   },
   "DashboardBreadcrumb": {
-    "managementSystem": "Système de gestion"
+    "mobileMenu": "Menu mobile",
+    "managementSystem": "Système de gestion",
+    "previousNavigation": "Navigation antérieure"
   },
   "AddTranslationField": {
     "addTranslation": "Ajouter une traduction",

@@ -71,8 +71,8 @@ const DashboardMenuLink = memo(
         aria-current={isActive ? "page" : undefined}
         aria-label={ariaLabel}
       >
-        <Button variant="ghost" size="icon" tabIndex={-1}>
-          {icon}
+        <Button variant="ghost" size="icon" tabIndex={-1} asChild>
+          <span className="size-6">{icon}</span>
         </Button>
         <p className="font-inter text-base pl-2 group-[.is-open]:inline-block hidden">{children}</p>
       </Link>
@@ -141,7 +141,7 @@ export const DashboardMenu: FC = () => {
     <div
       className={classNames(
         "relative z-10 flex flex-col py-5 px-4 bg-neutral-white rounded-xl max-md:rounded-l-none group",
-        open ? "is-open shadow-lg shadow-neutral-400/20" : "shadow-none"
+        { "is-open shadow-lg shadow-neutral-400/20": open, "shadow-none": !open }
       )}
       role="navigation"
       aria-label="Dashboard navigation"
@@ -162,8 +162,8 @@ export const DashboardMenu: FC = () => {
           {t("DashboardMenu.navigation")}
         </p>
       </div>
-      <nav className="flex flex-col flex-1 pt-10" id="dashboard-navigation-menu" ref={navRef}>
-        <ul className="flex flex-col gap-3" role="menu">
+      <nav className="flex flex-col flex-1 mt-4" id="dashboard-navigation-menu" ref={navRef}>
+        <ul className="flex flex-col gap-2" role="menu">
           {links.map((link) => (
             <li key={`dashboard-link-${link.labelKey}`} role="none">
               <DashboardMenuLink
@@ -180,7 +180,7 @@ export const DashboardMenu: FC = () => {
         </ul>
       </nav>
       <div
-        className="flex flex-col gap-2 pt-6 mt-6 border-t border-neutral-lightest"
+        className="flex flex-col gap-2 pt-4 mt-4 border-t border-neutral-lightest"
         role="complementary"
         aria-label="User account actions"
       >

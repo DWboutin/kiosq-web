@@ -11,11 +11,36 @@ import { VideoIcon } from "@/components/ui/icons/video-icon";
 import { UserCircleIcon } from "@/components/ui/icons/user-circle-icon";
 import { UserRole } from "@/types/app";
 
-type DashboardLink = {
+export type DashboardLink = {
   path: string;
   labelKey: string;
   icon?: React.ReactNode;
   role?: UserRole;
+  children?: Record<string, DashboardLink>;
+};
+
+export const DASHBOARD_UTILS_LINKS: Record<string, DashboardLink> = {
+  training: {
+    path: "/dashboard/training",
+    labelKey: "DashboardMenu.learningVideos",
+    icon: <VideoIcon className="size-6" />,
+  },
+  account: {
+    path: "/dashboard/account",
+    labelKey: "DashboardMenu.yourAccount",
+    icon: <UserCircleIcon className="size-6" />,
+  },
+};
+
+export const DASHBOARD_ADMIN_TABS: Record<string, DashboardLink> = {
+  importantInformation: {
+    path: "/dashboard/admin",
+    labelKey: "DashboardAdminTabs.importantInformation",
+  },
+  categories: {
+    path: "/dashboard/admin/categories",
+    labelKey: "DashboardAdminTabs.categories",
+  },
 };
 
 export const DASHBOARD_LINKS: Record<string, DashboardLink> = {
@@ -64,29 +89,6 @@ export const DASHBOARD_LINKS: Record<string, DashboardLink> = {
     labelKey: "DashboardMenu.admin",
     icon: <KeyholeIcon className="size-6" />,
     role: "admin" as UserRole,
-  },
-};
-
-export const DASHBOARD_UTILS_LINKS: Record<string, DashboardLink> = {
-  training: {
-    path: "/dashboard/training",
-    labelKey: "DashboardMenu.learningVideos",
-    icon: <VideoIcon className="size-6" />,
-  },
-  account: {
-    path: "/dashboard/account",
-    labelKey: "DashboardMenu.yourAccount",
-    icon: <UserCircleIcon className="size-6" />,
-  },
-};
-
-export const DASHBOARD_ADMIN_TABS: Record<string, DashboardLink> = {
-  importantInformation: {
-    path: "/dashboard/admin",
-    labelKey: "DashboardAdminTabs.importantInformation",
-  },
-  categories: {
-    path: "/dashboard/admin/categories",
-    labelKey: "DashboardAdminTabs.categories",
+    children: DASHBOARD_ADMIN_TABS,
   },
 };
