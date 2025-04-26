@@ -100,7 +100,11 @@
     "categoryDeleteError": "Échec de la suppression de la catégorie",
     "categoryAdded": "Catégorie ajoutée avec succès",
     "categoryAddError": "Échec de l'ajout de la catégorie",
-    "slugExists": "Le slug existe déjà. Veuillez choisir un autre slug."
+    "slugExists": "Le slug existe déjà. Veuillez choisir un autre slug.",
+    "deleteModalTitle": "Supprimer la catégorie",
+    "deleteModalDescription": "Êtes-vous sûr de vouloir supprimer cette catégorie ?",
+    "deleteModalButton": "Supprimer",
+    "cancelModalButton": "Annuler"
   },
   "HeaderAccountButton": {
     "accountButton": "Menu de votre compte",

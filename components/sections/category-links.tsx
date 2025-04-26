@@ -2,6 +2,7 @@ import { ProductCategoryCard } from "@/components/ui/product-category-card";
 import { Link } from "@/i18n/navigation";
 import { CATEGORIES_ORDER } from "@/utils/constants";
 import { getTranslations } from "next-intl/server";
+
 export const CategoryLinks = async () => {
   const t = await getTranslations("Categories");
 

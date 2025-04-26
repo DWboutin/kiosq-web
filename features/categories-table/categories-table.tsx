@@ -17,6 +17,8 @@ import {
   getFlattenedData,
 } from "@/utils/factories/hierarchical-categories-factory";
 import { LocaleFullDate } from "@/components/ui/locale-date";
+import { useCategoriesTable } from "@/features/categories-table/hooks/use-categories-table";
+import { DeleteButtonWithConfirmationModal } from "@/features/delete-button-with-confirmation-modal/delete-button-with-confirmation-modal";
 
 type CategoriesTableProps = {
   data: FormattedProductCategory[];
@@ -24,24 +26,10 @@ type CategoriesTableProps = {
 
 export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
   const t = useTranslations();
-  const selectCategory = useCategoriesStore((state) => state.selectCategory);
-  const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
-  const hierarchicalData = useMemo(() => formatCategoriesWithChildren(data), [data]);
-  const flattenedData = useMemo(
-    () => getFlattenedData(hierarchicalData, expandedRows),
-    [hierarchicalData, expandedRows]
-  );
-
-  const handleRowClick = (row: HierarchicalProductCategory) => {
-    selectCategory(row);
-  };
-
-  const toggleExpand = (id: string) => {
-    setExpandedRows((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
+  const {
+    selectors: { flattenedData, expandedRows },
+    actions: { handleRowClick, toggleExpand },
+  } = useCategoriesTable({ data });
 
   const columns: ColumnDef<HierarchicalProductCategory, unknown>[] = useMemo(
     () => [
@@ -128,12 +116,14 @@ export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
         accessorKey: "actions",
         cell: ({ row }) => (
           <div className="flex items-center gap-2">
-            <Button
-              variant="destructive"
-              size="sm"
-              aria-label={t("DataTable.delete")}
-              onClick={async (e) => {
+            <DeleteButtonWithConfirmationModal
+              title={t("CategoriesTable.deleteModalTitle")}
+              description={t("CategoriesTable.deleteModalDescription")}
+              buttonDeleteLabel={t("CategoriesTable.deleteModalButton")}
+              buttonCancelLabel={t("CategoriesTable.cancelModalButton")}
+              action={async (e) => {
                 e.stopPropagation();
+                e.preventDefault();
                 try {
                   await deleteProductCategory(row.original.id);
                   toast.success(t("CategoriesTable.categoryDeleted"));
@@ -143,8 +133,10 @@ export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
                 }
               }}
             >
-              {t("DataTable.delete")}
-            </Button>
+              <Button variant="destructive" size="sm">
+                {t("DataTable.delete")}
+              </Button>
+            </DeleteButtonWithConfirmationModal>
           </div>
         ),
         size: 120,

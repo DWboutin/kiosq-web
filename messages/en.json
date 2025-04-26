@@ -100,7 +100,11 @@
     "categoryDeleteError": "Failed to delete category",
     "categoryAdded": "Category added successfully",
     "categoryAddError": "Failed to add category",
-    "slugExists": "Slug already exists. Please choose a different slug."
+    "slugExists": "Slug already exists. Please choose a different slug.",
+    "deleteModalTitle": "Delete category",
+    "deleteModalDescription": "Are you sure you want to delete this category?",
+    "deleteModalButton": "Delete",
+    "cancelModalButton": "Cancel"
   },
   "HeaderAccountButton": {
     "accountButton": "Your account menu",
