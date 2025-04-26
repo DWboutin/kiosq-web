@@ -84,20 +84,23 @@
   },
   "DataTable": {
     "selectAll": "Tout sélectionner",
-    "selectRow": "Sélectionner une ligne"
+    "selectRow": "Sélectionner une ligne",
+    "expandCategory": "Déplier la catégorie",
+    "collapseCategory": "Replier la catégorie",
+    "createdAt": "Créé le",
+    "updatedAt": "Mis à jour le",
+    "actions": "Actions",
+    "delete": "Supprimer"
   },
   "CategoriesTable": {
-    "selectAll": "Tout sélectionner",
     "name": "Nom",
     "description": "Description",
     "slug": "Slug",
     "parent": "Parent",
-    "createdAt": "Créé le",
-    "updatedAt": "Mis à jour le",
-    "actions": "Actions",
-    "delete": "Supprimer",
     "categoryDeleted": "Catégorie supprimée avec succès",
-    "categoryDeleteError": "Échec de la suppression de la catégorie"
+    "categoryDeleteError": "Échec de la suppression de la catégorie",
+    "categoryAdded": "Catégorie ajoutée avec succès",
+    "categoryAddError": "Échec de l'ajout de la catégorie"
   },
   "HeaderAccountButton": {
     "accountButton": "Menu de votre compte",

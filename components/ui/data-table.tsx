@@ -105,7 +105,7 @@ export function DataTable<TData, TValue>({
   return (
     <div className="w-full overflow-auto">
       <div className="rounded-md border bg-white overflow-hidden relative z-0">
-        <Table>
+        <Table className="w-full">
           <TableHeader className="[&_tr:first-child]:overflow-hidden [&_tr:first-child]:rounded-t-md">
             {table.getHeaderGroups().map((headerGroup, index) => (
               <TableRow
@@ -121,17 +121,24 @@ export function DataTable<TData, TValue>({
                     <TableHead
                       key={header.id}
                       className={cn(
-                        "font-medium text-neutral-600 px-6 py-3",
+                        "font-medium text-neutral-600 px-6 py-3 overflow-hidden",
                         header.column.getCanSort() && "cursor-pointer select-none"
                       )}
                       onClick={header.column.getToggleSortingHandler()}
+                      style={{
+                        width: header.column.columnDef.size as number | undefined,
+                        minWidth: header.column.columnDef.minSize as number | undefined,
+                        maxWidth: header.column.columnDef.maxSize as number | undefined,
+                      }}
                     >
-                      <div className="flex items-center gap-1">
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(header.column.columnDef.header, header.getContext())}
+                      <div className="flex items-center gap-1 overflow-hidden">
+                        <div className="overflow-hidden text-ellipsis whitespace-nowrap">
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(header.column.columnDef.header, header.getContext())}
+                        </div>
                         {header.column.getCanSort() && (
-                          <div className="ml-1">
+                          <div className="ml-1 flex-shrink-0">
                             {isSorted === "asc" ? (
                               <ChevronUp className="h-4 w-4" />
                             ) : isSorted === "desc" ? (
@@ -170,8 +177,18 @@ export function DataTable<TData, TValue>({
                   onClick={() => handleRowClick(row.original as TData)}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="px-6 py-3">
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    <TableCell
+                      key={cell.id}
+                      className="px-6 py-3 overflow-hidden"
+                      style={{
+                        width: cell.column.columnDef.size as number | undefined,
+                        minWidth: cell.column.columnDef.minSize as number | undefined,
+                        maxWidth: cell.column.columnDef.maxSize as number | undefined,
+                      }}
+                    >
+                      <div className="overflow-hidden text-ellipsis whitespace-nowrap">
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </div>
                     </TableCell>
                   ))}
                 </TableRow>

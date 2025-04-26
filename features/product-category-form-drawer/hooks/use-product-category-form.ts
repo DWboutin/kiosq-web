@@ -3,7 +3,7 @@ import { Locales } from "@/types/app";
 import { useLocale, useTranslations } from "next-intl";
 import { addProductCategory } from "@/actions/add-product-category";
 import { SideDrawerRef } from "@/components/ui/side-drawer";
-import { useEffect, RefObject } from "react";
+import { useEffect, RefObject, useState } from "react";
 import { useCategoriesStore } from "@/stores/categories-store";
 import { usePrevious } from "@/utils/hooks/use-previous";
 import { updateProductCategory } from "@/actions/update-product-category";
@@ -12,6 +12,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createProductCategorySchema } from "@/features/product-category-form-drawer/utils/product-category-validation-schema";
 import { slugify } from "@/utils/slugify";
+import { toast } from "sonner";
 
 export type ProductCategoryFormValues = z.infer<ReturnType<typeof createProductCategorySchema>>;
 
@@ -38,8 +39,8 @@ export const useProductCategoryForm = (
   const selectedId = useCategoriesStore((state) => state.selectedId);
   const resetCategory = useCategoriesStore((state) => state.resetCategory);
   const lastSelected = useCategoriesStore((state) => state.lastSelected);
-  const isDrawerOpen = sideDrawerRef?.current?.isOpen;
-  const previousIsDrawerOpen = usePrevious(isDrawerOpen);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const previousDrawerOpen = usePrevious(drawerOpen);
   const validationSchema = createProductCategorySchema(locale, t);
 
   const {
@@ -83,8 +84,10 @@ export const useProductCategoryForm = (
       sideDrawerRef?.current?.close();
       reset();
       resetCategory();
+      toast.success(t("CategoriesTable.categoryAdded"));
     } catch (error) {
       console.error(error);
+      toast.error(t("CategoriesTable.categoryAddError"));
     }
   });
 
@@ -113,7 +116,22 @@ export const useProductCategoryForm = (
   }, [initialData, lastSelected, reset, locale]);
 
   useEffect(() => {
-    if (!isDrawerOpen && previousIsDrawerOpen) {
+    const checkDrawerState = () => {
+      const isOpen = sideDrawerRef?.current?.isOpen || false;
+      if (isOpen !== drawerOpen) {
+        setDrawerOpen(isOpen);
+      }
+    };
+
+    checkDrawerState();
+
+    const intervalId = setInterval(checkDrawerState, 100);
+
+    return () => clearInterval(intervalId);
+  }, [sideDrawerRef, drawerOpen]);
+
+  useEffect(() => {
+    if (!drawerOpen && previousDrawerOpen) {
       reset({
         name: "",
         description: "",
@@ -124,14 +142,15 @@ export const useProductCategoryForm = (
         description_translations: {},
         slug_translations: {},
       });
+      resetCategory();
     }
-  }, [isDrawerOpen, previousIsDrawerOpen, reset]);
+  }, [drawerOpen, previousDrawerOpen, reset, resetCategory]);
 
   useEffect(() => {
-    if (initialData && !isDrawerOpen) {
+    if (initialData && !drawerOpen) {
       sideDrawerRef?.current?.open();
     }
-  }, [initialData, lastSelected, isDrawerOpen, sideDrawerRef]);
+  }, [initialData]);
 
   useEffect(() => {
     if (name) {

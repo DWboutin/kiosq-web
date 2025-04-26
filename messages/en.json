@@ -84,20 +84,23 @@
   },
   "DataTable": {
     "selectAll": "Select all",
-    "selectRow": "Select row"
+    "selectRow": "Select row",
+    "expandCategory": "Expand category",
+    "collapseCategory": "Collapse category",
+    "createdAt": "Created At",
+    "updatedAt": "Updated At",
+    "actions": "Actions",
+    "delete": "Delete"
   },
   "CategoriesTable": {
-    "selectAll": "Select all",
     "name": "Name",
     "description": "Description",
     "slug": "Slug",
     "parent": "Parent",
-    "createdAt": "Created At",
-    "updatedAt": "Updated At",
-    "actions": "Actions",
-    "delete": "Delete",
     "categoryDeleted": "Category deleted successfully",
-    "categoryDeleteError": "Failed to delete category"
+    "categoryDeleteError": "Failed to delete category",
+    "categoryAdded": "Category added successfully",
+    "categoryAddError": "Failed to add category"
   },
   "HeaderAccountButton": {
     "accountButton": "Your account menu",
