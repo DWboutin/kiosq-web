@@ -16,7 +16,7 @@ export const DashboardPageHeading: FC<DashboardPageHeadingProps> = ({
   const Heading = headingLevel === "h1" ? "h1" : "h2";
 
   return (
-    <div className="flex flex-row justify-between items-start gap-4 pt-8">
+    <div className="flex flex-row max-md:flex-col justify-between items-start gap-4 pt-8">
       <div className="flex flex-col gap-2">
         <Heading
           className={classNames(

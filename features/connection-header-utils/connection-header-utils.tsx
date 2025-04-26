@@ -27,8 +27,7 @@ export const ConnectionHeaderUtils: FC = () => {
   }
 
   return (
-    <div className="flex items-center px-2 py-2">
-      <HeaderLocaleButton />
+    <div className="flex items-center">
       <HeaderAccountButton />
       <Button variant="ghost" size="icon" aria-label={t("reservationButton")}>
         <ShoppingBagIcon className="text-neutral-dark size-6" />

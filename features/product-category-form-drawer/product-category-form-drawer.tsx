@@ -1,7 +1,7 @@
 "use client";
 
 import { FC, useRef, RefObject } from "react";
-import { SideDrawer, SideDrawerRef } from "@/components/ui/side-drawer";
+import { SideFormDrawer, SideFormDrawerRef } from "@/components/ui/side-form-drawer";
 import { Button } from "@/components/ui/button";
 import { PlusSquareIcon } from "@/components/ui/icons/plus-square-icon";
 import { ProductCategoryForm } from "@/features/product-category-form-drawer/components/product-category-form";
@@ -10,14 +10,14 @@ import { useTranslations } from "next-intl";
 
 export const ProductCategoryFormDrawer: FC = () => {
   const t = useTranslations("ProductCategoryFormDrawer");
-  const drawerRef = useRef<SideDrawerRef>(null);
+  const drawerRef = useRef<SideFormDrawerRef>(null);
   const {
     selectors: { control, errors, isUpdating, hasErrors },
     actions: { handleFormSubmit },
-  } = useProductCategoryForm(drawerRef as RefObject<SideDrawerRef>);
+  } = useProductCategoryForm(drawerRef as RefObject<SideFormDrawerRef>);
 
   return (
-    <SideDrawer
+    <SideFormDrawer
       ref={drawerRef}
       title={isUpdating ? t("editTitle") : t("addTitle")}
       description={isUpdating ? t("editDescription") : t("addDescription")}
@@ -34,9 +34,9 @@ export const ProductCategoryFormDrawer: FC = () => {
         </Button>
       }
     >
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-5">
         <ProductCategoryForm control={control} errors={errors} />
       </div>
-    </SideDrawer>
+    </SideFormDrawer>
   );
 };

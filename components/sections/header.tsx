@@ -28,18 +28,15 @@ export const Header: FC<PropsWithChildren> = async ({ children }) => {
 
   return (
     <header className={headerStyles({ hasChildren })}>
-      <div className="flex flex-row items-center justify-between w-full gap-6  px-5">
-        <div className="flex flex-1 items-center min-md:gap-6 max-md:flex-row-reverse">
+      <div className="flex flex-row items-center justify-between w-full gap-6 px-5 max-md:px-3">
+        <div className="flex flex-1 items-center min-md:gap-6">
           <Link
             href="/"
-            className="flex items-center gap-2 py-3 max-md:flex-1 max-md:justify-center max-md:pl-28"
+            className="flex items-center gap-2 py-3 min-md:relative max-md:absolute max-md:left-1/2 max-md:-translate-x-1/2 max-md:z-10"
           >
             <KiosqLogo />
             <span className="text-xl font-lato text-brand-medium">kiosq</span>
           </Link>
-          <div className="flex min-md:flex-1 items-center gap-2">
-            <SearchInput />
-          </div>
           <Button
             variant="ghost"
             size="icon"
@@ -48,6 +45,9 @@ export const Header: FC<PropsWithChildren> = async ({ children }) => {
           >
             <MobileMenuIcon className="text-neutral-dark size-6" />
           </Button>
+          <div className="flex min-md:flex-1 items-center gap-2">
+            <SearchInput />
+          </div>
         </div>
         <div className="flex items-start justify-start gap-2">
           <LocationButton />

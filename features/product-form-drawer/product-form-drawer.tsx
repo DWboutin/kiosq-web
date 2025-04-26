@@ -1,7 +1,7 @@
 "use client";
 
 import { FC } from "react";
-import { SideDrawer } from "@/components/ui/side-drawer";
+import { SideDrawer } from "@/components/ui/side-form-drawer";
 import { Button } from "@/components/ui/button";
 import { PlusSquareIcon } from "@/components/ui/icons/plus-square-icon";
 import { useProductForm } from "@/features/product-form-drawer/hooks/use-product-form";

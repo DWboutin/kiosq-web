@@ -61,12 +61,12 @@ export const AddTranslationField = <TFieldValues extends FieldValues>({
     <div className={cn(className)}>
       <div className="flex flex-col gap-2">
         {Object.entries(translationsField).map(([locale, value]) => (
-          <div key={locale} className="flex gap-2 items-center items-start">
+          <div key={locale} className="flex gap-2 items-start">
             <Select
               value={locale}
               onValueChange={(newLocale) => handleLocaleChange(locale, newLocale)}
             >
-              <SelectTrigger className="w-[120px]">
+              <SelectTrigger className="w-[70px]">
                 <SelectValue placeholder="Select language" />
               </SelectTrigger>
               <SelectContent>
@@ -96,7 +96,6 @@ export const AddTranslationField = <TFieldValues extends FieldValues>({
         <Button
           variant="outline"
           size="sm"
-          className="mt-2"
           aria-label={t("addTranslation")}
           onMouseDown={() => {
             if (remainingLocales.length > 0) {

@@ -2,7 +2,7 @@ import { Control, FieldErrors, useForm } from "react-hook-form";
 import { Locales } from "@/types/app";
 import { useLocale, useTranslations } from "next-intl";
 import { addProductCategory } from "@/actions/add-product-category";
-import { SideDrawerRef } from "@/components/ui/side-drawer";
+import { SideDrawerRef } from "@/components/ui/side-form-drawer";
 import { useEffect, RefObject, useState } from "react";
 import { useCategoriesStore } from "@/stores/categories-store";
 import { usePrevious } from "@/utils/hooks/use-previous";

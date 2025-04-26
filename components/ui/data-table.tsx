@@ -121,7 +121,7 @@ export function DataTable<TData, TValue>({
                     <TableHead
                       key={header.id}
                       className={cn(
-                        "font-medium text-neutral-600 px-6 py-3 overflow-hidden",
+                        "font-medium text-neutral-600 px-3 py-1.5 min-md:px-6 min-md:py-3 overflow-hidden",
                         header.column.getCanSort() && "cursor-pointer select-none"
                       )}
                       onClick={header.column.getToggleSortingHandler()}
@@ -179,7 +179,7 @@ export function DataTable<TData, TValue>({
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
-                      className="px-6 py-3 overflow-hidden"
+                      className="px-3 py-1.5 min-md:px-6 min-md:py-3 overflow-hidden"
                       style={{
                         width: cell.column.columnDef.size as number | undefined,
                         minWidth: cell.column.columnDef.minSize as number | undefined,

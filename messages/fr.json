@@ -1,8 +1,7 @@
 {
   "Locales": {
     "en": "English",
-    "fr": "Français",
-    "localeButton": "Langue"
+    "fr": "Français"
   },
   "Header": {
     "searchPlaceholder": "Rechercher sur kiosq",
@@ -106,6 +105,7 @@
   "HeaderAccountButton": {
     "accountButton": "Menu de votre compte",
     "myAccount": "Mon compte",
+    "languages": "Langues",
     "dashboard": "Tableau de bord",
     "signOut": "Déconnexion"
   },

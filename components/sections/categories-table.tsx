@@ -4,7 +4,7 @@ import { DataTable } from "@/components/ui/data-table";
 import { FormattedProductCategory } from "@/utils/factories/product-categories-factory";
 import { ColumnDef } from "@tanstack/react-table";
 import { FC, useMemo, useState } from "react";
-import { TranslationDisplay } from "@/components/ui/table-utils/translation-display";
+import { TranslationDisplay } from "@/components/ui/translation-display";
 import { useCategoriesStore } from "@/stores/categories-store";
 import { Button } from "@/components/ui/button";
 import { deleteProductCategory } from "@/actions/delete-product-category";
@@ -94,7 +94,7 @@ export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
         header: t("CategoriesTable.description"),
         accessorKey: "description",
         cell: ({ row }) => (
-          <div className="w-[400px] whitespace-normal break-words">
+          <div className="w-[400px] whitespace-normal break-words overflow-hidden">
             <TranslationDisplay
               translations={row.original.description}
               currentLocale={row.original.locale}
