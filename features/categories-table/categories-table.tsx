@@ -3,22 +3,17 @@
 import { DataTable } from "@/components/ui/data-table";
 import { FormattedProductCategory } from "@/utils/factories/product-categories-factory";
 import { ColumnDef } from "@tanstack/react-table";
-import { FC, useMemo, useState } from "react";
+import { FC, MouseEvent, useMemo } from "react";
 import { TranslationDisplay } from "@/components/ui/translation-display";
-import { useCategoriesStore } from "@/stores/categories-store";
 import { Button } from "@/components/ui/button";
 import { deleteProductCategory } from "@/actions/delete-product-category";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import { ChevronDown, ChevronRight } from "lucide-react";
-import {
-  HierarchicalProductCategory,
-  formatCategoriesWithChildren,
-  getFlattenedData,
-} from "@/utils/factories/hierarchical-categories-factory";
+import { HierarchicalProductCategory } from "@/utils/factories/hierarchical-categories-factory";
 import { LocaleFullDate } from "@/components/ui/locale-date";
 import { useCategoriesTable } from "@/features/categories-table/hooks/use-categories-table";
-import { DeleteButtonWithConfirmationModal } from "@/features/delete-button-with-confirmation-modal/delete-button-with-confirmation-modal";
+import { ButtonWithConfirmationModal } from "@/features/button-with-confirmation-modal/button-with-confirmation-modal";
 
 type CategoriesTableProps = {
   data: FormattedProductCategory[];
@@ -30,6 +25,25 @@ export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
     selectors: { flattenedData, expandedRows },
     actions: { handleRowClick, toggleExpand },
   } = useCategoriesTable({ data });
+
+  const handleDelete = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
+    const rowId = e.currentTarget.dataset.rowId;
+
+    if (!rowId) {
+      toast.error(t("Global.thereWasAnError"));
+      return;
+    }
+
+    try {
+      await deleteProductCategory(rowId);
+      toast.success(t("CategoriesTable.categoryDeleted"));
+    } catch (error) {
+      console.error(error);
+      toast.error(t("CategoriesTable.categoryDeleteError"));
+    }
+  };
 
   const columns: ColumnDef<HierarchicalProductCategory, unknown>[] = useMemo(
     () => [
@@ -116,27 +130,17 @@ export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
         accessorKey: "actions",
         cell: ({ row }) => (
           <div className="flex items-center gap-2">
-            <DeleteButtonWithConfirmationModal
+            <ButtonWithConfirmationModal
               title={t("CategoriesTable.deleteModalTitle")}
               description={t("CategoriesTable.deleteModalDescription")}
-              buttonDeleteLabel={t("CategoriesTable.deleteModalButton")}
-              buttonCancelLabel={t("CategoriesTable.cancelModalButton")}
-              action={async (e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                try {
-                  await deleteProductCategory(row.original.id);
-                  toast.success(t("CategoriesTable.categoryDeleted"));
-                } catch (error) {
-                  console.error(error);
-                  toast.error(t("CategoriesTable.categoryDeleteError"));
-                }
-              }}
+              confirmLabel={t("CategoriesTable.deleteModalButton")}
+              cancelLabel={t("CategoriesTable.cancelModalButton")}
+              action={handleDelete}
             >
-              <Button variant="destructive" size="sm">
+              <Button variant="destructive" size="sm" data-row-id={row.original.id}>
                 {t("DataTable.delete")}
               </Button>
-            </DeleteButtonWithConfirmationModal>
+            </ButtonWithConfirmationModal>
           </div>
         ),
         size: 120,

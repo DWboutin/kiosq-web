@@ -21,15 +21,17 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
 
 export type ModalProps = {
   title: string;
   description: string;
-  buttonDeleteLabel: string;
-  buttonCancelLabel: string;
+  confirmLabel: string;
+  cancelLabel: string;
   action: (e: MouseEvent<HTMLButtonElement>) => Promise<void>;
   className?: string;
   hideFooter?: boolean;
+  loading?: boolean;
 } & PropsWithChildren;
 
 export type ModalRef = {
@@ -44,11 +46,12 @@ export const Modal = forwardRef<ModalRef, ModalProps>(
       children,
       title,
       description,
-      buttonDeleteLabel,
-      buttonCancelLabel,
+      confirmLabel,
+      cancelLabel,
       action,
       className,
       hideFooter = false,
+      loading = false,
     },
     ref
   ) => {
@@ -82,16 +85,17 @@ export const Modal = forwardRef<ModalRef, ModalProps>(
               )}
             </div>
           </DialogHeader>
-          {!hideFooter && buttonCancelLabel && buttonDeleteLabel && (
+          {!hideFooter && (
             <DialogFooter className="border-t border-neutral-lightest p-4">
               <div className="flex flex-row justify-end gap-2">
                 <DialogClose asChild>
                   <Button variant="outline" type="button">
-                    <span>{buttonCancelLabel}</span>
+                    <span>{cancelLabel}</span>
                   </Button>
                 </DialogClose>
                 <Button type="submit" variant="destructive" onClick={onDelete}>
-                  {buttonDeleteLabel}
+                  {loading && <Loader2 className="animate-spin" />}
+                  {loading ? `${confirmLabel}...` : confirmLabel}
                 </Button>
               </div>
             </DialogFooter>

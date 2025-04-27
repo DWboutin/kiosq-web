@@ -3,6 +3,9 @@
     "en": "English",
     "fr": "Français"
   },
+  "Global": {
+    "thereWasAnError": "Une erreur est survenue, veuillez contacter le support"
+  },
   "Header": {
     "searchPlaceholder": "Rechercher sur kiosq",
     "searchButtonAriaLabel": "Rechercher",
