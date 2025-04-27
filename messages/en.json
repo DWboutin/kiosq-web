@@ -92,7 +92,8 @@
     "createdAt": "Created At",
     "updatedAt": "Updated At",
     "actions": "Actions",
-    "delete": "Delete"
+    "delete": "Delete",
+    "edit": "Edit"
   },
   "CategoriesTable": {
     "name": "Name",

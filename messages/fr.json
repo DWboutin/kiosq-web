@@ -92,7 +92,8 @@
     "createdAt": "Créé le",
     "updatedAt": "Mis à jour le",
     "actions": "Actions",
-    "delete": "Supprimer"
+    "delete": "Supprimer",
+    "edit": "Modifier"
   },
   "CategoriesTable": {
     "name": "Nom",

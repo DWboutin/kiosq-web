@@ -50,6 +50,7 @@ export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
       {
         id: "expander",
         header: "",
+        enableSorting: false,
         cell: ({ row }) => {
           return row.original.children?.length ? (
             <Button
@@ -128,8 +129,12 @@ export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
       {
         header: t("DataTable.actions"),
         accessorKey: "actions",
+        enableSorting: false,
         cell: ({ row }) => (
           <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" onClick={() => handleRowClick(row.original)}>
+              {t("DataTable.edit")}
+            </Button>
             <ButtonWithConfirmationModal
               title={t("CategoriesTable.deleteModalTitle")}
               description={t("CategoriesTable.deleteModalDescription")}

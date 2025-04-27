@@ -89,7 +89,6 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  // Update parent component with selected rows when selection changes
   const selectedRows = table.getSelectedRowModel().rows.map((row) => row.original);
 
   if (onSelectionChange && Object.keys(rowSelection).length > 0) {
