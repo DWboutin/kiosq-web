@@ -51,6 +51,7 @@ export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
         id: "expander",
         header: "",
         enableSorting: false,
+        enableHiding: false,
         cell: ({ row }) => {
           return row.original.children?.length ? (
             <Button
@@ -130,6 +131,7 @@ export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
         header: t("DataTable.actions"),
         accessorKey: "actions",
         enableSorting: false,
+        enableHiding: false,
         cell: ({ row }) => (
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" onClick={() => handleRowClick(row.original)}>
@@ -154,5 +156,12 @@ export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
     [expandedRows, toggleExpand]
   );
 
-  return <DataTable columns={columns} data={flattenedData} onRowClick={handleRowClick} />;
+  return (
+    <DataTable
+      tableId="admin-categories-table"
+      columns={columns}
+      data={flattenedData}
+      onRowClick={handleRowClick}
+    />
+  );
 };

@@ -93,7 +93,8 @@
     "updatedAt": "Updated At",
     "actions": "Actions",
     "delete": "Delete",
-    "edit": "Edit"
+    "edit": "Edit",
+    "columnsVisibility": "Columns visibility"
   },
   "CategoriesTable": {
     "name": "Name",

@@ -93,7 +93,8 @@
     "updatedAt": "Mis à jour le",
     "actions": "Actions",
     "delete": "Supprimer",
-    "edit": "Modifier"
+    "edit": "Modifier",
+    "columnsVisibility": "Visibilité des colonnes"
   },
   "CategoriesTable": {
     "name": "Nom",
