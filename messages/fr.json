@@ -27,7 +27,8 @@
     "bakery": "Boulangerie",
     "coffeeShop": "Cafés & Torréfacteurs",
     "selfcare": "Soins & Beauté",
-    "alcohol": "Vins, Bières & Spiritueux"
+    "alcohol": "Vins, Bières & Spiritueux",
+    "animals": "Animaux"
   },
   "DashboardMenu": {
     "navigation": "Navigation",

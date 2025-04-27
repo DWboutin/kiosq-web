@@ -15,7 +15,7 @@ export const CategoryLinks = async () => {
             key={category.name}
             aria-label={t(category.name)}
             className={`block h-30 w-30 flex-shrink-0 rounded-2xl outline-none transition-all duration-200
-              focus:scale-105 focus:ring-4 focus:ring-opacity-50 ring-neutral-lightest`}
+              focus:scale-105 focus:ring-4 focus:ring-opacity-40 ring-neutral-lightest`}
           >
             <ProductCategoryCard category={category.name} />
           </Link>

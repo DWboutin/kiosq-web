@@ -11,6 +11,7 @@ import { AlcoholIcon } from "@/components/ui/icons/alcohol-icon";
 import { DiscountListingIcon } from "@/components/ui/icons/discount-listing-icon";
 import { IconProps } from "@/types/app";
 import { AppConfig } from "@/app-config";
+import { AnimalIcon } from "@/components/ui/icons/animal-icon";
 
 export type ProductCategory = {
   name: string;
@@ -80,6 +81,12 @@ export const PRODUCT_CATEGORIES: Record<string, ProductCategory> = {
     contentColor: "text-categories-alcohol-text",
     icon: AlcoholIcon,
   },
+  animals: {
+    name: "animals",
+    backgroundColor: "bg-categories-animal-bg",
+    contentColor: "text-categories-animal-text",
+    icon: AnimalIcon,
+  },
 };
 
 export const CATEGORIES_ORDER = [
@@ -122,6 +129,10 @@ export const CATEGORIES_ORDER = [
   {
     name: "selfcare",
     link: "/categories/selfcare",
+  },
+  {
+    name: "animals",
+    link: "/categories/animals",
   },
 ] as const;
 

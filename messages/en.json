@@ -27,7 +27,8 @@
     "bakery": "Bakery",
     "coffeeShop": "Coffee & Roasters",
     "selfcare": "Selfcare",
-    "alcohol": "Wine, Beer & Spirits"
+    "alcohol": "Wine, Beer & Spirits",
+    "animals": "Animals"
   },
   "DashboardMenu": {
     "navigation": "Navigation",

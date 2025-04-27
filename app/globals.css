@@ -35,6 +35,7 @@
   --color-categories-coffeeShop-bg: #715D50;
   --color-categories-selfcare-bg: #3E7777;
   --color-categories-alcohol-bg: #7C3335;
+  --color-categories-animal-bg: #E5DEFF;
 
   /* Category text colors */
   --color-categories-preparedMeals-text: #63559D;
@@ -46,6 +47,7 @@
   --color-categories-coffeeShop-text: #FAE1D2;
   --color-categories-selfcare-text: #DEFBFB;
   --color-categories-alcohol-text: #FFDDDE;
+  --color-categories-animal-text: #5E4B8B;
 
   /* Border radius */
   --radius-small: 4px;
