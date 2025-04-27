@@ -63,6 +63,7 @@ export const ButtonWithConfirmationModal: FC<ButtonWithConfirmationModalProps> =
 
   const wrappedAction = useCallback(
     async (e: MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
       const newEvent = Object.create(e);
       newEvent.currentTarget = {
         ...e.currentTarget,

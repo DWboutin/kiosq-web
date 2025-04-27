@@ -88,7 +88,7 @@ export const Modal = forwardRef<ModalRef, ModalProps>(
           {!hideFooter && (
             <DialogFooter className="border-t border-neutral-lightest p-4">
               <div className="flex flex-row justify-end gap-2">
-                <DialogClose asChild>
+                <DialogClose asChild onClick={(e) => e.stopPropagation()}>
                   <Button variant="outline" type="button">
                     <span>{cancelLabel}</span>
                   </Button>
