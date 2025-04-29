@@ -13,7 +13,7 @@ export const TooltipContainer: FC<TooltipContainerProps> = ({ children, content,
   return (
     <TooltipProvider>
       <Tooltip {...props}>
-        <TooltipTrigger>{children}</TooltipTrigger>
+        <TooltipTrigger asChild>{children}</TooltipTrigger>
         <TooltipContent>{content}</TooltipContent>
       </Tooltip>
     </TooltipProvider>

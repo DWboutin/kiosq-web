@@ -9,6 +9,7 @@ import { UserRole } from "@/types/app";
 import classNames from "classnames";
 import { useTranslations } from "next-intl";
 import { DASHBOARD_LINKS, DASHBOARD_UTILS_LINKS } from "@/utils/dashboard-navigation";
+import { TooltipContainer } from "@/components/ui/tooltip-container";
 
 type DashboardMenuProtectedLinkProps = {
   role: UserRole;
@@ -63,19 +64,23 @@ const DashboardMenuLink = memo(
     }
 
     return (
-      <Link
-        href={href}
-        className={`flex items-center hover:bg-neutral-lightest rounded-md ${
-          isActive ? "text-brand-medium" : "text-neutral-darker hover:text-neutral-black"
-        }`}
-        aria-current={isActive ? "page" : undefined}
-        aria-label={ariaLabel}
-      >
-        <Button variant="ghost" size="icon" tabIndex={-1} asChild>
-          <span className="size-6">{icon}</span>
-        </Button>
-        <p className="font-inter text-base pl-2 group-[.is-open]:inline-block hidden">{children}</p>
-      </Link>
+      <TooltipContainer content={ariaLabel}>
+        <Link
+          href={href}
+          className={`flex flex-row flex-1 items-center hover:bg-neutral-lightest rounded-md ${
+            isActive ? "text-brand-medium" : "text-neutral-darker hover:text-neutral-black"
+          }`}
+          aria-current={isActive ? "page" : undefined}
+          aria-label={ariaLabel}
+        >
+          <Button variant="ghost" size="icon" tabIndex={-1} asChild>
+            <span className="size-6">{icon}</span>
+          </Button>
+          <p className="font-inter text-base pl-2 group-[.is-open]:inline-block hidden">
+            {children}
+          </p>
+        </Link>
+      </TooltipContainer>
     );
   }
 );
@@ -165,7 +170,7 @@ export const DashboardMenu: FC = () => {
       <nav className="flex flex-col flex-1 mt-4" id="dashboard-navigation-menu" ref={navRef}>
         <ul className="flex flex-col gap-2" role="menu">
           {links.map((link) => (
-            <li key={`dashboard-link-${link.labelKey}`} role="none">
+            <li key={`dashboard-link-${link.labelKey}`} role="none" className="flex-1">
               <DashboardMenuLink
                 key={link.path}
                 href={link.path}

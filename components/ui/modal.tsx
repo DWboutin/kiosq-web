@@ -74,19 +74,19 @@ export const Modal = forwardRef<ModalRef, ModalProps>(
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className={cn("p-0", className)}>
-          <DialogHeader className="border-b border-neutral-lightest">
-            <div className="flex flex-col justify-between gap-2 pb-2 px-6 pt-6">
-              <DialogTitle id={titleId} className="text-base font-bold">
-                {title}
-              </DialogTitle>
-              {description && (
-                <DialogDescription id={descriptionId}>{description}</DialogDescription>
-              )}
-            </div>
+        <DialogContent
+          aria-labelledby={titleId}
+          aria-describedby={descriptionId}
+          className={cn("p-0", className)}
+        >
+          <DialogHeader className="border-b border-neutral-lightest flex flex-col justify-between gap-2 pb-2 px-6 pt-6">
+            <DialogTitle id={titleId} className="text-base font-bold">
+              {title}
+            </DialogTitle>
+            {description && <DialogDescription id={descriptionId}>{description}</DialogDescription>}
           </DialogHeader>
           {!hideFooter && (
-            <DialogFooter className="border-t border-neutral-lightest p-4">
+            <DialogFooter className="p-4">
               <div className="flex flex-row justify-end gap-2">
                 <DialogClose asChild onClick={(e) => e.stopPropagation()}>
                   <Button variant="outline" type="button">
