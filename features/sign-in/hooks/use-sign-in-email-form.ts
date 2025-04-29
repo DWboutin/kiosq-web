@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useUserStore } from "@/stores/user-store";
 import { useRouter } from "next/navigation";
 
-const signUpSchema = z.object({
+const signInSchema = z.object({
   name: z.string().min(1, "Ce nom n'est pas valide."),
   email: z
     .string()
@@ -13,9 +13,9 @@ const signUpSchema = z.object({
     .email("Cette adresse courriel n'est pas valide."),
 });
 
-export type FormData = z.infer<typeof signUpSchema>;
+export type FormData = z.infer<typeof signInSchema>;
 
-export const useSignUpEmailForm = () => {
+export const useSignInEmailForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const name = useUserStore((state) => state.name);
@@ -31,7 +31,7 @@ export const useSignUpEmailForm = () => {
       name: name || "",
       email: "",
     },
-    resolver: zodResolver(signUpSchema),
+    resolver: zodResolver(signInSchema),
     mode: "onBlur",
   });
 
