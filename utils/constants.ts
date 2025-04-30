@@ -12,6 +12,7 @@ import { DiscountListingIcon } from "@/components/ui/icons/discount-listing-icon
 import { IconProps } from "@/types/app";
 import { AppConfig } from "@/app-config";
 import { AnimalIcon } from "@/components/ui/icons/animal-icon";
+import { MapleIcon } from "@/components/ui/icons/maple-icon";
 
 export type ProductCategory = {
   name: string;
@@ -63,6 +64,12 @@ export const PRODUCT_CATEGORIES: Record<string, ProductCategory> = {
     contentColor: "text-categories-bakery-text",
     icon: BakeryIcon,
   },
+  maple: {
+    name: "maple",
+    backgroundColor: "bg-categories-maple-bg",
+    contentColor: "text-categories-maple-text",
+    icon: MapleIcon,
+  },
   coffeeShop: {
     name: "coffeeShop",
     backgroundColor: "bg-categories-coffeeShop-bg",
@@ -111,12 +118,16 @@ export const CATEGORIES_ORDER = [
     link: "/categories/preparedMeals",
   },
   {
-    name: "coffeeShop",
-    link: "/categories/coffeeShop",
+    name: "maple",
+    link: "/categories/maple",
   },
   {
     name: "alcohol",
     link: "/categories/alcohol",
+  },
+  {
+    name: "coffeeShop",
+    link: "/categories/coffeeShop",
   },
   {
     name: "clothes",
