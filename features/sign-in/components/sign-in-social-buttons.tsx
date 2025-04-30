@@ -6,11 +6,14 @@ import { GoogleIcon } from "@/components/ui/icons/google-icon";
 import { MetaIcon } from "@/components/ui/icons/meta-icon";
 import { TooltipContainer } from "@/components/ui/tooltip-container";
 import { FC } from "react";
+import { useTranslations } from "next-intl";
 
 export const SignInSocialButtons: FC = () => {
+  const t = useTranslations("SignIn");
+
   return (
     <div className="flex flex-row justify-center gap-4 mt-2">
-      <TooltipContainer content="Connectez-vous avec Google">
+      <TooltipContainer content={t("connectWithGoogle")}>
         <Button
           variant="outline"
           size="icon"
@@ -20,7 +23,7 @@ export const SignInSocialButtons: FC = () => {
           <GoogleIcon />
         </Button>
       </TooltipContainer>
-      <TooltipContainer content="Connectez-vous avec Apple">
+      <TooltipContainer content={t("connectWithApple")}>
         <Button
           variant="outline"
           size="icon"
@@ -30,7 +33,7 @@ export const SignInSocialButtons: FC = () => {
           <AppleIcon />
         </Button>
       </TooltipContainer>
-      <TooltipContainer content="Connectez-vous avec Meta/Facebook">
+      <TooltipContainer content={t("connectWithMeta")}>
         <Button
           variant="outline"
           size="icon"

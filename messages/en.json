@@ -7,6 +7,7 @@
     "thereWasAnError": "There was an error, please contact support"
   },
   "Header": {
+    "logoLinkAriaLabel": "Home",
     "searchPlaceholder": "Search on kiosq",
     "searchButtonAriaLabel": "Search",
     "mobileMenuButtonAriaLabel": "Mobile menu",
@@ -130,5 +131,36 @@
     "validationSlugTranslationRequired": "Slug translation is required",
     "validationSlugTranslationFormat": "Slug translation must be in lowercase and contain only letters, numbers and dashes",
     "validationTranslationKeysSupportedLocales": "Translation keys must be supported locales and cannot include current locale"
+  },
+  "SignIn": {
+    "pageTitle": "Join a local, simple and <br></br>essential movement.",
+    "formTitle": "Sign in",
+    "usingSocialNetworks": "using social networks",
+    "or": "or",
+    "formCompleteName": "Full name",
+    "formEmail": "Email",
+    "formContinue": "Continue",
+    "formLoading": "Loading...",
+    "termsAndConditions": "terms and conditions",
+    "privacyPolicy": "privacy policy",
+    "acceptTermsAndConditions": "By creating my account, I accept the",
+    "and": "and",
+    "connectWithGoogle": "Connect with Google",
+    "connectWithApple": "Connect with Apple",
+    "connectWithMeta": "Connect with Meta/Facebook",
+    "slogan": "Close to you, proud of here",
+    "sloganDescription": "Consuming local, it's taking care of yourself",
+    "farmerImageAlt": "Farmer image"
+  },
+  "VerifyOtpForm": {
+    "title": "Verify your email",
+    "description": "We have sent you a code to verify your email address. Please enter the code below to continue.",
+    "verifyButton": "Verify",
+    "verifyLoading": "Verifying...",
+    "askForNewCodeButton": "Ask for a new code",
+    "askForNewCodeButtonDisabled": "Request a new code in ({countdown}s)",
+    "aNewCodeHasBeenSent": "A new code has been sent",
+    "aNewCodeRequestError": "An error occurred while requesting a new code",
+    "aNewCodeRequestErrorNoEmail": "We cannot send a new code without your email, you will be redirected to the sign in page"
   }
 }

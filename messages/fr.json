@@ -7,6 +7,7 @@
     "thereWasAnError": "Une erreur est survenue, veuillez contacter le support"
   },
   "Header": {
+    "logoLinkAriaLabel": "Accueil",
     "searchPlaceholder": "Rechercher sur kiosq",
     "searchButtonAriaLabel": "Rechercher",
     "mobileMenuButtonAriaLabel": "Menu mobile",
@@ -130,5 +131,36 @@
     "validationSlugTranslationRequired": "La traduction du slug est requise",
     "validationSlugTranslationFormat": "Le slug doit être en minuscules et contenir uniquement des lettres, des chiffres et des tirets",
     "validationTranslationKeysSupportedLocales": "Les clés de traduction doivent être des locales supportées et ne doivent pas inclure la locale actuelle"
+  },
+  "SignIn": {
+    "pageTitle": "Rejoignez un mouvement local, <br></br>simple et essentiel.",
+    "formTitle": "Connectez-vous",
+    "usingSocialNetworks": "en utilisant les réseaux sociaux",
+    "or": "ou",
+    "formCompleteName": "Nom complet",
+    "formEmail": "Courriel",
+    "formContinue": "Continuer",
+    "formLoading": "Chargement...",
+    "termsAndConditions": "conditions générales",
+    "privacyPolicy": "politique de confidentialité",
+    "acceptTermsAndConditions": "En créant mon compte, j'accepte les ",
+    "and": "et",
+    "connectWithGoogle": "Connectez-vous avec Google",
+    "connectWithApple": "Connectez-vous avec Apple",
+    "connectWithMeta": "Connectez-vous avec Meta/Facebook",
+    "slogan": "Proche de vous, fier d'ici",
+    "sloganDescription": "Consommer local, c'est prendre soin de chez soi",
+    "farmerImageAlt": "Image de fermier"
+  },
+  "VerifyOtpForm": {
+    "title": "Vérifiez votre adresse courriel",
+    "description": "Nous vous avons envoyé un code pour vérifier votre adresse courriel. Veuillez entrer le code ci-dessous pour continuer.",
+    "verifyButton": "Vérifier",
+    "verifyLoading": "Vérification...",
+    "askForNewCodeButton": "Demander un nouveau code",
+    "askForNewCodeButtonDisabled": "Demander un nouveau code dans ({countdown}s)",
+    "aNewCodeHasBeenSent": "Un nouveau code vous a été envoyé",
+    "aNewCodeRequestError": "Une erreur est survenue lors de la demande de nouveau code",
+    "aNewCodeRequestErrorNoEmail": "Nous ne pouvons pas envoyer un nouveau code sans votre adresse courriel, vous serez redirigé vers la page de connexion"
   }
 }
