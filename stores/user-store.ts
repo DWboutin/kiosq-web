@@ -81,6 +81,7 @@ export const useUserStore = create<UserStore>()(
           set((state) => {
             state.error = error as string;
           });
+          throw error;
         } finally {
           set((state) => {
             state.isSigningWithOtp = false;

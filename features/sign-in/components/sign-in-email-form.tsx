@@ -1,23 +1,27 @@
+"use client";
+
 import { FC } from "react";
 import { Controller } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormInputContainer } from "@/components/ui/form-utils/form-input-container";
-import { useSignUpEmailForm } from "../../sign-in/hooks/use-sign-in-email-form";
+import { useSignInEmailForm } from "../hooks/use-sign-in-email-form";
+import { useTranslations } from "next-intl";
 
-export const SignUpEmailForm: FC = () => {
+export const SignInEmailForm: FC = () => {
+  const t = useTranslations("SignIn");
   const {
     selectors: { errors, control, isLoading },
     actions: { handleFormSubmit },
-  } = useSignUpEmailForm();
+  } = useSignInEmailForm();
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4">
+    <div className="flex items-center justify-center">
       <div className="w-full max-w-sm">
-        <form onSubmit={handleFormSubmit} className="flex flex-col gap-5">
+        <form onSubmit={handleFormSubmit} className="flex flex-col gap-4">
           <FormInputContainer
             inputId="name"
-            label="Nom complet"
+            label={t("formCompleteName")}
             error={errors.name?.message}
             required
           >
@@ -32,7 +36,7 @@ export const SignUpEmailForm: FC = () => {
 
           <FormInputContainer
             inputId="email"
-            label="Courriel"
+            label={t("formEmail")}
             error={errors.email?.message}
             required
           >
@@ -53,7 +57,7 @@ export const SignUpEmailForm: FC = () => {
 
           <div className="mt-2">
             <Button type="submit" disabled={isLoading} className="w-full">
-              {isLoading ? "Chargement..." : "Continuer"}
+              {isLoading ? t("formLoading") : t("formContinue")}
             </Button>
           </div>
         </form>

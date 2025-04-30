@@ -32,6 +32,7 @@ export const Header: FC<PropsWithChildren> = async ({ children }) => {
         <div className="flex flex-1 items-center min-md:gap-6">
           <Link
             href="/"
+            aria-label={t("logoLinkAriaLabel")}
             className="flex items-center gap-2 py-3 min-md:relative max-md:absolute max-md:left-1/2 max-md:-translate-x-1/2 max-md:z-10"
           >
             <KiosqLogo />

@@ -1,10 +1,12 @@
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useUserStore } from "@/stores/user-store";
 import { toast } from "sonner";
+import { useCountdownInSeconds } from "@/hooks/useCountdownInSeconds";
+import { useTranslations } from "next-intl";
 
 const otpSchema = z.object({
   email: z.string().email("L'email est invalide"),
@@ -15,6 +17,8 @@ export type FormData = z.infer<typeof otpSchema>;
 
 export const useVerifyOtpForm = () => {
   const router = useRouter();
+  const t = useTranslations("VerifyOtpForm");
+  const { countdown, setCountdown } = useCountdownInSeconds(60);
   const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
   const connectWithOtp = useUserStore((state) => state.connectWithOtp);
@@ -41,10 +45,9 @@ export const useVerifyOtpForm = () => {
   const handleFormSubmit = handleSubmit(async (data) => {
     try {
       setIsLoading(true);
-      // This will be replaced with Supabase verification in the future
-      console.log("Verifying OTP:", data.otp);
+
       await connectWithOtp(email, data.otp);
-      // Navigate to the desired page after verification
+
       router.push("/");
     } catch (error) {
       console.error("Error verifying OTP:", error);
@@ -58,29 +61,42 @@ export const useVerifyOtpForm = () => {
     setValue("otp", value, { shouldValidate: true });
   };
 
+  const errorSignInRedirection = () => {
+    toast.warning(t("aNewCodeRequestErrorNoEmail"), {
+      duration: 5000,
+    });
+    router.push("/auth/sign-in");
+  };
+
   const handleAskForNewCode = async () => {
-    if (!name) {
-      toast.warning(
-        "Nous en pouvons pas vous envoyer un nouveau code sans votre nom, vous serez redirigé vers la page de connexion"
-      );
-      router.push("/auth/sign-in");
+    if (!name || !email) {
+      errorSignInRedirection();
       return;
     }
 
     try {
       await signInWithOtp(email, name);
-      toast.success("Un nouveau code vous a été envoyé");
+      setCountdown(60);
+
+      toast.success(t("aNewCodeHasBeenSent"));
     } catch (error) {
       console.error("Error asking for new code:", error);
-      toast.error("Une erreur est survenue lors de la demande de nouveau code");
+      toast.error(t("aNewCodeRequestError"));
     }
   };
+
+  useEffect(() => {
+    if (!!errors.email) {
+      errorSignInRedirection();
+    }
+  }, [errors]);
 
   return {
     selectors: {
       control,
       errors,
       isLoading,
+      countdown,
     },
     actions: {
       handleFormSubmit,

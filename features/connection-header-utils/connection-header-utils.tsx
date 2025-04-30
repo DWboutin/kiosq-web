@@ -17,7 +17,6 @@ export const ConnectionHeaderUtils: FC = () => {
   if (!user) {
     return (
       <Link href="/auth/sign-in" className="flex items-center gap-2 group px-2 py-3.5">
-        <UserCircleIcon className="w-6 h-6 text-neutral-dark group-hover:text-brand-medium" />
         <span className="text-base font-medium text-neutral-dark group-hover:text-brand-medium">
           {t("connectionButton")}
         </span>

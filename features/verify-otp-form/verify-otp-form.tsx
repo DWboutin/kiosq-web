@@ -6,10 +6,12 @@ import { InputOTP } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
 import { InputOTPSlot } from "@/components/ui/input-otp";
 import { useVerifyOtpForm } from "@/features/verify-otp-form/hooks/use-verify-otp-form";
+import { useTranslations } from "next-intl";
 
 export const VerifyOtpForm: FC = () => {
+  const t = useTranslations("VerifyOtpForm");
   const {
-    selectors: { isLoading, errors },
+    selectors: { isLoading, errors, countdown },
     actions: { handleFormSubmit, handleOtpChange, handleAskForNewCode },
   } = useVerifyOtpForm();
 
@@ -34,10 +36,18 @@ export const VerifyOtpForm: FC = () => {
       </div>
       <div className="flex flex-col items-center gap-2">
         <Button type="submit" className="w-full" disabled={isLoading}>
-          {isLoading ? "Verifying..." : "Verify"}
+          {isLoading ? t("verifyLoading") : t("verifyButton")}
         </Button>
-        <Button type="button" variant="secondary" onClick={handleAskForNewCode} className="w-full">
-          Ask for a new code
+        <Button
+          type="button"
+          variant="secondary"
+          onClick={handleAskForNewCode}
+          className="w-full"
+          disabled={countdown !== 0}
+        >
+          {countdown !== 0
+            ? t("askForNewCodeButtonDisabled", { countdown })
+            : t("askForNewCodeButton")}
         </Button>
       </div>
     </form>

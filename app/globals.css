@@ -20,7 +20,7 @@
   --color-brand-light: #80D488;
   --color-brand-medium: #1A7F65;
   --color-brand-dark: #086049;
-
+  --color-brand-gradient: linear-gradient(172.5deg, #1A7F65 20.96%, #115543 82.91%);
   /* Secondary colors */
   --color-brand-danger: #F41F1F;
   --color-brand-warning: #F5A623;
@@ -201,4 +201,9 @@
 
 .animate-shake {
   animation: shake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* Custom utility classes */
+.bg-brand-gradient {
+  background: var(--color-brand-gradient);
 }
