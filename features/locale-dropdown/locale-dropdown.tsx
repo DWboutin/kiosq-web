@@ -10,8 +10,14 @@ import { usePathname } from "@/i18n/navigation";
 import { LOCALES } from "@/utils/constants";
 import { DropdownMenu } from "@/components/ui/dropdown-menu";
 import { CaretRightIcon } from "@/components/ui/icons/caret-right-icon";
+import classNames from "classnames";
 
-export const LocaleDropdown: FC = () => {
+type LocaleDropdownProps = {
+  className?: string;
+  short?: boolean;
+};
+
+export const LocaleDropdown: FC<LocaleDropdownProps> = ({ className, short = false }) => {
   const t = useTranslations();
   const locale = useLocale();
   const pathname = usePathname();
@@ -19,8 +25,12 @@ export const LocaleDropdown: FC = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="text-neutral-white hover:text-neutral-light transition px-2 py-1 rounded flex items-center gap-1">
-        {t(`Locales.${locale}`)}
+      <DropdownMenuTrigger
+        className={classNames("transition px-2 py-1 rounded flex items-center gap-1", className, {
+          uppercase: short,
+        })}
+      >
+        {short ? locale : t(`Locales.${locale}`)}
         <CaretRightIcon className="size-4 transition-transform rotate-90" />
       </DropdownMenuTrigger>
       <DropdownMenuContent>

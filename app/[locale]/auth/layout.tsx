@@ -20,7 +20,7 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
               <KiosqLogo inverted />
               <span className="text-xl font-lato text-neutral-white">kiosq</span>
             </Link>
-            <LocaleDropdown />
+            <LocaleDropdown className="text-neutral-white hover:text-neutral-light" />
           </div>
           {children}
         </div>

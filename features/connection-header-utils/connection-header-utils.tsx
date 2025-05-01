@@ -9,6 +9,7 @@ import { HeaderAccountButton } from "@/features/header-account-button/header-acc
 import { useUserStore } from "@/stores/user-store";
 import { ShoppingBagIcon } from "@/components/ui/icons/shopping-bag-icon";
 import { useTranslations } from "next-intl";
+import { LocaleDropdown } from "@/features/locale-dropdown/locale-dropdown";
 
 export const ConnectionHeaderUtils: FC = () => {
   const t = useTranslations("Header");
@@ -16,11 +17,14 @@ export const ConnectionHeaderUtils: FC = () => {
 
   if (!user) {
     return (
-      <Link href="/auth/sign-in" className="flex items-center gap-2 group px-2 py-3.5">
-        <span className="text-base font-medium text-neutral-dark group-hover:text-brand-medium">
-          {t("connectionButton")}
-        </span>
-      </Link>
+      <div className="flex flex-row items-center gap-2">
+        <LocaleDropdown className="text-neutral-dark group-hover:text-brand-medium" short />
+        <Link href="/auth/sign-in" className="flex items-center gap-2 group px-2 py-3.5">
+          <span className="text-base font-medium text-neutral-dark group-hover:text-brand-medium">
+            {t("connectionButton")}
+          </span>
+        </Link>
+      </div>
     );
   }
 
