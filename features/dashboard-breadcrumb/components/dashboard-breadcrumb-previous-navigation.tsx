@@ -38,8 +38,8 @@ export const DashboardBreadcrumbPreviousNavigation: FC<
         <DropdownMenuLabel>{t("DashboardBreadcrumb.previousNavigation")}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {hiddenLinks.map((link) => (
-          <DropdownMenuItem key={link.path} asChild>
-            <Link className="flex flex-row items-center gap-2" href={link.path}>
+          <DropdownMenuItem key={link.pathKey} asChild>
+            <Link className="flex flex-row items-center gap-2" href={t(link.pathKey)}>
               {link.icon}
               <span className="font-inter font-semibold">{t(link.labelKey)}</span>
             </Link>

@@ -19,7 +19,7 @@ export const DashboardBreadcrumbLink = ({
         "flex flex-row items-center gap-2 hover:underline flex-shrink-0",
         isLast && "text-brand-medium"
       )}
-      href={link.path}
+      href={t(link.pathKey)}
       aria-current={isLast ? "page" : undefined}
     >
       {link.icon}

@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -11,14 +10,16 @@ import { SubMenuIcon } from "@/components/ui/icons/sub-menu-icon";
 import { DashboardBreadcrumbParentSubMenu } from "@/features/dashboard-breadcrumb/components/dashboard-breadcrumb-parent-sub-menu";
 import { DashboardBreadcrumbSubMenu } from "@/features/dashboard-breadcrumb/components/dashboard-breadcrumb-sub-menu";
 import { Link, usePathname } from "@/i18n/navigation";
+import { useUserStore } from "@/stores/user-store";
 import {
   DASHBOARD_LINKS,
   DASHBOARD_UTILS_LINKS,
   DashboardLink,
 } from "@/utils/dashboard-navigation";
+import { filterLinksFromRole } from "@/utils/filter-links-from-role";
 import classNames from "classnames";
 import { useTranslations } from "next-intl";
-import { memo } from "react";
+import { memo, useMemo } from "react";
 
 const hasRequiredChildren = (
   link: DashboardLink
@@ -29,6 +30,15 @@ const hasRequiredChildren = (
 export const DashboardBreadcrumbMobileMenu = memo(() => {
   const t = useTranslations();
   const pathname = usePathname();
+  const userData = useUserStore((state) => state.userData);
+  const filteredDashboardLinks = useMemo(
+    () => filterLinksFromRole(Object.values(DASHBOARD_LINKS), userData),
+    [userData]
+  );
+  const filteredDashboardUtilsLinks = useMemo(
+    () => filterLinksFromRole(Object.values(DASHBOARD_UTILS_LINKS), userData),
+    [userData]
+  );
 
   return (
     <div className="p-1 min-lg:hidden">
@@ -41,23 +51,23 @@ export const DashboardBreadcrumbMobileMenu = memo(() => {
         <DropdownMenuContent className="min-w-[200px] p-2">
           <DropdownMenuLabel>{t("DashboardBreadcrumb.managementSystem")}</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          {Object.values(DASHBOARD_LINKS).map((link) => {
+          {filteredDashboardLinks.map((link) => {
             if (hasRequiredChildren(link)) {
-              return <DashboardBreadcrumbParentSubMenu key={link.path} link={link} />;
+              return <DashboardBreadcrumbParentSubMenu key={link.pathKey} link={link} />;
             }
 
-            return <DashboardBreadcrumbSubMenu key={link.path} link={link} />;
+            return <DashboardBreadcrumbSubMenu key={link.pathKey} link={link} />;
           })}
           <DropdownMenuSeparator />
-          {Object.values(DASHBOARD_UTILS_LINKS).map((link) => (
+          {filteredDashboardUtilsLinks.map((link) => (
             <Link
-              key={link.path}
-              href={link.path}
+              key={link.pathKey}
+              href={t(link.pathKey)}
               className={classNames(
                 "flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-neutral-100 w-full",
-                { "bg-neutral-100": pathname === link.path }
+                { "bg-neutral-100": pathname === t(link.pathKey) }
               )}
-              aria-current={pathname === link.path ? "page" : undefined}
+              aria-current={pathname === t(link.pathKey) ? "page" : undefined}
             >
               {link.icon}
               <span className="font-inter">{t(link.labelKey)}</span>

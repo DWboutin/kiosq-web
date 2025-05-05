@@ -12,7 +12,7 @@ import { UserCircleIcon } from "@/components/ui/icons/user-circle-icon";
 import { UserRole } from "@/types/app";
 
 export type DashboardLink = {
-  path: string;
+  pathKey: string;
   labelKey: string;
   icon?: React.ReactNode;
   role?: UserRole | UserRole[];
@@ -21,12 +21,12 @@ export type DashboardLink = {
 
 export const DASHBOARD_UTILS_LINKS: Record<string, DashboardLink> = {
   training: {
-    path: "/dashboard/training",
+    pathKey: "Pathnames.dashboard_training",
     labelKey: "DashboardMenu.learningVideos",
     icon: <VideoIcon className="size-6" />,
   },
   account: {
-    path: "/dashboard/account",
+    pathKey: "Pathnames.dashboard_account",
     labelKey: "DashboardMenu.yourAccount",
     icon: <UserCircleIcon className="size-6" />,
   },
@@ -34,63 +34,63 @@ export const DASHBOARD_UTILS_LINKS: Record<string, DashboardLink> = {
 
 export const DASHBOARD_ADMIN_TABS: Record<string, DashboardLink> = {
   importantInformation: {
-    path: "/dashboard/admin",
+    pathKey: "Pathnames.dashboard_admin",
     labelKey: "DashboardAdminTabs.importantInformation",
   },
   categories: {
-    path: "/dashboard/admin/categories",
+    pathKey: "Pathnames.dashboard_admin_categories",
     labelKey: "DashboardAdminTabs.categories",
   },
 };
 
 export const DASHBOARD_LINKS: Record<string, DashboardLink> = {
   dashboard: {
-    path: "/dashboard",
+    pathKey: "Pathnames.dashboard",
     labelKey: "DashboardMenu.dashboard",
     icon: <DashboardIcon className="size-6" />,
   },
   products: {
-    path: "/dashboard/products",
+    pathKey: "Pathnames.dashboard_products",
     labelKey: "DashboardMenu.products",
     icon: <StorefrontIcon className="size-6" />,
     role: ["admin", "vendor-admin", "vendor-manager"],
   },
   discounts: {
-    path: "/dashboard/discounts",
+    pathKey: "Pathnames.dashboard_discounts",
     labelKey: "DashboardMenu.discounts",
     icon: <DiscountHandIcon className="size-6" />,
     role: ["admin", "vendor-admin", "vendor-manager"],
   },
   events: {
-    path: "/dashboard/events",
+    pathKey: "Pathnames.dashboard_events",
     labelKey: "DashboardMenu.events",
     icon: <CalendarDotsIcon className="size-6" />,
     role: ["admin", "vendor-admin", "vendor-manager"],
   },
   yourStore: {
-    path: "/dashboard/your-store",
+    pathKey: "Pathnames.dashboard_yourStore",
     labelKey: "DashboardMenu.yourStore",
     icon: <IdentificationCardIcon className="size-6" />,
   },
   yourKiosqs: {
-    path: "/dashboard/your-kiosqs",
+    pathKey: "Pathnames.dashboard_yourKiosqs",
     labelKey: "DashboardMenu.yourKiosqs",
     icon: <MapPinAreaIcon className="size-6" />,
     role: ["admin", "vendor-admin", "vendor-manager"],
   },
   reservations: {
-    path: "/dashboard/reservations",
+    pathKey: "Pathnames.dashboard_reservations",
     labelKey: "DashboardMenu.reservations",
     icon: <ShoppingBagIcon className="size-6" />,
   },
   billing: {
-    path: "/dashboard/billing",
+    pathKey: "Pathnames.dashboard_billing",
     labelKey: "DashboardMenu.billing",
     icon: <InvoiceIcon className="size-6" />,
     role: ["admin", "vendor-admin", "vendor-manager"],
   },
   admin: {
-    path: "/dashboard/admin",
+    pathKey: "Pathnames.dashboard_admin",
     labelKey: "DashboardMenu.admin",
     icon: <KeyholeIcon className="size-6" />,
     role: "admin" as UserRole,

@@ -3,6 +3,20 @@
     "en": "English",
     "fr": "Français"
   },
+  "Pathnames": {
+    "dashboard": "/dashboard",
+    "dashboard_products": "/dashboard/products",
+    "dashboard_discounts": "/dashboard/discounts",
+    "dashboard_events": "/dashboard/events",
+    "dashboard_yourStore": "/dashboard/your-store",
+    "dashboard_yourKiosqs": "/dashboard/your-kiosqs",
+    "dashboard_reservations": "/dashboard/reservations",
+    "dashboard_billing": "/dashboard/billing",
+    "dashboard_admin": "/dashboard/admin",
+    "dashboard_admin_categories": "/dashboard/admin/categories",
+    "dashboard_training": "/dashboard/training",
+    "dashboard_account": "/dashboard/account"
+  },
   "Global": {
     "thereWasAnError": "There was an error, please contact support"
   },

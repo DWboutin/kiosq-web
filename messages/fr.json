@@ -3,6 +3,20 @@
     "en": "English",
     "fr": "Français"
   },
+  "Pathnames": {
+    "dashboard": "/tableau-de-bord",
+    "dashboard_products": "/tableau-de-bord/produits",
+    "dashboard_discounts": "/tableau-de-bord/rabais",
+    "dashboard_events": "/tableau-de-bord/evenements",
+    "dashboard_yourStore": "/tableau-de-bord/votre-commerce",
+    "dashboard_yourKiosqs": "/tableau-de-bord/vos-kiosqs",
+    "dashboard_reservations": "/tableau-de-bord/reservations",
+    "dashboard_billing": "/tableau-de-bord/facturation",
+    "dashboard_admin": "/tableau-de-bord/administration",
+    "dashboard_admin_categories": "/tableau-de-bord/administration/categories",
+    "dashboard_training": "/tableau-de-bord/formation",
+    "dashboard_account": "/tableau-de-bord/compte"
+  },
   "Global": {
     "thereWasAnError": "Une erreur est survenue, veuillez contacter le support"
   },

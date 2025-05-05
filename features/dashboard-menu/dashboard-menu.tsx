@@ -10,176 +10,78 @@ import classNames from "classnames";
 import { useTranslations } from "next-intl";
 import { DASHBOARD_LINKS, DASHBOARD_UTILS_LINKS } from "@/utils/dashboard-navigation";
 import { TooltipContainer } from "@/components/ui/tooltip-container";
-
-type DashboardMenuProtectedLinkProps = {
-  role: UserRole | UserRole[];
-} & DashboardMenuLinkProps;
-
-const DashboardMenuProtectedLink: FC<DashboardMenuProtectedLinkProps> = ({
-  role,
-  href,
-  icon,
-  children,
-  ariaLabel,
-}) => {
-  const pathname = usePathname();
-  const isActive = pathname === href;
-  const userData = useUserStore((state) => state.userData);
-
-  if (!userData?.role) {
-    return null;
-  }
-
-  const hasRequiredRole = Array.isArray(role)
-    ? role.includes(userData.role)
-    : userData.role === role;
-
-  if (!hasRequiredRole) {
-    return null;
-  }
-
-  return (
-    <li role="none" className="flex-1">
-      <DashboardMenuLink
-        href={href}
-        icon={icon}
-        ariaLabel={ariaLabel}
-        aria-current={isActive ? "page" : undefined}
-      >
-        {children}
-      </DashboardMenuLink>
-    </li>
-  );
-};
+import { filterLinksFromRole } from "@/utils/filter-links-from-role";
+import { useDashboardMenu } from "@/features/dashboard-menu/hooks/use-dashboard-meny";
 
 type DashboardMenuLinkProps = {
-  href: string;
+  pathKey: string;
   icon: React.ReactNode;
   children: React.ReactNode;
   ariaLabel?: string;
   role?: UserRole | UserRole[];
 };
 
-const DashboardMenuLink = memo(
-  ({ href, icon, children, ariaLabel, role }: DashboardMenuLinkProps) => {
-    const pathname = usePathname();
-    const isActive = pathname === href;
+const DashboardMenuLink = memo(({ pathKey, icon, children, ariaLabel }: DashboardMenuLinkProps) => {
+  const pathname = usePathname();
+  const t = useTranslations();
+  const path = t(pathKey);
+  const isActive = pathname === path;
 
-    if (role) {
-      return (
-        <DashboardMenuProtectedLink href={href} icon={icon} ariaLabel={ariaLabel} role={role}>
-          {children}
-        </DashboardMenuProtectedLink>
-      );
-    }
-
-    return (
-      <li role="none" className="flex-1">
-        <TooltipContainer content={ariaLabel} disableHoverableContent>
-          <Link
-            href={href}
-            className={`flex flex-row flex-1 items-center hover:bg-neutral-lightest rounded-md ${
-              isActive ? "text-brand-medium" : "text-neutral-darker hover:text-neutral-black"
-            }`}
-            aria-current={isActive ? "page" : undefined}
-            aria-label={ariaLabel}
-          >
-            <Button variant="ghost" size="icon" tabIndex={-1} asChild>
-              <span className="size-6">{icon}</span>
-            </Button>
-            <p className="font-inter text-base pl-2 group-[.is-open]:inline-block hidden">
-              {children}
-            </p>
-          </Link>
-        </TooltipContainer>
-      </li>
-    );
-  }
-);
+  return (
+    <li role="none" className="flex-1">
+      <TooltipContainer content={ariaLabel} disableHoverableContent>
+        <Link
+          href={path}
+          className={`flex flex-row flex-1 items-center hover:bg-neutral-lightest rounded-md ${
+            isActive ? "text-brand-medium" : "text-neutral-darker hover:text-neutral-black"
+          }`}
+          aria-current={isActive ? "page" : undefined}
+          aria-label={ariaLabel}
+        >
+          <Button variant="ghost" size="icon" tabIndex={-1} asChild>
+            <span className="size-6">{icon}</span>
+          </Button>
+          <p className="font-inter text-base pl-2 group-[.is-open]:inline-block hidden">
+            {children}
+          </p>
+        </Link>
+      </TooltipContainer>
+    </li>
+  );
+});
 
 DashboardMenuLink.displayName = "DashboardMenuLink";
 
 export const DashboardMenu: FC = () => {
   const t = useTranslations();
-  const refreshUserData = useUserStore((state) => state.refreshUserData);
-  const [open, setOpen] = useState(false);
-  const navRef = useRef<HTMLElement>(null);
-  const toggleButtonRef = useRef<HTMLButtonElement>(null);
-  const pathname = usePathname();
-  const links = useMemo(() => {
-    return Object.values(DASHBOARD_LINKS);
-  }, []);
-  const utilsLinks = useMemo(() => {
-    return Object.values(DASHBOARD_UTILS_LINKS);
-  }, []);
-
-  const handleToggleMenu = () => {
-    setOpen((prev) => !prev);
-  };
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && open) {
-        setOpen(false);
-        toggleButtonRef.current?.focus();
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-
-    const handleFocusOut = (e: FocusEvent) => {
-      const target = e.target as Node;
-      const menuContainer = navRef.current?.parentElement;
-
-      if (menuContainer && !menuContainer.contains(target)) {
-        setOpen(false);
-      }
-    };
-
-    document.addEventListener("focusin", handleFocusOut);
-    return () => {
-      document.removeEventListener("focusin", handleFocusOut);
-    };
-  }, [open]);
-
-  useEffect(() => {
-    if (open) {
-      setOpen(false);
-    }
-  }, [pathname]);
-
-  useEffect(() => {
-    refreshUserData();
-  }, []);
+  const {
+    selectors: { isOpen, links, utilsLinks, navRef, toggleButtonRef },
+    actions: { handleToggleMenu },
+  } = useDashboardMenu();
 
   return (
     <div
       className={classNames(
         "relative z-10 flex flex-col py-5 px-4 bg-neutral-white rounded-xl max-md:rounded-l-none group",
-        { "is-open shadow-lg shadow-neutral-400/20": open, "shadow-none": !open }
+        { "is-open shadow-lg shadow-neutral-400/20": isOpen, "shadow-none": !isOpen }
       )}
       role="navigation"
       aria-label="Dashboard navigation"
     >
       <div className="flex items-center pb-2.5 border-b border-neutral-lightest">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={handleToggleMenu}
-          aria-expanded={open}
-          aria-controls="dashboard-navigation-menu"
-          aria-label={open ? "Close navigation menu" : "Open navigation menu"}
-          ref={toggleButtonRef}
-        >
-          <SubMenuIcon className="size-6 text-neutral-darker" open={open} />
-        </Button>
+        <TooltipContainer content={t("DashboardMenu.navigation")} disableHoverableContent>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleToggleMenu}
+            aria-expanded={isOpen}
+            aria-controls="dashboard-navigation-menu"
+            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+            ref={toggleButtonRef}
+          >
+            <SubMenuIcon className="size-6 text-neutral-darker" open={isOpen} />
+          </Button>
+        </TooltipContainer>
         <p className="pl-2 text-neutral-darker font-inter text-base font-semibold group-[.is-open]:block hidden">
           {t("DashboardMenu.navigation")}
         </p>
@@ -188,8 +90,8 @@ export const DashboardMenu: FC = () => {
         <ul className="flex flex-col gap-2" role="menu">
           {links.map((link) => (
             <DashboardMenuLink
-              key={link.path}
-              href={link.path}
+              key={link.pathKey}
+              pathKey={link.pathKey}
               icon={link.icon}
               ariaLabel={t(link.labelKey)}
               role={link.role}
@@ -208,7 +110,7 @@ export const DashboardMenu: FC = () => {
           {utilsLinks.map((link) => (
             <DashboardMenuLink
               key={`dashboard-utils-${link.labelKey}`}
-              href={link.path}
+              pathKey={link.pathKey}
               icon={link.icon}
               ariaLabel={t(link.labelKey)}
               role={link.role}

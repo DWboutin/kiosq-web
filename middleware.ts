@@ -3,6 +3,9 @@ import createIntlMiddleware from "next-intl/middleware";
 import { updateSession } from "@/utils/supabase/middleware";
 import { AppConfig } from "@/app-config";
 import { Locales } from "@/types/app";
+import { createPathnamesMappings } from "@/i18n/create-pathnames-mappings";
+
+const pathnames = createPathnamesMappings();
 
 export async function middleware(request: NextRequest) {
   // First, check authentication
@@ -18,6 +21,7 @@ export async function middleware(request: NextRequest) {
     locales: AppConfig.locales,
     defaultLocale: AppConfig.defaultLocale as Locales,
     localePrefix: AppConfig.localePrefix as "always" | "as-needed" | "never",
+    pathnames,
   });
 
   return handleI18nRouting(request);

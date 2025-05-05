@@ -12,14 +12,14 @@ export const DashboardBreadcrumbSubMenu = memo(({ link }: { link: DashboardLink 
   const pathname = usePathname();
 
   return (
-    <DropdownMenuItem asChild key={link.path}>
+    <DropdownMenuItem asChild key={link.pathKey}>
       <Link
-        href={link.path}
+        href={t(link.pathKey)}
         className={classNames(
           "flex items-center gap-2 px-1.5 py-1 text-sm rounded-md hover:bg-neutral-100 w-full",
-          { "text-brand-medium": pathname === link.path }
+          { "text-brand-medium": pathname === t(link.pathKey) }
         )}
-        aria-current={pathname === link.path ? "page" : undefined}
+        aria-current={pathname === t(link.pathKey) ? "page" : undefined}
       >
         {link.icon}
         <span className="font-inter">{t(link.labelKey)}</span>

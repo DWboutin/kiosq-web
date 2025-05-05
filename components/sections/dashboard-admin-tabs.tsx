@@ -15,12 +15,12 @@ export const DashboardAdminTabs: FC = () => {
     <nav className="flex border-b border-neutral-light" aria-label="Admin navigation">
       <div className="flex space-x-2">
         {tabs.map((tab) => {
-          const isActive = pathname.endsWith(tab.path);
+          const isActive = pathname.endsWith(t(tab.pathKey));
 
           return (
             <Link
-              key={tab.path}
-              href={tab.path}
+              key={tab.pathKey}
+              href={t(tab.pathKey)}
               className={`px-4 py-2 font-medium text-sm inline-flex items-center transition-colors
                 ${
                   isActive
