@@ -6,7 +6,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
@@ -40,7 +39,7 @@ export const HeaderAccountButton: FC = memo(() => {
         <DropdownMenuLabel>{t("HeaderAccountButton.myAccount")}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>{t("HeaderAccountButton.languages")}</DropdownMenuItem>
+          <DropdownMenuLabel>{t("HeaderAccountButton.languages")}</DropdownMenuLabel>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>{t(`Locales.${locale}`)}</DropdownMenuSubTrigger>
             <DropdownMenuPortal>

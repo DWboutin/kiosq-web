@@ -12,7 +12,7 @@ import { DASHBOARD_LINKS, DASHBOARD_UTILS_LINKS } from "@/utils/dashboard-naviga
 import { TooltipContainer } from "@/components/ui/tooltip-container";
 
 type DashboardMenuProtectedLinkProps = {
-  role: UserRole;
+  role: UserRole | UserRole[];
 } & DashboardMenuLinkProps;
 
 const DashboardMenuProtectedLink: FC<DashboardMenuProtectedLinkProps> = ({
@@ -26,19 +26,29 @@ const DashboardMenuProtectedLink: FC<DashboardMenuProtectedLinkProps> = ({
   const isActive = pathname === href;
   const userData = useUserStore((state) => state.userData);
 
-  if (userData?.role !== role) {
+  if (!userData?.role) {
+    return null;
+  }
+
+  const hasRequiredRole = Array.isArray(role)
+    ? role.includes(userData.role)
+    : userData.role === role;
+
+  if (!hasRequiredRole) {
     return null;
   }
 
   return (
-    <DashboardMenuLink
-      href={href}
-      icon={icon}
-      ariaLabel={ariaLabel}
-      aria-current={isActive ? "page" : undefined}
-    >
-      {children}
-    </DashboardMenuLink>
+    <li role="none" className="flex-1">
+      <DashboardMenuLink
+        href={href}
+        icon={icon}
+        ariaLabel={ariaLabel}
+        aria-current={isActive ? "page" : undefined}
+      >
+        {children}
+      </DashboardMenuLink>
+    </li>
   );
 };
 
@@ -47,7 +57,7 @@ type DashboardMenuLinkProps = {
   icon: React.ReactNode;
   children: React.ReactNode;
   ariaLabel?: string;
-  role?: UserRole;
+  role?: UserRole | UserRole[];
 };
 
 const DashboardMenuLink = memo(
@@ -64,23 +74,25 @@ const DashboardMenuLink = memo(
     }
 
     return (
-      <TooltipContainer content={ariaLabel}>
-        <Link
-          href={href}
-          className={`flex flex-row flex-1 items-center hover:bg-neutral-lightest rounded-md ${
-            isActive ? "text-brand-medium" : "text-neutral-darker hover:text-neutral-black"
-          }`}
-          aria-current={isActive ? "page" : undefined}
-          aria-label={ariaLabel}
-        >
-          <Button variant="ghost" size="icon" tabIndex={-1} asChild>
-            <span className="size-6">{icon}</span>
-          </Button>
-          <p className="font-inter text-base pl-2 group-[.is-open]:inline-block hidden">
-            {children}
-          </p>
-        </Link>
-      </TooltipContainer>
+      <li role="none" className="flex-1">
+        <TooltipContainer content={ariaLabel} disableHoverableContent>
+          <Link
+            href={href}
+            className={`flex flex-row flex-1 items-center hover:bg-neutral-lightest rounded-md ${
+              isActive ? "text-brand-medium" : "text-neutral-darker hover:text-neutral-black"
+            }`}
+            aria-current={isActive ? "page" : undefined}
+            aria-label={ariaLabel}
+          >
+            <Button variant="ghost" size="icon" tabIndex={-1} asChild>
+              <span className="size-6">{icon}</span>
+            </Button>
+            <p className="font-inter text-base pl-2 group-[.is-open]:inline-block hidden">
+              {children}
+            </p>
+          </Link>
+        </TooltipContainer>
+      </li>
     );
   }
 );
@@ -89,6 +101,7 @@ DashboardMenuLink.displayName = "DashboardMenuLink";
 
 export const DashboardMenu: FC = () => {
   const t = useTranslations();
+  const refreshUserData = useUserStore((state) => state.refreshUserData);
   const [open, setOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const toggleButtonRef = useRef<HTMLButtonElement>(null);
@@ -142,6 +155,10 @@ export const DashboardMenu: FC = () => {
     }
   }, [pathname]);
 
+  useEffect(() => {
+    refreshUserData();
+  }, []);
+
   return (
     <div
       className={classNames(
@@ -170,37 +187,37 @@ export const DashboardMenu: FC = () => {
       <nav className="flex flex-col flex-1 mt-4" id="dashboard-navigation-menu" ref={navRef}>
         <ul className="flex flex-col gap-2" role="menu">
           {links.map((link) => (
-            <li key={`dashboard-link-${link.labelKey}`} role="none" className="flex-1">
-              <DashboardMenuLink
-                key={link.path}
-                href={link.path}
-                icon={link.icon}
-                ariaLabel={t(link.labelKey)}
-                role={link.role}
-              >
-                {t(link.labelKey)}
-              </DashboardMenuLink>
-            </li>
+            <DashboardMenuLink
+              key={link.path}
+              href={link.path}
+              icon={link.icon}
+              ariaLabel={t(link.labelKey)}
+              role={link.role}
+            >
+              {t(link.labelKey)}
+            </DashboardMenuLink>
           ))}
         </ul>
       </nav>
-      <div
+      <nav
         className="flex flex-col gap-2 pt-4 mt-4 border-t border-neutral-lightest"
         role="complementary"
         aria-label="User account actions"
       >
-        {utilsLinks.map((link) => (
-          <DashboardMenuLink
-            key={`dashboard-utils-${link.labelKey}`}
-            href={link.path}
-            icon={link.icon}
-            ariaLabel={t(link.labelKey)}
-            role={link.role}
-          >
-            {t(link.labelKey)}
-          </DashboardMenuLink>
-        ))}
-      </div>
+        <ul className="flex flex-col gap-2" role="menu">
+          {utilsLinks.map((link) => (
+            <DashboardMenuLink
+              key={`dashboard-utils-${link.labelKey}`}
+              href={link.path}
+              icon={link.icon}
+              ariaLabel={t(link.labelKey)}
+              role={link.role}
+            >
+              {t(link.labelKey)}
+            </DashboardMenuLink>
+          ))}
+        </ul>
+      </nav>
     </div>
   );
 };

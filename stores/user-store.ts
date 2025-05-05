@@ -25,6 +25,7 @@ type UserActions = {
   signInWithOtp: (email: string, name: string) => Promise<void>;
   connectWithOtp: (email: string, code: string) => Promise<void>;
   disconnectUser: () => Promise<void>;
+  refreshUserData: () => Promise<void>;
 };
 
 const initialState: UserState = {
@@ -112,6 +113,14 @@ export const useUserStore = create<UserStore>()(
             state.isAuthenticating = false;
           });
         }
+      },
+      refreshUserData: async () => {
+        const userData = await getAuthenticatedUserData();
+        get().getUser();
+
+        set((state) => {
+          state.userData = userData;
+        });
       },
       disconnectUser: async () => {
         try {

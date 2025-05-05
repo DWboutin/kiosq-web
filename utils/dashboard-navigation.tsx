@@ -15,7 +15,7 @@ export type DashboardLink = {
   path: string;
   labelKey: string;
   icon?: React.ReactNode;
-  role?: UserRole;
+  role?: UserRole | UserRole[];
   children?: Record<string, DashboardLink>;
 };
 
@@ -53,16 +53,19 @@ export const DASHBOARD_LINKS: Record<string, DashboardLink> = {
     path: "/dashboard/products",
     labelKey: "DashboardMenu.products",
     icon: <StorefrontIcon className="size-6" />,
+    role: ["admin", "vendor-admin", "vendor-manager"],
   },
   discounts: {
     path: "/dashboard/discounts",
     labelKey: "DashboardMenu.discounts",
     icon: <DiscountHandIcon className="size-6" />,
+    role: ["admin", "vendor-admin", "vendor-manager"],
   },
   events: {
     path: "/dashboard/events",
     labelKey: "DashboardMenu.events",
     icon: <CalendarDotsIcon className="size-6" />,
+    role: ["admin", "vendor-admin", "vendor-manager"],
   },
   yourStore: {
     path: "/dashboard/your-store",
@@ -73,6 +76,7 @@ export const DASHBOARD_LINKS: Record<string, DashboardLink> = {
     path: "/dashboard/your-kiosqs",
     labelKey: "DashboardMenu.yourKiosqs",
     icon: <MapPinAreaIcon className="size-6" />,
+    role: ["admin", "vendor-admin", "vendor-manager"],
   },
   reservations: {
     path: "/dashboard/reservations",
@@ -83,6 +87,7 @@ export const DASHBOARD_LINKS: Record<string, DashboardLink> = {
     path: "/dashboard/billing",
     labelKey: "DashboardMenu.billing",
     icon: <InvoiceIcon className="size-6" />,
+    role: ["admin", "vendor-admin", "vendor-manager"],
   },
   admin: {
     path: "/dashboard/admin",
