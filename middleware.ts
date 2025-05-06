@@ -6,6 +6,12 @@ import { Locales } from "@/types/app";
 import { createPathnamesMappings } from "@/i18n/create-pathnames-mappings";
 
 const pathnames = createPathnamesMappings();
+const handleI18nRouting = createIntlMiddleware({
+  locales: AppConfig.locales,
+  defaultLocale: AppConfig.defaultLocale as Locales,
+  localePrefix: AppConfig.localePrefix as "always" | "as-needed" | "never",
+  pathnames,
+});
 
 export async function middleware(request: NextRequest) {
   // First, check authentication
@@ -15,14 +21,6 @@ export async function middleware(request: NextRequest) {
   if (authResponse.headers.has("Location")) {
     return authResponse;
   }
-
-  // Otherwise, handle i18n routing
-  const handleI18nRouting = createIntlMiddleware({
-    locales: AppConfig.locales,
-    defaultLocale: AppConfig.defaultLocale as Locales,
-    localePrefix: AppConfig.localePrefix as "always" | "as-needed" | "never",
-    pathnames,
-  });
 
   return handleI18nRouting(request);
 }
