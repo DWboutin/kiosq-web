@@ -10,7 +10,7 @@ import { ProductCategoryFormValues } from "@/features/product-category-form-draw
 import { ControlledSelect } from "@/components/ui/form-utils/controlled-select";
 import { AddTranslationField } from "@/features/add-translation-field/add-translation-field";
 import { useTranslations } from "next-intl";
-import { useProductCategories } from "@/hooks/useProductCategories";
+import { useProductCategories } from "@/hooks/use-product-categories";
 import { Locales } from "@/types/app";
 import { useLocale } from "next-intl";
 

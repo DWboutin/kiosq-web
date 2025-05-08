@@ -26,7 +26,7 @@ export const DashboardBreadcrumbParentSubMenu = memo(
         <DropdownMenuSub>
           <DropdownMenuSubTrigger
             className={classNames("flex items-center gap-2 px-1.5 py-1 text-sm rounded-md w-full", {
-              "text-brand-medium": pathname.includes(link.path),
+              "text-brand-medium": pathname.includes(t(link.pathKey)),
             })}
           >
             {link.icon}
@@ -35,7 +35,7 @@ export const DashboardBreadcrumbParentSubMenu = memo(
           <DropdownMenuPortal>
             <DropdownMenuSubContent>
               {Object.values(link.children).map((child) => (
-                <DashboardBreadcrumbSubMenu key={child.path} link={child} />
+                <DashboardBreadcrumbSubMenu key={child.pathKey} link={child} />
               ))}
             </DropdownMenuSubContent>
           </DropdownMenuPortal>

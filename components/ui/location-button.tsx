@@ -2,7 +2,7 @@
 
 import { LocationPinIcon } from "@/components/ui/icons/location-pin-icon";
 import { FC } from "react";
-import { useGeolocation } from "@/hooks/useGeolocation";
+import { useGeolocation } from "@/hooks/use-geolocation";
 import { useTranslations } from "next-intl";
 
 export const LocationButton: FC = () => {

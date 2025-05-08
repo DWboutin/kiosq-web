@@ -1,17 +1,14 @@
 "use client";
 
-import { FC, memo, useState, useRef, useEffect, useMemo } from "react";
+import { FC, memo } from "react";
 import { Button } from "@/components/ui/button";
 import { SubMenuIcon } from "@/components/ui/icons/sub-menu-icon";
 import { Link, usePathname } from "@/i18n/navigation";
-import { useUserStore } from "@/stores/user-store";
 import { UserRole } from "@/types/app";
 import classNames from "classnames";
 import { useTranslations } from "next-intl";
-import { DASHBOARD_LINKS, DASHBOARD_UTILS_LINKS } from "@/utils/dashboard-navigation";
 import { TooltipContainer } from "@/components/ui/tooltip-container";
-import { filterLinksFromRole } from "@/utils/filter-links-from-role";
-import { useDashboardMenu } from "@/features/dashboard-menu/hooks/use-dashboard-meny";
+import { useDashboardMenu } from "@/features/dashboard-menu/hooks/use-dashboard-menu";
 
 type DashboardMenuLinkProps = {
   pathKey: string;

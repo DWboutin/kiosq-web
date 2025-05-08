@@ -9,8 +9,8 @@ export interface UseDashboardMenuSelectors {
   isOpen: boolean;
   links: DashboardLink[];
   utilsLinks: DashboardLink[];
-  navRef: React.RefObject<HTMLElement>;
-  toggleButtonRef: React.RefObject<HTMLButtonElement>;
+  navRef: React.RefObject<HTMLElement | null>;
+  toggleButtonRef: React.RefObject<HTMLButtonElement | null>;
 }
 
 export interface UseDashboardMenuActions {

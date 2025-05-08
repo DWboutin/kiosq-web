@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useUserStore } from "@/stores/user-store";
 import { toast } from "sonner";
-import { useCountdownInSeconds } from "@/hooks/useCountdownInSeconds";
+import { useCountdownInSeconds } from "@/hooks/use-countdown-in-seconds";
 import { useTranslations } from "next-intl";
 
 const otpSchema = z.object({

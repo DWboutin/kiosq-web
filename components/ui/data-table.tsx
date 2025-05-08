@@ -34,7 +34,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useDataTableVisibilityStore } from "@/stores/data-table-visibility-store";
-import { useIsMounted } from "@/hooks/useIsMounted";
+import { useIsMounted } from "@/hooks/use-is-mounted";
 
 interface DataTableProps<TData, TValue> {
   tableId: string;

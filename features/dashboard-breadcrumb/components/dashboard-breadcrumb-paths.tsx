@@ -3,7 +3,7 @@ import React from "react";
 import { DashboardBreadcrumbPreviousNavigation } from "@/features/dashboard-breadcrumb/components/dashboard-breadcrumb-previous-navigation";
 import { useDashboardBreadcrumbPaths } from "@/features/dashboard-breadcrumb/hooks/use-dashboard-breadcrumb-paths";
 import { DashboardBreadcrumbLink } from "@/features/dashboard-breadcrumb/components/dashboard-breadcrumb-link";
-import { usePathLinks } from "@/hooks/usePathsLinks";
+import { usePathLinks } from "@/hooks/use-paths-links";
 
 export const DashboardBreadcrumbPaths = () => {
   const containerRef = React.useRef<HTMLDivElement>(null);
