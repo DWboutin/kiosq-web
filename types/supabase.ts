@@ -419,18 +419,20 @@ export type Database = {
           is_deleted: boolean
           name_translations: Json | null
           slug_translations: Json | null
-          type: string | null
+          type: Database["public"]["Enums"]["profile_type"] | null
           updated_at: string
+          user_id: string
         }
         Insert: {
           banner_image?: string | null
           created_at?: string
-          id: string
+          id?: string
           is_deleted?: boolean
           name_translations?: Json | null
           slug_translations?: Json | null
-          type?: string | null
+          type?: Database["public"]["Enums"]["profile_type"] | null
           updated_at?: string
+          user_id: string
         }
         Update: {
           banner_image?: string | null
@@ -439,14 +441,15 @@ export type Database = {
           is_deleted?: boolean
           name_translations?: Json | null
           slug_translations?: Json | null
-          type?: string | null
+          type?: Database["public"]["Enums"]["profile_type"] | null
           updated_at?: string
+          user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "profiles_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
+            foreignKeyName: "profiles_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           },
@@ -545,7 +548,7 @@ export type Database = {
           max_price: number | null
           min_price: number | null
           name_translations: Json | null
-          profile_type: string | null
+          profile_type: Database["public"]["Enums"]["profile_type"] | null
           slug: string | null
           status: string | null
           total_inventory: number | null
@@ -556,6 +559,10 @@ export type Database = {
       }
     }
     Functions: {
+      delete_category: {
+        Args: { category_id: string }
+        Returns: undefined
+      }
       has_role_permission: {
         Args: {
           user_id: string
@@ -565,6 +572,7 @@ export type Database = {
       }
     }
     Enums: {
+      profile_type: "personal" | "vendor"
       user_role: "admin" | "vendor-admin" | "vendor-manager" | "user"
     }
     CompositeTypes: {
@@ -681,6 +689,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      profile_type: ["personal", "vendor"],
       user_role: ["admin", "vendor-admin", "vendor-manager", "user"],
     },
   },

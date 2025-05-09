@@ -74,6 +74,10 @@
     "title": "Categories",
     "description": "Manage the categories"
   },
+  "DashboardYourStoreHeader": {
+    "title": "Your store",
+    "description": "Manage your store"
+  },
   "ProductCategoryFormDrawer": {
     "openingButton": "Add a category",
     "addTitle": "Add a category",

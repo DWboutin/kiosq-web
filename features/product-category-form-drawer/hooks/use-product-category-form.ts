@@ -68,7 +68,6 @@ export const useProductCategoryForm = (
   });
   const name = watch("name");
   const name_translations = watch("name_translations");
-  const slug_translations = watch("slug_translations");
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -179,19 +178,14 @@ export const useProductCategoryForm = (
   }, [name]);
 
   useEffect(() => {
-    if (name_translations && Object.keys(name_translations).length > 0) {
-      const updatedSlugs = Object.keys(name_translations).reduce<Record<string, string>>(
-        (acc, nameLocale) => ({
-          ...acc,
-          [nameLocale]: slugify(name_translations[nameLocale]),
-        }),
-        {}
+    if (name_translations) {
+      setValue(
+        "slug_translations",
+        Object.keys(name_translations).reduce((acc, key) => {
+          acc[key] = slugify(name_translations[key]);
+          return acc;
+        }, {} as Record<string, string>)
       );
-
-      setValue("slug_translations", {
-        ...(slug_translations || {}),
-        ...updatedSlugs,
-      });
     }
   }, [name_translations]);
 
