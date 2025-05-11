@@ -5,6 +5,7 @@ import { VendorProfileFormValues } from "@/features/create-profile-wizard/utils/
 import { Textarea } from "@/components/ui/textarea";
 import { AddTranslationField } from "@/features/add-translation-field/add-translation-field";
 import { useTranslations } from "next-intl";
+
 interface CreateProfileStepDetailsProps {
   control: Control<VendorProfileFormValues>;
   errors: FieldErrors<VendorProfileFormValues>;
@@ -43,7 +44,12 @@ export const CreateProfileStepDetails: FC<CreateProfileStepDetailsProps> = ({
             {t("storeDescriptionDescription")}
           </div>
         </FormInputContainer>
-        <AddTranslationField name="description" control={control} errors={errors} />
+        <AddTranslationField
+          name="description"
+          control={control}
+          errors={errors}
+          fieldType="textarea"
+        />
       </div>
     </div>
   );

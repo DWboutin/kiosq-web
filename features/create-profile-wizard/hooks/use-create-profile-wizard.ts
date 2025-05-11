@@ -10,12 +10,28 @@ import { useTranslations } from "next-intl";
 import { Locales } from "@/types/app";
 import { slugify } from "@/utils/slugify";
 import { SubmitHandler } from "react-hook-form";
+import { createUserVendorProfile } from "@/actions/create-user-vendor-profile";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 export const useCreateProfileWizard = (steps: { id: string; label: string }[]) => {
   const t = useTranslations();
   const locale = useLocale() as Locales;
   const [activeTab, setActiveTab] = useState(steps[0].id);
   const vendorProfileSchema = createProfileWizardSchema(locale, t);
+
+  const mutation = useMutation({
+    mutationFn: createUserVendorProfile,
+    onSuccess: () => {
+      // Handle success, e.g., show notification or redirect
+      toast.success(t("CreateProfileWizard.creationSuccess"));
+    },
+    onError: (error) => {
+      console.error("Error submitting form:", error);
+      toast.error(t("CreateProfileWizard.creationError"));
+    },
+  });
+
   const {
     control,
     handleSubmit,
@@ -75,24 +91,7 @@ export const useCreateProfileWizard = (steps: { id: string; label: string }[]) =
   };
 
   const onSubmit: SubmitHandler<VendorProfileFormValues> = async (data) => {
-    try {
-      // This is a mock implementation
-      console.log("Form data submitted:", data);
-
-      // Simulate API delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // In a real implementation, this would call an API or server action
-      // to create the vendor profile in the database
-
-      // Show success alert or redirect user
-      alert("Vendor profile created successfully!");
-
-      return { success: true, data };
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      return { success: false, error };
-    }
+    return mutation.mutate({ ...data, locale });
   };
 
   const handleFormSubmit = handleSubmit(
@@ -158,7 +157,7 @@ export const useCreateProfileWizard = (steps: { id: string; label: string }[]) =
     selectors: {
       control: control as Control<VendorProfileFormValues>,
       errors,
-      isSubmitting,
+      isSubmitting: isSubmitting || mutation.isPending,
       watch,
       activeTab,
       formValues: formValues as VendorProfileFormValues,

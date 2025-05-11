@@ -211,6 +211,8 @@
     "reviewStoreDetailsDescription": "Veuillez revoir vos informations de commerce avant de créer votre profil de vendeur",
     "termsOfService": "Conditions d'utilisation",
     "vendorAgreement": "Accord de vendeur",
-    "termsOfServiceFullText": "En créant votre profil de vendeur, vous acceptez nos <termsLink>conditions d'utilisation</termsLink> et <agreementLink>accord de vendeur</agreementLink>"
+    "termsOfServiceFullText": "En créant votre profil de vendeur, vous acceptez nos <termsLink>conditions d'utilisation</termsLink> et <agreementLink>accord de vendeur</agreementLink>",
+    "creationError": "Une erreur est survenue lors de la création de votre profil de vendeur",
+    "creationSuccess": "Votre profil de vendeur a été créé avec succès"
   }
 }

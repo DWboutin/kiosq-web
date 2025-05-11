@@ -22,6 +22,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
+import { LoadingButton } from "@/components/ui/loading-button";
 
 export type ModalProps = {
   title: string;
@@ -93,10 +94,14 @@ export const Modal = forwardRef<ModalRef, ModalProps>(
                     <span>{cancelLabel}</span>
                   </Button>
                 </DialogClose>
-                <Button type="submit" variant="destructive" onClick={onDelete}>
-                  {loading && <Loader2 className="animate-spin" />}
+                <LoadingButton
+                  type="submit"
+                  variant="destructive"
+                  onClick={onDelete}
+                  isLoading={loading}
+                >
                   {loading ? `${confirmLabel}...` : confirmLabel}
-                </Button>
+                </LoadingButton>
               </div>
             </DialogFooter>
           )}

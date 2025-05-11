@@ -18,6 +18,7 @@ import { CreateProfileStepReview } from "@/features/create-profile-wizard/compon
 import { useCreateProfileWizard } from "./hooks/use-create-profile-wizard";
 import { FC } from "react";
 import { useTranslations } from "next-intl";
+import { LoadingButton } from "@/components/ui/loading-button";
 
 export const CreateProfileWizard: FC = () => {
   const t = useTranslations("CreateProfileWizard");
@@ -63,12 +64,17 @@ export const CreateProfileWizard: FC = () => {
         </form>
       </CardContent>
       <CardFooter className="flex justify-end gap-2">
-        <Button variant="outline" onClick={handlePrevious} type="button" disabled={isFirstStep}>
+        <Button
+          variant="outline"
+          onClick={handlePrevious}
+          type="button"
+          disabled={isFirstStep || isSubmitting}
+        >
           {t("previous")}
         </Button>
-        <Button onClick={handleNext} type="button" disabled={isSubmitting}>
+        <LoadingButton onClick={handleNext} type="button" isLoading={isSubmitting}>
           {isLastStep ? t("createStore") : t("next")}
-        </Button>
+        </LoadingButton>
       </CardFooter>
     </Card>
   );

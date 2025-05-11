@@ -211,6 +211,8 @@
     "reviewStoreDetailsDescription": "Please review your store details before creating your vendor profile",
     "termsOfService": "Terms of Service",
     "vendorAgreement": "Vendor Agreement",
-    "termsOfServiceFullText": "By creating your vendor profile, you agree to our <termsLink>terms of service</termsLink> and <agreementLink>vendor agreement</agreementLink>"
+    "termsOfServiceFullText": "By creating your vendor profile, you agree to our <termsLink>terms of service</termsLink> and <agreementLink>vendor agreement</agreementLink>",
+    "creationError": "An error occurred while creating your vendor profile",
+    "creationSuccess": "Your vendor profile has been created successfully"
   }
 }
