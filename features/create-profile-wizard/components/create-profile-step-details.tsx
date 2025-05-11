@@ -4,7 +4,7 @@ import { FormInputContainer } from "@/components/ui/form-utils/form-input-contai
 import { VendorProfileFormValues } from "@/features/create-profile-wizard/utils/create-profile-wizard-schema";
 import { Textarea } from "@/components/ui/textarea";
 import { AddTranslationField } from "@/features/add-translation-field/add-translation-field";
-
+import { useTranslations } from "next-intl";
 interface CreateProfileStepDetailsProps {
   control: Control<VendorProfileFormValues>;
   errors: FieldErrors<VendorProfileFormValues>;
@@ -14,12 +14,14 @@ export const CreateProfileStepDetails: FC<CreateProfileStepDetailsProps> = ({
   control,
   errors,
 }) => {
+  const t = useTranslations("CreateProfileWizard");
+
   return (
     <div className="relative">
       <div className="grid w-full items-center gap-4">
         <FormInputContainer
           inputId="description"
-          label="Store Description"
+          label={t("storeDescription")}
           error={errors.description?.message}
           required
         >
@@ -29,7 +31,7 @@ export const CreateProfileStepDetails: FC<CreateProfileStepDetailsProps> = ({
             render={({ field }) => (
               <Textarea
                 id="description"
-                placeholder="Describe your store, products, and services..."
+                placeholder={t("storeDescriptionPlaceholder")}
                 aria-invalid={!!errors.description}
                 rows={5}
                 className="resize-none"
@@ -38,7 +40,7 @@ export const CreateProfileStepDetails: FC<CreateProfileStepDetailsProps> = ({
             )}
           />
           <div className="text-sm text-muted-foreground mt-1">
-            This will appear on your store page and help customers understand what you offer
+            {t("storeDescriptionDescription")}
           </div>
         </FormInputContainer>
         <AddTranslationField name="description" control={control} errors={errors} />

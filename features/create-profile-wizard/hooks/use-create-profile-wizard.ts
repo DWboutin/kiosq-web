@@ -43,28 +43,28 @@ export const useCreateProfileWizard = (steps: { id: string; label: string }[]) =
   const handleNext = async () => {
     const currentIndex = steps.findIndex((step) => step.id === activeTab);
 
-    // For the last step, we should submit the form
     if (currentIndex === steps.length - 1) {
       await handleFormSubmit();
       return;
     }
 
-    // For other steps, validate the current step before moving to the next
-    let isValid = true;
-
-    // Validate fields based on the current step
-    if (activeTab === "basic-info") {
-      isValid = await trigger(["name", "slug", "name_translations", "slug_translations"]);
-    } else if (activeTab === "details") {
-      isValid = await trigger(["description", "description_translations"]);
-    } else if (activeTab === "banner") {
-      // Banner is optional, so we don't need to validate
-      isValid = true;
-    }
+    const isValid = await validateStep(activeTab);
 
     if (isValid && currentIndex < steps.length - 1) {
       setActiveTab(steps[currentIndex + 1].id);
     }
+  };
+
+  const validateStep = async (stepId: string): Promise<boolean> => {
+    if (stepId === "basic-info") {
+      return await trigger(["name", "slug", "name_translations", "slug_translations"]);
+    } else if (stepId === "details") {
+      return await trigger(["description", "description_translations"]);
+    } else if (stepId === "banner") {
+      return true;
+    }
+
+    return true;
   };
 
   const handlePrevious = () => {
@@ -99,7 +99,6 @@ export const useCreateProfileWizard = (steps: { id: string; label: string }[]) =
     onSubmit as unknown as SubmitHandler<VendorProfileFormValues>
   );
 
-  // Generate slug from name
   const generateSlug = (name: string) => {
     return name
       .toLowerCase()
@@ -107,7 +106,6 @@ export const useCreateProfileWizard = (steps: { id: string; label: string }[]) =
       .replace(/\s+/g, "-");
   };
 
-  // Auto-generate slug when name changes
   const autoGenerateSlug = () => {
     const name = watch("name");
     return generateSlug(name);
@@ -134,6 +132,28 @@ export const useCreateProfileWizard = (steps: { id: string; label: string }[]) =
     }
   }, [name_translations]);
 
+  const handleChangeTab = async (tab: string) => {
+    const currentTabIndex = steps.findIndex((step) => step.id === activeTab);
+    const targetTabIndex = steps.findIndex((step) => step.id === tab);
+
+    if (targetTabIndex < currentTabIndex) {
+      setActiveTab(tab);
+      return;
+    }
+
+    let i = currentTabIndex;
+
+    while (i < targetTabIndex) {
+      const isStepValid = await validateStep(steps[i].id);
+
+      if (!isStepValid) return;
+
+      i++;
+    }
+
+    setActiveTab(tab);
+  };
+
   return {
     selectors: {
       control: control as Control<VendorProfileFormValues>,
@@ -152,7 +172,7 @@ export const useCreateProfileWizard = (steps: { id: string; label: string }[]) =
       getValues,
       handleNext,
       handlePrevious,
-      setActiveTab,
+      handleChangeTab,
     },
   };
 };

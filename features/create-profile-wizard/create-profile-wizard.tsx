@@ -17,31 +17,35 @@ import { CreateProfileStepDetails } from "@/features/create-profile-wizard/compo
 import { CreateProfileStepReview } from "@/features/create-profile-wizard/components/create-profile-step-review";
 import { useCreateProfileWizard } from "./hooks/use-create-profile-wizard";
 import { FC } from "react";
+import { useTranslations } from "next-intl";
 
 export const CreateProfileWizard: FC = () => {
+  const t = useTranslations("CreateProfileWizard");
   const steps = [
-    { id: "basic-info", label: "Basic Info" },
-    { id: "details", label: "Details" },
-    { id: "banner", label: "Banner" },
-    { id: "review", label: "Review" },
+    { id: "basic-info", label: t("basicInfo") },
+    { id: "details", label: t("details") },
+    { id: "banner", label: t("banner") },
+    { id: "review", label: t("review") },
   ];
   const {
     selectors: { control, errors, isSubmitting, activeTab, formValues, isLastStep, isFirstStep },
-    actions: { handleFormSubmit, handleNext, handlePrevious, setActiveTab },
+    actions: { handleFormSubmit, handleNext, handlePrevious, handleChangeTab },
   } = useCreateProfileWizard(steps);
 
   return (
     <Card className="min-sm:w-[600px] w-[400px] shadow-none m-auto">
       <CardHeader>
-        <CardTitle>Create your store</CardTitle>
-        <CardDescription>
-          Create your store to start selling your products and services.
-        </CardDescription>
+        <CardTitle>{t("title")}</CardTitle>
+        <CardDescription>{t("description")}</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleFormSubmit}>
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsStepNumbers activeTab={activeTab} steps={steps} />
+          <Tabs value={activeTab} onValueChange={handleChangeTab} className="w-full">
+            <TabsStepNumbers
+              activeTab={activeTab}
+              steps={steps}
+              className="mb-4 pb-2 border-b border-neutral-lightest"
+            />
 
             <TabsContent value="basic-info">
               <CreateProfileStepBasicInfo control={control} errors={errors} />
@@ -60,10 +64,10 @@ export const CreateProfileWizard: FC = () => {
       </CardContent>
       <CardFooter className="flex justify-end gap-2">
         <Button variant="outline" onClick={handlePrevious} type="button" disabled={isFirstStep}>
-          Previous
+          {t("previous")}
         </Button>
         <Button onClick={handleNext} type="button" disabled={isSubmitting}>
-          {isLastStep ? "Create Store" : "Next"}
+          {isLastStep ? t("createStore") : t("next")}
         </Button>
       </CardFooter>
     </Card>

@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Upload } from "lucide-react";
 import Image from "next/image";
 import { VendorProfileFormValues } from "@/features/create-profile-wizard/utils/create-profile-wizard-schema";
+import { useTranslations } from "next-intl";
 
 interface CreateProfileStepBannerProps {
   control: Control<VendorProfileFormValues>;
@@ -12,14 +13,14 @@ interface CreateProfileStepBannerProps {
 }
 
 export const CreateProfileStepBanner: FC<CreateProfileStepBannerProps> = ({ control, errors }) => {
-  // We'll implement a simple URL-based banner upload for now
-  // In a real implementation, this would use a file upload component
+  const t = useTranslations("CreateProfileWizard");
+
   return (
     <div className="relative">
       <div className="grid w-full items-center gap-4">
         <FormInputContainer
           inputId="bannerImage"
-          label="Banner Image"
+          label={t("bannerImage")}
           error={errors.bannerImage?.message}
         >
           <Controller
@@ -29,7 +30,7 @@ export const CreateProfileStepBanner: FC<CreateProfileStepBannerProps> = ({ cont
               <div className="space-y-4">
                 <Input
                   id="bannerImage"
-                  placeholder="https://example.com/your-banner-image.jpg"
+                  placeholder={t("bannerImagePlaceholder")}
                   aria-invalid={!!errors.bannerImage}
                   {...field}
                 />
@@ -38,12 +39,12 @@ export const CreateProfileStepBanner: FC<CreateProfileStepBannerProps> = ({ cont
                   <div className="relative w-full h-48 rounded-md overflow-hidden border border-border">
                     <div className="absolute inset-0 flex items-center justify-center bg-muted">
                       <div className="flex flex-col items-center gap-2 text-muted-foreground">
-                        <span>Banner Preview</span>
+                        <span>{t("bannerPreview")}</span>
                       </div>
                     </div>
                     <Image
                       src={field.value}
-                      alt="Banner preview"
+                      alt={t("bannerPreview")}
                       fill
                       className="absolute inset-0 w-full h-full object-cover"
                       onError={(e) => {
@@ -58,17 +59,15 @@ export const CreateProfileStepBanner: FC<CreateProfileStepBannerProps> = ({ cont
                   <div className="w-full h-48 rounded-md border border-dashed border-border flex items-center justify-center">
                     <div className="flex flex-col items-center gap-2 text-muted-foreground">
                       <Upload className="w-10 h-10" />
-                      <span>Upload a banner image</span>
-                      <span className="text-xs">Recommended size: 1200 x 400 pixels</span>
+                      <span>{t("uploadBannerImage")}</span>
+                      <span className="text-xs">{t("recommendedSize")}</span>
                     </div>
                   </div>
                 )}
               </div>
             )}
           />
-          <div className="text-sm text-muted-foreground mt-1">
-            Your banner image will appear at the top of your store page
-          </div>
+          <div className="text-sm text-muted-foreground mt-1">{t("bannerImageDescription")}</div>
         </FormInputContainer>
       </div>
     </div>

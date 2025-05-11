@@ -1,6 +1,5 @@
 import { TabsTrigger } from "@/components/ui/tabs";
 import { TabsList } from "@/components/ui/tabs";
-import { CreateProfileWizardStepStatus } from "@/features/create-profile-wizard/create-profile-wizard";
 import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
 import { FC, useMemo } from "react";
@@ -8,11 +7,12 @@ import { FC, useMemo } from "react";
 type TabsStepNumbersProps = {
   activeTab: string;
   steps: { id: string; label: string }[];
+  className?: string;
 };
 
 export type TabsStepNumbersStatus = "completed" | "active" | "inactive";
 
-export const TabsStepNumbers: FC<TabsStepNumbersProps> = ({ activeTab, steps }) => {
+export const TabsStepNumbers: FC<TabsStepNumbersProps> = ({ activeTab, steps, className }) => {
   const stepStatuses = useMemo(() => {
     const activeIndex = steps.findIndex((step) => step.id === activeTab);
 
@@ -32,7 +32,7 @@ export const TabsStepNumbers: FC<TabsStepNumbersProps> = ({ activeTab, steps }) 
   }, [activeTab, steps]);
 
   return (
-    <div className="relative">
+    <div className={cn("relative", className)}>
       <div className="absolute top-6 left-[calc(12.5%+24px)] right-[calc(12.5%+24px)] h-[2px] flex">
         <div
           className={cn(
