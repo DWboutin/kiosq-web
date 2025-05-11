@@ -110,6 +110,28 @@ export const useCreateProfileWizard = (steps: { id: string; label: string }[]) =
     return generateSlug(name);
   };
 
+  // Handle image file upload and conversion to base64
+  const handleImageUpload = async (file: File) => {
+    try {
+      const base64 = await fileToBase64(file);
+      setValue("bannerImage", base64);
+      return base64;
+    } catch (error) {
+      console.error("Error converting image to base64:", error);
+      toast.error(t("CreateProfileWizard.imageUploadError"));
+      return null;
+    }
+  };
+
+  // Convert a file to base64 string
+  const fileToBase64 = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+
   const isLastStep = activeTab === steps[steps.length - 1].id;
   const isFirstStep = activeTab === steps[0].id;
 
@@ -153,6 +175,8 @@ export const useCreateProfileWizard = (steps: { id: string; label: string }[]) =
     setActiveTab(tab);
   };
 
+  console.log({ formValues });
+
   return {
     selectors: {
       control: control as Control<VendorProfileFormValues>,
@@ -172,6 +196,7 @@ export const useCreateProfileWizard = (steps: { id: string; label: string }[]) =
       handleNext,
       handlePrevious,
       handleChangeTab,
+      handleImageUpload,
     },
   };
 };

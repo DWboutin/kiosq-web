@@ -7,7 +7,7 @@ export default async function YourStorePage() {
   return (
     <>
       <div className="flex flex-col flex-1">your store</div>
-      {profiles.length === 0 && <CreateProfileWizard />}
+      <CreateProfileWizard />
       <pre>{JSON.stringify(profiles, null, 2)}</pre>
     </>
   );
