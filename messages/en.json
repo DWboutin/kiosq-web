@@ -74,6 +74,10 @@
     "title": "Categories",
     "description": "Manage the categories"
   },
+  "DashboardYourStoreHeader": {
+    "title": "Your store",
+    "description": "Manage your store"
+  },
   "ProductCategoryFormDrawer": {
     "openingButton": "Add a category",
     "addTitle": "Add a category",
@@ -177,5 +181,44 @@
     "aNewCodeHasBeenSent": "A new code has been sent",
     "aNewCodeRequestError": "An error occurred while requesting a new code",
     "aNewCodeRequestErrorNoEmail": "We cannot send a new code without your email, you will be redirected to the sign in page"
+  },
+  "CreateProfileWizard": {
+    "title": "Create your store",
+    "description": "Create your store to start selling your products and services.",
+    "basicInfo": "Basic info",
+    "details": "Details",
+    "banner": "Banner",
+    "review": "Review",
+    "previous": "Previous",
+    "next": "Next",
+    "createStore": "Create Store",
+    "bannerImage": "Banner Image",
+    "bannerImagePlaceholder": "https://example.com/your-banner-image.jpg",
+    "bannerPreview": "Banner Preview",
+    "uploadBannerImage": "Upload a banner image",
+    "recommendedSize": "Recommended size: 1200 x 400 pixels",
+    "bannerImageDescription": "Your banner image will appear at the top of your store page",
+    "storeName": "Store Name",
+    "storeNamePlaceholder": "My Amazing Store",
+    "storeNameDescription": "This is the name that will be displayed to the public",
+    "storeSlug": "Store Slug",
+    "storeSlugPlaceholder": "my-amazing-store",
+    "storeSlugDescription": "This is the slug that will be used to access your store",
+    "storeDescription": "Store Description",
+    "storeDescriptionPlaceholder": "My amazing store description",
+    "storeDescriptionDescription": "This is the description that will be displayed to the public",
+    "reviewStoreDetails": "Review Your Store Details",
+    "reviewStoreDetailsDescription": "Please review your store details before creating your vendor profile",
+    "termsOfService": "Terms of Service",
+    "vendorAgreement": "Vendor Agreement",
+    "termsOfServiceFullText": "By creating your vendor profile, you agree to our <termsLink>terms of service</termsLink> and <agreementLink>vendor agreement</agreementLink>",
+    "creationError": "An error occurred while creating your vendor profile",
+    "creationSuccess": "Your vendor profile has been created successfully"
+  },
+  "ImageDropzone": {
+    "invalidDimensions": "Invalid dimensions {width}x{height}. Required dimensions: {requiredDimensions}",
+    "dropImageHere": "Drop image here",
+    "uploadImage": "Upload image",
+    "recommendedSize": "Recommended size: {width}x{height} pixels"
   }
 }

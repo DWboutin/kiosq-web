@@ -32,3 +32,5 @@ export type ProductCategoryWithTranslations = Omit<
   slug: Record<Locales, string>;
 };
 export type ProductCategoryInsert = Database["public"]["Tables"]["categories"]["Insert"];
+
+export type Profile = Database["public"]["Tables"]["profiles"]["Row"];
