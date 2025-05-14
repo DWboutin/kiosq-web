@@ -175,8 +175,6 @@ export const useCreateProfileWizard = (steps: { id: string; label: string }[]) =
     setActiveTab(tab);
   };
 
-  console.log({ formValues });
-
   return {
     selectors: {
       control: control as Control<VendorProfileFormValues>,
