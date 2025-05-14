@@ -3,7 +3,7 @@
 import { VendorProfileFormValues } from "@/features/create-profile-wizard/utils/create-profile-wizard-schema";
 import { InsertWithLocale } from "@/types/app";
 import { createClient } from "@/utils/supabase/server";
-import { uploadImage } from "@/utils/upload";
+import { uploadImage } from "@/utils/upload-image";
 import { revalidatePath } from "next/cache";
 
 type AddUserVendorProfileArgs = InsertWithLocale<VendorProfileFormValues>;
