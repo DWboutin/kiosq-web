@@ -1,11 +1,11 @@
-import { Upload, X } from "lucide-react";
+"use client";
 
-import { AlertCircle } from "lucide-react";
+import { Upload, X, AlertCircle } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
-import { FC } from "react";
+import { useState, FC } from "react";
 import { useDropzone } from "react-dropzone";
 import { useTranslations } from "next-intl";
+
 interface ImageDropzoneProps {
   value: string | undefined;
   onChange: (value: string) => void;
