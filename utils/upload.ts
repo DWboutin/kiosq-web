@@ -6,6 +6,13 @@ interface UploadImageOptions {
   identifier: string;
   bucketName: string;
   filePrefix?: string;
+  pathBuilder: (params: {
+    userId: string;
+    identifier: string;
+    filePrefix: string;
+    randomId: string;
+    fileExt: string;
+  }) => string;
 }
 
 export const uploadImage = async ({
@@ -14,6 +21,7 @@ export const uploadImage = async ({
   identifier,
   bucketName,
   filePrefix = "",
+  pathBuilder,
 }: UploadImageOptions): Promise<string> => {
   if (!base64Image || !base64Image.startsWith("data:")) {
     throw new Error("Invalid image");
@@ -27,14 +35,25 @@ export const uploadImage = async ({
 
     const buffer = Buffer.from(base64Data, "base64");
 
-    const prefixStr = filePrefix ? `${filePrefix}_` : "";
-    const filePath = `${userId}/${prefixStr}${identifier}`;
+    // Generate a random filename component
+    const randomId = Math.random().toString(36).substring(2, 10);
+
+    // Get file extension from mime type
     const fileExt = mimeType.split("/")[1];
-    const fullPath = `${filePath}.${fileExt}`;
+    const prefixStr = filePrefix ? `${filePrefix}-` : "";
+
+    // Use the provided path builder function
+    const filePath = pathBuilder({
+      userId,
+      identifier,
+      filePrefix: prefixStr,
+      randomId,
+      fileExt,
+    });
 
     const { error: uploadError } = await supabase.storage
       .from(bucketName)
-      .upload(fullPath, buffer, {
+      .upload(filePath, buffer, {
         contentType: mimeType,
         upsert: true,
       });
@@ -44,7 +63,7 @@ export const uploadImage = async ({
       throw uploadError;
     }
 
-    const { data: publicUrlData } = supabase.storage.from(bucketName).getPublicUrl(fullPath);
+    const { data: publicUrlData } = supabase.storage.from(bucketName).getPublicUrl(filePath);
 
     return publicUrlData.publicUrl;
   } catch (error) {

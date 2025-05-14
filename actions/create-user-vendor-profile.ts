@@ -57,6 +57,8 @@ export const createUserVendorProfile = async (data: AddUserVendorProfileArgs) =>
         identifier: vendorProfile.id,
         filePrefix: "banner",
         bucketName: "profile-images",
+        pathBuilder: ({ identifier, filePrefix, randomId, fileExt }) =>
+          `profiles/${identifier}/${filePrefix}${randomId}.${fileExt}`,
       });
 
       // Update the profile with the banner URL
