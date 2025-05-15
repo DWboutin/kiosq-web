@@ -21,6 +21,8 @@ import { UserOnboardingComplete } from "./components/user-onboarding-complete";
 import { UserOnboardingWelcome } from "./components/user-onboarding-welcome";
 import { UserOnboardingStepHeader } from "./components/user-onboarding-step-header";
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { LoadingButton } from "@/components/ui/loading-button";
 
 // Custom DialogContent without close button
 const DialogContent = ({
@@ -43,6 +45,7 @@ const DialogContent = ({
 );
 
 export const UserOnboarding = () => {
+  const t = useTranslations("UserOnboarding");
   const user = useUserStore((state) => state.user);
   const userData = useUserStore((state) => state.userData);
   const titleId = useId();
@@ -70,13 +73,13 @@ export const UserOnboarding = () => {
   const getStepTitle = () => {
     switch (step) {
       case 1:
-        return "Personal Information";
+        return t("stepOneTitle");
       case 2:
-        return "Location Preferences";
+        return t("stepTwoTitle");
       case 3:
-        return "Select Categories";
+        return t("stepThreeTitle");
       case 4:
-        return "User Type";
+        return t("stepFourTitle");
       default:
         return "";
     }
@@ -85,13 +88,13 @@ export const UserOnboarding = () => {
   const getStepDescription = () => {
     switch (step) {
       case 1:
-        return "Please provide your personal information to get started.";
+        return t("stepOneDescription");
       case 2:
-        return "Set your location preferences to see content relevant to you.";
+        return t("stepTwoDescription");
       case 3:
-        return "Choose 3 categories that interest you the most.";
+        return t("stepThreeDescription");
       case 4:
-        return "Select the type of user you are to tailor your experience.";
+        return t("stepFourDescription");
       default:
         return "";
     }
@@ -142,27 +145,29 @@ export const UserOnboarding = () => {
         <DialogFooter className={cn("p-4", step !== 0 && "border-t border-neutral-lightest")}>
           <div className="flex flex-row justify-between items-center w-full">
             <div className="text-sm text-muted-foreground">
-              {isFormStep && `Step ${step}/${formSteps}`}
+              {isFormStep && t("steps", { step, total: formSteps })}
             </div>
             <div className="flex flex-row gap-2">
               {!isComplete && !isWelcomeStep && (
                 <Button variant="outline" onClick={previousStep} disabled={isSubmitting}>
-                  Back
+                  {t("previous")}
                 </Button>
               )}
-              {!isComplete && (
-                <Button onClick={nextStep} disabled={isSubmitting}>
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      {isLastFormStep ? "Saving..." : "Next..."}
-                    </>
-                  ) : (
-                    <>{isWelcomeStep ? "Get Started" : isLastFormStep ? "Complete" : "Continue"}</>
-                  )}
-                </Button>
-              )}
-              {isComplete && <Button>Get Started</Button>}
+              {!isComplete &&
+                (isLastFormStep ? (
+                  <LoadingButton
+                    onClick={nextStep}
+                    isLoading={isSubmitting}
+                    disabled={isSubmitting}
+                  >
+                    {t("complete")}
+                  </LoadingButton>
+                ) : (
+                  <Button onClick={nextStep}>
+                    {isWelcomeStep ? t("getStarted") : t("continue")}
+                  </Button>
+                ))}
+              {isComplete && <Button>{t("exploreKiosq")}</Button>}
             </div>
           </div>
         </DialogFooter>

@@ -1,13 +1,20 @@
-import { useState, useEffect } from "react";
-import { useForm, useWatch } from "react-hook-form";
-import { UserOnboardingValues } from "../schemas/user-onboarding-schema";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { getGeolocation } from "@/utils/get-geolocation";
 import { useUserStore } from "@/stores/user-store";
+import {
+  createUserOnboardingSchema,
+  UserOnboardingValues,
+} from "../utils/create-user-onboarding-schema";
+import { useTranslations } from "next-intl";
 
 export const useUserOnboarding = () => {
-  const [step, setStep] = useState(3);
+  const t = useTranslations("UserOnboarding");
+  const [step, setStep] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const refreshUserData = useUserStore((state) => state.refreshUserData);
+  const validationSchema = createUserOnboardingSchema(t);
 
   const {
     control,
@@ -15,9 +22,10 @@ export const useUserOnboarding = () => {
     setValue,
     trigger,
     getValues,
-    register,
+    watch,
   } = useForm<UserOnboardingValues>({
     mode: "onTouched",
+    resolver: zodResolver(validationSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -30,27 +38,11 @@ export const useUserOnboarding = () => {
     },
   });
 
-  // Watch relevant fields for UI
-  const useGeolocation = useWatch({ control, name: "useGeolocation" });
-  const searchRadius = useWatch({ control, name: "searchRadius" });
-  const categories = useWatch({ control, name: "categories" });
-  const userType = useWatch({ control, name: "userType" });
+  const useGeolocation = watch("useGeolocation");
+  const searchRadius = watch("searchRadius");
+  const categories = watch("categories");
+  const userType = watch("userType");
 
-  // Register fields with validation
-  useEffect(() => {
-    register("firstName", { required: "First name is required" });
-    register("lastName", { required: "Last name is required" });
-    register("displayName", { required: "Display name is required" });
-    register("postalCode", {
-      required: !useGeolocation ? "Postal code is required when geolocation is disabled" : false,
-    });
-    register("categories", {
-      validate: (value) => value?.length === 3 || "Please select exactly 3 categories",
-    });
-    register("userType", { required: "User type is required" });
-  }, []); // Only run once on mount
-
-  // Actual form steps (excluding welcome step)
   const formSteps = 4;
 
   const handleGeolocationRequest = async () => {
@@ -68,14 +60,12 @@ export const useUserOnboarding = () => {
   };
 
   const nextStep = async () => {
-    // Skip validation for welcome step (step 0)
     if (step === 0) {
       setStep(1);
       return;
     }
 
     const isValid = await validateCurrentStep();
-    console.log("Validation result:", isValid, errors);
 
     if (isValid) {
       if (step < formSteps) {
@@ -93,17 +83,15 @@ export const useUserOnboarding = () => {
   };
 
   const validateCurrentStep = async () => {
-    // Welcome step doesn't need validation
     if (step === 0) return true;
 
     if (step === 1) {
       return await trigger(["firstName", "lastName", "displayName"]);
     } else if (step === 2) {
-      // If geolocation is enabled, only validate searchRadius
+      console.log("useGeolocation", useGeolocation);
       if (useGeolocation) {
         return await trigger(["searchRadius"]);
       }
-      // Otherwise validate both fields
       return await trigger(["postalCode", "searchRadius"]);
     } else if (step === 3) {
       return await trigger(["categories"]);

@@ -2,7 +2,8 @@ import { FC } from "react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import { FormInputContainer } from "@/components/ui/form-utils/form-input-container";
 import { Input } from "@/components/ui/input";
-import { UserOnboardingValues } from "../schemas/user-onboarding-schema";
+import { UserOnboardingValues } from "../utils/create-user-onboarding-schema";
+import { useTranslations } from "next-intl";
 
 interface UserOnboardingStepOneProps {
   control: Control<UserOnboardingValues>;
@@ -10,11 +11,13 @@ interface UserOnboardingStepOneProps {
 }
 
 export const UserOnboardingStepOne: FC<UserOnboardingStepOneProps> = ({ control, errors }) => {
+  const t = useTranslations("UserOnboarding");
+
   return (
     <div className="grid w-full items-center gap-4">
       <FormInputContainer
         inputId="firstName"
-        label="First Name"
+        label={t("firstName")}
         error={errors.firstName?.message}
         required
       >
@@ -24,7 +27,7 @@ export const UserOnboardingStepOne: FC<UserOnboardingStepOneProps> = ({ control,
           render={({ field }) => (
             <Input
               id="firstName"
-              placeholder="Enter your first name"
+              placeholder={t("firstNamePlaceholder")}
               aria-invalid={!!errors.firstName}
               {...field}
             />
@@ -34,7 +37,7 @@ export const UserOnboardingStepOne: FC<UserOnboardingStepOneProps> = ({ control,
 
       <FormInputContainer
         inputId="lastName"
-        label="Last Name"
+        label={t("lastName")}
         error={errors.lastName?.message}
         required
       >
@@ -44,7 +47,7 @@ export const UserOnboardingStepOne: FC<UserOnboardingStepOneProps> = ({ control,
           render={({ field }) => (
             <Input
               id="lastName"
-              placeholder="Enter your last name"
+              placeholder={t("lastNamePlaceholder")}
               aria-invalid={!!errors.lastName}
               {...field}
             />
@@ -54,7 +57,7 @@ export const UserOnboardingStepOne: FC<UserOnboardingStepOneProps> = ({ control,
 
       <FormInputContainer
         inputId="displayName"
-        label="Display Name"
+        label={t("displayName")}
         error={errors.displayName?.message}
         required
       >
@@ -64,15 +67,12 @@ export const UserOnboardingStepOne: FC<UserOnboardingStepOneProps> = ({ control,
           render={({ field }) => (
             <Input
               id="displayName"
-              placeholder="Enter your display name"
+              placeholder={t("displayNamePlaceholder")}
               aria-invalid={!!errors.displayName}
               {...field}
             />
           )}
         />
-        <div className="text-sm text-muted-foreground mt-1">
-          This is how your name will appear to others on the platform
-        </div>
       </FormInputContainer>
     </div>
   );

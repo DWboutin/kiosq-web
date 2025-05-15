@@ -1,9 +1,10 @@
 import { FC } from "react";
 import { Control, Controller, FieldErrors, useWatch } from "react-hook-form";
-import { UserOnboardingValues } from "../schemas/user-onboarding-schema";
+import { UserOnboardingValues } from "../utils/create-user-onboarding-schema";
 import { FormInputContainer } from "@/components/ui/form-utils/form-input-container";
 import { CATEGORIES_ORDER } from "@/utils/constants";
 import { UserOnboardingCategoryButton } from "@/features/user-onboarding/components/user-onboarding-category-button";
+import { useTranslations } from "next-intl";
 
 interface UserOnboardingStepThreeProps {
   control: Control<UserOnboardingValues>;
@@ -11,6 +12,8 @@ interface UserOnboardingStepThreeProps {
 }
 
 export const UserOnboardingStepThree: FC<UserOnboardingStepThreeProps> = ({ control, errors }) => {
+  const t = useTranslations("UserOnboarding");
+
   const selectedCategories = useWatch({
     control,
     name: "categories",
@@ -33,10 +36,10 @@ export const UserOnboardingStepThree: FC<UserOnboardingStepThreeProps> = ({ cont
   );
 
   return (
-    <div className="grid w-full items-center gap-4">
+    <div className="grid w-full items-center gap-2">
       <FormInputContainer
         inputId="categories"
-        label={`Categories - Selected: ${selectedCategories.length}/3`}
+        label={t("categoriesSelected", { count: selectedCategories.length })}
         error={errors.categories?.message}
         required
       >
@@ -45,6 +48,7 @@ export const UserOnboardingStepThree: FC<UserOnboardingStepThreeProps> = ({ cont
           control={control}
           render={({ field: { onChange } }) => (
             <div className="w-full">
+              <div className="mb-4 text-xs text-gray-500">{t("categoriesDescription")}</div>
               <div className="flex flex-wrap gap-2">
                 {filteredCategories.map((category) => (
                   <UserOnboardingCategoryButton
@@ -55,9 +59,6 @@ export const UserOnboardingStepThree: FC<UserOnboardingStepThreeProps> = ({ cont
                     onChange={onChange}
                   />
                 ))}
-              </div>
-              <div className="mt-2 text-xs text-gray-500">
-                Select up to 3 categories that best describe your interests
               </div>
             </div>
           )}

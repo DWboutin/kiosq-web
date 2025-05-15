@@ -1,10 +1,11 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
-import { UserOnboardingValues } from "../schemas/user-onboarding-schema";
+import { UserOnboardingValues } from "../utils/create-user-onboarding-schema";
 import { FormInputContainer } from "@/components/ui/form-utils/form-input-container";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { UserSquare2, Building, Store } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface UserOnboardingStepFourProps {
   control: Control<UserOnboardingValues>;
@@ -18,33 +19,38 @@ type UserTypeOption = {
   icon: React.ReactNode;
 };
 
-const userTypes: UserTypeOption[] = [
-  {
-    value: "User",
-    label: "User",
-    description: "I want to discover deals and products",
-    icon: <UserSquare2 className="h-5 w-5" />,
-  },
-  {
-    value: "Vendor",
-    label: "Vendor",
-    description: "I want to sell my products or services",
-    icon: <Store className="h-5 w-5" />,
-  },
-  {
-    value: "Business",
-    label: "Business",
-    description: "I represent a company or organization",
-    icon: <Building className="h-5 w-5" />,
-  },
-];
-
 export const UserOnboardingStepFour: FC<UserOnboardingStepFourProps> = ({ control, errors }) => {
+  const t = useTranslations("UserOnboarding");
+
+  const userTypes: UserTypeOption[] = useMemo(
+    () => [
+      {
+        value: "User",
+        label: t("userTypeUser"),
+        description: t("userTypeUserDescription"),
+        icon: <UserSquare2 className="h-5 w-5" />,
+      },
+      {
+        value: "Vendor",
+        label: t("userTypeVendor"),
+        description: t("userTypeVendorDescription"),
+        icon: <Store className="h-5 w-5" />,
+      },
+      {
+        value: "Business",
+        label: t("userTypeBusiness"),
+        description: t("userTypeBusinessDescription"),
+        icon: <Building className="h-5 w-5" />,
+      },
+    ],
+    []
+  );
+
   return (
     <div className="grid w-full items-center gap-4">
       <FormInputContainer
         inputId="userType"
-        label="User Type"
+        label={t("userType")}
         error={errors.userType?.message}
         required
       >
@@ -60,10 +66,14 @@ export const UserOnboardingStepFour: FC<UserOnboardingStepFourProps> = ({ contro
               {userTypes.map((type) => (
                 <div
                   key={type.value}
-                  className={`flex items-center space-x-3 rounded-md border p-4 ${
+                  onClick={() => {
+                    field.onChange(type.value);
+                    document.getElementById(`userType-${type.value}`)?.click();
+                  }}
+                  className={`flex items-center space-x-3 rounded-md border p-4 cursor-pointer transition-colors ${
                     field.value === type.value
-                      ? "border-brand-medium bg-brand-lightest"
-                      : "border-neutral-lightest"
+                      ? "border-brand-medium bg-brand-lightest/20"
+                      : "border-neutral-lightest hover:border-neutral-light hover:bg-neutral-lightest/50"
                   }`}
                 >
                   <RadioGroupItem
@@ -73,10 +83,10 @@ export const UserOnboardingStepFour: FC<UserOnboardingStepFourProps> = ({ contro
                   />
                   <Label
                     htmlFor={`userType-${type.value}`}
-                    className="flex flex-1 cursor-pointer items-center gap-2"
+                    className="flex flex-1 cursor-pointer items-center gap-4"
                   >
                     <div className="text-foreground">{type.icon}</div>
-                    <div className="flex flex-col">
+                    <div className="flex flex-col gap-1">
                       <span className="font-medium">{type.label}</span>
                       <span className="text-sm text-muted-foreground">{type.description}</span>
                     </div>

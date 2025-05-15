@@ -2,12 +2,14 @@ import { FC, useEffect } from "react";
 import { Control, Controller, FieldErrors, useWatch } from "react-hook-form";
 import { FormInputContainer } from "@/components/ui/form-utils/form-input-container";
 import { Input } from "@/components/ui/input";
-import { UserOnboardingValues } from "../schemas/user-onboarding-schema";
+import { UserOnboardingValues } from "../utils/create-user-onboarding-schema";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { MapPin, Mail } from "lucide-react";
 import { UserGeolocation } from "@/utils/get-geolocation";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
+import { Separator } from "@/components/ui/separator";
 
 interface UserOnboardingStepTwoProps {
   control: Control<UserOnboardingValues>;
@@ -20,6 +22,7 @@ export const UserOnboardingStepTwo: FC<UserOnboardingStepTwoProps> = ({
   errors,
   onRequestGeolocation,
 }) => {
+  const t = useTranslations("UserOnboarding");
   const useGeolocation = useWatch({
     control,
     name: "useGeolocation",
@@ -52,10 +55,6 @@ export const UserOnboardingStepTwo: FC<UserOnboardingStepTwoProps> = ({
   return (
     <div className="grid w-full items-center gap-6">
       <div className="flex flex-col gap-4">
-        <p className="text-sm text-muted-foreground">
-          We need your location to show you relevant content nearby. You can either:
-        </p>
-
         <div className="flex flex-col gap-3 sm:flex-row">
           <Button
             type="button"
@@ -67,22 +66,21 @@ export const UserOnboardingStepTwo: FC<UserOnboardingStepTwoProps> = ({
             variant={useGeolocation ? "default" : "outline"}
           >
             <MapPin size={16} />
-            {useGeolocation ? "Geolocation Enabled" : "Enable Geolocation"}
+            {useGeolocation ? t("geolocationEnabled") : t("enableGeolocation")}
           </Button>
-
-          {!useGeolocation && (
-            <Button type="button" className="flex-1 gap-2 justify-center" variant="outline">
-              <Mail size={16} />
-              Use Postal Code
-            </Button>
-          )}
         </div>
+      </div>
+
+      <div className="flex items-center gap-2">
+        <Separator className="flex-1" />
+        <span className="text-xs text-muted-foreground">{t("orEnterPostalCode")}</span>
+        <Separator className="flex-1" />
       </div>
 
       {!useGeolocation && (
         <FormInputContainer
           inputId="postalCode"
-          label="Postal Code"
+          label={t("postalCode")}
           error={errors.postalCode?.message}
           required={!useGeolocation}
         >
@@ -92,22 +90,19 @@ export const UserOnboardingStepTwo: FC<UserOnboardingStepTwoProps> = ({
             render={({ field }) => (
               <Input
                 id="postalCode"
-                placeholder="Enter your postal code"
+                placeholder={t("postalCodePlaceholder")}
                 aria-invalid={!!errors.postalCode}
                 {...field}
               />
             )}
           />
-          <div className="text-sm text-muted-foreground mt-1">
-            We&apos;ll use this to find relevant content in your area
-          </div>
         </FormInputContainer>
       )}
 
       <div className="space-y-4">
         <FormInputContainer
           inputId="searchRadius"
-          label={`Search Radius (${searchRadius} km)`}
+          label={t("searchRadius", { km: searchRadius })}
           error={errors.searchRadius?.message}
           required
         >
