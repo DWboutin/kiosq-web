@@ -27,17 +27,12 @@ export const verifyOtpCode = async (email: string, code: string) => {
   }
 };
 
-export const signInWithOtp = async (email: string, name: string) => {
+export const signInWithOtp = async (email: string) => {
   try {
     const supabase = createClient();
 
     const { error } = await supabase.auth.signInWithOtp({
       email: email as string,
-      options: {
-        data: {
-          full_name: name,
-        },
-      },
     });
 
     if (error) {

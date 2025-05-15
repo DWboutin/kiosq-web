@@ -169,7 +169,9 @@
     "connectWithMeta": "Connectez-vous avec Meta/Facebook",
     "slogan": "Proche de vous, fier d'ici",
     "sloganDescription": "Consommer local, c'est prendre soin de chez soi",
-    "farmerImageAlt": "Image de fermier"
+    "farmerImageAlt": "Image de fermier",
+    "formEmailRequired": "Le courriel est requis",
+    "formEmailInvalid": "Cette adresse courriel n'est pas valide"
   },
   "VerifyOtpForm": {
     "title": "Vérifiez votre adresse courriel",

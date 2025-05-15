@@ -4,23 +4,20 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useUserStore } from "@/stores/user-store";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
-const signInSchema = z.object({
-  name: z.string().min(1, "Ce nom n'est pas valide."),
-  email: z
-    .string()
-    .min(1, "Le courriel est requis")
-    .email("Cette adresse courriel n'est pas valide."),
-});
+const createSignInSchema = (t: (key: string) => string) =>
+  z.object({
+    email: z.string().min(1, t("formEmailRequired")).email(t("formEmailInvalid")),
+  });
 
-export type FormData = z.infer<typeof signInSchema>;
+export type FormData = z.infer<ReturnType<typeof createSignInSchema>>;
 
 export const useSignInEmailForm = () => {
+  const t = useTranslations("SignIn");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const name = useUserStore((state) => state.name);
   const signInWithOtp = useUserStore((state) => state.signInWithOtp);
-  const updateName = useUserStore((state) => state.updateName);
 
   const {
     control,
@@ -28,10 +25,9 @@ export const useSignInEmailForm = () => {
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
-      name: name || "",
       email: "",
     },
-    resolver: zodResolver(signInSchema),
+    resolver: zodResolver(createSignInSchema(t)),
     mode: "onBlur",
   });
 
@@ -39,11 +35,7 @@ export const useSignInEmailForm = () => {
     try {
       setIsLoading(true);
 
-      if (!name) {
-        updateName(data.name);
-      }
-
-      await signInWithOtp(data.email, data.name);
+      await signInWithOtp(data.email);
 
       router.push(`/auth/verify-otp?email=${data.email}`);
     } catch (error) {

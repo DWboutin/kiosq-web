@@ -75,7 +75,7 @@ export const useVerifyOtpForm = () => {
     }
 
     try {
-      await signInWithOtp(email, name);
+      await signInWithOtp(email);
       setCountdown(60);
 
       toast.success(t("aNewCodeHasBeenSent"));

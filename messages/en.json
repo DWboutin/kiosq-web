@@ -169,7 +169,9 @@
     "connectWithMeta": "Connect with Meta/Facebook",
     "slogan": "Close to you, proud of here",
     "sloganDescription": "Consuming local, it's taking care of yourself",
-    "farmerImageAlt": "Farmer image"
+    "farmerImageAlt": "Farmer image",
+    "formEmailRequired": "Email is required",
+    "formEmailInvalid": "Invalid email address"
   },
   "VerifyOtpForm": {
     "title": "Verify your email",
