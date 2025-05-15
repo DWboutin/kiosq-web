@@ -15,6 +15,7 @@ export const useUserOnboarding = () => {
   const [isComplete, setIsComplete] = useState(false);
   const refreshUserData = useUserStore((state) => state.refreshUserData);
   const validationSchema = createUserOnboardingSchema(t);
+  const [isOpen, setIsOpen] = useState(true);
 
   const {
     control,
@@ -88,7 +89,6 @@ export const useUserOnboarding = () => {
     if (step === 1) {
       return await trigger(["firstName", "lastName", "displayName"]);
     } else if (step === 2) {
-      console.log("useGeolocation", useGeolocation);
       if (useGeolocation) {
         return await trigger(["searchRadius"]);
       }
@@ -105,12 +105,18 @@ export const useUserOnboarding = () => {
     // Here we would send the collected data to the backend
     // For now, we'll just mark the onboarding as complete locally
     console.log("Onboarding data:", getValues());
+    setStep(5);
     await refreshUserData();
     setIsComplete(true);
   };
 
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
+
   return {
     selectors: {
+      isOpen,
       step,
       formSteps,
       isWelcomeStep: step === 0,
@@ -129,6 +135,7 @@ export const useUserOnboarding = () => {
       nextStep,
       previousStep,
       handleGeolocationRequest,
+      handleCloseModal,
     },
   };
 };

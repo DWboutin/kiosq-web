@@ -63,14 +63,18 @@ export const UserOnboardingStepFour: FC<UserOnboardingStepFourProps> = ({ contro
               defaultValue={field.value}
               className="flex flex-col gap-3"
             >
-              {userTypes.map((type) => (
-                <div
+              {userTypes.map((type, idx) => (
+                <button
                   key={type.value}
+                  type="button"
+                  role="radio"
+                  aria-checked={field.value === type.value}
                   onClick={() => {
                     field.onChange(type.value);
                     document.getElementById(`userType-${type.value}`)?.click();
                   }}
-                  className={`flex items-center space-x-3 rounded-md border p-4 cursor-pointer transition-colors ${
+                  autoFocus={idx === 0}
+                  className={`flex items-center space-x-3 rounded-md border p-4 cursor-pointer transition-colors outline-none focus-visible:ring-2 focus-visible:ring-brand-medium focus-visible:ring-offset-2 ${
                     field.value === type.value
                       ? "border-brand-medium bg-brand-lightest/20"
                       : "border-neutral-lightest hover:border-neutral-light hover:bg-neutral-lightest/50"
@@ -79,6 +83,7 @@ export const UserOnboardingStepFour: FC<UserOnboardingStepFourProps> = ({ contro
                   <RadioGroupItem
                     value={type.value}
                     id={`userType-${type.value}`}
+                    tabIndex={-1}
                     className="data-[state=checked]:border-brand-medium data-[state=checked]:text-brand-medium"
                   />
                   <Label
@@ -86,12 +91,12 @@ export const UserOnboardingStepFour: FC<UserOnboardingStepFourProps> = ({ contro
                     className="flex flex-1 cursor-pointer items-center gap-4"
                   >
                     <div className="text-foreground">{type.icon}</div>
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1 text-left">
                       <span className="font-medium">{type.label}</span>
                       <span className="text-sm text-muted-foreground">{type.description}</span>
                     </div>
                   </Label>
-                </div>
+                </button>
               ))}
             </RadioGroup>
           )}

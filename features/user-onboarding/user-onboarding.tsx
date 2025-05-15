@@ -20,7 +20,6 @@ import { UserOnboardingStepFour } from "./components/user-onboarding-step-four";
 import { UserOnboardingComplete } from "./components/user-onboarding-complete";
 import { UserOnboardingWelcome } from "./components/user-onboarding-welcome";
 import { UserOnboardingStepHeader } from "./components/user-onboarding-step-header";
-import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { LoadingButton } from "@/components/ui/loading-button";
 
@@ -53,6 +52,7 @@ export const UserOnboarding = () => {
 
   const {
     selectors: {
+      isOpen,
       step,
       formSteps,
       isWelcomeStep,
@@ -63,7 +63,7 @@ export const UserOnboarding = () => {
       isSubmitting,
       isComplete,
     },
-    actions: { nextStep, previousStep, handleGeolocationRequest },
+    actions: { nextStep, previousStep, handleGeolocationRequest, handleCloseModal },
   } = useUserOnboarding();
 
   if (!user || !userData) {
@@ -134,7 +134,7 @@ export const UserOnboarding = () => {
   };
 
   return (
-    <Dialog open={true} onOpenChange={() => {}}>
+    <Dialog open={isOpen}>
       <DialogContent
         aria-labelledby={titleId}
         aria-describedby={descriptionId}
@@ -163,11 +163,15 @@ export const UserOnboarding = () => {
                     {t("complete")}
                   </LoadingButton>
                 ) : (
-                  <Button onClick={nextStep}>
+                  <Button onClick={nextStep} autoFocus={isWelcomeStep}>
                     {isWelcomeStep ? t("getStarted") : t("continue")}
                   </Button>
                 ))}
-              {isComplete && <Button>{t("exploreKiosq")}</Button>}
+              {isComplete && (
+                <Button onClick={handleCloseModal} autoFocus>
+                  {t("exploreKiosq")}
+                </Button>
+              )}
             </div>
           </div>
         </DialogFooter>

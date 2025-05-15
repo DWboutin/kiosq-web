@@ -29,6 +29,7 @@ export const UserOnboardingStepOne: FC<UserOnboardingStepOneProps> = ({ control,
               id="firstName"
               placeholder={t("firstNamePlaceholder")}
               aria-invalid={!!errors.firstName}
+              autoFocus
               {...field}
             />
           )}

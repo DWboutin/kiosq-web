@@ -64,6 +64,7 @@ export const UserOnboardingStepTwo: FC<UserOnboardingStepTwoProps> = ({
             )}
             onClick={onRequestGeolocation}
             variant={useGeolocation ? "default" : "outline"}
+            autoFocus={!useGeolocation}
           >
             <MapPin size={16} />
             {useGeolocation ? t("geolocationEnabled") : t("enableGeolocation")}

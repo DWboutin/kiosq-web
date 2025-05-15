@@ -50,9 +50,10 @@ export const UserOnboardingStepThree: FC<UserOnboardingStepThreeProps> = ({ cont
             <div className="w-full">
               <div className="mb-4 text-xs text-gray-500">{t("categoriesDescription")}</div>
               <div className="flex flex-wrap gap-2">
-                {filteredCategories.map((category) => (
+                {filteredCategories.map((category, i) => (
                   <UserOnboardingCategoryButton
                     key={category.name}
+                    autoFocus={i === 0}
                     category={category}
                     selectedCategories={selectedCategories}
                     handleCategoryClick={handleCategoryClick}
