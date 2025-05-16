@@ -248,6 +248,7 @@
     "displayNameRequired": "Username is required",
     "enableGeolocation": "Enable Geolocation",
     "geolocationEnabled": "Geolocation Enabled",
+    "geolocationRequired": "Geolocation is required",
     "usePostalCode": "Use Postal Code",
     "postalCode": "Postal Code",
     "searchRadius": "Search Radius ({km} km)",

@@ -11,7 +11,7 @@ import { useTranslations } from "next-intl";
 
 export const useUserOnboarding = () => {
   const t = useTranslations("UserOnboarding");
-  const [step, setStep] = useState(4);
+  const [step, setStep] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const refreshUserData = useUserStore((state) => state.refreshUserData);
   const validationSchema = createUserOnboardingSchema(t);
@@ -32,6 +32,10 @@ export const useUserOnboarding = () => {
       lastName: "",
       displayName: "",
       postalCode: "",
+      geolocation: {
+        latitude: 0,
+        longitude: 0,
+      },
       useGeolocation: false,
       searchRadius: 100,
       categories: [],
@@ -51,6 +55,7 @@ export const useUserOnboarding = () => {
       const coords = await getGeolocation();
       if (coords) {
         setValue("useGeolocation", true);
+        setValue("geolocation", coords);
       }
       return coords;
     } catch (error) {

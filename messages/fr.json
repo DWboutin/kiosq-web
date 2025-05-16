@@ -248,6 +248,7 @@
     "displayNameRequired": "Le nom d'utilisateur est requis",
     "enableGeolocation": "Activer la géolocalisation",
     "geolocationEnabled": "Géolocalisation activée",
+    "geolocationRequired": "La géolocalisation est requise",
     "usePostalCode": "Utiliser le code postal",
     "searchRadius": "Rayon de recherche ({km} km)",
     "postalCode": "Code postal",

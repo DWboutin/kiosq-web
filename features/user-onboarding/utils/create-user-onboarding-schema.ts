@@ -21,6 +21,12 @@ export const createUserStepTwoSchema = (t: (key: string) => string) =>
           { message: t("invalidPostalCodeFormat") }
         ),
       useGeolocation: z.boolean(),
+      geolocation: z
+        .object({
+          latitude: z.number(),
+          longitude: z.number(),
+        })
+        .optional(),
       searchRadius: z.number().min(50).max(500),
     })
     .refine(
@@ -28,6 +34,13 @@ export const createUserStepTwoSchema = (t: (key: string) => string) =>
       {
         message: t("postalCodeRequired"),
         path: ["postalCode"],
+      }
+    )
+    .refine(
+      (data) => !data.useGeolocation || (data.geolocation?.latitude && data.geolocation?.longitude),
+      {
+        message: t("geolocationRequired"),
+        path: ["geolocation"],
       }
     );
 
