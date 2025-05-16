@@ -33,6 +33,7 @@ export const UserOnboardingUserButton: FC<UserOnboardingUserButtonProps> = ({
       aria-describedby={`userType-desc-${userType.value}`}
       autoFocus={idx === 0 && !field.value}
       onKeyDown={handleKeyDown}
+      onClick={() => field.onChange(userType.value)}
     >
       <RadioGroupItem
         value={userType.value}
