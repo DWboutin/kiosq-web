@@ -1,9 +1,24 @@
-import { UserOnboarding } from "@/features/user-onboarding/user-onboarding";
+import { getAuthenticatedUserData } from "@/actions/get-authenticated-user-data";
+import dynamic from "next/dynamic";
 
-export default function Home() {
+const UserOnboarding = dynamic(() =>
+  import("@/features/user-onboarding/user-onboarding").then((mod) => mod.UserOnboarding)
+);
+
+export default async function Home() {
+  const userData = await getAuthenticatedUserData();
+
   return (
     <div className="flex flex-col gap-5">
-      <UserOnboarding />
+      {userData.is_onboarded ? (
+        <div>
+          <h1>
+            Welcome {userData.first_name} {userData.last_name}
+          </h1>
+        </div>
+      ) : (
+        <UserOnboarding />
+      )}
     </div>
   );
 }

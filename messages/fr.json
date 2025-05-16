@@ -273,6 +273,7 @@
     "getStarted": "Commencer",
     "complete": "Terminer",
     "exploreKiosq": "Explorer Kiosq",
-    "orEnterPostalCode": "Ou entrer votre code postal"
+    "orEnterPostalCode": "Ou entrer votre code postal",
+    "errorSubmitting": "Une erreur est survenue lors de la soumission des données d'onboarding. Nous vous demanderons ces informations plus tard."
   }
 }

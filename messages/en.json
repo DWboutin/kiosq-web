@@ -273,6 +273,7 @@
     "getStarted": "Get Started",
     "complete": "Complete",
     "exploreKiosq": "Explore Kiosq",
-    "orEnterPostalCode": "Or enter your postal code"
+    "orEnterPostalCode": "Or enter your postal code",
+    "errorSubmitting": "An error occurred while submitting your onboarding data. We will ask you for this information later."
   }
 }

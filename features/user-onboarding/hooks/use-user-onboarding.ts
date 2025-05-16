@@ -8,6 +8,9 @@ import {
   UserOnboardingValues,
 } from "../utils/create-user-onboarding-schema";
 import { useTranslations } from "next-intl";
+import { useMutation } from "@tanstack/react-query";
+import { setUserOnboardingValues } from "@/actions/set-user-onboarding-values";
+import { toast } from "sonner";
 
 export const useUserOnboarding = () => {
   const t = useTranslations("UserOnboarding");
@@ -40,6 +43,20 @@ export const useUserOnboarding = () => {
       searchRadius: 100,
       categories: [],
       userType: "User",
+    },
+  });
+
+  const { mutate: submitOnboardingValues, isPending } = useMutation({
+    mutationFn: setUserOnboardingValues,
+    onSuccess: async () => {
+      await refreshUserData();
+      setIsComplete(true);
+      setStep(5);
+    },
+    onError: (error) => {
+      console.error("Error submitting onboarding data:", error);
+      toast.error(t("errorSubmitting"));
+      setIsOpen(false);
     },
   });
 
@@ -107,12 +124,9 @@ export const useUserOnboarding = () => {
   };
 
   const completeOnboarding = async () => {
-    // Here we would send the collected data to the backend
-    // For now, we'll just mark the onboarding as complete locally
-    console.log("Onboarding data:", getValues());
-    setStep(5);
-    await refreshUserData();
-    setIsComplete(true);
+    const values = getValues();
+
+    submitOnboardingValues(values);
   };
 
   const handleCloseModal = () => {
@@ -129,7 +143,7 @@ export const useUserOnboarding = () => {
       isLastFormStep: step === formSteps,
       control,
       errors,
-      isSubmitting,
+      isSubmitting: isSubmitting || isPending,
       isComplete,
       useGeolocation,
       searchRadius,
