@@ -6,13 +6,15 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { UserSquare2, Building, Store } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { cn } from "@/lib/utils";
+import { UserOnboardingUserButton } from "@/features/user-onboarding/components/user-onboarding-user-button";
 
 interface UserOnboardingStepFourProps {
   control: Control<UserOnboardingValues>;
   errors: FieldErrors<UserOnboardingValues>;
 }
 
-type UserTypeOption = {
+export type UserTypeOption = {
   value: "User" | "Vendor" | "Business";
   label: string;
   description: string;
@@ -43,7 +45,7 @@ export const UserOnboardingStepFour: FC<UserOnboardingStepFourProps> = ({ contro
         icon: <Building className="h-5 w-5" />,
       },
     ],
-    []
+    [t]
   );
 
   return (
@@ -62,41 +64,15 @@ export const UserOnboardingStepFour: FC<UserOnboardingStepFourProps> = ({ contro
               onValueChange={field.onChange}
               defaultValue={field.value}
               className="flex flex-col gap-3"
+              aria-labelledby="userType-label"
             >
               {userTypes.map((type, idx) => (
-                <button
+                <UserOnboardingUserButton
                   key={type.value}
-                  type="button"
-                  role="radio"
-                  aria-checked={field.value === type.value}
-                  onClick={() => {
-                    field.onChange(type.value);
-                    document.getElementById(`userType-${type.value}`)?.click();
-                  }}
-                  autoFocus={idx === 0}
-                  className={`flex items-center space-x-3 rounded-md border p-4 cursor-pointer transition-colors outline-none focus-visible:ring-2 focus-visible:ring-brand-medium focus-visible:ring-offset-2 ${
-                    field.value === type.value
-                      ? "border-brand-medium bg-brand-lightest/20"
-                      : "border-neutral-lightest hover:border-neutral-light hover:bg-neutral-lightest/50"
-                  }`}
-                >
-                  <RadioGroupItem
-                    value={type.value}
-                    id={`userType-${type.value}`}
-                    tabIndex={-1}
-                    className="data-[state=checked]:border-brand-medium data-[state=checked]:text-brand-medium"
-                  />
-                  <Label
-                    htmlFor={`userType-${type.value}`}
-                    className="flex flex-1 cursor-pointer items-center gap-4"
-                  >
-                    <div className="text-foreground">{type.icon}</div>
-                    <div className="flex flex-col gap-1 text-left">
-                      <span className="font-medium">{type.label}</span>
-                      <span className="text-sm text-muted-foreground">{type.description}</span>
-                    </div>
-                  </Label>
-                </button>
+                  userType={type}
+                  idx={idx}
+                  field={field}
+                />
               ))}
             </RadioGroup>
           )}

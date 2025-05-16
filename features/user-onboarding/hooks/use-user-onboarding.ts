@@ -11,7 +11,7 @@ import { useTranslations } from "next-intl";
 
 export const useUserOnboarding = () => {
   const t = useTranslations("UserOnboarding");
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(4);
   const [isComplete, setIsComplete] = useState(false);
   const refreshUserData = useUserStore((state) => state.refreshUserData);
   const validationSchema = createUserOnboardingSchema(t);
