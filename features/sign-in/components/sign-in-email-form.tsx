@@ -20,21 +20,6 @@ export const SignInEmailForm: FC = () => {
       <div className="w-full max-w-sm">
         <form onSubmit={handleFormSubmit} className="flex flex-col gap-4">
           <FormInputContainer
-            inputId="name"
-            label={t("formCompleteName")}
-            error={errors.name?.message}
-            required
-          >
-            <Controller
-              name="name"
-              control={control}
-              render={({ field }) => (
-                <Input id="name" placeholder="John Doe" aria-invalid={!!errors.name} {...field} />
-              )}
-            />
-          </FormInputContainer>
-
-          <FormInputContainer
             inputId="email"
             label={t("formEmail")}
             error={errors.email?.message}
