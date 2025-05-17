@@ -6,6 +6,8 @@ import {
   createProductFormSchema,
   ProductFormValues,
 } from "@/features/product-form-drawer/utils/product-form-validation-schema";
+import { useMutation } from "@tanstack/react-query";
+import { createProduct } from "@/actions/create-product";
 
 export const useProductForm = () => {
   const t = useTranslations();
@@ -17,6 +19,7 @@ export const useProductForm = () => {
     handleSubmit,
     watch,
     formState: { errors },
+    reset,
   } = useForm<ProductFormValues>({
     defaultValues: {
       name: "",
@@ -40,8 +43,15 @@ export const useProductForm = () => {
 
   const categoryValue = watch("category");
 
+  const { mutate: submitProduct, isPending } = useMutation({
+    mutationFn: (data: ProductFormValues) => createProduct({ ...data, locale }),
+    onSuccess: () => {
+      reset();
+    },
+  });
+
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    submitProduct(data);
   });
 
   const addChecklistItem = () => {
@@ -51,7 +61,7 @@ export const useProductForm = () => {
   };
 
   return {
-    selectors: { control, errors, fields, categoryValue },
+    selectors: { control, errors, fields, categoryValue, isSubmitting: isPending },
     actions: { handleFormSubmit: onSubmit, addChecklistItem, remove },
   };
 };

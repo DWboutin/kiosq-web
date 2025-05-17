@@ -10,7 +10,7 @@ import { ProductForm } from "@/features/product-form-drawer/components/product-f
 
 export const ProductFormDrawer: FC = () => {
   const {
-    selectors: { control, errors, fields, categoryValue },
+    selectors: { control, errors, fields, categoryValue, isSubmitting },
     actions: { handleFormSubmit, addChecklistItem, remove },
   } = useProductForm();
 
@@ -21,6 +21,7 @@ export const ProductFormDrawer: FC = () => {
       buttonSubmitLabel="Ajouter"
       buttonCancelLabel="Annuler"
       handleSubmit={handleFormSubmit}
+      isSubmitting={isSubmitting}
       trigger={
         <Button tabIndex={-1} asChild>
           <span>
