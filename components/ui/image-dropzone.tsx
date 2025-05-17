@@ -82,12 +82,12 @@ export const ImageDropzone: FC<ImageDropzoneProps> = ({
         <div className="relative w-full h-48 rounded-md overflow-hidden border border-border">
           <div className="absolute inset-0 flex items-center justify-center bg-muted">
             <div className="flex flex-col items-center gap-2 text-muted-foreground">
-              <span>{t("bannerPreview")}</span>
+              <span>{t("imagePreview")}</span>
             </div>
           </div>
           <Image
             src={value}
-            alt={t("bannerPreview")}
+            alt={t("imagePreview")}
             fill
             className="absolute inset-0 w-full h-full object-cover"
             onError={(e) => {

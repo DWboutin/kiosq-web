@@ -215,13 +215,17 @@
     "vendorAgreement": "Vendor Agreement",
     "termsOfServiceFullText": "By creating your vendor profile, you agree to our <termsLink>terms of service</termsLink> and <agreementLink>vendor agreement</agreementLink>",
     "creationError": "An error occurred while creating your vendor profile",
-    "creationSuccess": "Your vendor profile has been created successfully"
+    "creationSuccess": "Your vendor profile has been created successfully",
+    "creationSuccessDescription": "You can now start selling your products. Click on the 'Add product' button to get started.",
+    "creationSuccessClose": "Close",
+    "creationSuccessButton": "Add my products"
   },
   "ImageDropzone": {
     "invalidDimensions": "Invalid dimensions {width}x{height}. Required dimensions: {requiredDimensions}",
     "dropImageHere": "Drop image here",
     "uploadImage": "Upload image",
-    "recommendedSize": "Recommended size: {width}x{height} pixels"
+    "recommendedSize": "Recommended size: {width}x{height} pixels",
+    "imagePreview": "Image preview"
   },
   "UserOnboarding": {
     "welcome": "Welcome to the app!",

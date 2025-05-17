@@ -215,13 +215,17 @@
     "vendorAgreement": "Accord de vendeur",
     "termsOfServiceFullText": "En créant votre profil de vendeur, vous acceptez nos <termsLink>conditions d'utilisation</termsLink> et <agreementLink>accord de vendeur</agreementLink>",
     "creationError": "Une erreur est survenue lors de la création de votre profil de vendeur",
-    "creationSuccess": "Votre profil de vendeur a été créé avec succès"
+    "creationSuccess": "Votre profil de vendeur a été créé avec succès",
+    "creationSuccessDescription": "Vous pouvez maintenant commencer à vendre vos produits. Cliquez sur le bouton 'Ajouter un produit' pour commencer.",
+    "creationSuccessClose": "Fermer",
+    "creationSuccessButton": "Ajouter mes produits"
   },
   "ImageDropzone": {
     "invalidDimensions": "Dimensions invalides {width}x{height}. Dimensions requises: {requiredDimensions}",
     "dropImageHere": "Glisser-déposer une image ici",
     "uploadImage": "Télécharger une image",
-    "recommendedSize": "Taille recommandée: {width}x{height} pixels"
+    "recommendedSize": "Taille recommandée: {width}x{height} pixels",
+    "imagePreview": "Aperçu de l'image"
   },
   "UserOnboarding": {
     "welcome": "Bienvenue dans l'application !",

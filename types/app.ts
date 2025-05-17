@@ -8,6 +8,7 @@ export type Locales = (typeof AppConfig)["locales"][number];
 export type User = Session["user"];
 export type UserData = Database["public"]["Tables"]["users"]["Row"];
 export type UserRole = Database["public"]["Enums"]["user_role"];
+
 export interface IconProps extends SVGProps<SVGSVGElement> {
   color?: string;
   className?: string;
@@ -34,3 +35,4 @@ export type ProductCategoryWithTranslations = Omit<
 export type ProductCategoryInsert = Database["public"]["Tables"]["categories"]["Insert"];
 
 export type Profile = Database["public"]["Tables"]["profiles"]["Row"];
+export type ProfileType = Database["public"]["Enums"]["profile_type"];

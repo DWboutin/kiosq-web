@@ -234,18 +234,21 @@ export type Database = {
           id: string
           product_id: string
           tax_component_id: string
+          updated_by: string | null
         }
         Insert: {
           created_at?: string
           id?: string
           product_id: string
           tax_component_id: string
+          updated_by?: string | null
         }
         Update: {
           created_at?: string
           id?: string
           product_id?: string
           tax_component_id?: string
+          updated_by?: string | null
         }
         Relationships: [
           {
@@ -267,6 +270,13 @@ export type Database = {
             columns: ["tax_component_id"]
             isOneToOne: false
             referencedRelation: "tax_components"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_taxes_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "users"
             referencedColumns: ["id"]
           },
         ]
@@ -415,37 +425,56 @@ export type Database = {
         Row: {
           banner_image: string | null
           created_at: string
+          description_translations: Json | null
           id: string
+          is_active: boolean | null
           is_deleted: boolean
+          is_reviewed: boolean | null
           name_translations: Json | null
           slug_translations: Json | null
           type: Database["public"]["Enums"]["profile_type"] | null
           updated_at: string
+          updated_by: string | null
           user_id: string
         }
         Insert: {
           banner_image?: string | null
           created_at?: string
+          description_translations?: Json | null
           id?: string
+          is_active?: boolean | null
           is_deleted?: boolean
+          is_reviewed?: boolean | null
           name_translations?: Json | null
           slug_translations?: Json | null
           type?: Database["public"]["Enums"]["profile_type"] | null
           updated_at?: string
+          updated_by?: string | null
           user_id: string
         }
         Update: {
           banner_image?: string | null
           created_at?: string
+          description_translations?: Json | null
           id?: string
+          is_active?: boolean | null
           is_deleted?: boolean
+          is_reviewed?: boolean | null
           name_translations?: Json | null
           slug_translations?: Json | null
           type?: Database["public"]["Enums"]["profile_type"] | null
           updated_at?: string
+          updated_by?: string | null
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "profiles_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "profiles_user_id_fkey"
             columns: ["user_id"]
@@ -510,30 +539,65 @@ export type Database = {
           created_at: string
           display_name: string | null
           email: string
+          first_name: string | null
           id: string
+          interests: string[]
           is_deleted: boolean
+          is_onboarded: boolean
+          last_name: string | null
+          latitude: number | null
+          longitude: number | null
+          postal_code: string | null
           role: Database["public"]["Enums"]["user_role"]
+          search_radius: number | null
           updated_at: string
+          updated_by: string | null
         }
         Insert: {
           created_at?: string
           display_name?: string | null
           email: string
+          first_name?: string | null
           id: string
+          interests?: string[]
           is_deleted?: boolean
+          is_onboarded?: boolean
+          last_name?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          postal_code?: string | null
           role?: Database["public"]["Enums"]["user_role"]
+          search_radius?: number | null
           updated_at?: string
+          updated_by?: string | null
         }
         Update: {
           created_at?: string
           display_name?: string | null
           email?: string
+          first_name?: string | null
           id?: string
+          interests?: string[]
           is_deleted?: boolean
+          is_onboarded?: boolean
+          last_name?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          postal_code?: string | null
           role?: Database["public"]["Enums"]["user_role"]
+          search_radius?: number | null
           updated_at?: string
+          updated_by?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "users_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
@@ -559,6 +623,16 @@ export type Database = {
       }
     }
     Functions: {
+      create_vendor_profile: {
+        Args: {
+          user_id: string
+          name_translations: Json
+          slug_translations: Json
+          description_translations?: Json
+          banner_image?: string
+        }
+        Returns: string
+      }
       delete_category: {
         Args: { category_id: string }
         Returns: undefined
@@ -568,6 +642,10 @@ export type Database = {
           user_id: string
           required_role: Database["public"]["Enums"]["user_role"]
         }
+        Returns: boolean
+      }
+      review_profile: {
+        Args: { profile_id: string; set_active: boolean; set_reviewed: boolean }
         Returns: boolean
       }
     }

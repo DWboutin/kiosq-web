@@ -11,12 +11,17 @@ import { Locales } from "@/types/app";
 import { slugify } from "@/utils/slugify";
 import { SubmitHandler } from "react-hook-form";
 import { createUserVendorProfile } from "@/actions/create-user-vendor-profile";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { useRouter } from "@/i18n/navigation";
+import { cacheKeys } from "@/utils/cache-keys";
 
 export const useCreateProfileWizard = (steps: { id: string; label: string }[]) => {
   const t = useTranslations();
+  const router = useRouter();
   const locale = useLocale() as Locales;
+  const queryClient = useQueryClient();
+  const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(steps[0].id);
   const vendorProfileSchema = createProfileWizardSchema(locale, t);
 
@@ -25,6 +30,8 @@ export const useCreateProfileWizard = (steps: { id: string; label: string }[]) =
     onSuccess: () => {
       // Handle success, e.g., show notification or redirect
       toast.success(t("CreateProfileWizard.creationSuccess"));
+      setIsSuccessDialogOpen(true);
+      queryClient.invalidateQueries({ queryKey: cacheKeys.userProfiles.list.queryKey });
     },
     onError: (error) => {
       console.error("Error submitting form:", error);
@@ -175,6 +182,15 @@ export const useCreateProfileWizard = (steps: { id: string; label: string }[]) =
     setActiveTab(tab);
   };
 
+  const handleSuccessDialogClose = () => {
+    setIsSuccessDialogOpen(false);
+  };
+
+  const handleSuccessDialogCreateProduct = () => {
+    setIsSuccessDialogOpen(false);
+    router.push("/dashboard/products");
+  };
+
   return {
     selectors: {
       control: control as Control<VendorProfileFormValues>,
@@ -185,6 +201,7 @@ export const useCreateProfileWizard = (steps: { id: string; label: string }[]) =
       formValues: formValues as VendorProfileFormValues,
       isLastStep,
       isFirstStep,
+      isSuccessDialogOpen,
     },
     actions: {
       handleFormSubmit,
@@ -195,6 +212,8 @@ export const useCreateProfileWizard = (steps: { id: string; label: string }[]) =
       handlePrevious,
       handleChangeTab,
       handleImageUpload,
+      handleSuccessDialogClose,
+      handleSuccessDialogCreateProduct,
     },
   };
 };

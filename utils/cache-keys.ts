@@ -32,6 +32,13 @@ export const cacheKeys = {
       queryKey: ["productCategories", "detail", id] as const,
     }),
   },
+  userProfiles: {
+    list: {
+      revalidate: 86400, // 1 day
+      tag: "user-profiles",
+      queryKey: ["userProfiles", "list"] as const,
+    } satisfies CacheKeyConfig,
+  },
 };
 
 export const getAllTagsForDomain = (domain: keyof typeof cacheKeys): string[] => {
