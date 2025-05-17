@@ -44,7 +44,9 @@
     "selfcare": "Soins & Beauté",
     "alcohol": "Vins, Bières & Spiritueux",
     "animals": "Animaux",
-    "maple": "Produits de l'érable"
+    "maple": "Produits de l'érable",
+    "categories": "Catégories",
+    "subcategories": "Sous-catégories"
   },
   "DashboardMenu": {
     "navigation": "Navigation",
@@ -104,6 +106,42 @@
     "validationSlugRequired": "Le slug est requis",
     "validationSlugFormat": "Le slug doit être en minuscules et contenir uniquement des lettres, des chiffres et des tirets",
     "validationOrderRankValidInteger": "L'ordre doit être un entier valide"
+  },
+  "ProductForm": {
+    "name": "Nom",
+    "namePlaceholder": "Fruit de la saison",
+    "description": "Description",
+    "descriptionPlaceholder": "Le meilleur fruit de la saison directement de la ferme",
+    "category": "Catégorie",
+    "categoryPlaceholder": "Fruits",
+    "subcategory": "Sous-catégorie",
+    "subcategoryPlaceholder": "Sous-catégorie",
+    "subcategoryNoParentPlaceholder": "Choisissez d'abord une catégorie",
+    "price": "Prix",
+    "pricePlaceholder": "10.00",
+    "quantity": "Quantité",
+    "quantityPlaceholder": "1",
+    "unit": "Unité",
+    "unitPlaceholder": "g",
+    "validationNameRequired": "Le nom est requis",
+    "validationDescriptionRequired": "La description est requise",
+    "validationDescriptionMinWords": "La description doit contenir au moins 10 mots",
+    "validationCategoryRequired": "La catégorie est requise",
+    "validationPriceRequired": "Le prix est requis",
+    "validationPricePositive": "Le prix doit être positif",
+    "validationQuantityRequired": "La quantité est requise",
+    "validationQuantityPositive": "La quantité doit être positive",
+    "validationUnitRequired": "L'unité est requise",
+    "validationUnitInvalid": "L'unité est invalide",
+    "validationChecklistItemRequired": "Le point fort est requis",
+    "validationChecklistMaxItems": "Vous ne pouvez ajouter que 5 points forts"
+  },
+  "ProductFormChecklist": {
+    "title": "Liste de points forts",
+    "description": "Ajoutez jusqu'à 5 points forts pour votre produit. Cette liste permet de mieux vendre votre produit.",
+    "addButton": "Ajouter un point fort",
+    "inputPlaceholder": "Point fort",
+    "noChecklist": "Aucun point fort. Cliquez sur 'Ajouter' pour commencer."
   },
   "DataTable": {
     "selectAll": "Tout sélectionner",

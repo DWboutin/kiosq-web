@@ -10,7 +10,7 @@ import { ProductForm } from "@/features/product-form-drawer/components/product-f
 
 export const ProductFormDrawer: FC = () => {
   const {
-    selectors: { control, errors, fields },
+    selectors: { control, errors, fields, categoryValue },
     actions: { handleFormSubmit, addChecklistItem, remove },
   } = useProductForm();
 
@@ -31,12 +31,13 @@ export const ProductFormDrawer: FC = () => {
       }
     >
       <div className="flex flex-col gap-4">
-        <ProductForm control={control} errors={errors} />
+        <ProductForm control={control} errors={errors} categoryValue={categoryValue} />
         <ProductFormChecklist
           fields={fields}
           addChecklistItem={addChecklistItem}
           remove={remove}
           control={control}
+          errors={errors}
         />
       </div>
     </SideFormDrawer>

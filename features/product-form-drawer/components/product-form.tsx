@@ -6,39 +6,39 @@ import { ProductFormValues } from "@/features/product-form-drawer/hooks/use-prod
 import { FieldErrors, Control } from "react-hook-form";
 import { FC } from "react";
 import { Textarea } from "@/components/ui/textarea";
-import { ControlledSelect } from "@/components/ui/form-utils/controlled-select";
-import { CATEGORIES_ORDER } from "@/utils/constants";
+import { CategoriesSelect } from "@/features/categories-select/categories-select";
+import { useTranslations } from "next-intl";
+import { AddTranslationField } from "@/features/add-translation-field/add-translation-field";
 
 type ProductFormProps = {
+  categoryValue: string;
   control: Control<ProductFormValues>;
   errors: FieldErrors<ProductFormValues>;
 };
 
-export const ProductForm: FC<ProductFormProps> = ({ control, errors }) => {
+export const ProductForm: FC<ProductFormProps> = ({ control, errors, categoryValue }) => {
+  const t = useTranslations("ProductForm");
+
   return (
     <>
-      <FormInputContainer
-        inputId="name"
-        label="Nom du produit"
-        error={errors.name?.message}
-        required
-      >
+      <FormInputContainer inputId="name" label={t("name")} error={errors.name?.message} required>
         <Controller
           name="name"
           control={control}
           render={({ field }) => (
             <Input
               id="name"
-              placeholder="Fraise des champs"
+              placeholder={t("namePlaceholder")}
               aria-invalid={!!errors.name}
               {...field}
             />
           )}
         />
       </FormInputContainer>
+      <AddTranslationField name="name" control={control} errors={errors} />
       <FormInputContainer
         inputId="description"
-        label="Description"
+        label={t("description")}
         error={errors.description?.message}
         required
       >
@@ -48,16 +48,22 @@ export const ProductForm: FC<ProductFormProps> = ({ control, errors }) => {
           render={({ field }) => (
             <Textarea
               id="description"
-              placeholder="Mon produit est un..."
+              placeholder={t("descriptionPlaceholder")}
               aria-invalid={!!errors.description}
               {...field}
             />
           )}
         />
       </FormInputContainer>
+      <AddTranslationField
+        name="description"
+        control={control}
+        errors={errors}
+        fieldType="textarea"
+      />
       <FormInputContainer
         inputId="category"
-        label="Catégorie"
+        label={t("category")}
         error={errors.category?.message}
         required
       >
@@ -65,15 +71,34 @@ export const ProductForm: FC<ProductFormProps> = ({ control, errors }) => {
           name="category"
           control={control}
           render={({ field }) => (
-            <ControlledSelect
+            <CategoriesSelect
               id="category"
-              placeholder="Fruits"
+              placeholder={t("categoryPlaceholder")}
               value={field.value}
               onChange={field.onChange}
-              options={CATEGORIES_ORDER.map((category) => ({
-                label: category.name,
-                value: category.name,
-              }))}
+            />
+          )}
+        />
+      </FormInputContainer>
+      <FormInputContainer
+        inputId="subcategory"
+        label={t("subcategory")}
+        error={errors.subcategory?.message}
+        required
+      >
+        <Controller
+          name="subcategory"
+          control={control}
+          render={({ field }) => (
+            <CategoriesSelect
+              id="subcategory"
+              placeholder={
+                categoryValue ? t("subcategoryPlaceholder") : t("subcategoryNoParentPlaceholder")
+              }
+              value={field.value}
+              onChange={field.onChange}
+              parentId={categoryValue}
+              disabled={!categoryValue}
             />
           )}
         />
@@ -81,7 +106,7 @@ export const ProductForm: FC<ProductFormProps> = ({ control, errors }) => {
       <div className="flex gap-2">
         <FormInputContainer
           inputId="price"
-          label="Prix"
+          label={t("price")}
           error={errors.price?.message}
           required
           className="flex-1"
@@ -93,7 +118,7 @@ export const ProductForm: FC<ProductFormProps> = ({ control, errors }) => {
               <Input
                 id="price"
                 type="number"
-                placeholder="5.99"
+                placeholder={t("pricePlaceholder")}
                 value={field.value}
                 onChange={field.onChange}
               />
@@ -102,7 +127,7 @@ export const ProductForm: FC<ProductFormProps> = ({ control, errors }) => {
         </FormInputContainer>
         <FormInputContainer
           inputId="quantity"
-          label="Quantité"
+          label={t("quantity")}
           error={errors.quantity?.message}
           required
           className="flex-1"
@@ -113,7 +138,7 @@ export const ProductForm: FC<ProductFormProps> = ({ control, errors }) => {
             render={({ field }) => (
               <Input
                 id="quantity"
-                placeholder="100"
+                placeholder={t("quantityPlaceholder")}
                 value={field.value}
                 onChange={field.onChange}
               />
@@ -122,7 +147,7 @@ export const ProductForm: FC<ProductFormProps> = ({ control, errors }) => {
         </FormInputContainer>
         <FormInputContainer
           inputId="unit"
-          label="Unité"
+          label={t("unit")}
           error={errors.unit?.message}
           required
           className="flex-1"
@@ -133,7 +158,7 @@ export const ProductForm: FC<ProductFormProps> = ({ control, errors }) => {
             render={({ field }) => (
               <UnitDropdown
                 id="unit"
-                placeholder="g"
+                placeholder={t("unitPlaceholder")}
                 value={field.value}
                 onChange={field.onChange}
               />
