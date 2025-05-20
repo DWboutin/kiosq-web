@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { LoadingButton } from "@/components/ui/loading-button";
 
 type SideFormDrawerProps = {
   title: string;
@@ -22,6 +23,7 @@ type SideFormDrawerProps = {
   buttonCancelLabel: string;
   handleSubmit: () => void;
   formHasErrors?: boolean;
+  isSubmitting?: boolean;
 } & PropsWithChildren;
 
 export type SideFormDrawerRef = {
@@ -41,6 +43,7 @@ export const SideFormDrawer = forwardRef<SideFormDrawerRef, SideFormDrawerProps>
       buttonCancelLabel,
       handleSubmit,
       formHasErrors,
+      isSubmitting = false,
     },
     ref
   ) => {
@@ -85,13 +88,14 @@ export const SideFormDrawer = forwardRef<SideFormDrawerRef, SideFormDrawerProps>
                     <span>{buttonCancelLabel}</span>
                   </Button>
                 </DrawerClose>
-                <Button
+                <LoadingButton
                   type="submit"
                   className={cn(formHasErrors && "animate-shake")}
                   aria-disabled={formHasErrors}
+                  isLoading={isSubmitting}
                 >
                   {buttonSubmitLabel}
-                </Button>
+                </LoadingButton>
               </div>
             </DrawerFooter>
           </form>

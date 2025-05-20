@@ -1,52 +1,73 @@
-import { useFieldArray, useForm } from "react-hook-form";
-
-type ChecklistItem = { value: string };
-
-export type ProductFormValues = {
-  name: string;
-  description: string;
-  category: string;
-  price: string;
-  quantity: string;
-  unit: string;
-  checklist: ChecklistItem[];
-};
+import { Locales } from "@/types/app";
+import { Resolver, useFieldArray, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useLocale, useTranslations } from "next-intl";
+import {
+  createProductFormSchema,
+  ProductFormValues,
+} from "@/features/product-form-drawer/utils/product-form-validation-schema";
+import { useMutation } from "@tanstack/react-query";
+import { createProduct } from "@/actions/create-product";
+import { toast } from "sonner";
 
 export const useProductForm = () => {
+  const t = useTranslations();
+  const locale = useLocale() as Locales;
+  const validationSchema = createProductFormSchema(locale, t);
+
   const {
     control,
     handleSubmit,
+    watch,
     formState: { errors },
+    reset,
   } = useForm<ProductFormValues>({
     defaultValues: {
       name: "",
+      name_translations: {},
       description: "",
+      description_translations: {},
       category: "",
+      subcategory: "",
       price: "",
       quantity: "",
       unit: "",
       checklist: [],
     },
+    resolver: zodResolver(validationSchema) as Resolver<ProductFormValues>,
   });
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: "checklist",
   });
 
-  const onSubmit = (data: ProductFormValues) => {
-    console.log(data);
-  };
+  const categoryValue = watch("category");
+  const name = watch("name");
+
+  const { mutate: submitProduct, isPending } = useMutation({
+    mutationFn: (data: ProductFormValues) => createProduct({ ...data, locale }),
+    onSuccess: () => {
+      reset();
+      toast.success(t("ProductForm.created", { name }));
+    },
+    onError: () => {
+      toast.error(t("ProductForm.createdError"));
+    },
+  });
+
+  const onSubmit = handleSubmit((data) => {
+    submitProduct(data);
+  });
 
   const addChecklistItem = () => {
     if (fields.length < 5) {
-      append({ value: "" });
+      append({ value: "", value_translations: {} });
     }
   };
 
-  const handleFormSubmit = handleSubmit(onSubmit);
-
   return {
-    selectors: { control, errors, fields },
-    actions: { handleFormSubmit, addChecklistItem, remove },
+    selectors: { control, errors, fields, categoryValue, isSubmitting: isPending },
+    actions: { handleFormSubmit: onSubmit, addChecklistItem, remove },
   };
 };
