@@ -8,6 +8,7 @@ import {
 } from "@/features/product-form-drawer/utils/product-form-validation-schema";
 import { useMutation } from "@tanstack/react-query";
 import { createProduct } from "@/actions/create-product";
+import { toast } from "sonner";
 
 export const useProductForm = () => {
   const t = useTranslations();
@@ -42,11 +43,16 @@ export const useProductForm = () => {
   });
 
   const categoryValue = watch("category");
+  const name = watch("name");
 
   const { mutate: submitProduct, isPending } = useMutation({
     mutationFn: (data: ProductFormValues) => createProduct({ ...data, locale }),
     onSuccess: () => {
       reset();
+      toast.success(t("ProductForm.created", { name }));
+    },
+    onError: () => {
+      toast.error(t("ProductForm.createdError"));
     },
   });
 

@@ -107,6 +107,13 @@
     "validationSlugFormat": "Le slug doit être en minuscules et contenir uniquement des lettres, des chiffres et des tirets",
     "validationOrderRankValidInteger": "L'ordre doit être un entier valide"
   },
+  "ProductFormDrawer": {
+    "openingButton": "Ajouter un produit",
+    "addTitle": "Ajouter un produit",
+    "addDescription": "Entrez les informations du produit et cliquez sur 'Ajouter'.",
+    "addButton": "Ajouter",
+    "cancelButton": "Annuler"
+  },
   "ProductForm": {
     "name": "Nom",
     "namePlaceholder": "Fruit de la saison",
@@ -134,7 +141,9 @@
     "validationUnitRequired": "L'unité est requise",
     "validationUnitInvalid": "L'unité est invalide",
     "validationChecklistItemRequired": "Le point fort est requis",
-    "validationChecklistMaxItems": "Vous ne pouvez ajouter que 5 points forts"
+    "validationChecklistMaxItems": "Vous ne pouvez ajouter que 5 points forts",
+    "created": "Produit \"{name}\" a été créé avec succès",
+    "createdError": "Échec de la création du produit, veuillez réessayer"
   },
   "ProductFormChecklist": {
     "title": "Liste de points forts",

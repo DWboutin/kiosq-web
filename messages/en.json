@@ -105,6 +105,13 @@
     "validationSlugFormat": "The slug must be in lowercase and contain only letters, numbers and dashes",
     "validationOrderRankValidInteger": "Order rank must be a valid integer"
   },
+  "ProductFormDrawer": {
+    "openingButton": "Add a product",
+    "addTitle": "Add a product",
+    "addDescription": "Enter the product information and click on 'Add'.",
+    "addButton": "Add",
+    "cancelButton": "Cancel"
+  },
   "ProductForm": {
     "name": "Name",
     "namePlaceholder": "Fruit of the season",
@@ -132,7 +139,9 @@
     "validationUnitRequired": "The unit is required",
     "validationUnitInvalid": "The unit is invalid",
     "validationChecklistItemRequired": "The highlight is required",
-    "validationChecklistMaxItems": "You can only add up to 5 highlights"
+    "validationChecklistMaxItems": "You can only add up to 5 highlights",
+    "created": "Product \"{name}\" has been created successfully",
+    "createdError": "Failed to create product, please try again"
   },
   "ProductFormChecklist": {
     "title": "Checklist",

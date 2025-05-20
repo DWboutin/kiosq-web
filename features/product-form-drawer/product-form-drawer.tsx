@@ -7,8 +7,9 @@ import { PlusSquareIcon } from "@/components/ui/icons/plus-square-icon";
 import { useProductForm } from "@/features/product-form-drawer/hooks/use-product-form";
 import { ProductFormChecklist } from "@/features/product-form-drawer/components/product-form-checklist";
 import { ProductForm } from "@/features/product-form-drawer/components/product-form";
-
+import { useTranslations } from "next-intl";
 export const ProductFormDrawer: FC = () => {
+  const t = useTranslations("ProductFormDrawer");
   const {
     selectors: { control, errors, fields, categoryValue, isSubmitting },
     actions: { handleFormSubmit, addChecklistItem, remove },
@@ -16,17 +17,17 @@ export const ProductFormDrawer: FC = () => {
 
   return (
     <SideFormDrawer
-      title="Ajouter un produit"
-      description='Entrez les informations du produit et cliquez sur "Ajouter".'
-      buttonSubmitLabel="Ajouter"
-      buttonCancelLabel="Annuler"
+      title={t("addTitle")}
+      description={t("addDescription")}
+      buttonSubmitLabel={t("addButton")}
+      buttonCancelLabel={t("cancelButton")}
       handleSubmit={handleFormSubmit}
       isSubmitting={isSubmitting}
       trigger={
         <Button tabIndex={-1} asChild>
           <span>
             <PlusSquareIcon className="size-5" />
-            Ajouter un produit
+            {t("openingButton")}
           </span>
         </Button>
       }
