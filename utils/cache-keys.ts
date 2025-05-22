@@ -32,12 +32,19 @@ export const cacheKeys = {
       queryKey: ["productCategories", "detail", id] as const,
     }),
   },
-  userProfiles: {
+  currentUserProfiles: {
     list: {
       revalidate: 86400, // 1 day
-      tag: "user-profiles",
-      queryKey: ["userProfiles", "list"] as const,
+      tag: "current-user-profiles",
+      queryKey: ["currentUserProfiles", "list"] as const,
     } satisfies CacheKeyConfig,
+  },
+  currentUserProfileIdProducts: {
+    list: (profileId: string): CacheKeyConfig => ({
+      revalidate: 86400, // 1 day
+      tag: `current-user-profile-id-products-${profileId}`,
+      queryKey: ["currentUserProfileIdProducts", "list", profileId] as const,
+    }),
   },
 };
 

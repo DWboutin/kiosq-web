@@ -36,3 +36,19 @@ export type ProductCategoryInsert = Database["public"]["Tables"]["categories"]["
 
 export type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 export type ProfileType = Database["public"]["Enums"]["profile_type"];
+
+export type RawProduct = Database["public"]["Tables"]["products"]["Row"];
+export type RawProductVariant = Database["public"]["Tables"]["product_variants"]["Row"];
+export type RawProductPrice = Database["public"]["Tables"]["product_prices"]["Row"];
+
+export type RawProductWithVariantsAndPrices = RawProduct & {
+  product_variants: RawProductVariant &
+    {
+      product_prices: RawProductPrice[];
+    }[];
+};
+
+export type NameTranslations = Record<Locales, string>;
+export type DescriptionTranslations = Record<Locales, string>;
+export type SlugTranslations = Record<Locales, string>;
+export type PublishedStatus = "draft" | "published" | "archived";

@@ -1,3 +1,4 @@
+import { DashboardProfileProducts } from "@/components/client-pages/dashboard-profile-products/dashboard-profile-products";
 import { DashboardPageHeading } from "@/components/sections/dashboard-page-heading";
 import { ProductFormDrawer } from "@/features/product-form-drawer/product-form-drawer";
 
@@ -9,6 +10,7 @@ export default function DashboardProductsPage() {
         description="Gérer facilement vos produits, leurs inventaire et leur disponibilité selon la saison"
         cta={<ProductFormDrawer />}
       />
+      <DashboardProfileProducts />
     </div>
   );
 }
