@@ -21,11 +21,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState, useMemo } from "react";
+import { useState, useMemo, memo, type ReactElement } from "react";
 import { ChevronDown, ChevronUp, ChevronsUpDown, EyeIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useDataTableVisibilityStore } from "@/stores/data-table-visibility-store";
 import { useIsMounted } from "@/hooks/use-is-mounted";
+import { sortDataHierarchically } from "@/utils/data-table-utils";
 
 interface DataTableProps<TData, TValue> {
   tableId: string;
@@ -79,7 +80,7 @@ const DataTableColumnsVisibilityControl = <TData,>({ table }: { table: TableInst
   );
 };
 
-export function DataTable<TData, TValue>({
+function DataTableComponent<TData, TValue>({
   tableId,
   columns,
   data,
@@ -87,6 +88,7 @@ export function DataTable<TData, TValue>({
   onRowClick,
   onSelectionChange,
 }: DataTableProps<TData, TValue>) {
+  const locale = useLocale();
   const t = useTranslations("DataTable");
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
@@ -108,6 +110,10 @@ export function DataTable<TData, TValue>({
       setTableVisibility(tableId, newValue);
     };
   }, [tableId, columnVisibility, setTableVisibility]);
+
+  const sortedData = useMemo(() => {
+    return sortDataHierarchically(data as object[], sorting, locale) as TData[];
+  }, [data, sorting, locale]);
 
   const selectionColumn = {
     id: "select",
@@ -139,7 +145,7 @@ export function DataTable<TData, TValue>({
     : columns;
 
   const table = useReactTable({
-    data,
+    data: sortedData,
     columns: allColumns,
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
@@ -151,6 +157,8 @@ export function DataTable<TData, TValue>({
       rowSelection,
       columnVisibility: isClient ? columnVisibility : {},
     },
+    // Disable manual sorting as we're providing pre-sorted data
+    manualSorting: true,
   });
 
   const selectedRows = table.getSelectedRowModel().rows.map((row) => row.original);
@@ -295,3 +303,8 @@ export function DataTable<TData, TValue>({
     </div>
   );
 }
+
+// Create memoized version that preserves generics
+export const DataTable = memo(DataTableComponent) as <TData, TValue>(
+  props: DataTableProps<TData, TValue>
+) => ReactElement;
