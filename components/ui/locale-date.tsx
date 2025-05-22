@@ -12,13 +12,15 @@ export const LocaleFullDate: FC<LocaleDateProps> = memo(({ date }) => {
 
   return (
     <TooltipContainer content={dateTime.toLocaleString()} disableHoverableContent>
-      {format.dateTime(dateTime, {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-      })}
+      <span>
+        {format.dateTime(dateTime, {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+        })}
+      </span>
     </TooltipContainer>
   );
 });
