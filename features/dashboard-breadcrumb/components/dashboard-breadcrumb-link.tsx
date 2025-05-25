@@ -13,12 +13,18 @@ export const DashboardBreadcrumbLink = ({
 }) => {
   const t = useTranslations();
 
+  if (isLast) {
+    return (
+      <span className="flex flex-row items-center gap-2 hover:underline flex-shrink-0 text-brand-medium">
+        {link.icon}
+        <span className="font-inter font-semibold">{t(link.labelKey)}</span>
+      </span>
+    );
+  }
+
   return (
     <Link
-      className={classNames(
-        "flex flex-row items-center gap-2 hover:underline flex-shrink-0",
-        isLast && "text-brand-medium"
-      )}
+      className="flex flex-row items-center gap-2 hover:underline flex-shrink-0"
       href={t(link.pathKey)}
       aria-current={isLast ? "page" : undefined}
     >

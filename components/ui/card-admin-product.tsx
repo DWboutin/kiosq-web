@@ -15,8 +15,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Link } from "@/i18n/navigation";
+import { DynamicLink } from "@/components/ui/dynamic-link";
 import Image from "next/image";
+import Link from "next/link";
 
 type CardAdminProductProps = {
   id: string;
@@ -51,7 +52,9 @@ export const CardAdminProduct = ({ id }: CardAdminProductProps) => {
       </CardContent>
       <CardFooter className="flex justify-end">
         <ButtonBrand asChild>
-          <Link href={`/dashboard/products/${id}`}>Edit</Link>
+          <DynamicLink pathKey="Pathnames.dashboard_product_id" id={id}>
+            Edit
+          </DynamicLink>
         </ButtonBrand>
       </CardFooter>
     </Card>

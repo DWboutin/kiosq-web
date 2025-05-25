@@ -6,7 +6,7 @@
   "Pathnames": {
     "dashboard": "/tableau-de-bord",
     "dashboard_products": "/tableau-de-bord/produits",
-    "dashboard_product_id": "/tableau-de-bord/produits/{productId}",
+    "dashboard_product_id": "/tableau-de-bord/produits/[productId]",
     "dashboard_discounts": "/tableau-de-bord/rabais",
     "dashboard_events": "/tableau-de-bord/evenements",
     "dashboard_yourStore": "/tableau-de-bord/votre-commerce",
@@ -53,6 +53,7 @@
     "navigation": "Navigation",
     "dashboard": "Tableau de bord",
     "products": "Produits",
+    "productDetails": "Détails du produit",
     "discounts": "Rabais",
     "orders": "Commandes",
     "settings": "Paramètres",
