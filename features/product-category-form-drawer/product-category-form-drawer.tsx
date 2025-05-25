@@ -2,7 +2,6 @@
 
 import { FC, useRef, RefObject } from "react";
 import { SideFormDrawer, SideFormDrawerRef } from "@/components/ui/side-form-drawer";
-import { Button } from "@/components/ui/button";
 import { PlusSquareIcon } from "@/components/ui/icons/plus-square-icon";
 import { ProductCategoryForm } from "@/features/product-category-form-drawer/components/product-category-form";
 import { useProductCategoryForm } from "@/features/product-category-form-drawer/hooks/use-product-category-form";

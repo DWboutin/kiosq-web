@@ -1,7 +1,7 @@
 "use client";
 
 import { DataTable } from "@/components/ui/data-table";
-import { FormattedProductCategory } from "@/utils/factories/product-categories-factory";
+import { AdminProductCategory } from "@/utils/factories/admin-product-categories-factory";
 import { ColumnDef } from "@tanstack/react-table";
 import { FC, MouseEvent, useMemo } from "react";
 import { TranslationDisplay } from "@/components/ui/translation-display";
@@ -16,7 +16,7 @@ import { ButtonWithConfirmationModal } from "@/features/button-with-confirmation
 import { ButtonBrand } from "@/components/ui/button-brand";
 
 type CategoriesTableProps = {
-  data: FormattedProductCategory[];
+  data: AdminProductCategory[];
 };
 
 export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {

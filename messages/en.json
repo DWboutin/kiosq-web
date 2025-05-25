@@ -6,6 +6,7 @@
   "Pathnames": {
     "dashboard": "/dashboard",
     "dashboard_products": "/dashboard/products",
+    "dashboard_product_id": "/dashboard/products/{productId}",
     "dashboard_discounts": "/dashboard/discounts",
     "dashboard_events": "/dashboard/events",
     "dashboard_yourStore": "/dashboard/your-store",

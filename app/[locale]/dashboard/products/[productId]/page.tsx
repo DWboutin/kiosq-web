@@ -1,8 +1,8 @@
-import { getTranslations } from "next-intl/server";
+import { getUserProductById } from "@/actions/get-user-product-by-id";
 
 export default async function ProductPage({ params }: { params: Promise<{ productId: string }> }) {
   const { productId } = await params;
-  const t = await getTranslations("ProductPage");
+  const data = await getUserProductById(productId);
 
-  return <div>{t("title", { productId })}</div>;
+  return <pre>{JSON.stringify(data, null, 2)}</pre>;
 }

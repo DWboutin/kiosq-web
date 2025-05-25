@@ -43,6 +43,13 @@ export const DASHBOARD_ADMIN_TABS: Record<string, DashboardLink> = {
   },
 };
 
+export const DASHBOARD_PRODUCT_TABS: Record<string, DashboardLink> = {
+  importantInformation: {
+    pathKey: "Pathnames.dashboard_product_important_information",
+    labelKey: "DashboardProductTabs.importantInformation",
+  },
+};
+
 export const DASHBOARD_LINKS: Record<string, DashboardLink> = {
   dashboard: {
     pathKey: "Pathnames.dashboard",
@@ -54,6 +61,7 @@ export const DASHBOARD_LINKS: Record<string, DashboardLink> = {
     labelKey: "DashboardMenu.products",
     icon: <StorefrontIcon className="size-6" />,
     role: ["admin", "vendor-admin", "vendor-manager"],
+    children: DASHBOARD_PRODUCT_TABS,
   },
   discounts: {
     pathKey: "Pathnames.dashboard_discounts",

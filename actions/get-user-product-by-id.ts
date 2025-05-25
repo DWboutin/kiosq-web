@@ -1,6 +1,5 @@
-import { authenticatedUserProfileIdProductsFactory } from "@/utils/factories/authenticated-user-profile-id-products-factory";
+import { authenticatedUserProductFactory } from "@/utils/factories/authenticated-user-product-factory";
 import { createClient } from "@/utils/supabase/server";
-import { NextResponse } from "next/server";
 
 export const getUserProductById = async (productId: string) => {
   try {
@@ -16,12 +15,12 @@ export const getUserProductById = async (productId: string) => {
       throw new Error("User not found");
     }
 
-    const { data: products, error: productsError } = await supabase
+    const { data: product, error: productError } = await supabase
       .from("products")
       .select(
         `
       *,
-      product_categories (
+      categories (
         *
       ),
       product_variants (
@@ -30,18 +29,17 @@ export const getUserProductById = async (productId: string) => {
       )
     `
       )
-      .eq("id", productId);
+      .eq("id", productId)
+      .single();
 
-    if (productsError) {
-      console.error("Error fetching products", productsError);
-      return NextResponse.json({ error: "Error fetching products" }, { status: 500 });
+    if (productError) {
+      console.error("Error fetching product", productError);
+      throw new Error("Error fetching product");
     }
 
-    return NextResponse.json({
-      products: authenticatedUserProfileIdProductsFactory(products),
-    });
+    return authenticatedUserProductFactory(product);
   } catch (error) {
-    console.error("Error fetching products", error);
-    return NextResponse.json({ error: "Error fetching products" }, { status: 500 });
+    console.error("Error fetching product", error);
+    throw new Error("Error fetching product");
   }
 };

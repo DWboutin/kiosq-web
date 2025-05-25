@@ -1,4 +1,4 @@
-import { FormattedProductCategory } from "./product-categories-factory";
+import { FormattedProductCategory } from "./admin-product-categories-factory";
 
 export type HierarchicalItem<T extends object> = T & {
   children?: HierarchicalItem<T>[];

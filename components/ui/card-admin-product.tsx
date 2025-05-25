@@ -15,9 +15,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 
-export const CardAdminProduct = () => {
+type CardAdminProductProps = {
+  id: string;
+};
+
+export const CardAdminProduct = ({ id }: CardAdminProductProps) => {
   return (
     <Card className="flex flex-col pt-0 overflow-hidden w-[240px] gap-0">
       <div className="relative">
@@ -45,7 +50,9 @@ export const CardAdminProduct = () => {
         <p>Product content</p>
       </CardContent>
       <CardFooter className="flex justify-end">
-        <ButtonBrand>Edit</ButtonBrand>
+        <ButtonBrand asChild>
+          <Link href={`/dashboard/products/${id}`}>Edit</Link>
+        </ButtonBrand>
       </CardFooter>
     </Card>
   );

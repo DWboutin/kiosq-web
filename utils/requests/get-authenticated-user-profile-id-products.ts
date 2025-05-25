@@ -19,9 +19,7 @@ export const getAuthenticatedUserProfileIdProducts = async (
 
     const data = await response.json();
 
-    console.log("data", data);
-
-    return data;
+    return data.products;
   } catch (error) {
     console.error("Error fetching authenticated user's profile's products:", error);
     throw new Error("Failed request for authenticated user's profile's products");

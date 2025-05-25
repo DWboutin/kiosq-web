@@ -12,12 +12,13 @@ export const usePathLinks = (): DashboardLink[] => {
   const pathname = usePathname();
   const t = useTranslations();
 
-  return useMemo(() => {
+  const parsedPathLinks = useMemo(() => {
     const segments = pathname.split("/").filter(Boolean);
 
     return segments
       .reduce<{ path: string; link: DashboardLink | undefined }[]>((acc, segment, index) => {
         const currentPath = `/${segments.slice(0, index + 1).join("/")}`;
+        console.log({ currentPath });
 
         const link =
           Object.values(DASHBOARD_LINKS).find((link) => t(link.pathKey) === currentPath) ||
@@ -30,4 +31,8 @@ export const usePathLinks = (): DashboardLink[] => {
       .filter((item) => item.link)
       .map((item) => item.link as DashboardLink);
   }, [pathname, t]);
+
+  console.log({ parsedPathLinks });
+
+  return parsedPathLinks;
 };

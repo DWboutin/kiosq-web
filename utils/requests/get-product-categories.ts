@@ -1,5 +1,5 @@
 import { Locales } from "@/types/app";
-import { productCategoriesFactory } from "@/utils/factories/product-categories-factory";
+import { adminProductCategoriesFactory } from "@/utils/factories/admin-product-categories-factory";
 import { cacheKeys } from "@/utils/cache-keys";
 
 export const getProductCategories = async (locale: Locales) => {
@@ -18,7 +18,7 @@ export const getProductCategories = async (locale: Locales) => {
 
     const data = await response.json();
 
-    return productCategoriesFactory(data.categories, locale);
+    return adminProductCategoriesFactory(data.categories, locale);
   } catch (error) {
     console.error("Error fetching product categories:", error);
     throw new Error("Failed request for product categories");

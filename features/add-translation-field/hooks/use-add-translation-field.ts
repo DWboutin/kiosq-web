@@ -35,20 +35,23 @@ export function useAddTranslationField<TFieldValues extends FieldValues>({
     control,
   });
 
-  const translationsField = (field.value as Record<string, string>) || {};
+  const allTranslations = (field.value as Record<string, string>) || {};
+  const translationsField = Object.fromEntries(
+    Object.entries(allTranslations).filter(([locale]) => locale !== currentLocale)
+  );
 
   const getRemainingLocales = useCallback(
     (excludeLocale = "") =>
       LOCALES.filter(
         (locale) =>
-          locale !== currentLocale && (locale === excludeLocale || !(locale in translationsField))
+          locale !== currentLocale && (locale === excludeLocale || !(locale in allTranslations))
       ),
-    [currentLocale, translationsField]
+    [currentLocale, allTranslations]
   );
 
   const handleLocaleChange = (rowLocale: string, newLocale: string) => {
-    if (rowLocale && rowLocale in translationsField) {
-      const updatedTranslations = { ...translationsField };
+    if (rowLocale && rowLocale in allTranslations) {
+      const updatedTranslations = { ...allTranslations };
       const value = updatedTranslations[rowLocale];
       delete updatedTranslations[rowLocale];
 
@@ -57,9 +60,9 @@ export function useAddTranslationField<TFieldValues extends FieldValues>({
       }
 
       field.onChange(updatedTranslations);
-    } else if (!(newLocale in translationsField)) {
+    } else if (!(newLocale in allTranslations)) {
       field.onChange({
-        ...translationsField,
+        ...allTranslations,
         [newLocale]: "",
       });
     }
@@ -69,7 +72,7 @@ export function useAddTranslationField<TFieldValues extends FieldValues>({
     if (!locale) return;
 
     field.onChange({
-      ...translationsField,
+      ...allTranslations,
       [locale]: value,
     });
   };
@@ -77,7 +80,7 @@ export function useAddTranslationField<TFieldValues extends FieldValues>({
   const removeTranslation = (locale: string) => {
     const newTranslations: Record<string, string> = {};
 
-    Object.entries(translationsField).forEach(([key, value]) => {
+    Object.entries(allTranslations).forEach(([key, value]) => {
       if (key !== locale) {
         newTranslations[key] = value;
       }

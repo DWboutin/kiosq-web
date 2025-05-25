@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Locales } from "@/types/app";
 import { getProductCategories } from "@/utils/requests/get-product-categories";
-import { FormattedProductCategory } from "@/utils/factories/product-categories-factory";
+import { FormattedProductCategory } from "@/utils/factories/admin-product-categories-factory";
 import { useLocale } from "next-intl";
 import { cacheKeys } from "@/utils/cache-keys";
 
