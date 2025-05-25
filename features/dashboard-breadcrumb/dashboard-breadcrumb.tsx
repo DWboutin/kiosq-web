@@ -12,7 +12,7 @@ export const DashboardBreadcrumb: FC = () => {
     <div className="w-full py-4 px-5 max-md:px-2 max-md:py-2 overflow-hidden">
       <div className="flex flex-row justify-start items-center w-full gap-2 overflow-x-auto whitespace-nowrap pb-2 text-lg max-md:text-base [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <DashboardBreadcrumbMobileMenu />
-        <span className="font-inter font-semibold text-neutral-dark flex-shrink-0 max-md:hidden">
+        <span className="font-inter font-semibold text-neutral-dark flex-shrink-0 max-md:hidden cursor-default">
           {t("DashboardBreadcrumb.managementSystem")}
         </span>
         <DashboardBreadcrumbPaths />

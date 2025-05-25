@@ -15,7 +15,7 @@ export const DashboardBreadcrumbLink = ({
 
   if (isLast) {
     return (
-      <span className="flex flex-row items-center gap-2 hover:underline flex-shrink-0 text-brand-medium">
+      <span className="flex flex-row items-center gap-2 flex-shrink-0 text-brand-medium cursor-default">
         {link.icon}
         <span className="font-inter font-semibold">{t(link.labelKey)}</span>
       </span>

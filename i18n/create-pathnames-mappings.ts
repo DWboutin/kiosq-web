@@ -44,7 +44,5 @@ export const createPathnamesMappings = (): PathnameMappings => {
     return acc;
   }, {} as PathnameMappings);
 
-  console.log({ pathnamesMappingsCache });
-
   return pathnamesMappingsCache;
 };

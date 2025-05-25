@@ -19,15 +19,16 @@ export const getUserProductById = async (productId: string) => {
       .from("products")
       .select(
         `
-      *,
-      categories (
-        *
-      ),
-      product_variants (
-        *,
-        product_prices(*)
-      )
-    `
+          *,
+          categories (
+            *,
+            parent_category:parent_id(*)
+          ),
+          product_variants (
+            *,
+            product_prices(*)
+          )
+        `
       )
       .eq("id", productId)
       .single();

@@ -19,7 +19,11 @@
     "dashboard_account": "/dashboard/account"
   },
   "Global": {
-    "thereWasAnError": "There was an error, please contact support"
+    "thereWasAnError": "There was an error, please contact support",
+    "status": "Status",
+    "published": "Published",
+    "deleted": "Deleted",
+    "draft": "Draft"
   },
   "Header": {
     "logoLinkAriaLabel": "Home",
@@ -326,5 +330,10 @@
     "exploreKiosq": "Explore Kiosq",
     "orEnterPostalCode": "Or enter your postal code",
     "errorSubmitting": "An error occurred while submitting your onboarding data. We will ask you for this information later."
+  },
+  "AdminProductPage": {
+    "status": "Status",
+    "published": "Published",
+    "unpublished": "Unpublished"
   }
 }

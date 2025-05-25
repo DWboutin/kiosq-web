@@ -22,16 +22,16 @@ export const GET = async (
       .from("products")
       .select(
         `
-      *,
-      categories (
-        *,
-        parent_category:parent_id(*)
-      ),
-      product_variants (
-        *,
-        product_prices(*)
-      )
-    `
+          *,
+          categories (
+            *,
+            parent_category:parent_id(*)
+          ),
+          product_variants (
+            *,
+            product_prices(*)
+          )
+        `
       )
       .eq("profile_id", profileId);
 

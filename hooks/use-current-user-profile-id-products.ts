@@ -3,7 +3,6 @@ import { getAuthenticatedUserProfileIdProducts } from "@/utils/requests/get-auth
 import { useQuery } from "@tanstack/react-query";
 
 export function useCurrentUserProfileIdProducts(profileId: string) {
-  console.log("profileId", profileId);
   const {
     data: products = [],
     isLoading,

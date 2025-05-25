@@ -19,7 +19,11 @@
     "dashboard_account": "/tableau-de-bord/compte"
   },
   "Global": {
-    "thereWasAnError": "Une erreur est survenue, veuillez contacter le support"
+    "thereWasAnError": "Une erreur est survenue, veuillez contacter le support",
+    "status": "Statut",
+    "published": "Publié",
+    "deleted": "Supprimé",
+    "draft": "Brouillon"
   },
   "Header": {
     "logoLinkAriaLabel": "Accueil",
