@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { ButtonBrand } from "@/components/ui/button-brand";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -44,9 +44,9 @@ export const DashboardBreadcrumbMobileMenu = memo(() => {
     <div className="p-1 min-lg:hidden">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon" aria-label={t("DashboardBreadcrumb.mobileMenu")}>
+          <ButtonBrand variant="ghost" size="icon" aria-label={t("DashboardBreadcrumb.mobileMenu")}>
             <SubMenuIcon className="text-neutral-dark size-6" />
-          </Button>
+          </ButtonBrand>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="min-w-[200px] p-2">
           <DropdownMenuLabel>{t("DashboardBreadcrumb.managementSystem")}</DropdownMenuLabel>

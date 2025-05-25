@@ -8,6 +8,7 @@ import { useProductForm } from "@/features/product-form-drawer/hooks/use-product
 import { ProductFormChecklist } from "@/features/product-form-drawer/components/product-form-checklist";
 import { ProductForm } from "@/features/product-form-drawer/components/product-form";
 import { useTranslations } from "next-intl";
+import { ButtonBrand } from "@/components/ui/button-brand";
 export const ProductFormDrawer: FC = () => {
   const t = useTranslations("ProductFormDrawer");
   const {
@@ -24,12 +25,12 @@ export const ProductFormDrawer: FC = () => {
       handleSubmit={handleFormSubmit}
       isSubmitting={isSubmitting}
       trigger={
-        <Button tabIndex={-1} asChild>
+        <ButtonBrand tabIndex={-1} asChild>
           <span>
             <PlusSquareIcon className="size-5" />
             {t("openingButton")}
           </span>
-        </Button>
+        </ButtonBrand>
       }
     >
       <div className="flex flex-col gap-4">

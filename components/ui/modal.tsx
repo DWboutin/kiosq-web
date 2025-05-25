@@ -19,9 +19,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { LoadingButton } from "@/components/ui/loading-button";
+import { ButtonBrand } from "@/components/ui/button-brand";
 
 export type ModalProps = {
   title: string;
@@ -89,9 +89,9 @@ export const Modal = forwardRef<ModalRef, ModalProps>(
             <DialogFooter className="p-4">
               <div className="flex flex-row justify-end gap-2">
                 <DialogClose asChild onClick={(e) => e.stopPropagation()}>
-                  <Button variant="outline" type="button">
+                  <ButtonBrand variant="outline" type="button">
                     <span>{cancelLabel}</span>
-                  </Button>
+                  </ButtonBrand>
                 </DialogClose>
                 <LoadingButton
                   type="submit"

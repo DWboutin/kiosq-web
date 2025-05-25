@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { SearchIcon } from "@/components/ui/icons/search-icon";
 import { Input } from "@/components/ui/input";
 import { FC } from "react";
 import { useTranslations } from "next-intl";
+import { ButtonBrand } from "@/components/ui/button-brand";
 
 export const SearchInput: FC = () => {
   const t = useTranslations("Header");
@@ -18,7 +18,7 @@ export const SearchInput: FC = () => {
         placeholder={t("searchPlaceholder")}
         className="w-full rounded-full pl-9 pr-3 border-neutral-light shadow-none max-md:hidden"
       />
-      <Button
+      <ButtonBrand
         variant="ghost"
         size="icon"
         onClick={() => {
@@ -28,7 +28,7 @@ export const SearchInput: FC = () => {
         className="min-md:hidden"
       >
         <SearchIcon className="text-neutral-dark size-6" />
-      </Button>
+      </ButtonBrand>
     </div>
   );
 };

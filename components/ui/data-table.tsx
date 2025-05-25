@@ -26,7 +26,6 @@ import { ChevronDown, ChevronUp, ChevronsUpDown, EyeIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useLocale, useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,6 +35,7 @@ import {
 import { useDataTableVisibilityStore } from "@/stores/data-table-visibility-store";
 import { useIsMounted } from "@/hooks/use-is-mounted";
 import { sortDataHierarchically } from "@/utils/data-table-utils";
+import { ButtonBrand } from "@/components/ui/button-brand";
 
 interface DataTableProps<TData, TValue> {
   tableId: string;
@@ -53,10 +53,10 @@ const DataTableColumnsVisibilityControl = <TData,>({ table }: { table: TableInst
     <div className="flex justify-end mb-2">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="sm">
+          <ButtonBrand variant="outline" size="sm">
             <EyeIcon className="h-4 w-4 mr-2" />
             {t("columnsVisibility")}
-          </Button>
+          </ButtonBrand>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           {table

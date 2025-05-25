@@ -11,9 +11,9 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { LoadingButton } from "@/components/ui/loading-button";
+import { ButtonBrand } from "@/components/ui/button-brand";
 
 type SideFormDrawerProps = {
   title: string;
@@ -84,9 +84,9 @@ export const SideFormDrawer = forwardRef<SideFormDrawerRef, SideFormDrawerProps>
             <DrawerFooter className="border-t border-neutral-lightest">
               <div className="flex flex-row justify-end gap-2">
                 <DrawerClose asChild>
-                  <Button variant="outline" type="button">
+                  <ButtonBrand variant="outline" type="button">
                     <span>{buttonCancelLabel}</span>
-                  </Button>
+                  </ButtonBrand>
                 </DrawerClose>
                 <LoadingButton
                   type="submit"

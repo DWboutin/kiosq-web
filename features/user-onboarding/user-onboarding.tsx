@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import {
   DialogContent as BaseDialogContent,
   DialogFooter,
@@ -22,6 +21,7 @@ import { UserOnboardingWelcome } from "./components/user-onboarding-welcome";
 import { UserOnboardingStepHeader } from "./components/user-onboarding-step-header";
 import { useTranslations } from "next-intl";
 import { LoadingButton } from "@/components/ui/loading-button";
+import { ButtonBrand } from "@/components/ui/button-brand";
 
 // Custom DialogContent without close button
 const DialogContent = ({
@@ -149,9 +149,9 @@ export const UserOnboarding = () => {
             </div>
             <div className="flex flex-row gap-2">
               {!isComplete && !isWelcomeStep && (
-                <Button variant="outline" onClick={previousStep} disabled={isSubmitting}>
+                <ButtonBrand variant="outline" onClick={previousStep} disabled={isSubmitting}>
                   {t("previous")}
-                </Button>
+                </ButtonBrand>
               )}
               {!isComplete &&
                 (isLastFormStep ? (
@@ -163,14 +163,14 @@ export const UserOnboarding = () => {
                     {t("complete")}
                   </LoadingButton>
                 ) : (
-                  <Button onClick={nextStep} autoFocus={isWelcomeStep}>
+                  <ButtonBrand onClick={nextStep} autoFocus={isWelcomeStep}>
                     {isWelcomeStep ? t("getStarted") : t("continue")}
-                  </Button>
+                  </ButtonBrand>
                 ))}
               {isComplete && (
-                <Button onClick={handleCloseModal} autoFocus>
+                <ButtonBrand onClick={handleCloseModal} autoFocus>
                   {t("exploreKiosq")}
-                </Button>
+                </ButtonBrand>
               )}
             </div>
           </div>

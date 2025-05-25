@@ -1,15 +1,14 @@
 "use client";
 
-import { UserCircleIcon } from "@/components/ui/icons/user-circle-icon";
 import { Link } from "@/i18n/navigation";
 import { FC } from "react";
-import { Button } from "@/components/ui/button";
 import { MessageBubble } from "@/components/ui/icons/message-bubble";
 import { HeaderAccountButton } from "@/features/header-account-button/header-account-button";
 import { useUserStore } from "@/stores/user-store";
 import { ShoppingBagIcon } from "@/components/ui/icons/shopping-bag-icon";
 import { useTranslations } from "next-intl";
 import { LocaleDropdown } from "@/features/locale-dropdown/locale-dropdown";
+import { ButtonBrand } from "@/components/ui/button-brand";
 
 export const ConnectionHeaderUtils: FC = () => {
   const t = useTranslations("Header");
@@ -31,10 +30,10 @@ export const ConnectionHeaderUtils: FC = () => {
   return (
     <div className="flex items-center">
       <HeaderAccountButton />
-      <Button variant="ghost" size="icon" aria-label={t("reservationButton")}>
+      <ButtonBrand variant="ghost" size="icon" aria-label={t("reservationButton")}>
         <ShoppingBagIcon className="text-neutral-dark size-6" />
-      </Button>
-      <Button
+      </ButtonBrand>
+      <ButtonBrand
         variant="ghost"
         size="icon"
         onClick={() => {
@@ -43,7 +42,7 @@ export const ConnectionHeaderUtils: FC = () => {
         aria-label={t("signOutButton")}
       >
         <MessageBubble className="text-neutral-dark size-6" />
-      </Button>
+      </ButtonBrand>
     </div>
   );
 };

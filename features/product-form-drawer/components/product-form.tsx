@@ -2,13 +2,13 @@ import { FormInputContainer } from "@/components/ui/form-utils/form-input-contai
 import { UnitDropdown } from "@/components/ui/form-utils/unit-dropdown";
 import { Input } from "@/components/ui/input";
 import { Controller } from "react-hook-form";
-import { ProductFormValues } from "@/features/product-form-drawer/hooks/use-product-form";
 import { FieldErrors, Control } from "react-hook-form";
 import { FC } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { CategoriesSelect } from "@/features/categories-select/categories-select";
 import { useTranslations } from "next-intl";
 import { AddTranslationField } from "@/features/add-translation-field/add-translation-field";
+import { ProductFormValues } from "@/features/product-form-drawer/utils/product-form-validation-schema";
 
 type ProductFormProps = {
   categoryValue: string;

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { ButtonBrand } from "@/components/ui/button-brand";
 import { Loader2 } from "lucide-react";
 import * as React from "react";
 
@@ -8,7 +9,7 @@ export type LoadingButtonProps = React.ComponentProps<typeof Button> & {
 
 export const LoadingButton = ({ isLoading, disabled, children, ...props }: LoadingButtonProps) => {
   return (
-    <Button disabled={isLoading || disabled} {...props}>
+    <ButtonBrand disabled={isLoading || disabled} {...props}>
       {isLoading ? (
         <>
           <Loader2 className="size-4 animate-spin" />
@@ -17,6 +18,6 @@ export const LoadingButton = ({ isLoading, disabled, children, ...props }: Loadi
       ) : (
         children
       )}
-    </Button>
+    </ButtonBrand>
   );
 };

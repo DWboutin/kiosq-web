@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { PlusSquareIcon } from "@/components/ui/icons/plus-square-icon";
 import { Control, FieldErrors, FieldValues, get } from "react-hook-form";
 import { Input } from "@/components/ui/input";
@@ -15,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { useAddTranslationField } from "@/features/add-translation-field/hooks/use-add-translation-field";
 import { FormInputContainer } from "@/components/ui/form-utils/form-input-container";
 import { useTranslations } from "next-intl";
+import { ButtonBrand } from "@/components/ui/button-brand";
 
 type Props<TFieldValues extends FieldValues> = {
   name: string;
@@ -85,15 +85,15 @@ export const AddTranslationField = <TFieldValues extends FieldValues>({
               {renderField(locale, value)}
             </FormInputContainer>
 
-            <Button variant="ghost" size="icon" onClick={() => removeTranslation(locale)}>
+            <ButtonBrand variant="ghost" size="icon" onClick={() => removeTranslation(locale)}>
               <CloseIcon className="w-4 h-4" />
-            </Button>
+            </ButtonBrand>
           </div>
         ))}
       </div>
 
       {hasAvailableTranslations && (
-        <Button
+        <ButtonBrand
           variant="outline"
           size="sm"
           aria-label={t("addTranslation")}
@@ -105,7 +105,7 @@ export const AddTranslationField = <TFieldValues extends FieldValues>({
         >
           <PlusSquareIcon className="mr-1" />
           <span>{t("addTranslation")}</span>
-        </Button>
+        </ButtonBrand>
       )}
     </div>
   );

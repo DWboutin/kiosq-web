@@ -2,6 +2,7 @@
 
 import { useCurrentUserProfiles } from "@/hooks/use-current-user-profiles";
 import { useCurrentUserProfileIdProducts } from "@/hooks/use-current-user-profile-id-products";
+import { CardAdminProduct } from "@/components/ui/card-admin-product";
 
 export const DashboardProfileProducts = () => {
   const {
@@ -20,5 +21,10 @@ export const DashboardProfileProducts = () => {
     return <div>Error: {profilesError?.message || productsError?.message}</div>;
   }
 
-  return <pre>{JSON.stringify(products, null, 2)}</pre>;
+  return (
+    <>
+      <CardAdminProduct />
+      <pre>{JSON.stringify(products, null, 2)}</pre>
+    </>
+  );
 };

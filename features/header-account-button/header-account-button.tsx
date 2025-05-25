@@ -18,8 +18,8 @@ import { useUserStore } from "@/stores/user-store";
 import { FC, memo, useMemo } from "react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
 import { LOCALES } from "@/utils/constants";
+import { ButtonBrand } from "@/components/ui/button-brand";
 
 export const HeaderAccountButton: FC = memo(() => {
   const t = useTranslations();
@@ -31,9 +31,13 @@ export const HeaderAccountButton: FC = memo(() => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" aria-label={t("HeaderAccountButton.accountButton")}>
+        <ButtonBrand
+          variant="ghost"
+          size="icon"
+          aria-label={t("HeaderAccountButton.accountButton")}
+        >
           <UserCircleIcon className="text-neutral-dark size-6" />
-        </Button>
+        </ButtonBrand>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>{t("HeaderAccountButton.myAccount")}</DropdownMenuLabel>

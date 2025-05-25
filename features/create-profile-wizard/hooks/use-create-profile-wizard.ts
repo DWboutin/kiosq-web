@@ -31,7 +31,7 @@ export const useCreateProfileWizard = (steps: { id: string; label: string }[]) =
       // Handle success, e.g., show notification or redirect
       toast.success(t("CreateProfileWizard.creationSuccess"));
       setIsSuccessDialogOpen(true);
-      queryClient.invalidateQueries({ queryKey: cacheKeys.userProfiles.list.queryKey });
+      queryClient.invalidateQueries({ queryKey: cacheKeys.currentUserProfiles.list.queryKey });
     },
     onError: (error) => {
       console.error("Error submitting form:", error);
