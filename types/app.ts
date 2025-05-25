@@ -40,8 +40,15 @@ export type ProfileType = Database["public"]["Enums"]["profile_type"];
 export type RawProduct = Database["public"]["Tables"]["products"]["Row"];
 export type RawProductVariant = Database["public"]["Tables"]["product_variants"]["Row"];
 export type RawProductPrice = Database["public"]["Tables"]["product_prices"]["Row"];
+export type RawProductCategory = Database["public"]["Tables"]["categories"]["Row"];
+export type RawProductCategoryWithParent = RawProductCategory & {
+  parent_category: RawProductCategory | null;
+};
 
 export type RawProductWithVariantsAndPrices = RawProduct & {
+  categories: RawProductCategory & {
+    parent_category: RawProductCategory;
+  };
   product_variants: RawProductVariant &
     {
       product_prices: RawProductPrice[];

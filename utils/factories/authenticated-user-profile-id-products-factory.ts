@@ -8,6 +8,7 @@ import {
   RawProductPrice,
 } from "@/types/app";
 import { extractTranslations } from "@/utils/extract-translations";
+import { productCategoryWithParentFactory } from "@/utils/factories/product-category-with-parent-factory";
 
 export type AuthenticatedUserProductVariant = {
   id: string;
@@ -62,6 +63,24 @@ export const authenticatedUserProfileIdProductsFactory = (
   return products.map((product) => {
     const nameTranslations = extractTranslations(product, "name_translations");
     const descriptionTranslations = extractTranslations(product, "description_translations");
+    const categoryNameTranslations = extractTranslations(product.categories, "name_translations");
+    const categoryDescriptionTranslations = extractTranslations(
+      product.categories,
+      "description_translations"
+    );
+    const categorySlugTranslations = extractTranslations(product.categories, "slug");
+    const parentCategoryNameTranslations = extractTranslations(
+      product.categories.parent_category,
+      "name_translations"
+    );
+    const parentCategoryDescriptionTranslations = extractTranslations(
+      product.categories.parent_category,
+      "description_translations"
+    );
+    const parentCategorySlugTranslations = extractTranslations(
+      product.categories.parent_category,
+      "slug"
+    );
 
     let checklistTranslations: Record<Locales, string>[] = [];
     if (Array.isArray(product.checklist_translations)) {
@@ -70,6 +89,8 @@ export const authenticatedUserProfileIdProductsFactory = (
           typeof item === "object" && item !== null && ("en" in item || "fr" in item)
       );
     }
+
+    console.log("product", product);
 
     const status: PublishedStatus | undefined =
       "status" in product ? (product.status as PublishedStatus) : undefined;
@@ -87,6 +108,7 @@ export const authenticatedUserProfileIdProductsFactory = (
       profileId: product.profile_id,
       checklistTranslations,
       status: status ?? "draft",
+      category: productCategoryWithParentFactory(product.categories),
       productVariants: Array.isArray(product.product_variants)
         ? product.product_variants.map((variant) => {
             const v = variant as RawProductVariant & { product_prices: RawProductPrice[] };

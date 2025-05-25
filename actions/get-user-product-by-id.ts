@@ -2,20 +2,18 @@ import { authenticatedUserProfileIdProductsFactory } from "@/utils/factories/aut
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 
-export const GET = async (
-  request: Request,
-  { params }: { params: Promise<{ profileId: string }> }
-) => {
+export const getUserProductById = async (productId: string) => {
   try {
-    const { profileId } = await params;
     const supabase = await createClient();
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser();
 
-    if (authError || !user) {
-      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+    const { data: user, error: userError } = await supabase.auth.getUser();
+
+    if (userError) {
+      throw userError;
+    }
+
+    if (!user.user) {
+      throw new Error("User not found");
     }
 
     const { data: products, error: productsError } = await supabase
@@ -23,9 +21,8 @@ export const GET = async (
       .select(
         `
       *,
-      categories (
-        *,
-        parent_category:parent_id(*)
+      product_categories (
+        *
       ),
       product_variants (
         *,
@@ -33,7 +30,7 @@ export const GET = async (
       )
     `
       )
-      .eq("profile_id", profileId);
+      .eq("id", productId);
 
     if (productsError) {
       console.error("Error fetching products", productsError);
