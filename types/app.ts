@@ -23,9 +23,8 @@ export type UpdateWithLocale<T> = T &
     id: string;
   };
 
-export type ProductCategory = Database["public"]["Tables"]["categories"]["Row"];
 export type ProductCategoryWithTranslations = Omit<
-  ProductCategory,
+  RawProductCategory,
   "name_translations" | "description_translations" | "slug"
 > & {
   name_translations: Record<Locales, string>;

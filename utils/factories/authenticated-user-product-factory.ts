@@ -9,6 +9,7 @@ import {
 } from "@/types/app";
 import { extractTranslations } from "@/utils/extract-translations";
 import { productCategoryWithParentFactory } from "@/utils/factories/product-category-with-parent-factory";
+import { ProductCategory } from "@/utils/factories/product-category-with-parent-factory";
 
 export type AuthenticatedUserProductVariant = {
   id: string;
@@ -52,6 +53,7 @@ export type AuthenticatedUserProductWithVariantsAndPrices = {
   profileId: string;
   checklistTranslations: Record<Locales, string>[];
   status: PublishedStatus;
+  category: ProductCategory;
   productVariants: (AuthenticatedUserProductVariant & {
     productPrices: AuthenticatedUserProductPrice[];
   })[];

@@ -1,11 +1,11 @@
-import { FormattedProductCategory } from "./admin-product-categories-factory";
+import { AdminProductCategory } from "@/utils/factories/admin-product-categories-factory";
 
 export type HierarchicalItem<T extends object> = T & {
   children?: HierarchicalItem<T>[];
   depth?: number;
 };
 
-export type HierarchicalProductCategory = HierarchicalItem<FormattedProductCategory>;
+export type HierarchicalProductCategory = HierarchicalItem<AdminProductCategory>;
 
 /**
  * Transforms a flat array of items with parent-child relationships into a hierarchical structure
@@ -76,7 +76,7 @@ export const getFlattenedData = <T extends { id: string }>(
  * Creates a hierarchical structure from a flat array of product categories
  */
 export const formatCategoriesWithChildren = (
-  categories: FormattedProductCategory[]
+  categories: AdminProductCategory[]
 ): HierarchicalProductCategory[] => {
   return createHierarchy(categories);
 };
