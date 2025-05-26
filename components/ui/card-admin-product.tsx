@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/carousel";
 import { DynamicLink } from "@/components/ui/dynamic-link";
 import Image from "next/image";
-import Link from "next/link";
 
 type CardAdminProductProps = {
   id: string;

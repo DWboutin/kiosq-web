@@ -29,9 +29,11 @@ export type ModalProps = {
   confirmLabel: string;
   cancelLabel: string;
   action: (e: MouseEvent<HTMLButtonElement>) => Promise<void>;
+  closeAction?: () => void;
   className?: string;
   hideFooter?: boolean;
   loading?: boolean;
+  isDestructive?: boolean;
 } & PropsWithChildren;
 
 export type ModalRef = {
@@ -49,7 +51,9 @@ export const Modal = forwardRef<ModalRef, ModalProps>(
       confirmLabel,
       cancelLabel,
       action,
+      closeAction,
       className,
+      isDestructive = false,
       hideFooter = false,
       loading = false,
     },
@@ -65,21 +69,28 @@ export const Modal = forwardRef<ModalRef, ModalProps>(
       close: () => setOpen(false),
     }));
 
-    const onDelete: MouseEventHandler<HTMLButtonElement> = async (e) => {
+    const handleAction: MouseEventHandler<HTMLButtonElement> = async (e) => {
       e.stopPropagation();
       await action(e);
       setOpen(false);
     };
 
+    const handleClose = () => {
+      if (closeAction) {
+        closeAction();
+      }
+      setOpen(false);
+    };
+
     return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>{children}</DialogTrigger>
+      <Dialog open={open} onOpenChange={handleClose}>
+        {children && <DialogTrigger asChild>{children}</DialogTrigger>}
         <DialogContent
           aria-labelledby={titleId}
           aria-describedby={descriptionId}
-          className={cn("p-0", className)}
+          className={cn("p-0 gap-0", className)}
         >
-          <DialogHeader className="border-b border-neutral-lightest flex flex-col justify-between gap-2 pb-2 px-6 pt-6">
+          <DialogHeader className="border-b border-neutral-lightest flex flex-col justify-between gap-2 py-6 px-6 pt-6">
             <DialogTitle id={titleId} className="text-base font-bold">
               {title}
             </DialogTitle>
@@ -95,8 +106,8 @@ export const Modal = forwardRef<ModalRef, ModalProps>(
                 </DialogClose>
                 <LoadingButton
                   type="submit"
-                  variant="destructive"
-                  onClick={onDelete}
+                  variant={isDestructive ? "destructive" : "default"}
+                  onClick={handleAction}
                   isLoading={loading}
                 >
                   {loading ? `${confirmLabel}...` : confirmLabel}

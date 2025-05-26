@@ -58,4 +58,4 @@ export type RawProductWithVariantsAndPrices = RawProduct & {
 export type NameTranslations = Record<Locales, string>;
 export type DescriptionTranslations = Record<Locales, string>;
 export type SlugTranslations = Record<Locales, string>;
-export type PublishedStatus = "draft" | "published" | "archived";
+export type PublishedStatus = "draft" | "published" | "deleted";

@@ -23,7 +23,8 @@
     "status": "Statut",
     "published": "Publié",
     "deleted": "Supprimé",
-    "draft": "Brouillon"
+    "draft": "Brouillon",
+    "cancel": "Annuler"
   },
   "Header": {
     "logoLinkAriaLabel": "Accueil",
@@ -332,5 +333,16 @@
     "exploreKiosq": "Explorer Kiosq",
     "orEnterPostalCode": "Ou entrer votre code postal",
     "errorSubmitting": "Une erreur est survenue lors de la soumission des données d'onboarding. Nous vous demanderons ces informations plus tard."
+  },
+  "PublishedStatusManagement": {
+    "modal_draft_title": "Mettre en brouillon \"{name}\"",
+    "modal_draft_description": "Êtes-vous sûr de vouloir mettre \"{name}\" en brouillon ?",
+    "modal_draft_action": "Mettre en brouillon",
+    "modal_published_title": "Publier \"{name}\"",
+    "modal_published_description": "Êtes-vous sûr de vouloir publier \"{name}\" ?",
+    "modal_published_action": "Publier",
+    "modal_deleted_title": "Supprimer \"{name}\"",
+    "modal_deleted_description": "Êtes-vous sûr de vouloir supprimer \"{name}\"? Cette action est irréversible.",
+    "modal_deleted_action": "Supprimer"
   }
 }

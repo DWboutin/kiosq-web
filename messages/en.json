@@ -23,7 +23,8 @@
     "status": "Status",
     "published": "Published",
     "deleted": "Deleted",
-    "draft": "Draft"
+    "draft": "Draft",
+    "cancel": "Cancel"
   },
   "Header": {
     "logoLinkAriaLabel": "Home",
@@ -335,5 +336,16 @@
     "status": "Status",
     "published": "Published",
     "unpublished": "Unpublished"
+  },
+  "PublishedStatusManagement": {
+    "modal_draft_title": "Set as draft \"{name}\"",
+    "modal_draft_description": "Are you sure you want to set \"{name}\" as draft?",
+    "modal_draft_action": "Set as draft",
+    "modal_published_title": "Publish \"{name}\"",
+    "modal_published_description": "Are you sure you want to publish \"{name}\"?",
+    "modal_published_action": "Publish",
+    "modal_deleted_title": "Delete \"{name}\"",
+    "modal_deleted_description": "Are you sure you want to delete \"{name}\"? This action is irreversible.",
+    "modal_deleted_action": "Delete"
   }
 }

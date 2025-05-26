@@ -1,10 +1,8 @@
 import { getUserProductById } from "@/actions/get-user-product-by-id";
+import { AdminProductIdCta } from "@/components/sections/admin-product-id-cta";
 import { DashboardPageHeading } from "@/components/sections/dashboard-page-heading";
-import { ButtonBrand } from "@/components/ui/button-brand";
-import { EditPencilIcon } from "@/components/ui/icons/edit-pencil-icon";
-import { PublishedStatusManagement } from "@/features/published-status-management/published-status-management";
 import { Locales } from "@/types/app";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getLocale } from "next-intl/server";
 
 export default async function ProductPage({ params }: { params: Promise<{ productId: string }> }) {
   const { productId } = await params;
@@ -17,15 +15,11 @@ export default async function ProductPage({ params }: { params: Promise<{ produc
         title={data.nameTranslations[locale]}
         description={data.descriptionTranslations[locale]}
         cta={
-          <div className="flex flex-row gap-2">
-            <PublishedStatusManagement status={data.status} />
-            <ButtonBrand>
-              <span className="flex flex-row items-center gap-2">
-                <EditPencilIcon className="size-5" />
-                Modifier
-              </span>
-            </ButtonBrand>
-          </div>
+          <AdminProductIdCta
+            productId={productId}
+            entityName={data.nameTranslations[locale]}
+            status={data.status}
+          />
         }
       />
       <pre>{locale}</pre>
