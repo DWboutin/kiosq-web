@@ -33,6 +33,10 @@ export const PublishedStatusManagement: FC<PublishedStatusManagementProps> = ({
     }
   }, [modalRef.current?.isOpen, currentStatus, status]);
 
+  useEffect(() => {
+    setCurrentStatus(status);
+  }, [status]);
+
   return (
     <div className="flex flex-row items-center gap-2">
       <span>{t("Global.status")}:</span>

@@ -1,8 +1,9 @@
 "use server";
 
 import { PublishedStatus } from "@/types/app";
+import { cacheKeys } from "@/utils/cache-keys";
 import { createClient } from "@/utils/supabase/server";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 
 export const updateProductPublishedStatus = async (productId: string, status: PublishedStatus) => {
   try {
@@ -27,7 +28,7 @@ export const updateProductPublishedStatus = async (productId: string, status: Pu
       throw productError;
     }
 
-    revalidatePath(`/dashboard/products/${productId}`);
+    revalidateTag(cacheKeys.currentUserProductById(productId).tag);
 
     return true;
   } catch (error) {

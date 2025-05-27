@@ -22,6 +22,7 @@ import {
 import { cn } from "@/lib/utils";
 import { LoadingButton } from "@/components/ui/loading-button";
 import { ButtonBrand } from "@/components/ui/button-brand";
+import { useDebouncedValue } from "@/hooks/use-debounced-value";
 
 export type ModalProps = {
   title: string;
@@ -62,6 +63,8 @@ export const Modal = forwardRef<ModalRef, ModalProps>(
     const [open, setOpen] = useState(false);
     const titleId = useId();
     const descriptionId = useId();
+    const [isProcessing, setIsProcessing] = useState(false);
+    const modalIsLoading = useDebouncedValue(isProcessing || loading, 300);
 
     useImperativeHandle(ref, () => ({
       isOpen: open,
@@ -70,9 +73,17 @@ export const Modal = forwardRef<ModalRef, ModalProps>(
     }));
 
     const handleAction: MouseEventHandler<HTMLButtonElement> = async (e) => {
-      e.stopPropagation();
-      await action(e);
-      setOpen(false);
+      try {
+        e.stopPropagation();
+        setIsProcessing(true);
+        await action(e);
+        setOpen(false);
+      } catch (error) {
+        console.error(error);
+        throw error;
+      } finally {
+        setIsProcessing(false);
+      }
     };
 
     const handleClose = () => {
@@ -108,7 +119,7 @@ export const Modal = forwardRef<ModalRef, ModalProps>(
                   type="submit"
                   variant={isDestructive ? "destructive" : "default"}
                   onClick={handleAction}
-                  isLoading={loading}
+                  isLoading={modalIsLoading}
                 >
                   {loading ? `${confirmLabel}...` : confirmLabel}
                 </LoadingButton>

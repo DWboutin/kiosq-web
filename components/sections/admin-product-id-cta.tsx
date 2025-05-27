@@ -5,6 +5,8 @@ import { ButtonBrand } from "@/components/ui/button-brand";
 import { EditPencilIcon } from "@/components/ui/icons/edit-pencil-icon";
 import { PublishedStatusManagement } from "@/features/published-status-management/published-status-management";
 import { PublishedStatus } from "@/types/app";
+import { cacheKeys } from "@/utils/cache-keys";
+import { useQueryClient } from "@tanstack/react-query";
 import { FC } from "react";
 import { toast } from "sonner";
 
@@ -19,11 +21,16 @@ export const AdminProductIdCta: FC<AdminProductIdCtaProps> = ({
   entityName,
   status,
 }) => {
+  const queryClient = useQueryClient();
+
   const handleStatusChange = async (status: PublishedStatus) => {
     try {
       const success = await updateProductPublishedStatus(productId, status);
 
       if (success) {
+        queryClient.invalidateQueries({
+          queryKey: cacheKeys.currentUserProductById(productId).queryKey,
+        });
         toast.success("Status updated successfully");
       }
     } catch (error) {
