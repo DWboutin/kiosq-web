@@ -39,7 +39,7 @@ export const PublishedStatusManagement: FC<PublishedStatusManagementProps> = ({
 
   return (
     <div className="flex flex-row items-center gap-2">
-      <span>{t("Global.status")}:</span>
+      <span className="text-sm">{t("Global.status")}:</span>
       <ControlledSelect
         id="status"
         placeholder={t("Global.status")}

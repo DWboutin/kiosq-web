@@ -41,7 +41,7 @@ export const DashboardBreadcrumbMobileMenu = memo(() => {
   );
 
   return (
-    <div className="p-1 min-lg:hidden">
+    <div className="min-lg:hidden">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <ButtonBrand variant="ghost" size="icon" aria-label={t("DashboardBreadcrumb.mobileMenu")}>
