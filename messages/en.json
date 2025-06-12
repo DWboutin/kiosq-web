@@ -335,7 +335,10 @@
   "AdminProductPage": {
     "status": "Status",
     "published": "Published",
-    "unpublished": "Unpublished"
+    "unpublished": "Unpublished",
+    "edit": "Edit",
+    "createdAt": "Created at",
+    "updatedAt": "Updated at"
   },
   "PublishedStatusManagement": {
     "modal_draft_title": "Set as draft \"{name}\"",
