@@ -39,51 +39,53 @@ export const DashboardPageManagementHeading: FC<DashboardPageManagementHeadingPr
   }, [description]);
 
   return (
-    <div className="flex flex-row max-md:flex-col-reverse justify-between items-start gap-4 pt-8">
-      <div className="flex flex-col gap-2">
-        <div className="flex flex-row gap-2 items-center">
-          <Heading
-            className={classNames(
-              "font-inter font-semibold text-neutral-black",
-              headingLevel === "h1" ? "text-2xl" : "text-xl"
-            )}
-          >
-            {title[locale]}
-          </Heading>
-          {titleFilledTranslation.length > 0 &&
-            titleFilledTranslation.map((key) => (
-              <TooltipContainer key={key} content={title[key as Locales]}>
-                <span>
-                  <BadgeTranslation>{key}</BadgeTranslation>
-                </span>
-              </TooltipContainer>
-            ))}
-          {missingTitleLocales.length > 0 &&
-            missingTitleLocales.map((key) => (
-              <BadgeWarning key={key}>&quot;{key}&quot; missing</BadgeWarning>
-            ))}
+    <div className="pt-8">
+      <div className="flex flex-row max-md:flex-col-reverse justify-between items-start gap-4">
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-row gap-2 items-center">
+            <Heading
+              className={classNames(
+                "font-inter font-semibold text-neutral-black",
+                headingLevel === "h1" ? "text-2xl" : "text-xl"
+              )}
+            >
+              {title[locale]}
+            </Heading>
+            {titleFilledTranslation.length > 0 &&
+              titleFilledTranslation.map((key) => (
+                <TooltipContainer key={key} content={title[key as Locales]}>
+                  <span>
+                    <BadgeTranslation>{key}</BadgeTranslation>
+                  </span>
+                </TooltipContainer>
+              ))}
+            {missingTitleLocales.length > 0 &&
+              missingTitleLocales.map((key) => (
+                <BadgeWarning key={key}>&quot;{key}&quot; missing</BadgeWarning>
+              ))}
+          </div>
+          <div className="flex flex-row gap-2">
+            <p className="text-sm font-inter text-neutral-darker">{description[locale]}</p>
+            {descriptionFilledTranslation.length > 0 &&
+              descriptionFilledTranslation.map((key) => (
+                <TooltipContainer
+                  key={key}
+                  content={description[key as Locales]}
+                  disableHoverableContent
+                >
+                  <span>
+                    <BadgeTranslation>{key}</BadgeTranslation>
+                  </span>
+                </TooltipContainer>
+              ))}
+            {missingDescriptionLocales.length > 0 &&
+              missingDescriptionLocales.map((key) => (
+                <BadgeWarning key={key}>&quot;{key}&quot; missing</BadgeWarning>
+              ))}
+          </div>
         </div>
-        <div className="flex flex-row gap-2 items-center">
-          <p className="text-sm font-inter text-neutral-darker">{description[locale]}</p>
-          {descriptionFilledTranslation.length > 0 &&
-            descriptionFilledTranslation.map((key) => (
-              <TooltipContainer
-                key={key}
-                content={description[key as Locales]}
-                disableHoverableContent
-              >
-                <span>
-                  <BadgeTranslation>{key}</BadgeTranslation>
-                </span>
-              </TooltipContainer>
-            ))}
-          {missingDescriptionLocales.length > 0 &&
-            missingDescriptionLocales.map((key) => (
-              <BadgeWarning key={key}>&quot;{key}&quot; missing</BadgeWarning>
-            ))}
-        </div>
+        {cta && <div className="flex-1 max-md:w-full flex justify-end">{cta}</div>}
       </div>
-      {cta && <div className="flex flex-row gap-2">{cta}</div>}
     </div>
   );
 };

@@ -9,7 +9,7 @@ type BadgeTranslationProps = {
 
 export const BadgeTranslation = ({ children, className }: BadgeTranslationProps) => {
   return (
-    <Badge className={cn("w-fit bg-neutral-light text-neutral-darker", className)}>
+    <Badge className={cn("w-fit cursor-default bg-neutral-light text-neutral-darker", className)}>
       <CheckIcon className="w-4 h-4 text-brand-medium" />
       {children}
     </Badge>

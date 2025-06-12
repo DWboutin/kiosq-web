@@ -27,7 +27,14 @@ export const BadgeCategory = ({ className, productCategory }: BadgeCategoryProps
   const Icon = category.icon;
 
   return (
-    <Badge className={cn("w-fit", category.backgroundColor, category.contentColor, className)}>
+    <Badge
+      className={cn(
+        "w-fit cursor-default",
+        category.backgroundColor,
+        category.contentColor,
+        className
+      )}
+    >
       <Icon className="w-4 h-4" />
       {categoryName}
     </Badge>

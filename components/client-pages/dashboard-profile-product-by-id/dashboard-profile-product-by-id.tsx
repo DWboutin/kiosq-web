@@ -34,7 +34,7 @@ export const DashboardProfileProductById: FC<DashboardProfileProductByIdProps> =
   }
 
   return (
-    <>
+    <div className="flex flex-col gap-10">
       <div className="flex flex-col gap-2">
         <DashboardPageManagementHeading
           title={product.nameTranslations}
@@ -59,6 +59,6 @@ export const DashboardProfileProductById: FC<DashboardProfileProductByIdProps> =
       </div>
       <pre>{locale}</pre>
       <pre>{JSON.stringify(product, null, 2)}</pre>
-    </>
+    </div>
   );
 };
