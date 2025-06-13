@@ -2,11 +2,12 @@ import { DashboardProfileProductById } from "@/components/client-pages/dashboard
 import { Locales } from "@/types/app";
 import { cacheKeys } from "@/utils/cache-keys";
 import { fetchServerAuthenticated } from "@/utils/fetch-server-authenticated";
+import { getBaseUrl } from "@/utils/get-base-url";
 import { getLocale } from "next-intl/server";
 
 const getProduct = async (productId: string) => {
   const response = await fetchServerAuthenticated(
-    `http://localhost:3000/api/users/current/product/${productId}`,
+    `${getBaseUrl()}/api/users/current/product/${productId}`,
     {
       next: {
         tags: [cacheKeys.currentUserProductById(productId).tag],

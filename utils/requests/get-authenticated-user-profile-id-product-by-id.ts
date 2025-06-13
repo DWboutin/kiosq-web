@@ -1,5 +1,6 @@
 import { cacheKeys } from "@/utils/cache-keys";
 import { AuthenticatedUserProductWithVariantsAndPrices } from "@/utils/factories/authenticated-user-product-factory";
+import { getBaseUrl } from "@/utils/get-base-url";
 
 export const getAuthenticatedUserProductById = async (
   productId: string
@@ -7,7 +8,7 @@ export const getAuthenticatedUserProductById = async (
   try {
     const cacheInfo = cacheKeys.currentUserProductById(productId);
 
-    const response = await fetch(`http://localhost:3000/api/users/current/product/${productId}`, {
+    const response = await fetch(`${getBaseUrl()}/api/users/current/product/${productId}`, {
       next: {
         tags: [cacheInfo.tag],
         revalidate: cacheInfo.revalidate,
