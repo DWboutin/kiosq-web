@@ -6,7 +6,8 @@ export const getAuthenticatedUserProductById = async (
 ): Promise<AuthenticatedUserProductWithVariantsAndPrices> => {
   try {
     const cacheInfo = cacheKeys.currentUserProductById(productId);
-    const response = await fetch(`/api/users/current/product/${productId}`, {
+
+    const response = await fetch(`http://localhost:3000/api/users/current/product/${productId}`, {
       next: {
         tags: [cacheInfo.tag],
         revalidate: cacheInfo.revalidate,
@@ -14,6 +15,8 @@ export const getAuthenticatedUserProductById = async (
     });
 
     if (!response.ok) {
+      const errorText = await response.text();
+      console.log("Client Request - Error response:", errorText);
       throw new Error(`Failed to fetch user's product id ${productId}`);
     }
 

@@ -7,19 +7,20 @@ import { BadgeCategory } from "@/components/ui/badge-category";
 import { CardAdminProductVariant } from "@/components/ui/card-admin-product-variant";
 import { useCurrentUserProductById } from "@/hooks/use-current-user-product-by-id";
 import { Locales } from "@/types/app";
+import { AuthenticatedUserProductWithVariantsAndPrices } from "@/utils/factories/authenticated-user-product-factory";
 import { useLocale, useTranslations } from "next-intl";
 import { FC } from "react";
 
 type DashboardProfileProductByIdProps = {
-  productId: string;
+  productData: AuthenticatedUserProductWithVariantsAndPrices;
 };
 
 export const DashboardProfileProductById: FC<DashboardProfileProductByIdProps> = ({
-  productId,
+  productData,
 }) => {
   const {
     selectors: { product, isLoading, error },
-  } = useCurrentUserProductById(productId);
+  } = useCurrentUserProductById(productData);
   const t = useTranslations("AdminProductPage");
   const locale = useLocale() as Locales;
 
@@ -44,7 +45,7 @@ export const DashboardProfileProductById: FC<DashboardProfileProductByIdProps> =
           productCategory={product.category}
           cta={
             <AdminProductIdCta
-              productId={productId}
+              productId={product.id}
               entityName={product.nameTranslations[locale]}
               status={product.status}
               createdAt={product.createdAt}

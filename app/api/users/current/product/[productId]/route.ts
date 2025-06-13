@@ -8,6 +8,7 @@ export const GET = async (
 ) => {
   try {
     const { productId } = await params;
+
     const supabase = await createClient();
     const {
       data: { user },
