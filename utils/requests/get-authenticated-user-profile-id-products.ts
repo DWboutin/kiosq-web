@@ -1,9 +1,9 @@
 import { cacheKeys } from "@/utils/cache-keys";
-import { Profile } from "@/utils/factories/profiles-factory";
+import { AuthenticatedUserProductWithVariantsAndPrices } from "@/utils/factories/authenticated-user-product-factory";
 
 export const getAuthenticatedUserProfileIdProducts = async (
   profileId: string
-): Promise<Profile[]> => {
+): Promise<AuthenticatedUserProductWithVariantsAndPrices[]> => {
   try {
     const cacheInfo = cacheKeys.currentUserProfileIdProducts.list(profileId);
     const response = await fetch(`/api/users/current/profiles/${profileId}/products`, {

@@ -15,9 +15,14 @@ export async function fetchServerAuthenticated(
     Cookie: cookieString,
   };
 
-  return fetch(url, {
+  const hasNextRevalidate =
+    typeof options.next === "object" && options.next !== null && "revalidate" in options.next;
+
+  const fetchOptions = {
     ...options,
     headers,
-    cache: options.cache || "no-store",
-  });
+    ...(hasNextRevalidate ? {} : { cache: options.cache || "no-store" }),
+  };
+
+  return fetch(url, fetchOptions);
 }

@@ -1,28 +1,24 @@
 "use client";
 
-import { useCurrentUserProfiles } from "@/hooks/use-current-user-profiles";
 import { useCurrentUserProfileIdProducts } from "@/hooks/use-current-user-profile-id-products";
 import { CardAdminProduct } from "@/components/ui/card-admin-product";
 import { useLocale } from "next-intl";
 import { Locales } from "@/types/app";
+import { AuthenticatedUserProductWithVariantsAndPrices } from "@/utils/factories/authenticated-user-product-factory";
 
-export const DashboardProfileProducts = () => {
+type DashboardProfileProductsProps = {
+  productsData: AuthenticatedUserProductWithVariantsAndPrices[];
+  profileId: string;
+};
+
+export const DashboardProfileProducts = ({
+  productsData,
+  profileId,
+}: DashboardProfileProductsProps) => {
   const locale = useLocale() as Locales;
   const {
-    selectors: { profiles, isLoading: profilesLoading, error: profilesError },
-  } = useCurrentUserProfiles();
-  const selectedProfileId = profiles[0]?.id;
-  const {
-    selectors: { products, isLoading: productsLoading, error: productsError },
-  } = useCurrentUserProfileIdProducts(selectedProfileId);
-
-  if (profilesLoading || productsLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (profilesError || productsError) {
-    return <div>Error: {profilesError?.message || productsError?.message}</div>;
-  }
+    selectors: { products },
+  } = useCurrentUserProfileIdProducts(productsData, profileId);
 
   return (
     <div className="flex flex-wrap gap-6 justify-start mt-6">

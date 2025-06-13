@@ -1,8 +1,12 @@
 import { cacheKeys } from "@/utils/cache-keys";
 import { getAuthenticatedUserProfileIdProducts } from "@/utils/requests/get-authenticated-user-profile-id-products";
+import { AuthenticatedUserProductWithVariantsAndPrices } from "@/utils/factories/authenticated-user-product-factory";
 import { useQuery } from "@tanstack/react-query";
 
-export function useCurrentUserProfileIdProducts(profileId: string) {
+export function useCurrentUserProfileIdProducts(
+  productsData: AuthenticatedUserProductWithVariantsAndPrices[],
+  profileId: string
+) {
   const {
     data: products = [],
     isLoading,
@@ -11,6 +15,7 @@ export function useCurrentUserProfileIdProducts(profileId: string) {
   } = useQuery({
     queryKey: cacheKeys.currentUserProfileIdProducts.list(profileId).queryKey,
     queryFn: () => getAuthenticatedUserProfileIdProducts(profileId),
+    initialData: productsData,
     enabled: !!profileId,
   });
 
