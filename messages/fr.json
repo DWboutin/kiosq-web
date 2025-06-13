@@ -340,7 +340,12 @@
     "unpublished": "Brouillon",
     "edit": "Modifier",
     "createdAt": "Créé le",
-    "updatedAt": "Mis à jour le"
+    "updatedAt": "Mis à jour le",
+    "missingTitle": "Titre manquant",
+    "missingDescription": "Description manquante",
+    "variantsTitle": "Variants",
+    "editVariant": "Modifier le variant",
+    "principalVariant": "Variant principal"
   },
   "PublishedStatusManagement": {
     "modal_draft_title": "Mettre en brouillon \"{name}\"",

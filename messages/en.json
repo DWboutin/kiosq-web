@@ -338,7 +338,12 @@
     "unpublished": "Unpublished",
     "edit": "Edit",
     "createdAt": "Created at",
-    "updatedAt": "Updated at"
+    "updatedAt": "Updated at",
+    "missingTitle": "Missing title",
+    "missingDescription": "Missing description",
+    "variantsTitle": "Variants",
+    "editVariant": "Edit variant",
+    "principalVariant": "Principal variant"
   },
   "PublishedStatusManagement": {
     "modal_draft_title": "Set as draft \"{name}\"",

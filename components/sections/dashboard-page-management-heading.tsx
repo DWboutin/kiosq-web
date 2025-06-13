@@ -1,12 +1,13 @@
 import { FC, useMemo } from "react";
 import classNames from "classnames";
 import { Locales } from "@/types/app";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { BadgeTranslation } from "@/components/ui/badge-translation";
 import { BadgeWarning } from "@/components/ui/badge-warning";
 import { AppConfig } from "@/app-config";
 import { ProductCategory } from "@/utils/factories/product-category-with-parent-factory";
 import { TooltipContainer } from "@/components/ui/tooltip-container";
+import { WarningIcon } from "@/components/ui/icons/warning-icon";
 
 type DashboardPageManagementHeadingProps = {
   title: Record<Locales, string>;
@@ -23,13 +24,14 @@ export const DashboardPageManagementHeading: FC<DashboardPageManagementHeadingPr
   headingLevel = "h1",
 }) => {
   const locale = useLocale() as Locales;
+  const t = useTranslations();
   const supportedLocales = AppConfig.locales.filter((l) => l !== locale);
   const Heading = headingLevel === "h1" ? "h1" : "h2";
   const titleFilledTranslation = useMemo(() => {
-    return Object.keys(title).filter((key) => key !== locale);
+    return Object.keys(title).filter((key) => key !== locale && title[key as Locales]);
   }, [title, locale]);
   const descriptionFilledTranslation = useMemo(() => {
-    return Object.keys(description).filter((key) => key !== locale);
+    return Object.keys(description).filter((key) => key !== locale && description[key as Locales]);
   }, [description, locale]);
   const missingTitleLocales = useMemo(() => {
     return supportedLocales.filter((locale) => !title[locale as Locales]);
@@ -49,7 +51,14 @@ export const DashboardPageManagementHeading: FC<DashboardPageManagementHeadingPr
                 headingLevel === "h1" ? "text-2xl" : "text-xl"
               )}
             >
-              {title[locale]}
+              {title[locale] || (
+                <div className="flex flex-row items-center gap-2">
+                  <BadgeWarning>
+                    <WarningIcon className="w-4 h-4" />
+                  </BadgeWarning>
+                  {t("AdminProductPage.missingTitle")}
+                </div>
+              )}
             </Heading>
             {titleFilledTranslation.length > 0 &&
               titleFilledTranslation.map((key) => (
@@ -65,7 +74,16 @@ export const DashboardPageManagementHeading: FC<DashboardPageManagementHeadingPr
               ))}
           </div>
           <div className="flex flex-row gap-2">
-            <p className="text-sm font-inter text-neutral-darker">{description[locale]}</p>
+            <div className="text-sm font-inter text-neutral-darker">
+              {description[locale] || (
+                <div className="flex flex-row items-center gap-2">
+                  <BadgeWarning>
+                    <WarningIcon className="w-4 h-4" />
+                  </BadgeWarning>
+                  {t("AdminProductPage.missingDescription")}
+                </div>
+              )}
+            </div>
             {descriptionFilledTranslation.length > 0 &&
               descriptionFilledTranslation.map((key) => (
                 <TooltipContainer

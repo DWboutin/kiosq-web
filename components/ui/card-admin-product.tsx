@@ -1,4 +1,3 @@
-import { BadgeWarning } from "@/components/ui/badge-warning";
 import { ButtonBrand } from "@/components/ui/button-brand";
 import {
   Card,
@@ -20,11 +19,13 @@ import Image from "next/image";
 
 type CardAdminProductProps = {
   id: string;
+  title: string;
+  description: string;
 };
 
-export const CardAdminProduct = ({ id }: CardAdminProductProps) => {
+export const CardAdminProduct = ({ id, title, description }: CardAdminProductProps) => {
   return (
-    <Card className="flex flex-col pt-0 overflow-hidden w-[240px] gap-0">
+    <Card className="flex flex-col overflow-hidden w-[240px] p-0 gap-4">
       <div className="relative">
         <Carousel>
           <CarouselContent>
@@ -39,19 +40,18 @@ export const CardAdminProduct = ({ id }: CardAdminProductProps) => {
           <CarouselNext className="right-2" />
         </Carousel>
       </div>
-      <div className="px-6 py-2">
-        <BadgeWarning>missing things</BadgeWarning>
+      <div className="flex-1 flex flex-col gap-4">
+        <CardHeader className="gap-2">
+          <CardTitle>{title}</CardTitle>
+          <CardDescription>{description}</CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-2">
+          <p>Product content</p>
+        </CardContent>
       </div>
-      <CardHeader>
-        <CardTitle>Product</CardTitle>
-        <CardDescription>Product description</CardDescription>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-2 py-4">
-        <p>Product content</p>
-      </CardContent>
-      <CardFooter className="flex justify-end">
+      <CardFooter className="flex justify-end pt-0 pb-4">
         <ButtonBrand asChild>
-          <DynamicLink pathKey="Pathnames.dashboard_product_id" id={id}>
+          <DynamicLink pathKey="Pathnames.dashboard_product_id" id={id} prefetch>
             Edit
           </DynamicLink>
         </ButtonBrand>

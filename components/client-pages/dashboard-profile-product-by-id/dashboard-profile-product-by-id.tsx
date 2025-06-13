@@ -4,9 +4,10 @@ import { AdminProductIdCta } from "@/components/sections/admin-product-id-cta";
 import { DashboardPageManagementHeading } from "@/components/sections/dashboard-page-management-heading";
 import { ProductChecklist } from "@/components/sections/product-checklist";
 import { BadgeCategory } from "@/components/ui/badge-category";
+import { CardAdminProductVariant } from "@/components/ui/card-admin-product-variant";
 import { useCurrentUserProductById } from "@/hooks/use-current-user-product-by-id";
 import { Locales } from "@/types/app";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { FC } from "react";
 
 type DashboardProfileProductByIdProps = {
@@ -19,6 +20,7 @@ export const DashboardProfileProductById: FC<DashboardProfileProductByIdProps> =
   const {
     selectors: { product, isLoading, error },
   } = useCurrentUserProductById(productId);
+  const t = useTranslations("AdminProductPage");
   const locale = useLocale() as Locales;
 
   if (isLoading) {
@@ -57,6 +59,26 @@ export const DashboardProfileProductById: FC<DashboardProfileProductByIdProps> =
           </div>
         </div>
       </div>
+
+      <div className="flex flex-col gap-4">
+        <h2 className="text-xl font-semibold">{t("variantsTitle")}</h2>
+        <div className="flex flex-wrap gap-4">
+          {product.productVariants.map((variant) => {
+            const price = variant.productPrices[0]?.basePrice || 0;
+
+            return (
+              <CardAdminProductVariant
+                key={variant.id}
+                title={`${variant.quantity} ${variant.unit}`}
+                price={price}
+                imageUrl={variant.imageUrl}
+                isDefault={variant.isDefault}
+              />
+            );
+          })}
+        </div>
+      </div>
+
       <pre>{locale}</pre>
       <pre>{JSON.stringify(product, null, 2)}</pre>
     </div>

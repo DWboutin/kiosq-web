@@ -3,8 +3,11 @@
 import { useCurrentUserProfiles } from "@/hooks/use-current-user-profiles";
 import { useCurrentUserProfileIdProducts } from "@/hooks/use-current-user-profile-id-products";
 import { CardAdminProduct } from "@/components/ui/card-admin-product";
+import { useLocale } from "next-intl";
+import { Locales } from "@/types/app";
 
 export const DashboardProfileProducts = () => {
+  const locale = useLocale() as Locales;
   const {
     selectors: { profiles, isLoading: profilesLoading, error: profilesError },
   } = useCurrentUserProfiles();
@@ -22,9 +25,14 @@ export const DashboardProfileProducts = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    <div className="flex flex-wrap gap-6 justify-start mt-6">
       {products.map((product) => (
-        <CardAdminProduct key={product.id} id={product.id} />
+        <CardAdminProduct
+          key={product.id}
+          id={product.id}
+          title={product.nameTranslations[locale]}
+          description={product.descriptionTranslations[locale]}
+        />
       ))}
     </div>
   );

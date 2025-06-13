@@ -1,7 +1,7 @@
 import { usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
+import Link, { LinkProps } from "next/link";
 import { PropsWithChildren } from "react";
 
 type DynamicLinkProps = {
@@ -9,7 +9,8 @@ type DynamicLinkProps = {
   id: string;
   className?: string;
   activeClassName?: string;
-} & PropsWithChildren;
+} & PropsWithChildren &
+  Omit<LinkProps, "href">;
 
 export const DynamicLink = ({
   pathKey,
@@ -17,6 +18,7 @@ export const DynamicLink = ({
   className,
   activeClassName,
   children,
+  ...props
 }: DynamicLinkProps) => {
   const pathname = usePathname();
   const t = useTranslations();
@@ -25,7 +27,7 @@ export const DynamicLink = ({
   const isActive = pathname === path;
 
   return (
-    <Link href={href} className={cn(className, isActive && activeClassName)}>
+    <Link href={href} className={cn(className, isActive && activeClassName)} {...props}>
       {children}
     </Link>
   );
