@@ -345,7 +345,9 @@
     "missingDescription": "Description manquante",
     "variantsTitle": "Variants",
     "editVariant": "Modifier le variant",
-    "principalVariant": "Variant principal"
+    "principalVariant": "Variant principal",
+    "title": "Produits",
+    "description": "Gérer facilement vos produits, leurs inventaire et leur disponibilité selon la saison"
   },
   "PublishedStatusManagement": {
     "modal_draft_title": "Mettre en brouillon \"{name}\"",

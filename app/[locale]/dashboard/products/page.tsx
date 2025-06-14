@@ -4,6 +4,7 @@ import { ProductFormDrawer } from "@/features/product-form-drawer/product-form-d
 import { cacheKeys } from "@/utils/cache-keys";
 import { fetchServerAuthenticated } from "@/utils/fetch-server-authenticated";
 import { getBaseUrl } from "@/utils/get-base-url";
+import { getTranslations } from "next-intl/server";
 
 const getUserProfiles = async () => {
   const response = await fetchServerAuthenticated(`${getBaseUrl()}/api/users/current/profiles`, {
@@ -51,14 +52,15 @@ export const metadata = {
 };
 
 export default async function DashboardProductsPage() {
+  const t = await getTranslations("AdminProductPage");
   const profiles = await getUserProfiles();
   const products = await getUserProfileIdProducts(profiles[0]?.id);
 
   return (
     <div className="flex flex-col flex-1">
       <DashboardPageHeading
-        title="Produits"
-        description="Gérer facilement vos produits, leurs inventaire et leur disponibilité selon la saison"
+        title={t("title")}
+        description={t("description")}
         cta={<ProductFormDrawer />}
       />
       <DashboardProfileProducts productsData={products} profileId={profiles[0]?.id} />

@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import { Inter, Nunito, Lato } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import "@/app/globals.css";
-import { Providers } from "@/features/providers/providers";
 import { hasLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
+import { ReactQueryProvider } from "@/features/providers/react-query-provider";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -40,10 +42,14 @@ export default async function RootLayout({
     return notFound();
   }
 
+  const messages = await getMessages();
+
   return (
     <html lang={locale}>
       <body className={`${nunito.className} ${lato.className} ${inter.className} antialiased`}>
-        <Providers>{children}</Providers>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <ReactQueryProvider>{children}</ReactQueryProvider>
+        </NextIntlClientProvider>
         <Toaster />
       </body>
     </html>
