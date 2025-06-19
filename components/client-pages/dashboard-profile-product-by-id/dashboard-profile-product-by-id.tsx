@@ -5,6 +5,7 @@ import { DashboardPageManagementHeading } from "@/components/sections/dashboard-
 import { ProductChecklist } from "@/components/sections/product-checklist";
 import { BadgeCategory } from "@/components/ui/badge-category";
 import { CardAdminProductVariant } from "@/components/ui/card-admin-product-variant";
+import { ProductVariantModalProvider } from "@/features/product-variant-modal-provider/product-variant-modal-provider";
 import { useCurrentUserProductById } from "@/hooks/use-current-user-product-by-id";
 import { Locales } from "@/types/app";
 import { AuthenticatedUserProductWithVariantsAndPrices } from "@/utils/factories/authenticated-user-product-factory";
@@ -64,19 +65,24 @@ export const DashboardProfileProductById: FC<DashboardProfileProductByIdProps> =
       <div className="flex flex-col gap-4">
         <h2 className="text-xl font-semibold">{t("variantsTitle")}</h2>
         <div className="flex flex-wrap gap-4">
-          {product.productVariants.map((variant) => {
-            const price = variant.productPrices[0]?.basePrice || 0;
+          <ProductVariantModalProvider>
+            {product.productVariants.map((variant) => {
+              const price = variant.productPrices[0]?.basePrice || 0;
 
-            return (
-              <CardAdminProductVariant
-                key={variant.id}
-                title={`${variant.quantity} ${variant.unit}`}
-                price={price}
-                imageUrl={variant.imageUrl}
-                isDefault={variant.isDefault}
-              />
-            );
-          })}
+              return (
+                <CardAdminProductVariant
+                  key={variant.id}
+                  id={variant.id}
+                  title={`${variant.quantity} ${variant.unit}`}
+                  quantity={variant.quantity}
+                  unit={variant.unit}
+                  price={price}
+                  imageUrl={variant.imageUrl}
+                  isDefault={variant.isDefault}
+                />
+              );
+            })}
+          </ProductVariantModalProvider>
         </div>
       </div>
 

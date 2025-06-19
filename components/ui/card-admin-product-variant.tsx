@@ -2,23 +2,36 @@ import { Badge } from "@/components/ui/badge";
 import { ButtonBrand } from "@/components/ui/button-brand";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { EditPencilIcon } from "@/components/ui/icons/edit-pencil-icon";
+import { useProductVariantModalContext } from "@/features/product-variant-modal-provider/product-variant-modal-provider";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 
-type CardAdminProductVariantProps = {
-  title: string;
+export type ProductVariantValues = {
+  id: string;
+  quantity: number;
+  unit: string;
   price: number;
   imageUrl?: string | null;
   isDefault?: boolean;
 };
 
+type CardAdminProductVariantProps = ProductVariantValues;
+
 export const CardAdminProductVariant = ({
-  title,
+  id,
+  quantity,
+  unit,
   price,
   imageUrl,
   isDefault,
 }: CardAdminProductVariantProps) => {
   const t = useTranslations("AdminProductPage");
+  const title = `${quantity} ${unit}`;
+  const { handleSetVariantValues } = useProductVariantModalContext();
+
+  const handleEditVariant = () => {
+    handleSetVariantValues({ id, quantity, unit, price, imageUrl, isDefault });
+  };
 
   return (
     <Card className="flex flex-col overflow-hidden w-[240px] p-0 gap-4">
@@ -47,7 +60,7 @@ export const CardAdminProductVariant = ({
         </CardContent>
       </div>
       <CardFooter className="flex justify-end pt-0 pb-4">
-        <ButtonBrand className="flex-1">
+        <ButtonBrand className="flex-1" onClick={handleEditVariant}>
           <EditPencilIcon />
           {t("editVariant")}
         </ButtonBrand>

@@ -8,6 +8,7 @@ import {
   useId,
   MouseEvent,
   MouseEventHandler,
+  ReactNode,
 } from "react";
 import {
   Dialog,
@@ -35,6 +36,7 @@ export type ModalProps = {
   hideFooter?: boolean;
   loading?: boolean;
   isDestructive?: boolean;
+  content?: ReactNode;
 } & PropsWithChildren;
 
 export type ModalRef = {
@@ -57,6 +59,7 @@ export const Modal = forwardRef<ModalRef, ModalProps>(
       isDestructive = false,
       hideFooter = false,
       loading = false,
+      content,
     },
     ref
   ) => {
@@ -107,6 +110,7 @@ export const Modal = forwardRef<ModalRef, ModalProps>(
             </DialogTitle>
             {description && <DialogDescription id={descriptionId}>{description}</DialogDescription>}
           </DialogHeader>
+          {content && <div className="p-4">{content}</div>}
           {!hideFooter && (
             <DialogFooter className="p-4">
               <div className="flex flex-row justify-end gap-2">

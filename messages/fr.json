@@ -364,5 +364,25 @@
     "modal_deleted_title": "Supprimer \"{name}\"",
     "modal_deleted_description": "Êtes-vous sûr de vouloir supprimer \"{name}\"? Cette action est irréversible.",
     "modal_deleted_action": "Supprimer"
+  },
+  "ProductVariantForm": {
+    "quantity": "Quantité",
+    "quantityPlaceholder": "1,5",
+    "unit": "Unité",
+    "unitPlaceholder": "Sélectionner une unité",
+    "price": "Prix",
+    "pricePlaceholder": "10,00",
+    "isDefault": "Mettre ce variant comme principal",
+    "cancel": "Annuler",
+    "update": "Mettre à jour",
+    "updating": "Mise à jour...",
+    "validationQuantityRequired": "La quantité est requise",
+    "validationQuantityPositive": "La quantité doit être positive",
+    "validationUnitRequired": "L'unité est requise",
+    "validationUnitInvalid": "L'unité est invalide",
+    "validationPriceRequired": "Le prix est requis",
+    "validationPricePositive": "Le prix doit être positif",
+    "updated": "Variant \"{variant}\" a été mis à jour avec succès",
+    "updatedError": "Échec de la mise à jour du variant, veuillez réessayer"
   }
 }

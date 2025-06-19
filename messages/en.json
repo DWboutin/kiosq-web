@@ -362,5 +362,25 @@
     "modal_deleted_title": "Delete \"{name}\"",
     "modal_deleted_description": "Are you sure you want to delete \"{name}\"? This action is irreversible.",
     "modal_deleted_action": "Delete"
+  },
+  "ProductVariantForm": {
+    "quantity": "Quantity",
+    "quantityPlaceholder": "1.5",
+    "unit": "Unit",
+    "unitPlaceholder": "Select unit",
+    "price": "Price",
+    "pricePlaceholder": "10.00",
+    "isDefault": "Make this variant the default one",
+    "cancel": "Cancel",
+    "update": "Update",
+    "updating": "Updating...",
+    "validationQuantityRequired": "The quantity is required",
+    "validationQuantityPositive": "The quantity must be positive",
+    "validationUnitRequired": "The unit is required",
+    "validationUnitInvalid": "The unit is invalid",
+    "validationPriceRequired": "The price is required",
+    "validationPricePositive": "The price must be positive",
+    "updated": "Variant \"{variant}\" has been updated successfully",
+    "updatedError": "Failed to update variant, please try again"
   }
 }
