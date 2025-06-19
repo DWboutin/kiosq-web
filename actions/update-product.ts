@@ -37,6 +37,8 @@ export const updateProduct = async (product: UpdateProductArgs) => {
           [product.locale]: item.value,
           ...item.value_translations,
         })),
+        updated_at: new Date().toISOString(),
+        updated_by: user.user.id,
       })
       .eq("id", product.id)
       .select()

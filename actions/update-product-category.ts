@@ -11,6 +11,14 @@ type UpdateProductCategoryArgs = UpdateWithLocale<ProductCategoryFormValues>;
 export const updateProductCategory = async (category: UpdateProductCategoryArgs) => {
   try {
     const supabase = await createClient();
+    const { data: user, error: userError } = await supabase.auth.getUser();
+
+    if (userError) {
+      throw userError;
+    }
+    if (!user) {
+      throw new Error("User not found");
+    }
 
     const { data, error } = await supabase
       .from("categories")
@@ -29,6 +37,8 @@ export const updateProductCategory = async (category: UpdateProductCategoryArgs)
         },
         parent_id: category.parentId === "false" ? null : category.parentId,
         order_rank: category.orderRank,
+        updated_at: new Date().toISOString(),
+        updated_by: user.user.id,
       })
       .eq("id", category.id);
 

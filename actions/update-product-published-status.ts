@@ -21,7 +21,7 @@ export const updateProductPublishedStatus = async (productId: string, status: Pu
 
     const { error: productError } = await supabase
       .from("products")
-      .update({ status })
+      .update({ status, updated_at: new Date().toISOString(), updated_by: user.user.id })
       .eq("id", productId);
 
     if (productError) {
