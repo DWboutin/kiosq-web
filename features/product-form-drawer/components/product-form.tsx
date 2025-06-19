@@ -14,9 +14,10 @@ type ProductFormProps = {
   categoryValue: string;
   control: Control<ProductFormValues>;
   errors: FieldErrors<ProductFormValues>;
+  editMode?: boolean;
 };
 
-export const ProductForm: FC<ProductFormProps> = ({ control, errors, categoryValue }) => {
+export const ProductForm: FC<ProductFormProps> = ({ control, errors, categoryValue, editMode }) => {
   const t = useTranslations("ProductForm");
 
   return (
@@ -103,69 +104,71 @@ export const ProductForm: FC<ProductFormProps> = ({ control, errors, categoryVal
           )}
         />
       </FormInputContainer>
-      <div className="flex gap-2">
-        <FormInputContainer
-          inputId="price"
-          label={t("price")}
-          error={errors.price?.message}
-          required
-          className="flex-1"
-        >
-          <Controller
-            name="price"
-            control={control}
-            render={({ field }) => (
-              <Input
-                id="price"
-                type="number"
-                placeholder={t("pricePlaceholder")}
-                value={field.value}
-                onChange={field.onChange}
-              />
-            )}
-          />
-        </FormInputContainer>
-        <FormInputContainer
-          inputId="quantity"
-          label={t("quantity")}
-          error={errors.quantity?.message}
-          required
-          className="flex-1"
-        >
-          <Controller
-            name="quantity"
-            control={control}
-            render={({ field }) => (
-              <Input
-                id="quantity"
-                placeholder={t("quantityPlaceholder")}
-                value={field.value}
-                onChange={field.onChange}
-              />
-            )}
-          />
-        </FormInputContainer>
-        <FormInputContainer
-          inputId="unit"
-          label={t("unit")}
-          error={errors.unit?.message}
-          required
-          className="flex-1"
-        >
-          <Controller
-            name="unit"
-            control={control}
-            render={({ field }) => (
-              <UnitDropdown
-                id="unit"
-                placeholder={t("unitPlaceholder")}
-                value={field.value}
-                onChange={field.onChange}
-              />
-            )}
-          />
-        </FormInputContainer>
-      </div>
+      {!editMode && (
+        <div className="flex gap-2">
+          <FormInputContainer
+            inputId="price"
+            label={t("price")}
+            error={errors.price?.message}
+            required
+            className="flex-1"
+          >
+            <Controller
+              name="price"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  id="price"
+                  type="number"
+                  placeholder={t("pricePlaceholder")}
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              )}
+            />
+          </FormInputContainer>
+          <FormInputContainer
+            inputId="quantity"
+            label={t("quantity")}
+            error={errors.quantity?.message}
+            required
+            className="flex-1"
+          >
+            <Controller
+              name="quantity"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  id="quantity"
+                  placeholder={t("quantityPlaceholder")}
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              )}
+            />
+          </FormInputContainer>
+          <FormInputContainer
+            inputId="unit"
+            label={t("unit")}
+            error={errors.unit?.message}
+            required
+            className="flex-1"
+          >
+            <Controller
+              name="unit"
+              control={control}
+              render={({ field }) => (
+                <UnitDropdown
+                  id="unit"
+                  placeholder={t("unitPlaceholder")}
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              )}
+            />
+          </FormInputContainer>
+        </div>
+      )}
     </>
   );
 };

@@ -3,18 +3,26 @@ import { getAuthenticatedUserProductById } from "@/utils/requests/get-authentica
 import { AuthenticatedUserProductWithVariantsAndPrices } from "@/utils/factories/authenticated-user-product-factory";
 import { useQuery } from "@tanstack/react-query";
 
-export function useCurrentUserProductById(
-  productData: AuthenticatedUserProductWithVariantsAndPrices
-) {
+type UseCurrentUserProductByIdProps = {
+  productData?: AuthenticatedUserProductWithVariantsAndPrices;
+  productId?: string;
+};
+
+export function useCurrentUserProductById({
+  productData,
+  productId,
+}: UseCurrentUserProductByIdProps) {
+  const queryProductId = (productData?.id || productId) as string;
   const {
     data: product = null,
     isLoading,
     error,
     refetch,
   } = useQuery({
-    queryKey: cacheKeys.currentUserProductById(productData.id).queryKey,
-    queryFn: () => getAuthenticatedUserProductById(productData.id),
+    queryKey: cacheKeys.currentUserProductById(queryProductId).queryKey,
+    queryFn: () => getAuthenticatedUserProductById(queryProductId),
     initialData: productData,
+    enabled: !!queryProductId,
   });
 
   return {

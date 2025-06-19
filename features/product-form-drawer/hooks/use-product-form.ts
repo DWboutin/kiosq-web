@@ -6,14 +6,71 @@ import {
   createProductFormSchema,
   ProductFormValues,
 } from "@/features/product-form-drawer/utils/product-form-validation-schema";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createProduct } from "@/actions/create-product";
 import { toast } from "sonner";
+import { useCurrentUserProductById } from "@/hooks/use-current-user-product-by-id";
+import { updateProduct } from "@/actions/update-product";
+import { cacheKeys } from "@/utils/cache-keys";
+import { SideFormDrawerRef } from "@/components/ui/side-form-drawer";
+import { useRef } from "react";
+import { AuthenticatedUserProductWithVariantsAndPrices } from "@/utils/factories/authenticated-user-product-factory";
 
-export const useProductForm = () => {
+type UseProductFormProps = {
+  editMode?: boolean;
+  productId?: string;
+};
+
+const productDefaultValues: ProductFormValues = {
+  name: "",
+  name_translations: {},
+  description: "",
+  description_translations: {},
+  category: "",
+  subcategory: "",
+  checklist: [],
+  price: "",
+  quantity: "",
+  unit: "",
+};
+
+const fillProductFormValues = (
+  product: AuthenticatedUserProductWithVariantsAndPrices,
+  locale: Locales
+) => {
+  return {
+    ...productDefaultValues,
+    name: product?.nameTranslations[locale],
+    name_translations: product?.nameTranslations,
+    description: product?.descriptionTranslations[locale],
+    description_translations: product?.descriptionTranslations,
+    category:
+      product?.category.parentCategory === null
+        ? product?.category.id
+        : product?.category.parentCategory?.id,
+    subcategory: product?.category.parentCategory !== null ? product?.category.id : "",
+    checklist:
+      product?.checklistTranslations?.map((item) => ({
+        value: typeof item === "string" ? item : item[locale] || "",
+        value_translations: typeof item === "object" ? item : { [locale]: item },
+      })) || [],
+  };
+};
+
+export const useProductForm = ({ editMode = false, productId }: UseProductFormProps = {}) => {
   const t = useTranslations();
+  const drawerRef = useRef<SideFormDrawerRef>(null);
   const locale = useLocale() as Locales;
-  const validationSchema = createProductFormSchema(locale, t);
+  const queryClient = useQueryClient();
+  const validationSchema = createProductFormSchema(locale, t, editMode);
+  const {
+    selectors: { product },
+    actions: { refetch },
+  } = useCurrentUserProductById({ productId });
+
+  const defaultValues: ProductFormValues = !product
+    ? productDefaultValues
+    : fillProductFormValues(product, locale);
 
   const {
     control,
@@ -22,18 +79,7 @@ export const useProductForm = () => {
     formState: { errors },
     reset,
   } = useForm<ProductFormValues>({
-    defaultValues: {
-      name: "",
-      name_translations: {},
-      description: "",
-      description_translations: {},
-      category: "",
-      subcategory: "",
-      price: "",
-      quantity: "",
-      unit: "",
-      checklist: [],
-    },
+    defaultValues,
     resolver: zodResolver(validationSchema) as Resolver<ProductFormValues>,
   });
 
@@ -46,13 +92,34 @@ export const useProductForm = () => {
   const name = watch("name");
 
   const { mutate: submitProduct, isPending } = useMutation({
-    mutationFn: (data: ProductFormValues) => createProduct({ ...data, locale }),
-    onSuccess: () => {
-      reset();
-      toast.success(t("ProductForm.created", { name }));
+    mutationFn: (data: ProductFormValues) =>
+      editMode
+        ? updateProduct({ ...data, locale, id: productId! })
+        : createProduct({ ...data, locale }),
+    onSuccess: async (savedProduct) => {
+      const message = editMode
+        ? t("ProductForm.updated", { name })
+        : t("ProductForm.created", { name });
+
+      toast.success(message);
+
+      if (editMode) {
+        await queryClient.invalidateQueries({
+          queryKey: cacheKeys.currentUserProductById(savedProduct.id).queryKey,
+        });
+        refetch();
+        drawerRef.current?.close();
+      } else {
+        reset();
+        queryClient.invalidateQueries({
+          queryKey: cacheKeys.currentUserProfileIdProducts.list(savedProduct.profile_id).queryKey,
+        });
+      }
     },
     onError: () => {
-      toast.error(t("ProductForm.createdError"));
+      const message = editMode ? t("ProductForm.updatedError") : t("ProductForm.createdError");
+
+      toast.error(message);
     },
   });
 
@@ -67,7 +134,7 @@ export const useProductForm = () => {
   };
 
   return {
-    selectors: { control, errors, fields, categoryValue, isSubmitting: isPending },
+    selectors: { control, errors, fields, categoryValue, isSubmitting: isPending, drawerRef },
     actions: { handleFormSubmit: onSubmit, addChecklistItem, remove },
   };
 };

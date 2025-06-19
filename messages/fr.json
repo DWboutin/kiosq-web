@@ -116,10 +116,13 @@
   },
   "ProductFormDrawer": {
     "openingButton": "Ajouter un produit",
+    "editButton": "Modifier",
     "addTitle": "Ajouter un produit",
     "addDescription": "Entrez les informations du produit et cliquez sur 'Ajouter'.",
     "addButton": "Ajouter",
-    "cancelButton": "Annuler"
+    "cancelButton": "Annuler",
+    "editTitle": "Modifier un produit",
+    "editDescription": "Entrez les informations du produit et cliquez sur 'Modifier'."
   },
   "ProductForm": {
     "name": "Nom",
@@ -150,7 +153,9 @@
     "validationChecklistItemRequired": "Le point fort est requis",
     "validationChecklistMaxItems": "Vous ne pouvez ajouter que 5 points forts",
     "created": "Produit \"{name}\" a été créé avec succès",
-    "createdError": "Échec de la création du produit, veuillez réessayer"
+    "createdError": "Échec de la création du produit, veuillez réessayer",
+    "updated": "Produit \"{name}\" a été mis à jour avec succès",
+    "updatedError": "Échec de la mise à jour du produit, veuillez réessayer"
   },
   "ProductFormChecklist": {
     "title": "Liste de points forts",

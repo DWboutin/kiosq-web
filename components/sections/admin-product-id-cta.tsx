@@ -1,11 +1,10 @@
 "use client";
 
 import { updateProductPublishedStatus } from "@/actions/update-product-published-status";
-import { ButtonBrand } from "@/components/ui/button-brand";
 import { ClockIcon } from "@/components/ui/icons/clock-icon";
-import { EditPencilIcon } from "@/components/ui/icons/edit-pencil-icon";
 import { LocaleFullDate } from "@/components/ui/locale-date";
 import { TooltipContainer } from "@/components/ui/tooltip-container";
+import { ProductFormDrawer } from "@/features/product-form-drawer/product-form-drawer";
 import { PublishedStatusManagement } from "@/features/published-status-management/published-status-management";
 import { PublishedStatus } from "@/types/app";
 import { cacheKeys } from "@/utils/cache-keys";
@@ -65,12 +64,7 @@ export const AdminProductIdCta: FC<AdminProductIdCtaProps> = ({
           entityName={entityName}
           onStatusChange={handleStatusChange}
         />
-        <ButtonBrand>
-          <span className="flex flex-row items-center gap-2">
-            <EditPencilIcon className="size-5" />
-            {t("edit")}
-          </span>
-        </ButtonBrand>
+        <ProductFormDrawer editMode productId={productId} />
       </div>
       <div className="flex flex-row justify-end items-center gap-2">
         <span className="text-sm font-inter italic text-neutral-darker">

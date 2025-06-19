@@ -114,10 +114,13 @@
   },
   "ProductFormDrawer": {
     "openingButton": "Add a product",
+    "editButton": "Edit",
     "addTitle": "Add a product",
     "addDescription": "Enter the product information and click on 'Add'.",
     "addButton": "Add",
-    "cancelButton": "Cancel"
+    "cancelButton": "Cancel",
+    "editTitle": "Edit a product",
+    "editDescription": "Enter the product information and click on 'Edit'."
   },
   "ProductForm": {
     "name": "Name",
@@ -148,7 +151,9 @@
     "validationChecklistItemRequired": "The highlight is required",
     "validationChecklistMaxItems": "You can only add up to 5 highlights",
     "created": "Product \"{name}\" has been created successfully",
-    "createdError": "Failed to create product, please try again"
+    "createdError": "Failed to create product, please try again",
+    "updated": "Product \"{name}\" has been updated successfully",
+    "updatedError": "Failed to update product, please try again"
   },
   "ProductFormChecklist": {
     "title": "Checklist",

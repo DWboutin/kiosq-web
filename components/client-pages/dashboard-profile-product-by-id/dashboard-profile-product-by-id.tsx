@@ -20,7 +20,7 @@ export const DashboardProfileProductById: FC<DashboardProfileProductByIdProps> =
 }) => {
   const {
     selectors: { product, isLoading, error },
-  } = useCurrentUserProductById(productData);
+  } = useCurrentUserProductById({ productData });
   const t = useTranslations("AdminProductPage");
   const locale = useLocale() as Locales;
 
