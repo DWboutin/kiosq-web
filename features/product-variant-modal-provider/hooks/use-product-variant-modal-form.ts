@@ -38,6 +38,7 @@ export const useProductVariantModalForm = ({ onSuccess }: UseProductVariantModal
     formState: { errors },
     reset,
     getValues,
+    setValue,
   } = useForm<ProductVariantFormValues>({
     defaultValues,
     resolver: zodResolver(validationSchema) as Resolver<ProductVariantFormValues>,
@@ -79,14 +80,33 @@ export const useProductVariantModalForm = ({ onSuccess }: UseProductVariantModal
     submitVariant(data);
   });
 
+  // Handle image file upload and conversion to base64
+  const handleImageUpload = async (file: File) => {
+    try {
+      const base64 = await fileToBase64(file);
+      setValue("imageUrl", base64);
+      return base64;
+    } catch (error) {
+      console.error("Error converting image to base64:", error);
+      toast.error(t("ProductVariantForm.imageUploadError"));
+      return null;
+    }
+  };
+
+  // Convert a file to base64 string
+  const fileToBase64 = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+
   useEffect(() => {
     if (variantValues) {
-      console.log("variantValues", variantValues);
       reset(variantValues);
     }
   }, [variantValues]);
-
-  console.log(getValues());
 
   return {
     selectors: {
@@ -97,6 +117,7 @@ export const useProductVariantModalForm = ({ onSuccess }: UseProductVariantModal
     },
     actions: {
       handleFormSubmit: onSubmit,
+      handleImageUpload,
       reset,
     },
   };

@@ -8,6 +8,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { ImageDropzone } from "@/components/ui/image-dropzone";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { UNITS } from "@/utils/constants";
@@ -23,6 +24,26 @@ export const ProductVariantModalForm = ({ control, errors }: ProductVariantModal
 
   return (
     <div className="flex flex-col gap-4">
+      <div className="space-y-2">
+        <Label htmlFor="imageUrl">{t("image")}</Label>
+        <Controller
+          name="imageUrl"
+          control={control}
+          render={({ field: { value, onChange, onBlur } }) => (
+            <ImageDropzone
+              className="h-35"
+              value={value || ""}
+              onChange={onChange}
+              onBlur={onBlur}
+              error={!!errors.imageUrl}
+              requiredDimensions={{ width: 240, height: 140 }}
+              maxSize={5 * 1024 * 1024} // 5MB
+            />
+          )}
+        />
+        {errors.imageUrl && <p className="text-sm text-red-500">{errors.imageUrl.message}</p>}
+      </div>
+
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="quantity">{t("quantity")}</Label>

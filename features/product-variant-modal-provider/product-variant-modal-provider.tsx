@@ -7,7 +7,7 @@ import { ProductVariantModal } from "@/features/product-variant-modal-provider/p
 import { createContext, useContext, ReactNode } from "react";
 
 type ProductVariantModalContextValues = {
-  modalRef: React.RefObject<ModalRef>;
+  modalRef: React.RefObject<ModalRef | null>;
   variantValues: ProductVariantValues | null;
   handleSetVariantValues: (values: ProductVariantValues) => void;
 };
