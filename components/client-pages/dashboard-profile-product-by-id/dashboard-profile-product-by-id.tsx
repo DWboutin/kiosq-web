@@ -5,6 +5,7 @@ import { DashboardPageManagementHeading } from "@/components/sections/dashboard-
 import { ProductChecklist } from "@/components/sections/product-checklist";
 import { BadgeCategory } from "@/components/ui/badge-category";
 import { CardAdminProductVariant } from "@/components/ui/card-admin-product-variant";
+import { ProductVariantAddVariantCard } from "@/features/product-variant-modal-provider/product-variant-add-variant-card";
 import { ProductVariantModalProvider } from "@/features/product-variant-modal-provider/product-variant-modal-provider";
 import { useCurrentUserProductById } from "@/hooks/use-current-user-product-by-id";
 import { Locales } from "@/types/app";
@@ -73,7 +74,6 @@ export const DashboardProfileProductById: FC<DashboardProfileProductByIdProps> =
                 <CardAdminProductVariant
                   key={variant.id}
                   id={variant.id}
-                  title={`${variant.quantity} ${variant.unit}`}
                   quantity={variant.quantity}
                   unit={variant.unit}
                   price={price}
@@ -82,6 +82,7 @@ export const DashboardProfileProductById: FC<DashboardProfileProductByIdProps> =
                 />
               );
             })}
+            <ProductVariantAddVariantCard />
           </ProductVariantModalProvider>
         </div>
       </div>

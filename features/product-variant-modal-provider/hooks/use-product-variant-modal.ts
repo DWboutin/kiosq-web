@@ -10,6 +10,10 @@ export const useProductVariantModal = () => {
     setVariantValues(values);
   };
 
+  const handleCreateVariant = () => {
+    modalRef.current?.open();
+  };
+
   useEffect(() => {
     if (variantValues !== null) {
       modalRef.current?.open();
@@ -23,6 +27,7 @@ export const useProductVariantModal = () => {
     },
     actions: {
       handleSetVariantValues,
+      handleCreateVariant,
     },
   };
 };

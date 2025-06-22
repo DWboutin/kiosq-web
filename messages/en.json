@@ -348,6 +348,7 @@
     "missingDescription": "Missing description",
     "variantsTitle": "Variants",
     "editVariant": "Edit variant",
+    "addVariant": "Add a variant",
     "principalVariant": "Principal variant",
     "title": "Products",
     "description": "Manage your products, their inventory and their availability according to the season"

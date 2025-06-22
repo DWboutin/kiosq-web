@@ -6,8 +6,8 @@ import { cacheKeys } from "@/utils/cache-keys";
 import { uploadImage } from "@/utils/upload-image";
 import { RawProductVariant } from "@/types/app";
 
-export type UpdateProductVariantParams = {
-  id: string;
+export type CreateProductVariantParams = {
+  productId: string;
   quantity: number;
   unit: string;
   price: number;
@@ -15,10 +15,10 @@ export type UpdateProductVariantParams = {
   isDefault?: boolean;
 };
 
-export const updateProductVariant = async (params: UpdateProductVariantParams) => {
+export const createProductVariant = async (params: CreateProductVariantParams) => {
   const supabase = await createClient();
 
-  const { id, quantity, unit, price, imageUrl, isDefault } = params;
+  const { productId, quantity, unit, price, imageUrl, isDefault } = params;
 
   const { data: user, error: userError } = await supabase.auth.getUser();
 
@@ -30,67 +30,78 @@ export const updateProductVariant = async (params: UpdateProductVariantParams) =
     throw new Error("User not found");
   }
 
+  const { data: productData, error: productError } = await supabase
+    .from("products")
+    .select("profile_id")
+    .eq("id", productId)
+    .single();
+
+  if (productError) {
+    console.error("Error fetching product data:", productError);
+    throw productError;
+  }
+
   const { data: variantData, error: variantError } = await supabase
     .from("product_variants")
-    .update({
+    .insert({
+      product_id: productId,
       quantity,
       unit,
-      image_url: imageUrl,
-      is_default: isDefault,
+      image_url: imageUrl && !imageUrl.startsWith("data:") ? imageUrl : null,
+      is_default: isDefault || false,
     })
-    .eq("id", id)
-    .select("product_id")
+    .select("id")
     .single();
 
   if (variantError) {
+    console.error("Error creating variant:", variantError);
     throw variantError;
   }
 
-  const { error: priceError } = await supabase
-    .from("product_prices")
-    .update({
-      base_price: price,
-    })
-    .eq("variant_id", id);
+  const { error: priceError } = await supabase.from("product_prices").insert({
+    variant_id: variantData.id,
+    base_price: price,
+  });
 
   if (priceError) {
+    console.error("Error creating price:", priceError);
     throw priceError;
   }
 
   if (imageUrl && imageUrl.startsWith("data:")) {
     try {
-      const { data: productData, error: productError } = await supabase
-        .from("products")
-        .select("profile_id")
-        .eq("id", variantData.product_id)
-        .single();
-
-      if (productError) {
-        throw productError;
-      }
-
       const profileId = productData.profile_id;
-      const productId = variantData.product_id;
 
       const uploadedImageUrl = await uploadImage({
         base64Image: imageUrl,
         userId: user.user.id,
-        identifier: id,
+        identifier: variantData.id,
         filePrefix: "variant",
         bucketName: "product-variants-images",
         pathBuilder: ({ identifier, filePrefix, randomId, fileExt }) =>
           `${profileId}/${productId}/${identifier}_${filePrefix}${randomId}.${fileExt}`,
       });
 
-      await supabase.from("product_variants").update({ image_url: uploadedImageUrl }).eq("id", id);
+      await supabase
+        .from("product_variants")
+        .update({ image_url: uploadedImageUrl })
+        .eq("id", variantData.id);
     } catch (error) {
       console.error("Error uploading variant image:", error);
     }
   }
 
-  const productVariant = await supabase.from("product_variants").select("*").eq("id", id).single();
+  const { data: productVariant, error: fetchError } = await supabase
+    .from("product_variants")
+    .select("*")
+    .eq("id", variantData.id)
+    .single();
 
-  revalidateTag(cacheKeys.currentUserProductById(variantData.product_id).tag);
+  if (fetchError) {
+    throw fetchError;
+  }
+
+  revalidateTag(cacheKeys.currentUserProductById(productId).tag);
 
   return productVariant as unknown as RawProductVariant;
 };

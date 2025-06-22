@@ -3,7 +3,6 @@ import { UNITS } from "@/utils/constants";
 
 export const createProductVariantFormSchema = (t: (key: string) => string) => {
   return z.object({
-    id: z.string().min(1),
     quantity: z
       .number()
       .min(0.01, t("ProductVariantForm.validationQuantityRequired"))
@@ -23,5 +22,8 @@ export const createProductVariantFormSchema = (t: (key: string) => string) => {
   });
 };
 
-export type ProductVariantFormValues = z.infer<ProductVariantFormSchema>;
+export type ProductVariantFormValues = z.infer<ProductVariantFormSchema> & {
+  productId?: string;
+  id?: string;
+};
 export type ProductVariantFormSchema = ReturnType<typeof createProductVariantFormSchema>;

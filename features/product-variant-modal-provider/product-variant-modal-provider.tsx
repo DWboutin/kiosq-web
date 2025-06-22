@@ -10,6 +10,7 @@ type ProductVariantModalContextValues = {
   modalRef: React.RefObject<ModalRef | null>;
   variantValues: ProductVariantValues | null;
   handleSetVariantValues: (values: ProductVariantValues) => void;
+  handleCreateVariant: () => void;
 };
 
 const ProductVariantModalContext = createContext({} as ProductVariantModalContextValues);
@@ -33,7 +34,7 @@ interface ProductVariantModalProviderProps {
 export const ProductVariantModalProvider = ({ children }: ProductVariantModalProviderProps) => {
   const {
     selectors: { modalRef, variantValues },
-    actions: { handleSetVariantValues },
+    actions: { handleSetVariantValues, handleCreateVariant },
   } = useProductVariantModal();
 
   return (
@@ -42,6 +43,7 @@ export const ProductVariantModalProvider = ({ children }: ProductVariantModalPro
         modalRef,
         variantValues,
         handleSetVariantValues,
+        handleCreateVariant,
       }}
     >
       {children}

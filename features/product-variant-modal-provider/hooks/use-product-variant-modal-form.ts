@@ -11,6 +11,8 @@ import { toast } from "sonner";
 import { cacheKeys } from "@/utils/cache-keys";
 import { useProductVariantModalContext } from "@/features/product-variant-modal-provider/product-variant-modal-provider";
 import { useEffect } from "react";
+import { createProductVariant } from "@/actions/create-product-variant";
+import { useParams } from "next/navigation";
 
 type UseProductVariantModalFormProps = {
   onSuccess?: () => void;
@@ -21,6 +23,8 @@ export const useProductVariantModalForm = ({ onSuccess }: UseProductVariantModal
   const queryClient = useQueryClient();
   const validationSchema = createProductVariantFormSchema(t);
   const { variantValues } = useProductVariantModalContext();
+  const params = useParams();
+  const productId = params.productId as string;
 
   const defaultValues: ProductVariantFormValues = {
     id: variantValues?.id || "",
@@ -37,7 +41,6 @@ export const useProductVariantModalForm = ({ onSuccess }: UseProductVariantModal
     watch,
     formState: { errors },
     reset,
-    getValues,
     setValue,
   } = useForm<ProductVariantFormValues>({
     defaultValues,
@@ -48,22 +51,33 @@ export const useProductVariantModalForm = ({ onSuccess }: UseProductVariantModal
   const unit = watch("unit");
 
   const { mutate: submitVariant, isPending } = useMutation({
-    mutationFn: (data: ProductVariantFormValues) =>
-      updateProductVariant({
+    mutationFn: (data: ProductVariantFormValues) => {
+      if (!data.id) {
+        return createProductVariant({
+          productId: productId,
+          quantity: data.quantity,
+          unit: data.unit,
+          price: data.price,
+          imageUrl: data.imageUrl,
+          isDefault: data.isDefault,
+        });
+      }
+
+      return updateProductVariant({
         id: data.id,
         quantity: data.quantity,
         unit: data.unit,
         price: data.price,
         imageUrl: data.imageUrl,
         isDefault: data.isDefault,
-      }),
+      });
+    },
     onSuccess: async (result) => {
       const variantTitle = `${quantity} ${unit}`;
       const message = t("ProductVariantForm.updated", { variant: variantTitle });
 
       toast.success(message);
 
-      // Invalidate the product cache to refresh the variant data
       await queryClient.invalidateQueries({
         queryKey: cacheKeys.currentUserProductById(result.product_id).queryKey,
       });
@@ -77,6 +91,7 @@ export const useProductVariantModalForm = ({ onSuccess }: UseProductVariantModal
   });
 
   const onSubmit = handleSubmit((data) => {
+    console.log("data", data);
     submitVariant(data);
   });
 
