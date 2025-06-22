@@ -86,9 +86,6 @@ export const DashboardProfileProductById: FC<DashboardProfileProductByIdProps> =
           </ProductVariantModalProvider>
         </div>
       </div>
-
-      <pre>{locale}</pre>
-      <pre>{JSON.stringify(product, null, 2)}</pre>
     </div>
   );
 };

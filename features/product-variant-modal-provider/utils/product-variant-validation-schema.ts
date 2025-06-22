@@ -5,7 +5,7 @@ export const createProductVariantFormSchema = (t: (key: string) => string) => {
   return z.object({
     quantity: z
       .number()
-      .min(0.01, t("ProductVariantForm.validationQuantityRequired"))
+      .min(1, t("ProductVariantForm.validationQuantityRequired"))
       .positive(t("ProductVariantForm.validationQuantityPositive")),
     unit: z
       .string()

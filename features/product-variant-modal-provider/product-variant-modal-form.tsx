@@ -56,11 +56,11 @@ export const ProductVariantModalForm = ({ control, errors }: ProductVariantModal
               <Input
                 id="quantity"
                 type="number"
-                step="0.01"
+                step="1"
                 min="0"
                 placeholder={t("quantityPlaceholder")}
                 {...field}
-                onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                onChange={(e) => field.onChange(parseInt(e.target.value))}
               />
             )}
           />
@@ -104,7 +104,7 @@ export const ProductVariantModalForm = ({ control, errors }: ProductVariantModal
               min="0"
               placeholder={t("pricePlaceholder")}
               {...field}
-              onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+              onChange={(e) => field.onChange(parseFloat(e.target.value))}
             />
           )}
         />
