@@ -11,6 +11,7 @@ export const useProductVariantModal = () => {
   };
 
   const handleCreateVariant = () => {
+    setVariantValues(null);
     modalRef.current?.open();
   };
 

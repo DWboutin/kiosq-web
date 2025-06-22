@@ -348,6 +348,7 @@
     "missingDescription": "Missing description",
     "variantsTitle": "Variants",
     "editVariant": "Edit variant",
+    "deleteVariant": "Delete variant",
     "addVariant": "Add a variant",
     "principalVariant": "Principal variant",
     "title": "Products",
@@ -375,6 +376,7 @@
     "cancel": "Cancel",
     "update": "Update",
     "updating": "Updating...",
+    "image": "Image",
     "validationQuantityRequired": "The quantity is required",
     "validationQuantityPositive": "The quantity must be positive",
     "validationUnitRequired": "The unit is required",
@@ -382,6 +384,14 @@
     "validationPriceRequired": "The price is required",
     "validationPricePositive": "The price must be positive",
     "updated": "Variant \"{variant}\" has been updated successfully",
-    "updatedError": "Failed to update variant, please try again"
+    "updatedError": "Failed to update variant, please try again",
+    "deleteModalTitle": "Delete variant",
+    "deleteModalDescription": "Are you sure you want to delete this variant?",
+    "deleteModalButton": "Delete",
+    "cancelModalButton": "Cancel",
+    "addVariant": "Add a variant",
+    "principalVariant": "Principal variant",
+    "editVariant": "Edit variant",
+    "deleteVariant": "Delete variant"
   }
 }

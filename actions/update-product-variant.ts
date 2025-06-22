@@ -39,11 +39,24 @@ export const updateProductVariant = async (params: UpdateProductVariantParams) =
       is_default: isDefault,
     })
     .eq("id", id)
-    .select("product_id")
-    .single();
+    .select("product_id, product:products(profile_id)")
+    .single<{ product_id: string; product: { profile_id: string } | null }>();
 
   if (variantError) {
     throw variantError;
+  }
+
+  if (isDefault) {
+    const { error: updateError } = await supabase
+      .from("product_variants")
+      .update({ is_default: false })
+      .eq("product_id", variantData.product_id)
+      .neq("id", id);
+
+    if (updateError) {
+      console.error("Error updating other variants:", updateError);
+      throw updateError;
+    }
   }
 
   const { error: priceError } = await supabase
@@ -57,19 +70,14 @@ export const updateProductVariant = async (params: UpdateProductVariantParams) =
     throw priceError;
   }
 
-  if (imageUrl && imageUrl.startsWith("data:")) {
+  if (
+    imageUrl &&
+    imageUrl.startsWith("data:") &&
+    variantData.product &&
+    !Array.isArray(variantData.product)
+  ) {
     try {
-      const { data: productData, error: productError } = await supabase
-        .from("products")
-        .select("profile_id")
-        .eq("id", variantData.product_id)
-        .single();
-
-      if (productError) {
-        throw productError;
-      }
-
-      const profileId = productData.profile_id;
+      const profileId = variantData.product.profile_id;
       const productId = variantData.product_id;
 
       const uploadedImageUrl = await uploadImage({
@@ -88,7 +96,11 @@ export const updateProductVariant = async (params: UpdateProductVariantParams) =
     }
   }
 
-  const productVariant = await supabase.from("product_variants").select("*").eq("id", id).single();
+  const { data: productVariant } = await supabase
+    .from("product_variants")
+    .select("*")
+    .eq("id", id)
+    .single();
 
   revalidateTag(cacheKeys.currentUserProductById(variantData.product_id).tag);
 

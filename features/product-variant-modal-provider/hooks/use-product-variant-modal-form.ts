@@ -18,6 +18,15 @@ type UseProductVariantModalFormProps = {
   onSuccess?: () => void;
 };
 
+const formDefaultValues: ProductVariantFormValues = {
+  id: "",
+  quantity: 0,
+  unit: "",
+  price: 0,
+  imageUrl: "",
+  isDefault: false,
+};
+
 export const useProductVariantModalForm = ({ onSuccess }: UseProductVariantModalFormProps = {}) => {
   const t = useTranslations();
   const queryClient = useQueryClient();
@@ -26,14 +35,16 @@ export const useProductVariantModalForm = ({ onSuccess }: UseProductVariantModal
   const params = useParams();
   const productId = params.productId as string;
 
-  const defaultValues: ProductVariantFormValues = {
-    id: variantValues?.id || "",
-    quantity: variantValues?.quantity || 0,
-    unit: variantValues?.unit || "",
-    price: variantValues?.price || 0,
-    imageUrl: variantValues?.imageUrl || "",
-    isDefault: variantValues?.isDefault || false,
-  };
+  const defaultValues: ProductVariantFormValues = variantValues?.id
+    ? {
+        id: variantValues?.id || "",
+        quantity: variantValues?.quantity || 0,
+        unit: variantValues?.unit || "",
+        price: variantValues?.price || 0,
+        imageUrl: variantValues?.imageUrl || "",
+        isDefault: variantValues?.isDefault || false,
+      }
+    : formDefaultValues;
 
   const {
     control,
@@ -52,7 +63,7 @@ export const useProductVariantModalForm = ({ onSuccess }: UseProductVariantModal
 
   const { mutate: submitVariant, isPending } = useMutation({
     mutationFn: (data: ProductVariantFormValues) => {
-      if (!data.id) {
+      if (!variantValues?.id) {
         return createProductVariant({
           productId: productId,
           quantity: data.quantity,
@@ -64,7 +75,7 @@ export const useProductVariantModalForm = ({ onSuccess }: UseProductVariantModal
       }
 
       return updateProductVariant({
-        id: data.id,
+        id: variantValues.id,
         quantity: data.quantity,
         unit: data.unit,
         price: data.price,
@@ -82,6 +93,8 @@ export const useProductVariantModalForm = ({ onSuccess }: UseProductVariantModal
         queryKey: cacheKeys.currentUserProductById(result.product_id).queryKey,
       });
 
+      reset(formDefaultValues);
+
       onSuccess?.();
     },
     onError: () => {
@@ -91,36 +104,11 @@ export const useProductVariantModalForm = ({ onSuccess }: UseProductVariantModal
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log("data", data);
     submitVariant(data);
   });
 
-  // Handle image file upload and conversion to base64
-  const handleImageUpload = async (file: File) => {
-    try {
-      const base64 = await fileToBase64(file);
-      setValue("imageUrl", base64);
-      return base64;
-    } catch (error) {
-      console.error("Error converting image to base64:", error);
-      toast.error(t("ProductVariantForm.imageUploadError"));
-      return null;
-    }
-  };
-
-  // Convert a file to base64 string
-  const fileToBase64 = (file: File): Promise<string> =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
-    });
-
   useEffect(() => {
-    if (variantValues) {
-      reset(variantValues);
-    }
+    reset(variantValues || formDefaultValues);
   }, [variantValues]);
 
   return {
@@ -132,7 +120,6 @@ export const useProductVariantModalForm = ({ onSuccess }: UseProductVariantModal
     },
     actions: {
       handleFormSubmit: onSubmit,
-      handleImageUpload,
       reset,
     },
   };

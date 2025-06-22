@@ -1,10 +1,16 @@
+import { deleteProductVariant } from "@/actions/delete-product-variant";
 import { Badge } from "@/components/ui/badge";
 import { ButtonBrand } from "@/components/ui/button-brand";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { EditPencilIcon } from "@/components/ui/icons/edit-pencil-icon";
+import { ButtonWithConfirmationModal } from "@/features/button-with-confirmation-modal/button-with-confirmation-modal";
 import { useProductVariantModalContext } from "@/features/product-variant-modal-provider/product-variant-modal-provider";
+import { cacheKeys } from "@/utils/cache-keys";
+import { useQueryClient } from "@tanstack/react-query";
+import { TrashIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { useParams } from "next/navigation";
 
 export type ProductVariantValues = {
   id: string;
@@ -25,12 +31,22 @@ export const CardAdminProductVariant = ({
   imageUrl,
   isDefault,
 }: CardAdminProductVariantProps) => {
-  const t = useTranslations("AdminProductPage");
+  const t = useTranslations("ProductVariantForm");
   const title = `${quantity} ${unit}`;
+  const params = useParams();
+  const productId = params.productId as string;
+  const queryClient = useQueryClient();
   const { handleSetVariantValues } = useProductVariantModalContext();
 
   const handleEditVariant = () => {
     handleSetVariantValues({ id, quantity, unit, price, imageUrl, isDefault });
+  };
+
+  const handleDeleteVariant = async () => {
+    await deleteProductVariant({ variantId: id, productId });
+    await queryClient.invalidateQueries({
+      queryKey: cacheKeys.currentUserProductById(productId).queryKey,
+    });
   };
 
   return (
@@ -59,11 +75,25 @@ export const CardAdminProductVariant = ({
           </div>
         </CardContent>
       </div>
-      <CardFooter className="flex justify-end pt-0 pb-4">
-        <ButtonBrand className="flex-1" onClick={handleEditVariant}>
+      <CardFooter className="flex flex-col gap-2 justify-end pt-0 pb-4">
+        <ButtonBrand className="w-full" onClick={handleEditVariant}>
           <EditPencilIcon />
           {t("editVariant")}
         </ButtonBrand>
+        {!isDefault && (
+          <ButtonWithConfirmationModal
+            title={t("deleteModalTitle")}
+            description={t("deleteModalDescription")}
+            confirmLabel={t("deleteModalButton")}
+            cancelLabel={t("cancelModalButton")}
+            action={handleDeleteVariant}
+          >
+            <ButtonBrand className="w-full" variant="destructive">
+              <TrashIcon />
+              {t("deleteVariant")}
+            </ButtonBrand>
+          </ButtonWithConfirmationModal>
+        )}
       </CardFooter>
     </Card>
   );

@@ -13,6 +13,7 @@ import { Control, Controller, FieldErrors } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { UNITS } from "@/utils/constants";
 import { ProductVariantFormValues } from "@/features/product-variant-modal-provider/utils/product-variant-validation-schema";
+import { useProductVariantModalContext } from "@/features/product-variant-modal-provider/product-variant-modal-provider";
 
 type ProductVariantModalFormProps = {
   control: Control<ProductVariantFormValues>;
@@ -21,6 +22,7 @@ type ProductVariantModalFormProps = {
 
 export const ProductVariantModalForm = ({ control, errors }: ProductVariantModalFormProps) => {
   const t = useTranslations("ProductVariantForm");
+  const { variantValues } = useProductVariantModalContext();
 
   return (
     <div className="flex flex-col gap-4">
@@ -119,6 +121,7 @@ export const ProductVariantModalForm = ({ control, errors }: ProductVariantModal
               className="data-[state=checked]:bg-brand-medium"
               checked={field.value || false}
               onCheckedChange={field.onChange}
+              disabled={!!variantValues?.isDefault}
             />
           )}
         />

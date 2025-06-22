@@ -349,7 +349,6 @@
     "missingTitle": "Titre manquant",
     "missingDescription": "Description manquante",
     "variantsTitle": "Variants",
-    "editVariant": "Modifier le variant",
     "addVariant": "Ajouter un variant",
     "principalVariant": "Variant principal",
     "title": "Produits",
@@ -377,6 +376,7 @@
     "cancel": "Annuler",
     "update": "Mettre à jour",
     "updating": "Mise à jour...",
+    "image": "Image",
     "validationQuantityRequired": "La quantité est requise",
     "validationQuantityPositive": "La quantité doit être positive",
     "validationUnitRequired": "L'unité est requise",
@@ -384,6 +384,14 @@
     "validationPriceRequired": "Le prix est requis",
     "validationPricePositive": "Le prix doit être positif",
     "updated": "Variant \"{variant}\" a été mis à jour avec succès",
-    "updatedError": "Échec de la mise à jour du variant, veuillez réessayer"
+    "updatedError": "Échec de la mise à jour du variant, veuillez réessayer",
+    "deleteModalTitle": "Supprimer le variant",
+    "deleteModalDescription": "Êtes-vous sûr de vouloir supprimer ce variant ?",
+    "deleteModalButton": "Supprimer",
+    "cancelModalButton": "Annuler",
+    "addVariant": "Ajouter un variant",
+    "principalVariant": "Variant principal",
+    "editVariant": "Modifier le variant",
+    "deleteVariant": "Supprimer le variant"
   }
 }

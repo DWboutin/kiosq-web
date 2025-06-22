@@ -41,6 +41,18 @@ export const createProductVariant = async (params: CreateProductVariantParams) =
     throw productError;
   }
 
+  if (isDefault) {
+    const { error: updateError } = await supabase
+      .from("product_variants")
+      .update({ is_default: false })
+      .eq("product_id", productId);
+
+    if (updateError) {
+      console.error("Error updating other variants:", updateError);
+      throw updateError;
+    }
+  }
+
   const { data: variantData, error: variantError } = await supabase
     .from("product_variants")
     .insert({
