@@ -3,13 +3,13 @@ import { Control, Controller, FieldErrors, useWatch } from "react-hook-form";
 import { FormInputContainer } from "@/components/ui/form-utils/form-input-container";
 import { Input } from "@/components/ui/input";
 import { UserOnboardingValues } from "../utils/create-user-onboarding-schema";
-import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { MapPin, Mail } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { UserGeolocation } from "@/utils/get-geolocation";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { Separator } from "@/components/ui/separator";
+import { ButtonBrand } from "@/components/ui/button-brand";
 
 interface UserOnboardingStepTwoProps {
   control: Control<UserOnboardingValues>;
@@ -56,7 +56,7 @@ export const UserOnboardingStepTwo: FC<UserOnboardingStepTwoProps> = ({
     <div className="grid w-full items-center gap-6">
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-3 sm:flex-row">
-          <Button
+          <ButtonBrand
             type="button"
             className={cn(
               "flex-1 gap-2 justify-center",
@@ -68,7 +68,7 @@ export const UserOnboardingStepTwo: FC<UserOnboardingStepTwoProps> = ({
           >
             <MapPin size={16} />
             {useGeolocation ? t("geolocationEnabled") : t("enableGeolocation")}
-          </Button>
+          </ButtonBrand>
         </div>
       </div>
 

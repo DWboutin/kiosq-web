@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -20,6 +19,7 @@ import { FC } from "react";
 import { useTranslations } from "next-intl";
 import { LoadingButton } from "@/components/ui/loading-button";
 import { CreateProfileSuccessDialog } from "@/features/create-profile-wizard/components/create-profile-success-dialog";
+import { ButtonBrand } from "@/components/ui/button-brand";
 
 export const CreateProfileWizard: FC = () => {
   const t = useTranslations("CreateProfileWizard");
@@ -82,14 +82,14 @@ export const CreateProfileWizard: FC = () => {
           </form>
         </CardContent>
         <CardFooter className="flex justify-end gap-2">
-          <Button
+          <ButtonBrand
             variant="outline"
             onClick={handlePrevious}
             type="button"
             disabled={isFirstStep || isSubmitting}
           >
             {t("previous")}
-          </Button>
+          </ButtonBrand>
           <LoadingButton onClick={handleNext} type="button" isLoading={isSubmitting}>
             {isLastStep ? t("createStore") : t("next")}
           </LoadingButton>

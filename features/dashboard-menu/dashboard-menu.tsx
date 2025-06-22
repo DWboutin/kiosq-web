@@ -1,7 +1,6 @@
 "use client";
 
 import { FC, memo } from "react";
-import { Button } from "@/components/ui/button";
 import { SubMenuIcon } from "@/components/ui/icons/sub-menu-icon";
 import { Link, usePathname } from "@/i18n/navigation";
 import { UserRole } from "@/types/app";
@@ -9,6 +8,7 @@ import classNames from "classnames";
 import { useTranslations } from "next-intl";
 import { TooltipContainer } from "@/components/ui/tooltip-container";
 import { useDashboardMenu } from "@/features/dashboard-menu/hooks/use-dashboard-menu";
+import { ButtonBrand } from "@/components/ui/button-brand";
 
 type DashboardMenuLinkProps = {
   pathKey: string;
@@ -35,9 +35,9 @@ const DashboardMenuLink = memo(({ pathKey, icon, children, ariaLabel }: Dashboar
           aria-current={isActive ? "page" : undefined}
           aria-label={ariaLabel}
         >
-          <Button variant="ghost" size="icon" tabIndex={-1} asChild>
+          <ButtonBrand variant="ghost" size="icon" tabIndex={-1} asChild>
             <span className="size-6">{icon}</span>
-          </Button>
+          </ButtonBrand>
           <p className="font-inter text-base pl-2 group-[.is-open]:inline-block hidden">
             {children}
           </p>
@@ -67,7 +67,7 @@ export const DashboardMenu: FC = () => {
     >
       <div className="flex items-center pb-2.5 border-b border-neutral-lightest">
         <TooltipContainer content={t("DashboardMenu.navigation")} disableHoverableContent>
-          <Button
+          <ButtonBrand
             variant="ghost"
             size="icon"
             onClick={handleToggleMenu}
@@ -77,7 +77,7 @@ export const DashboardMenu: FC = () => {
             ref={toggleButtonRef}
           >
             <SubMenuIcon className="size-6 text-neutral-darker" open={isOpen} />
-          </Button>
+          </ButtonBrand>
         </TooltipContainer>
         <p className="pl-2 text-neutral-darker font-inter text-base font-semibold group-[.is-open]:block hidden">
           {t("DashboardMenu.navigation")}

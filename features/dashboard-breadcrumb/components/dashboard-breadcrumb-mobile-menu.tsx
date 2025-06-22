@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { ButtonBrand } from "@/components/ui/button-brand";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -41,18 +41,21 @@ export const DashboardBreadcrumbMobileMenu = memo(() => {
   );
 
   return (
-    <div className="p-1 min-lg:hidden">
+    <div className="min-lg:hidden">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon" aria-label={t("DashboardBreadcrumb.mobileMenu")}>
+          <ButtonBrand variant="ghost" size="icon" aria-label={t("DashboardBreadcrumb.mobileMenu")}>
             <SubMenuIcon className="text-neutral-dark size-6" />
-          </Button>
+          </ButtonBrand>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="min-w-[200px] p-2">
           <DropdownMenuLabel>{t("DashboardBreadcrumb.managementSystem")}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           {filteredDashboardLinks.map((link) => {
-            if (hasRequiredChildren(link)) {
+            if (
+              hasRequiredChildren(link) &&
+              Object.values(link.children).some((child) => child.showInMobileMenu)
+            ) {
               return <DashboardBreadcrumbParentSubMenu key={link.pathKey} link={link} />;
             }
 

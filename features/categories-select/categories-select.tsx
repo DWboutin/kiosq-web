@@ -18,7 +18,7 @@ type CategoriesSelectProps = {
   placeholder: string;
   className?: string;
   parentId?: string;
-  value: string;
+  value?: string;
   onChange: (value: string) => void;
   disabled?: boolean;
 };

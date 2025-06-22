@@ -1,20 +1,13 @@
 "use client";
 
 import { CreateProfileWizard } from "@/features/create-profile-wizard/create-profile-wizard";
-import { cacheKeys } from "@/utils/cache-keys";
-import { getAuthenticatedUserProfile } from "@/utils/requests/get-authenticated-user-profiles";
-import { useQuery } from "@tanstack/react-query";
+import { useCurrentUserProfiles } from "@/hooks/use-current-user-profiles";
 import { FC } from "react";
 
 export const YourStore: FC = () => {
   const {
-    data: profiles = [],
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: cacheKeys.userProfiles.list.queryKey,
-    queryFn: getAuthenticatedUserProfile,
-  });
+    selectors: { profiles, isLoading, error },
+  } = useCurrentUserProfiles();
   const vendorProfiles = profiles.filter((profile) => profile.type === "vendor");
 
   if (isLoading) {

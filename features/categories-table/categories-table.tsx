@@ -1,11 +1,10 @@
 "use client";
 
 import { DataTable } from "@/components/ui/data-table";
-import { FormattedProductCategory } from "@/utils/factories/product-categories-factory";
+import { AdminProductCategory } from "@/utils/factories/admin-product-categories-factory";
 import { ColumnDef } from "@tanstack/react-table";
 import { FC, MouseEvent, useMemo } from "react";
 import { TranslationDisplay } from "@/components/ui/translation-display";
-import { Button } from "@/components/ui/button";
 import { deleteProductCategory } from "@/actions/delete-product-category";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
@@ -14,9 +13,10 @@ import { HierarchicalProductCategory } from "@/utils/factories/hierarchical-cate
 import { LocaleFullDate } from "@/components/ui/locale-date";
 import { useCategoriesTable } from "@/features/categories-table/hooks/use-categories-table";
 import { ButtonWithConfirmationModal } from "@/features/button-with-confirmation-modal/button-with-confirmation-modal";
+import { ButtonBrand } from "@/components/ui/button-brand";
 
 type CategoriesTableProps = {
-  data: FormattedProductCategory[];
+  data: AdminProductCategory[];
 };
 
 export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
@@ -54,7 +54,7 @@ export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
         enableHiding: false,
         cell: ({ row }) => {
           return row.original.children?.length ? (
-            <Button
+            <ButtonBrand
               variant="ghost"
               size="sm"
               onClick={(e) => {
@@ -73,7 +73,7 @@ export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
               ) : (
                 <ChevronRight size={20} />
               )}
-            </Button>
+            </ButtonBrand>
           ) : null;
         },
         size: 60,
@@ -134,9 +134,9 @@ export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
         enableHiding: false,
         cell: ({ row }) => (
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" onClick={() => handleRowClick(row.original)}>
+            <ButtonBrand variant="outline" size="sm" onClick={() => handleRowClick(row.original)}>
               {t("DataTable.edit")}
-            </Button>
+            </ButtonBrand>
             <ButtonWithConfirmationModal
               title={t("CategoriesTable.deleteModalTitle")}
               description={t("CategoriesTable.deleteModalDescription")}
@@ -144,9 +144,9 @@ export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
               cancelLabel={t("CategoriesTable.cancelModalButton")}
               action={handleDelete}
             >
-              <Button variant="destructive" size="sm" data-row-id={row.original.id}>
+              <ButtonBrand variant="destructive" size="sm" data-row-id={row.original.id}>
                 {t("DataTable.delete")}
-              </Button>
+              </ButtonBrand>
             </ButtonWithConfirmationModal>
           </div>
         ),

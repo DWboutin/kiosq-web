@@ -5,17 +5,20 @@ import Image from "next/image";
 import { useState, FC } from "react";
 import { useDropzone } from "react-dropzone";
 import { useTranslations } from "next-intl";
+import { cn } from "@/lib/utils";
 
 interface ImageDropzoneProps {
+  className?: string;
   value: string | undefined;
   onChange: (value: string) => void;
   onBlur: () => void;
   error: boolean;
-  requiredDimensions?: { width: number; height: number };
+  requiredDimensions: { width: number; height: number };
   maxSize?: number;
 }
 
 export const ImageDropzone: FC<ImageDropzoneProps> = ({
+  className,
   value,
   onChange,
   onBlur,
@@ -79,7 +82,12 @@ export const ImageDropzone: FC<ImageDropzoneProps> = ({
   return (
     <div className="space-y-4">
       {value ? (
-        <div className="relative w-full h-48 rounded-md overflow-hidden border border-border">
+        <div
+          className={cn(
+            "relative w-full rounded-md overflow-hidden border border-border",
+            className
+          )}
+        >
           <div className="absolute inset-0 flex items-center justify-center bg-muted">
             <div className="flex flex-col items-center gap-2 text-muted-foreground">
               <span>{t("imagePreview")}</span>
@@ -107,18 +115,23 @@ export const ImageDropzone: FC<ImageDropzoneProps> = ({
         <>
           <div
             {...getRootProps()}
-            className={`w-full h-48 rounded-md border ${
-              isDragActive
-                ? "border-primary border-dashed bg-primary/5"
-                : "border-dashed border-border"
-            } flex items-center justify-center cursor-pointer transition-colors hover:border-primary/50 hover:bg-primary/5`}
+            className={cn(
+              "flex w-full cursor-pointer items-center justify-center rounded-md border border-dashed border-border transition-colors hover:border-primary/50 hover:bg-primary/5",
+              isDragActive && "border-primary bg-primary/5",
+              className
+            )}
             onBlur={onBlur}
           >
             <input {...getInputProps()} id="bannerImage" aria-invalid={error} />
             <div className="flex flex-col items-center gap-2 text-muted-foreground">
               <Upload className="w-10 h-10" />
               <span>{isDragActive ? t("dropImageHere") : t("uploadImage")}</span>
-              <span className="text-xs">{t("recommendedSize", { width: 1200, height: 400 })}</span>
+              <span className="text-xs">
+                {t("recommendedSize", {
+                  width: requiredDimensions?.width,
+                  height: requiredDimensions?.height,
+                })}
+              </span>
             </div>
           </div>
           {dimensionError && (

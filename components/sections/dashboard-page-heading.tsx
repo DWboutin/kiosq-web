@@ -1,5 +1,6 @@
 import { FC } from "react";
 import classNames from "classnames";
+
 type DashboardPageHeadingProps = {
   title: string;
   description: string;

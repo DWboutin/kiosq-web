@@ -3,10 +3,10 @@
 import { FC } from "react";
 import { Controller } from "react-hook-form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { FormInputContainer } from "@/components/ui/form-utils/form-input-container";
 import { useSignInEmailForm } from "../hooks/use-sign-in-email-form";
 import { useTranslations } from "next-intl";
+import { ButtonBrand } from "@/components/ui/button-brand";
 
 export const SignInEmailForm: FC = () => {
   const t = useTranslations("SignIn");
@@ -41,9 +41,9 @@ export const SignInEmailForm: FC = () => {
           </FormInputContainer>
 
           <div className="mt-2">
-            <Button type="submit" disabled={isLoading} className="w-full">
+            <ButtonBrand type="submit" disabled={isLoading} className="w-full">
               {isLoading ? t("formLoading") : t("formContinue")}
-            </Button>
+            </ButtonBrand>
           </div>
         </form>
       </div>

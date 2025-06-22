@@ -11,9 +11,9 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { LoadingButton } from "@/components/ui/loading-button";
+import { ButtonBrand } from "@/components/ui/button-brand";
 
 type SideFormDrawerProps = {
   title: string;
@@ -24,6 +24,7 @@ type SideFormDrawerProps = {
   handleSubmit: () => void;
   formHasErrors?: boolean;
   isSubmitting?: boolean;
+  autoFocus?: boolean;
 } & PropsWithChildren;
 
 export type SideFormDrawerRef = {
@@ -44,6 +45,7 @@ export const SideFormDrawer = forwardRef<SideFormDrawerRef, SideFormDrawerProps>
       handleSubmit,
       formHasErrors,
       isSubmitting = false,
+      autoFocus = true,
     },
     ref
   ) => {
@@ -58,7 +60,7 @@ export const SideFormDrawer = forwardRef<SideFormDrawerRef, SideFormDrawerProps>
     }));
 
     return (
-      <Drawer open={open} onOpenChange={setOpen} direction="right" autoFocus={open}>
+      <Drawer open={open} onOpenChange={setOpen} direction="right" autoFocus={autoFocus && open}>
         <DrawerTrigger asChild aria-haspopup="dialog" aria-expanded={open}>
           {trigger}
         </DrawerTrigger>
@@ -84,9 +86,9 @@ export const SideFormDrawer = forwardRef<SideFormDrawerRef, SideFormDrawerProps>
             <DrawerFooter className="border-t border-neutral-lightest">
               <div className="flex flex-row justify-end gap-2">
                 <DrawerClose asChild>
-                  <Button variant="outline" type="button">
+                  <ButtonBrand variant="outline" type="button">
                     <span>{buttonCancelLabel}</span>
-                  </Button>
+                  </ButtonBrand>
                 </DrawerClose>
                 <LoadingButton
                   type="submit"

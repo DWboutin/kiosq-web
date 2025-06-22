@@ -6,6 +6,7 @@
   "Pathnames": {
     "dashboard": "/dashboard",
     "dashboard_products": "/dashboard/products",
+    "dashboard_product_id": "/dashboard/products/[productId]",
     "dashboard_discounts": "/dashboard/discounts",
     "dashboard_events": "/dashboard/events",
     "dashboard_yourStore": "/dashboard/your-store",
@@ -18,7 +19,12 @@
     "dashboard_account": "/dashboard/account"
   },
   "Global": {
-    "thereWasAnError": "There was an error, please contact support"
+    "thereWasAnError": "There was an error, please contact support",
+    "status": "Status",
+    "published": "Published",
+    "deleted": "Deleted",
+    "draft": "Draft",
+    "cancel": "Cancel"
   },
   "Header": {
     "logoLinkAriaLabel": "Home",
@@ -50,6 +56,7 @@
     "navigation": "Navigation",
     "dashboard": "Dashboard",
     "products": "Products",
+    "productDetails": "Product details",
     "discounts": "Discounts",
     "orders": "Orders",
     "settings": "Settings",
@@ -107,10 +114,13 @@
   },
   "ProductFormDrawer": {
     "openingButton": "Add a product",
+    "editButton": "Edit",
     "addTitle": "Add a product",
     "addDescription": "Enter the product information and click on 'Add'.",
     "addButton": "Add",
-    "cancelButton": "Cancel"
+    "cancelButton": "Cancel",
+    "editTitle": "Edit a product",
+    "editDescription": "Enter the product information and click on 'Edit'."
   },
   "ProductForm": {
     "name": "Name",
@@ -141,7 +151,9 @@
     "validationChecklistItemRequired": "The highlight is required",
     "validationChecklistMaxItems": "You can only add up to 5 highlights",
     "created": "Product \"{name}\" has been created successfully",
-    "createdError": "Failed to create product, please try again"
+    "createdError": "Failed to create product, please try again",
+    "updated": "Product \"{name}\" has been updated successfully",
+    "updatedError": "Failed to update product, please try again"
   },
   "ProductFormChecklist": {
     "title": "Checklist",
@@ -324,5 +336,62 @@
     "exploreKiosq": "Explore Kiosq",
     "orEnterPostalCode": "Or enter your postal code",
     "errorSubmitting": "An error occurred while submitting your onboarding data. We will ask you for this information later."
+  },
+  "AdminProductPage": {
+    "status": "Status",
+    "published": "Published",
+    "unpublished": "Unpublished",
+    "edit": "Edit",
+    "createdAt": "Created at",
+    "updatedAt": "Updated at",
+    "missingTitle": "Missing title",
+    "missingDescription": "Missing description",
+    "variantsTitle": "Variants",
+    "editVariant": "Edit variant",
+    "deleteVariant": "Delete variant",
+    "addVariant": "Add a variant",
+    "principalVariant": "Principal variant",
+    "title": "Products",
+    "description": "Manage your products, their inventory and their availability according to the season"
+  },
+  "PublishedStatusManagement": {
+    "modal_draft_title": "Set as draft \"{name}\"",
+    "modal_draft_description": "Are you sure you want to set \"{name}\" as draft?",
+    "modal_draft_action": "Set as draft",
+    "modal_published_title": "Publish \"{name}\"",
+    "modal_published_description": "Are you sure you want to publish \"{name}\"?",
+    "modal_published_action": "Publish",
+    "modal_deleted_title": "Delete \"{name}\"",
+    "modal_deleted_description": "Are you sure you want to delete \"{name}\"? This action is irreversible.",
+    "modal_deleted_action": "Delete"
+  },
+  "ProductVariantForm": {
+    "quantity": "Quantity",
+    "quantityPlaceholder": "1.5",
+    "unit": "Unit",
+    "unitPlaceholder": "Select unit",
+    "price": "Price",
+    "pricePlaceholder": "10.00",
+    "isDefault": "Make this variant the default one",
+    "cancel": "Cancel",
+    "update": "Update",
+    "updating": "Updating...",
+    "image": "Image",
+    "validationQuantityRequired": "The quantity is required",
+    "validationQuantityPositive": "The quantity must be positive",
+    "validationUnitRequired": "The unit is required",
+    "validationUnitInvalid": "The unit is invalid",
+    "validationPriceRequired": "The price is required",
+    "validationPricePositive": "The price must be positive",
+    "updated": "Variant \"{variant}\" has been updated successfully",
+    "updatedError": "Failed to update variant, please try again",
+    "deleteModalTitle": "Delete variant",
+    "deleteModalDescription": "Are you sure you want to delete this variant?",
+    "deleteModalButton": "Delete",
+    "cancelModalButton": "Cancel",
+    "addVariant": "Add a variant",
+    "principalVariant": "Principal variant",
+    "editVariant": "Edit variant",
+    "deleteVariant": "Delete variant"
   }
 }

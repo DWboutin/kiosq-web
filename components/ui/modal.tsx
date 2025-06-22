@@ -8,6 +8,7 @@ import {
   useId,
   MouseEvent,
   MouseEventHandler,
+  ReactNode,
 } from "react";
 import {
   Dialog,
@@ -19,9 +20,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { LoadingButton } from "@/components/ui/loading-button";
+import { ButtonBrand } from "@/components/ui/button-brand";
+import { useDebouncedValue } from "@/hooks/use-debounced-value";
 
 export type ModalProps = {
   title: string;
@@ -29,9 +31,12 @@ export type ModalProps = {
   confirmLabel: string;
   cancelLabel: string;
   action: (e: MouseEvent<HTMLButtonElement>) => Promise<void>;
+  closeAction?: () => void;
   className?: string;
   hideFooter?: boolean;
   loading?: boolean;
+  isDestructive?: boolean;
+  content?: ReactNode;
 } & PropsWithChildren;
 
 export type ModalRef = {
@@ -49,15 +54,20 @@ export const Modal = forwardRef<ModalRef, ModalProps>(
       confirmLabel,
       cancelLabel,
       action,
+      closeAction,
       className,
+      isDestructive = false,
       hideFooter = false,
       loading = false,
+      content,
     },
     ref
   ) => {
     const [open, setOpen] = useState(false);
     const titleId = useId();
     const descriptionId = useId();
+    const [isProcessing, setIsProcessing] = useState(false);
+    const modalIsLoading = useDebouncedValue(isProcessing || loading, 300);
 
     useImperativeHandle(ref, () => ({
       isOpen: open,
@@ -65,39 +75,55 @@ export const Modal = forwardRef<ModalRef, ModalProps>(
       close: () => setOpen(false),
     }));
 
-    const onDelete: MouseEventHandler<HTMLButtonElement> = async (e) => {
-      e.stopPropagation();
-      await action(e);
+    const handleAction: MouseEventHandler<HTMLButtonElement> = async (e) => {
+      try {
+        e.stopPropagation();
+        setIsProcessing(true);
+        await action(e);
+        setOpen(false);
+      } catch (error) {
+        console.error(error);
+        throw error;
+      } finally {
+        setIsProcessing(false);
+      }
+    };
+
+    const handleClose = () => {
+      if (closeAction) {
+        closeAction();
+      }
       setOpen(false);
     };
 
     return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>{children}</DialogTrigger>
+      <Dialog open={open} onOpenChange={handleClose}>
+        {children && <DialogTrigger asChild>{children}</DialogTrigger>}
         <DialogContent
           aria-labelledby={titleId}
           aria-describedby={descriptionId}
-          className={cn("p-0", className)}
+          className={cn("p-0 gap-0", className)}
         >
-          <DialogHeader className="border-b border-neutral-lightest flex flex-col justify-between gap-2 pb-2 px-6 pt-6">
+          <DialogHeader className="border-b border-neutral-lightest flex flex-col justify-between gap-2 py-6 px-6 pt-6">
             <DialogTitle id={titleId} className="text-base font-bold">
               {title}
             </DialogTitle>
             {description && <DialogDescription id={descriptionId}>{description}</DialogDescription>}
           </DialogHeader>
+          {content && <div className="p-4">{content}</div>}
           {!hideFooter && (
             <DialogFooter className="p-4">
               <div className="flex flex-row justify-end gap-2">
                 <DialogClose asChild onClick={(e) => e.stopPropagation()}>
-                  <Button variant="outline" type="button">
+                  <ButtonBrand variant="outline" type="button">
                     <span>{cancelLabel}</span>
-                  </Button>
+                  </ButtonBrand>
                 </DialogClose>
                 <LoadingButton
                   type="submit"
-                  variant="destructive"
-                  onClick={onDelete}
-                  isLoading={loading}
+                  variant={isDestructive ? "destructive" : "default"}
+                  onClick={handleAction}
+                  isLoading={modalIsLoading}
                 >
                   {loading ? `${confirmLabel}...` : confirmLabel}
                 </LoadingButton>

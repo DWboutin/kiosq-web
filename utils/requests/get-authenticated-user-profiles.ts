@@ -1,12 +1,12 @@
 import { cacheKeys } from "@/utils/cache-keys";
 import { Profile } from "@/utils/factories/profiles-factory";
 
-export const getAuthenticatedUserProfile = async (): Promise<Profile[]> => {
+export const getAuthenticatedUserProfiles = async (): Promise<Profile[]> => {
   try {
-    const response = await fetch(`/api/users/profiles/current`, {
+    const response = await fetch(`/api/users/current/profiles`, {
       cache: "no-store",
       next: {
-        tags: [cacheKeys.userProfiles.list.tag],
+        tags: [cacheKeys.currentUserProfiles.list.tag],
       },
     });
 

@@ -6,6 +6,7 @@
   "Pathnames": {
     "dashboard": "/tableau-de-bord",
     "dashboard_products": "/tableau-de-bord/produits",
+    "dashboard_product_id": "/tableau-de-bord/produits/[productId]",
     "dashboard_discounts": "/tableau-de-bord/rabais",
     "dashboard_events": "/tableau-de-bord/evenements",
     "dashboard_yourStore": "/tableau-de-bord/votre-commerce",
@@ -18,7 +19,12 @@
     "dashboard_account": "/tableau-de-bord/compte"
   },
   "Global": {
-    "thereWasAnError": "Une erreur est survenue, veuillez contacter le support"
+    "thereWasAnError": "Une erreur est survenue, veuillez contacter le support",
+    "status": "Statut",
+    "published": "Publié",
+    "deleted": "Supprimé",
+    "draft": "Brouillon",
+    "cancel": "Annuler"
   },
   "Header": {
     "logoLinkAriaLabel": "Accueil",
@@ -52,6 +58,7 @@
     "navigation": "Navigation",
     "dashboard": "Tableau de bord",
     "products": "Produits",
+    "productDetails": "Détails du produit",
     "discounts": "Rabais",
     "orders": "Commandes",
     "settings": "Paramètres",
@@ -109,10 +116,13 @@
   },
   "ProductFormDrawer": {
     "openingButton": "Ajouter un produit",
+    "editButton": "Modifier",
     "addTitle": "Ajouter un produit",
     "addDescription": "Entrez les informations du produit et cliquez sur 'Ajouter'.",
     "addButton": "Ajouter",
-    "cancelButton": "Annuler"
+    "cancelButton": "Annuler",
+    "editTitle": "Modifier un produit",
+    "editDescription": "Entrez les informations du produit et cliquez sur 'Modifier'."
   },
   "ProductForm": {
     "name": "Nom",
@@ -143,7 +153,9 @@
     "validationChecklistItemRequired": "Le point fort est requis",
     "validationChecklistMaxItems": "Vous ne pouvez ajouter que 5 points forts",
     "created": "Produit \"{name}\" a été créé avec succès",
-    "createdError": "Échec de la création du produit, veuillez réessayer"
+    "createdError": "Échec de la création du produit, veuillez réessayer",
+    "updated": "Produit \"{name}\" a été mis à jour avec succès",
+    "updatedError": "Échec de la mise à jour du produit, veuillez réessayer"
   },
   "ProductFormChecklist": {
     "title": "Liste de points forts",
@@ -326,5 +338,60 @@
     "exploreKiosq": "Explorer Kiosq",
     "orEnterPostalCode": "Ou entrer votre code postal",
     "errorSubmitting": "Une erreur est survenue lors de la soumission des données d'onboarding. Nous vous demanderons ces informations plus tard."
+  },
+  "AdminProductPage": {
+    "status": "Statut",
+    "published": "Publié",
+    "unpublished": "Brouillon",
+    "edit": "Modifier",
+    "createdAt": "Créé le",
+    "updatedAt": "Mis à jour le",
+    "missingTitle": "Titre manquant",
+    "missingDescription": "Description manquante",
+    "variantsTitle": "Variants",
+    "addVariant": "Ajouter un variant",
+    "principalVariant": "Variant principal",
+    "title": "Produits",
+    "description": "Gérer facilement vos produits, leurs inventaire et leur disponibilité selon la saison"
+  },
+  "PublishedStatusManagement": {
+    "modal_draft_title": "Mettre en brouillon \"{name}\"",
+    "modal_draft_description": "Êtes-vous sûr de vouloir mettre \"{name}\" en brouillon ?",
+    "modal_draft_action": "Mettre en brouillon",
+    "modal_published_title": "Publier \"{name}\"",
+    "modal_published_description": "Êtes-vous sûr de vouloir publier \"{name}\" ?",
+    "modal_published_action": "Publier",
+    "modal_deleted_title": "Supprimer \"{name}\"",
+    "modal_deleted_description": "Êtes-vous sûr de vouloir supprimer \"{name}\"? Cette action est irréversible.",
+    "modal_deleted_action": "Supprimer"
+  },
+  "ProductVariantForm": {
+    "quantity": "Quantité",
+    "quantityPlaceholder": "1,5",
+    "unit": "Unité",
+    "unitPlaceholder": "Sélectionner une unité",
+    "price": "Prix",
+    "pricePlaceholder": "10,00",
+    "isDefault": "Mettre ce variant comme principal",
+    "cancel": "Annuler",
+    "update": "Mettre à jour",
+    "updating": "Mise à jour...",
+    "image": "Image",
+    "validationQuantityRequired": "La quantité est requise",
+    "validationQuantityPositive": "La quantité doit être positive",
+    "validationUnitRequired": "L'unité est requise",
+    "validationUnitInvalid": "L'unité est invalide",
+    "validationPriceRequired": "Le prix est requis",
+    "validationPricePositive": "Le prix doit être positif",
+    "updated": "Variant \"{variant}\" a été mis à jour avec succès",
+    "updatedError": "Échec de la mise à jour du variant, veuillez réessayer",
+    "deleteModalTitle": "Supprimer le variant",
+    "deleteModalDescription": "Êtes-vous sûr de vouloir supprimer ce variant ?",
+    "deleteModalButton": "Supprimer",
+    "cancelModalButton": "Annuler",
+    "addVariant": "Ajouter un variant",
+    "principalVariant": "Variant principal",
+    "editVariant": "Modifier le variant",
+    "deleteVariant": "Supprimer le variant"
   }
 }

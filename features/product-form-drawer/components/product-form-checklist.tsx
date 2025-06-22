@@ -1,12 +1,12 @@
-import { Button } from "@/components/ui/button";
 import { CloseIcon } from "@/components/ui/icons/close-icon";
 import { PlusSquareIcon } from "@/components/ui/icons/plus-square-icon";
 import { Input } from "@/components/ui/input";
-import { ProductFormValues } from "@/features/product-form-drawer/hooks/use-product-form";
 import { useTranslations } from "next-intl";
 import { FC } from "react";
 import { FieldArrayWithId, Control, Controller, FieldErrors } from "react-hook-form";
 import { AddTranslationField } from "@/features/add-translation-field/add-translation-field";
+import { ButtonBrand } from "@/components/ui/button-brand";
+import { ProductFormValues } from "@/features/product-form-drawer/utils/product-form-validation-schema";
 
 type ProductFormChecklistProps = {
   fields: FieldArrayWithId<ProductFormValues, "checklist", "id">[];
@@ -32,7 +32,7 @@ export const ProductFormChecklist: FC<ProductFormChecklistProps> = ({
           <div className="text-base font-semibold">{t("title")}</div>
           <p className="text-sm text-neutral-darker">{t("description")}</p>
         </div>
-        <Button
+        <ButtonBrand
           type="button"
           variant="outline"
           size="sm"
@@ -41,7 +41,7 @@ export const ProductFormChecklist: FC<ProductFormChecklistProps> = ({
         >
           <PlusSquareIcon className="size-4 mr-2" />
           {t("addButton")}
-        </Button>
+        </ButtonBrand>
       </div>
 
       <div className="flex flex-col gap-6">
@@ -60,9 +60,9 @@ export const ProductFormChecklist: FC<ProductFormChecklistProps> = ({
                   />
                 )}
               />
-              <Button type="button" variant="ghost" size="icon" onClick={() => remove(index)}>
+              <ButtonBrand type="button" variant="ghost" size="icon" onClick={() => remove(index)}>
                 <CloseIcon className="size-4" />
-              </Button>
+              </ButtonBrand>
             </div>
             {errors.checklist?.[index]?.value && (
               <div className="mb-2">

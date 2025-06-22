@@ -3,10 +3,10 @@
 import { FC } from "react";
 import { InputOTPGroup } from "@/components/ui/input-otp";
 import { InputOTP } from "@/components/ui/input-otp";
-import { Button } from "@/components/ui/button";
 import { InputOTPSlot } from "@/components/ui/input-otp";
 import { useVerifyOtpForm } from "@/features/verify-otp-form/hooks/use-verify-otp-form";
 import { useTranslations } from "next-intl";
+import { ButtonBrand } from "@/components/ui/button-brand";
 
 export const VerifyOtpForm: FC = () => {
   const t = useTranslations("VerifyOtpForm");
@@ -35,10 +35,10 @@ export const VerifyOtpForm: FC = () => {
         )}
       </div>
       <div className="flex flex-col items-center gap-2">
-        <Button type="submit" className="w-full" disabled={isLoading}>
+        <ButtonBrand type="submit" className="w-full" disabled={isLoading}>
           {isLoading ? t("verifyLoading") : t("verifyButton")}
-        </Button>
-        <Button
+        </ButtonBrand>
+        <ButtonBrand
           type="button"
           variant="secondary"
           onClick={handleAskForNewCode}
@@ -48,7 +48,7 @@ export const VerifyOtpForm: FC = () => {
           {countdown !== 0
             ? t("askForNewCodeButtonDisabled", { countdown })
             : t("askForNewCodeButton")}
-        </Button>
+        </ButtonBrand>
       </div>
     </form>
   );

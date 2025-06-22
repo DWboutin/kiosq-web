@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { KiosqLogo } from "@/components/ui/kiosq-logo/kiosq-logo";
 import { LocationButton } from "@/components/ui/location-button";
 import { SearchInput } from "@/components/ui/search-input";
@@ -9,6 +8,7 @@ import { cva } from "class-variance-authority";
 import { ConnectionHeaderUtils } from "@/features/connection-header-utils/connection-header-utils";
 import { MobileMenuIcon } from "@/components/ui/icons/mobile-menu-icon";
 import { getTranslations } from "next-intl/server";
+import { ButtonBrand } from "@/components/ui/button-brand";
 
 const headerStyles = cva(
   "flex flex-col items-center justify-between border-b border-neutral-light",
@@ -38,14 +38,14 @@ export const Header: FC<PropsWithChildren> = async ({ children }) => {
             <KiosqLogo />
             <span className="text-xl font-lato text-brand-medium">kiosq</span>
           </Link>
-          <Button
+          <ButtonBrand
             variant="ghost"
             size="icon"
             aria-label={t("mobileMenuButtonAriaLabel")}
             className="min-md:hidden"
           >
             <MobileMenuIcon className="text-neutral-dark size-6" />
-          </Button>
+          </ButtonBrand>
           <div className="flex min-md:flex-1 items-center gap-2">
             <SearchInput />
           </div>

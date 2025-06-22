@@ -1,5 +1,5 @@
 import { AppConfig } from "@/app-config";
-import { Badge } from "@/components/ui/badge";
+import { BadgeWarning } from "@/components/ui/badge-warning";
 import { TooltipContainer } from "@/components/ui/tooltip-container";
 import { FC, memo } from "react";
 
@@ -25,9 +25,9 @@ export const TranslationDisplay: FC<TranslationDisplayProps> = memo(
         </TooltipContainer>
         <div className="flex flex-wrap gap-1">
           {missingLocales.map((locale) => (
-            <Badge key={locale} className="w-fit bg-brand-warning">
+            <BadgeWarning key={locale} className="w-fit bg-brand-warning">
               {locale} missing
-            </Badge>
+            </BadgeWarning>
           ))}
         </div>
       </div>

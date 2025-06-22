@@ -2,11 +2,11 @@
 
 import { FC, useRef, RefObject } from "react";
 import { SideFormDrawer, SideFormDrawerRef } from "@/components/ui/side-form-drawer";
-import { Button } from "@/components/ui/button";
 import { PlusSquareIcon } from "@/components/ui/icons/plus-square-icon";
 import { ProductCategoryForm } from "@/features/product-category-form-drawer/components/product-category-form";
 import { useProductCategoryForm } from "@/features/product-category-form-drawer/hooks/use-product-category-form";
 import { useTranslations } from "next-intl";
+import { ButtonBrand } from "@/components/ui/button-brand";
 
 export const ProductCategoryFormDrawer: FC = () => {
   const t = useTranslations("ProductCategoryFormDrawer");
@@ -26,12 +26,12 @@ export const ProductCategoryFormDrawer: FC = () => {
       handleSubmit={handleFormSubmit}
       formHasErrors={hasErrors}
       trigger={
-        <Button asChild>
+        <ButtonBrand asChild>
           <span>
             <PlusSquareIcon className="size-5" />
             {t("openingButton")}
           </span>
-        </Button>
+        </ButtonBrand>
       }
     >
       <div className="flex flex-col gap-5">

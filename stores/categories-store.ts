@@ -1,12 +1,12 @@
-import { FormattedProductCategory } from "@/utils/factories/product-categories-factory";
+import { AdminProductCategory } from "@/utils/factories/admin-product-categories-factory";
 import { create } from "zustand";
 
 type CategoriesState = {
-  initialData: FormattedProductCategory | null;
+  initialData: AdminProductCategory | null;
   selectedId: string | null;
   lastSelected: number;
-  setInitialData: (data: FormattedProductCategory) => void;
-  selectCategory: (category: FormattedProductCategory) => void;
+  setInitialData: (data: AdminProductCategory) => void;
+  selectCategory: (category: AdminProductCategory) => void;
   resetCategory: () => void;
 };
 

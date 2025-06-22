@@ -1,6 +1,6 @@
 import { Locales, ProductCategoryWithTranslations } from "@/types/app";
 
-export type FormattedProductCategory = {
+export type AdminProductCategory = {
   id: string;
   name: Record<Locales, string>;
   description: Record<Locales, string>;
@@ -15,10 +15,10 @@ export type FormattedProductCategory = {
   locale: Locales;
 };
 
-export const productCategoriesFactory = (
+export const adminProductCategoriesFactory = (
   categories: ProductCategoryWithTranslations[],
   locale: Locales
-): FormattedProductCategory[] => {
+): AdminProductCategory[] => {
   return categories.map((category) => ({
     id: category.id,
     name: category.name_translations,

@@ -1,6 +1,5 @@
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +12,7 @@ import { Link } from "@/i18n/navigation";
 import { DashboardLink } from "@/utils/dashboard-navigation";
 import { useTranslations } from "next-intl";
 import { FC } from "react";
+import { ButtonBrand } from "@/components/ui/button-brand";
 
 type DashboardBreadcrumbPreviousNavigationProps = {
   hiddenLinks: DashboardLink[];
@@ -26,13 +26,13 @@ export const DashboardBreadcrumbPreviousNavigation: FC<
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
+        <ButtonBrand
           variant="ghost"
           size="icon"
           aria-label={t("DashboardBreadcrumb.previousNavigation")}
         >
           <EllipsisIcon className="size-6" />
-        </Button>
+        </ButtonBrand>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>{t("DashboardBreadcrumb.previousNavigation")}</DropdownMenuLabel>
