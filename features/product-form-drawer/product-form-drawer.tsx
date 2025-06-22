@@ -34,6 +34,7 @@ export const ProductFormDrawer: FC<ProductFormDrawerProps> = ({ editMode = false
       buttonCancelLabel={t("cancelButton")}
       handleSubmit={handleFormSubmit}
       isSubmitting={isSubmitting}
+      autoFocus={!editMode}
       trigger={
         <ButtonBrand tabIndex={-1} asChild>
           {!editMode ? (

@@ -24,6 +24,7 @@ type SideFormDrawerProps = {
   handleSubmit: () => void;
   formHasErrors?: boolean;
   isSubmitting?: boolean;
+  autoFocus?: boolean;
 } & PropsWithChildren;
 
 export type SideFormDrawerRef = {
@@ -44,6 +45,7 @@ export const SideFormDrawer = forwardRef<SideFormDrawerRef, SideFormDrawerProps>
       handleSubmit,
       formHasErrors,
       isSubmitting = false,
+      autoFocus = true,
     },
     ref
   ) => {
@@ -58,7 +60,7 @@ export const SideFormDrawer = forwardRef<SideFormDrawerRef, SideFormDrawerProps>
     }));
 
     return (
-      <Drawer open={open} onOpenChange={setOpen} direction="right" autoFocus={open}>
+      <Drawer open={open} onOpenChange={setOpen} direction="right" autoFocus={autoFocus && open}>
         <DrawerTrigger asChild aria-haspopup="dialog" aria-expanded={open}>
           {trigger}
         </DrawerTrigger>
