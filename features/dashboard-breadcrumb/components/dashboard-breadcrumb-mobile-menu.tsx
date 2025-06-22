@@ -52,7 +52,10 @@ export const DashboardBreadcrumbMobileMenu = memo(() => {
           <DropdownMenuLabel>{t("DashboardBreadcrumb.managementSystem")}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           {filteredDashboardLinks.map((link) => {
-            if (hasRequiredChildren(link)) {
+            if (
+              hasRequiredChildren(link) &&
+              Object.values(link.children).some((child) => child.showInMobileMenu)
+            ) {
               return <DashboardBreadcrumbParentSubMenu key={link.pathKey} link={link} />;
             }
 
