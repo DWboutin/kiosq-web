@@ -30,27 +30,78 @@ export const updateProductVariant = async (params: UpdateProductVariantParams) =
     throw new Error("User not found");
   }
 
-  const { data: variantData, error: variantError } = await supabase
+  const { data: currentVariant, error: currentVariantError } = await supabase
+    .from("product_variants")
+    .select("*, product:products(profile_id)")
+    .eq("id", id)
+    .single();
+
+  if (currentVariantError) {
+    throw currentVariantError;
+  }
+
+  let finalImageUrl: string | null | undefined = currentVariant.image_url;
+
+  if (imageUrl && imageUrl.startsWith("data:")) {
+    if (currentVariant.product && !Array.isArray(currentVariant.product)) {
+      try {
+        if (currentVariant.image_url) {
+          const oldImagePath = new URL(currentVariant.image_url).pathname.split(
+            "/product-variants-images/"
+          )[1];
+          if (oldImagePath) {
+            await supabase.storage.from("product-variants-images").remove([oldImagePath]);
+          }
+        }
+        const profileId = currentVariant.product.profile_id;
+        const productId = currentVariant.product_id;
+
+        finalImageUrl = await uploadImage({
+          base64Image: imageUrl,
+          userId: user.user.id,
+          identifier: id,
+          filePrefix: "variant",
+          bucketName: "product-variants-images",
+          pathBuilder: ({ identifier, filePrefix, randomId, fileExt }) =>
+            `${profileId}/${productId}/${identifier}_${filePrefix}${randomId}.${fileExt}`,
+        });
+      } catch (error) {
+        console.error("Error uploading variant image:", error);
+      }
+    }
+  } else if (imageUrl === "" && currentVariant.image_url) {
+    try {
+      const oldImagePath = new URL(currentVariant.image_url).pathname.split(
+        "/product-variants-images/"
+      )[1];
+      if (oldImagePath) {
+        await supabase.storage.from("product-variants-images").remove([oldImagePath]);
+      }
+      finalImageUrl = null;
+    } catch (error) {
+      console.error("Error deleting variant image:", error);
+    }
+  }
+
+  const { error: updateError } = await supabase
     .from("product_variants")
     .update({
       quantity,
       unit,
-      image_url: imageUrl,
       is_default: isDefault,
+      image_url: finalImageUrl,
     })
-    .eq("id", id)
-    .select("product_id, product:products(profile_id)")
-    .single<{ product_id: string; product: { profile_id: string } | null }>();
+    .eq("id", id);
 
-  if (variantError) {
-    throw variantError;
+  if (updateError) {
+    throw updateError;
   }
 
   if (isDefault) {
     const { error: updateError } = await supabase
       .from("product_variants")
       .update({ is_default: false })
-      .eq("product_id", variantData.product_id)
+      .eq("product_id", currentVariant.product_id)
       .neq("id", id);
 
     if (updateError) {
@@ -70,39 +121,13 @@ export const updateProductVariant = async (params: UpdateProductVariantParams) =
     throw priceError;
   }
 
-  if (
-    imageUrl &&
-    imageUrl.startsWith("data:") &&
-    variantData.product &&
-    !Array.isArray(variantData.product)
-  ) {
-    try {
-      const profileId = variantData.product.profile_id;
-      const productId = variantData.product_id;
-
-      const uploadedImageUrl = await uploadImage({
-        base64Image: imageUrl,
-        userId: user.user.id,
-        identifier: id,
-        filePrefix: "variant",
-        bucketName: "product-variants-images",
-        pathBuilder: ({ identifier, filePrefix, randomId, fileExt }) =>
-          `${profileId}/${productId}/${identifier}_${filePrefix}${randomId}.${fileExt}`,
-      });
-
-      await supabase.from("product_variants").update({ image_url: uploadedImageUrl }).eq("id", id);
-    } catch (error) {
-      console.error("Error uploading variant image:", error);
-    }
-  }
+  revalidateTag(cacheKeys.currentUserProductById(currentVariant.product_id).tag);
 
   const { data: productVariant } = await supabase
     .from("product_variants")
     .select("*")
     .eq("id", id)
     .single();
-
-  revalidateTag(cacheKeys.currentUserProductById(variantData.product_id).tag);
 
   return productVariant as unknown as RawProductVariant;
 };
