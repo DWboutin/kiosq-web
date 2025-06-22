@@ -28,6 +28,8 @@ export const DashboardProfileProducts = ({
           id={product.id}
           title={product.nameTranslations[locale]}
           description={product.descriptionTranslations[locale]}
+          status={product.status}
+          variants={product.productVariants}
         />
       ))}
     </div>

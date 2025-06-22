@@ -40,6 +40,10 @@ export type AuthenticatedUserProductPrice = {
   isTaxInclusive: boolean;
 };
 
+export type AuthenticatedUserProductVariantWithPrices = AuthenticatedUserProductVariant & {
+  productPrices: AuthenticatedUserProductPrice[];
+};
+
 export type AuthenticatedUserProductWithVariantsAndPrices = {
   id: string;
   categoryId: string;
@@ -54,9 +58,7 @@ export type AuthenticatedUserProductWithVariantsAndPrices = {
   checklistTranslations: Record<Locales, string>[];
   status: PublishedStatus;
   category: ProductCategory;
-  productVariants: (AuthenticatedUserProductVariant & {
-    productPrices: AuthenticatedUserProductPrice[];
-  })[];
+  productVariants: AuthenticatedUserProductVariantWithPrices[];
 };
 
 export const authenticatedUserProductFactory = (

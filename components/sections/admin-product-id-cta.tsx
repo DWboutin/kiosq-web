@@ -1,5 +1,6 @@
 "use client";
 
+import { getUserProfiles } from "@/actions/get-user-profiles";
 import { updateProductPublishedStatus } from "@/actions/update-product-published-status";
 import { ClockIcon } from "@/components/ui/icons/clock-icon";
 import { LocaleFullDate } from "@/components/ui/locale-date";
@@ -43,10 +44,14 @@ export const AdminProductIdCta: FC<AdminProductIdCtaProps> = ({
   const handleStatusChange = async (status: PublishedStatus) => {
     try {
       const success = await updateProductPublishedStatus(productId, status);
+      const profiles = await getUserProfiles();
 
       if (success) {
         queryClient.invalidateQueries({
           queryKey: cacheKeys.currentUserProductById(productId).queryKey,
+        });
+        queryClient.invalidateQueries({
+          queryKey: cacheKeys.currentUserProfileIdProducts.list(profiles[0]?.id).queryKey,
         });
         toast.success("Status updated successfully");
       }
