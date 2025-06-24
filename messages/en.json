@@ -393,5 +393,18 @@
     "principalVariant": "Principal variant",
     "editVariant": "Edit variant",
     "deleteVariant": "Delete variant"
+  },
+  "AdminVendorBannerImage": {
+    "modalTitle": "Edit banner image",
+    "modalDescription": "Edit the banner image",
+    "modalConfirmLabel": "Change image",
+    "modalCancelLabel": "Cancel",
+    "editImage": "Edit image"
+  },
+  "AdminVendorBannerImageForm": {
+    "image": "Image",
+    "validationImageRequired": "The image is required",
+    "success": "Banner image updated",
+    "error": "Failed to update banner image, please try again"
   }
 }

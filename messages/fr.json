@@ -393,5 +393,19 @@
     "principalVariant": "Variant principal",
     "editVariant": "Modifier le variant",
     "deleteVariant": "Supprimer le variant"
+  },
+  "AdminVendorBannerImage": {
+    "modalTitle": "Modifier l'image de bannière",
+    "modalDescription": "Modifier l'image de bannière",
+    "modalConfirmLabel": "Changer l'image",
+    "modalCancelLabel": "Annuler",
+    "validationImageRequired": "L'image est requise",
+    "editImage": "Modifier l'image"
+  },
+  "AdminVendorBannerImageForm": {
+    "image": "Image",
+    "validationImageRequired": "L'image est requise",
+    "success": "Image de bannière mise à jour",
+    "error": "Échec de la mise à jour de l'image de bannière, veuillez réessayer"
   }
 }
