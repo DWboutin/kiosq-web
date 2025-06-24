@@ -19,14 +19,20 @@ export const DashboardYourStore: FC = () => {
     return <div>Error: {error.message}</div>;
   }
 
+  if (vendorProfiles.length === 0) {
+    return <CreateProfileWizard />;
+  }
+
+  const firstVendorProfile = vendorProfiles[0];
+
   return (
     <>
       {vendorProfiles.length === 0 && <CreateProfileWizard />}
       <VendorStoreHeader
-        profileId={vendorProfiles[0]?.id!}
-        bannerImageUrl={vendorProfiles[0]?.bannerImage!}
-        nameTranslations={vendorProfiles[0]?.nameTranslations!}
-        descriptionTranslations={vendorProfiles[0]?.descriptionTranslations!}
+        profileId={firstVendorProfile.id}
+        bannerImageUrl={firstVendorProfile.bannerImage}
+        nameTranslations={firstVendorProfile.nameTranslations}
+        descriptionTranslations={firstVendorProfile.descriptionTranslations}
       />
       <pre>{JSON.stringify(vendorProfiles, null, 2)}</pre>
     </>

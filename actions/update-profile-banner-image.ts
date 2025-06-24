@@ -37,7 +37,47 @@ export const updateProfileBannerImage = async (data: UpdateProfileBannerImageArg
   }
 
   try {
-    // Delete existing banner image if it exists
+    // If bannerImage is empty, remove the existing banner image
+    if (data.bannerImage === "") {
+      // Delete existing banner image if it exists
+      if (profile.banner_image) {
+        try {
+          // Extract the file path from the banner image URL
+          const url = new URL(profile.banner_image);
+          const pathSegments = url.pathname.split("/");
+          // Remove empty segments and find the path after the bucket name
+          const cleanSegments = pathSegments.filter((segment) => segment.length > 0);
+          const bucketIndex = cleanSegments.findIndex((segment) => segment === "profile-images");
+
+          if (bucketIndex !== -1 && bucketIndex < cleanSegments.length - 1) {
+            const filePath = cleanSegments.slice(bucketIndex + 1).join("/");
+
+            await supabase.storage.from("profile-images").remove([filePath]);
+          }
+        } catch (deleteError) {
+          console.warn("Error deleting existing banner image:", deleteError);
+          // Continue with update even if deletion fails
+        }
+      }
+
+      // Update the profile to remove the banner image
+      const { data: updatedProfile, error: updateError } = await supabase
+        .from("profiles")
+        .update({ banner_image: null })
+        .eq("id", data.profileId)
+        .select("banner_image")
+        .single();
+
+      if (updateError) {
+        throw updateError;
+      }
+
+      revalidatePath("/dashboard/your-store");
+
+      return updatedProfile;
+    }
+
+    // Delete existing banner image if it exists (for replacement)
     if (profile.banner_image) {
       try {
         // Extract the file path from the banner image URL
@@ -57,6 +97,7 @@ export const updateProfileBannerImage = async (data: UpdateProfileBannerImageArg
         // Continue with upload even if deletion fails
       }
     }
+
     const bannerUrl = await uploadImage({
       base64Image: data.bannerImage,
       userId: user.user.id,
@@ -83,7 +124,7 @@ export const updateProfileBannerImage = async (data: UpdateProfileBannerImageArg
 
     return updatedProfile;
   } catch (error) {
-    console.error("Error uploading banner image:", error);
+    console.error("Error updating banner image:", error);
     throw error;
   }
 };

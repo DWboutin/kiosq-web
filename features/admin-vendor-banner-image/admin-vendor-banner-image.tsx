@@ -25,7 +25,12 @@ export const AdminVendorBannerImage: FC<AdminVendorBannerImageProps> = ({
   return (
     <>
       <div className="relative z-0">
-        <Image src={bannerImageUrl} alt="Banner" width={1200} height={400} />
+        <Image
+          src={bannerImageUrl || "/placeholders/1200x400.jpg"}
+          alt="Banner"
+          width={1200}
+          height={400}
+        />
         <div className="absolute top-5 right-5">
           <Button variant="outline" size="sm" onClick={handleOpenModal}>
             <PhotoIcon className="w-4 h-4" />

@@ -6,7 +6,7 @@ import { FC } from "react";
 
 type VendorStoreHeaderProps = {
   profileId: string;
-  bannerImageUrl: string;
+  bannerImageUrl: string | null;
   nameTranslations: Record<Locales, string>;
   descriptionTranslations: Record<Locales, string>;
 };
