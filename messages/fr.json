@@ -354,6 +354,10 @@
     "title": "Produits",
     "description": "Gérer facilement vos produits, leurs inventaire et leur disponibilité selon la saison"
   },
+  "AdminVendorProfilePage": {
+    "createdAt": "Créé le",
+    "updatedAt": "Mis à jour le"
+  },
   "PublishedStatusManagement": {
     "modal_draft_title": "Mettre en brouillon \"{name}\"",
     "modal_draft_description": "Êtes-vous sûr de vouloir mettre \"{name}\" en brouillon ?",

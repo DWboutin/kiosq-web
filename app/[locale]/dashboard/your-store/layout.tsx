@@ -1,6 +1,6 @@
 import { DashboardPageHeading } from "@/components/sections/dashboard-page-heading";
+import { AdminVendorProfileCta } from "@/components/sections/admin-vendor-profile-cta";
 import { getTranslations } from "next-intl/server";
-import { VendorProfileFormDrawer } from "@/features/vendor-profile-form-drawer/vendor-profile-form-drawer";
 import { getUserProfiles } from "@/actions/get-user-profiles";
 
 export default async function DashboardYourStoreLayout({
@@ -19,7 +19,11 @@ export default async function DashboardYourStoreLayout({
         description={t("description")}
         cta={
           vendorProfiles.length > 0 ? (
-            <VendorProfileFormDrawer profileId={vendorProfiles[0].id} />
+            <AdminVendorProfileCta
+              profileId={vendorProfiles[0].id}
+              createdAt={vendorProfiles[0].createdAt}
+              updatedAt={vendorProfiles[0].updatedAt}
+            />
           ) : null
         }
       />
