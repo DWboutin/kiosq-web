@@ -41,12 +41,12 @@ export const VendorStoreHeader: FC<VendorStoreHeaderProps> = ({
       <AdminVendorBannerImage bannerImageUrl={bannerImageUrl} profileId={profileId} />
       <div className="flex flex-row flex-1 gap-5 z-10">
         <AdminVendorProfileImage profileId={profileId} profileImageUrl={profileImageUrl} />
-        <div className="flex flex-row gap-2 items-start justify-between">
+        <div className="flex flex-1 flex-row gap-2 items-start justify-between">
           <div className="flex flex-col flex-1 py-5">
             <h2 className="text-2xl font-bold text-neutral-black">{name}</h2>
             <p className="text-sm text-neutral-medium">{description}</p>
           </div>
-          <div className="flex flex-row gap-2 items-start py-5">
+          <div className="flex flex-row gap-2 items-start py-5 pr-5">
             {facebookPageUrl && (
               <SocialButton platform="facebook" href={facebookPageUrl}>
                 <FacebookIcon className="size-6" color="white" />

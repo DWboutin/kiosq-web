@@ -39,7 +39,6 @@ export const DashboardYourStore: FC = () => {
         tiktokPageUrl={firstVendorProfile.tiktokPageUrl}
         xPageUrl={firstVendorProfile.xPageUrl}
       />
-      <pre>{JSON.stringify(vendorProfiles, null, 2)}</pre>
     </>
   );
 };
