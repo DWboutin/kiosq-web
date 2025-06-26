@@ -31,6 +31,7 @@ export const DashboardYourStore: FC = () => {
       <VendorStoreHeader
         profileId={firstVendorProfile.id}
         bannerImageUrl={firstVendorProfile.bannerImage}
+        profileImageUrl={firstVendorProfile.profileImage}
         nameTranslations={firstVendorProfile.nameTranslations}
         descriptionTranslations={firstVendorProfile.descriptionTranslations}
       />

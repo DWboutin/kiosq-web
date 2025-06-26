@@ -9,7 +9,7 @@ import { FC } from "react";
 
 type AdminVendorBannerImageProps = {
   profileId: string;
-  bannerImageUrl: string;
+  bannerImageUrl: string | null;
 };
 
 export const AdminVendorBannerImage: FC<AdminVendorBannerImageProps> = ({

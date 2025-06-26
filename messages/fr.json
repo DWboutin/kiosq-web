@@ -407,5 +407,18 @@
     "validationImageRequired": "L'image est requise",
     "success": "Image de bannière mise à jour",
     "error": "Échec de la mise à jour de l'image de bannière, veuillez réessayer"
+  },
+  "AdminVendorProfileImage": {
+    "modalTitle": "Modifier l'image de profil",
+    "modalDescription": "Modifier l'image de profil",
+    "modalConfirmLabel": "Changer l'image",
+    "modalCancelLabel": "Annuler",
+    "editImage": "Modifier l'image"
+  },
+  "AdminVendorProfileImageForm": {
+    "image": "Image",
+    "validationImageRequired": "L'image est requise",
+    "success": "Image de profil mise à jour",
+    "error": "Échec de la mise à jour de l'image de profil, veuillez réessayer"
   }
 }

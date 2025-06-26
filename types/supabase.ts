@@ -78,11 +78,9 @@ export type Database = {
           discount_type: string | null
           effective_from: string
           effective_to: string | null
-          final_price: number | null
           id: string
           is_tax_inclusive: boolean | null
           updated_at: string
-          updated_by: string | null
           variant_id: string
         }
         Insert: {
@@ -93,11 +91,9 @@ export type Database = {
           discount_type?: string | null
           effective_from?: string
           effective_to?: string | null
-          final_price?: number | null
           id?: string
           is_tax_inclusive?: boolean | null
           updated_at?: string
-          updated_by?: string | null
           variant_id: string
         }
         Update: {
@@ -108,21 +104,12 @@ export type Database = {
           discount_type?: string | null
           effective_from?: string
           effective_to?: string | null
-          final_price?: number | null
           id?: string
           is_tax_inclusive?: boolean | null
           updated_at?: string
-          updated_by?: string | null
           variant_id?: string
         }
         Relationships: [
-          {
-            foreignKeyName: "product_prices_updated_by_fkey"
-            columns: ["updated_by"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "product_prices_variant_id_fkey"
             columns: ["variant_id"]
@@ -203,6 +190,7 @@ export type Database = {
           is_featured: boolean | null
           name_translations: Json
           profile_id: string
+          status: Database["public"]["Enums"]["product_status"] | null
           updated_at: string
           updated_by: string | null
         }
@@ -216,6 +204,7 @@ export type Database = {
           is_featured?: boolean | null
           name_translations?: Json
           profile_id: string
+          status?: Database["public"]["Enums"]["product_status"] | null
           updated_at?: string
           updated_by?: string | null
         }
@@ -229,6 +218,7 @@ export type Database = {
           is_featured?: boolean | null
           name_translations?: Json
           profile_id?: string
+          status?: Database["public"]["Enums"]["product_status"] | null
           updated_at?: string
           updated_by?: string | null
         }
@@ -266,6 +256,7 @@ export type Database = {
           is_deleted: boolean
           is_reviewed: boolean | null
           name_translations: Json | null
+          profile_image: string | null
           slug_translations: Json | null
           type: Database["public"]["Enums"]["profile_type"] | null
           updated_at: string
@@ -281,6 +272,7 @@ export type Database = {
           is_deleted?: boolean
           is_reviewed?: boolean | null
           name_translations?: Json | null
+          profile_image?: string | null
           slug_translations?: Json | null
           type?: Database["public"]["Enums"]["profile_type"] | null
           updated_at?: string
@@ -296,6 +288,7 @@ export type Database = {
           is_deleted?: boolean
           is_reviewed?: boolean | null
           name_translations?: Json | null
+          profile_image?: string | null
           slug_translations?: Json | null
           type?: Database["public"]["Enums"]["profile_type"] | null
           updated_at?: string
@@ -416,6 +409,7 @@ export type Database = {
       }
     }
     Enums: {
+      product_status: "published" | "draft" | "deleted"
       profile_type: "personal" | "vendor"
       user_role: "admin" | "vendor-admin" | "vendor-manager" | "user"
     }
@@ -533,6 +527,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      product_status: ["published", "draft", "deleted"],
       profile_type: ["personal", "vendor"],
       user_role: ["admin", "vendor-admin", "vendor-manager", "user"],
     },

@@ -406,5 +406,18 @@
     "validationImageRequired": "The image is required",
     "success": "Banner image updated",
     "error": "Failed to update banner image, please try again"
+  },
+  "AdminVendorProfileImage": {
+    "modalTitle": "Edit profile image",
+    "modalDescription": "Edit the profile image",
+    "modalConfirmLabel": "Change image",
+    "modalCancelLabel": "Cancel",
+    "editImage": "Edit image"
+  },
+  "AdminVendorProfileImageForm": {
+    "image": "Image",
+    "validationImageRequired": "The image is required",
+    "success": "Profile image updated",
+    "error": "Failed to update profile image, please try again"
   }
 }
