@@ -85,6 +85,43 @@
     "title": "Your store",
     "description": "Manage your store"
   },
+  "VendorProfileFormDrawer": {
+    "editTitle": "Edit your store",
+    "editDescription": "Update your store information and click 'Save'.",
+    "editButton": "Edit Store",
+    "cancelButton": "Cancel"
+  },
+  "VendorProfileForm": {
+    "name": "Store Name",
+    "namePlaceholder": "My Amazing Store",
+    "description": "Store Description",
+    "descriptionPlaceholder": "A brief description of your store and what you offer",
+    "slug": "Store Slug",
+    "slugPlaceholder": "my-amazing-store",
+    "socialMediaTitle": "Social Media",
+    "facebookUrl": "Facebook Page",
+    "facebookUrlPlaceholder": "https://facebook.com/your-page",
+    "xUrl": "X (Twitter) Profile",
+    "xUrlPlaceholder": "https://x.com/your-username",
+    "instagramUrl": "Instagram Profile",
+    "instagramUrlPlaceholder": "https://instagram.com/your-username",
+    "tiktokUrl": "TikTok Profile",
+    "tiktokUrlPlaceholder": "https://tiktok.com/@your-username",
+    "validationNameRequired": "Store name is required",
+    "validationDescriptionRequired": "Store description is required",
+    "validationDescriptionMinLength": "Description must be at least 10 characters",
+    "validationDescriptionMaxLength": "Description cannot exceed 500 characters",
+    "validationSlugRequired": "Store slug is required",
+    "validationSlugFormat": "Slug must contain only lowercase letters, numbers, and hyphens",
+    "validationFacebookUrlFormat": "Please enter a valid Facebook URL (e.g., https://facebook.com/your-page)",
+    "validationXUrlFormat": "Please enter a valid X URL (e.g., https://x.com/your-username)",
+    "validationInstagramUrlFormat": "Please enter a valid Instagram URL (e.g., https://instagram.com/your-username)",
+    "validationTiktokUrlFormat": "Please enter a valid TikTok URL (e.g., https://tiktok.com/@your-username)",
+    "validationSlugAlreadyTaken": "This slug is already taken by another store",
+    "validationSlugTranslationAlreadyTaken": "One or more of these slug translations are already taken by another store",
+    "updated": "Store \"{name}\" has been updated successfully",
+    "updatedError": "Failed to update store, please try again"
+  },
   "ProductCategoryFormDrawer": {
     "openingButton": "Add a category",
     "addTitle": "Add a category",
@@ -354,6 +391,10 @@
     "title": "Products",
     "description": "Manage your products, their inventory and their availability according to the season"
   },
+  "AdminVendorProfilePage": {
+    "createdAt": "Created at",
+    "updatedAt": "Updated at"
+  },
   "PublishedStatusManagement": {
     "modal_draft_title": "Set as draft \"{name}\"",
     "modal_draft_description": "Are you sure you want to set \"{name}\" as draft?",
@@ -393,5 +434,31 @@
     "principalVariant": "Principal variant",
     "editVariant": "Edit variant",
     "deleteVariant": "Delete variant"
+  },
+  "AdminVendorBannerImage": {
+    "modalTitle": "Edit banner image",
+    "modalDescription": "Edit the banner image",
+    "modalConfirmLabel": "Change image",
+    "modalCancelLabel": "Cancel",
+    "editImage": "Edit image"
+  },
+  "AdminVendorBannerImageForm": {
+    "image": "Image",
+    "validationImageRequired": "The image is required",
+    "success": "Banner image updated",
+    "error": "Failed to update banner image, please try again"
+  },
+  "AdminVendorProfileImage": {
+    "modalTitle": "Edit profile image",
+    "modalDescription": "Edit the profile image",
+    "modalConfirmLabel": "Change image",
+    "modalCancelLabel": "Cancel",
+    "editImage": "Edit image"
+  },
+  "AdminVendorProfileImageForm": {
+    "image": "Image",
+    "validationImageRequired": "The image is required",
+    "success": "Profile image updated",
+    "error": "Failed to update profile image, please try again"
   }
 }

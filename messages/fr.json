@@ -354,6 +354,10 @@
     "title": "Produits",
     "description": "Gérer facilement vos produits, leurs inventaire et leur disponibilité selon la saison"
   },
+  "AdminVendorProfilePage": {
+    "createdAt": "Créé le",
+    "updatedAt": "Mis à jour le"
+  },
   "PublishedStatusManagement": {
     "modal_draft_title": "Mettre en brouillon \"{name}\"",
     "modal_draft_description": "Êtes-vous sûr de vouloir mettre \"{name}\" en brouillon ?",
@@ -393,5 +397,69 @@
     "principalVariant": "Variant principal",
     "editVariant": "Modifier le variant",
     "deleteVariant": "Supprimer le variant"
+  },
+  "AdminVendorBannerImage": {
+    "modalTitle": "Modifier l'image de bannière",
+    "modalDescription": "Modifier l'image de bannière",
+    "modalConfirmLabel": "Changer l'image",
+    "modalCancelLabel": "Annuler",
+    "validationImageRequired": "L'image est requise",
+    "editImage": "Modifier l'image"
+  },
+  "AdminVendorBannerImageForm": {
+    "image": "Image",
+    "validationImageRequired": "L'image est requise",
+    "success": "Image de bannière mise à jour",
+    "error": "Échec de la mise à jour de l'image de bannière, veuillez réessayer"
+  },
+  "AdminVendorProfileImage": {
+    "modalTitle": "Modifier l'image de profil",
+    "modalDescription": "Modifier l'image de profil",
+    "modalConfirmLabel": "Changer l'image",
+    "modalCancelLabel": "Annuler",
+    "editImage": "Modifier l'image"
+  },
+  "AdminVendorProfileImageForm": {
+    "image": "Image",
+    "validationImageRequired": "L'image est requise",
+    "success": "Image de profil mise à jour",
+    "error": "Échec de la mise à jour de l'image de profil, veuillez réessayer"
+  },
+  "VendorProfileFormDrawer": {
+    "editTitle": "Modifier votre commerce",
+    "editDescription": "Mettez à jour les informations de votre commerce et cliquez sur 'Enregistrer'.",
+    "editButton": "Modifier le commerce",
+    "cancelButton": "Annuler"
+  },
+  "VendorProfileForm": {
+    "name": "Nom du commerce",
+    "namePlaceholder": "Mon commerce formidable",
+    "description": "Description du commerce",
+    "descriptionPlaceholder": "Une brève description de votre commerce et de ce que vous offrez",
+    "slug": "Slug du commerce",
+    "slugPlaceholder": "mon-commerce-formidable",
+    "socialMediaTitle": "Réseaux sociaux",
+    "facebookUrl": "Page Facebook",
+    "facebookUrlPlaceholder": "https://facebook.com/votre-page",
+    "xUrl": "Profil X (Twitter)",
+    "xUrlPlaceholder": "https://x.com/votre-nom-utilisateur",
+    "instagramUrl": "Profil Instagram",
+    "instagramUrlPlaceholder": "https://instagram.com/votre-nom-utilisateur",
+    "tiktokUrl": "Profil TikTok",
+    "tiktokUrlPlaceholder": "https://tiktok.com/@votre-nom-utilisateur",
+    "validationNameRequired": "Le nom du commerce est requis",
+    "validationDescriptionRequired": "La description du commerce est requise",
+    "validationDescriptionMinLength": "La description doit contenir au moins 10 caractères",
+    "validationDescriptionMaxLength": "La description ne peut pas dépasser 500 caractères",
+    "validationSlugRequired": "Le slug du commerce est requis",
+    "validationSlugFormat": "Le slug doit contenir uniquement des lettres minuscules, des chiffres et des tirets",
+    "validationFacebookUrlFormat": "Veuillez entrer une URL Facebook valide (ex: https://facebook.com/votre-page)",
+    "validationXUrlFormat": "Veuillez entrer une URL X valide (ex: https://x.com/votre-nom-utilisateur)",
+    "validationInstagramUrlFormat": "Veuillez entrer une URL Instagram valide (ex: https://instagram.com/votre-nom-utilisateur)",
+    "validationTiktokUrlFormat": "Veuillez entrer une URL TikTok valide (ex: https://tiktok.com/@votre-nom-utilisateur)",
+    "validationSlugAlreadyTaken": "Ce slug est déjà utilisé par un autre commerce",
+    "validationSlugTranslationAlreadyTaken": "Une ou plusieurs de ces traductions de slug sont déjà utilisées par un autre commerce",
+    "updated": "Commerce \"{name}\" mis à jour avec succès",
+    "updatedError": "Échec de la mise à jour du commerce, veuillez réessayer"
   }
 }

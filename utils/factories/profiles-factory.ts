@@ -8,6 +8,11 @@ export type Profile = {
   descriptionTranslations: Record<Locales, string>;
   slugTranslations: Record<Locales, string>;
   bannerImage: string | null;
+  profileImage: string | null;
+  facebookPageUrl: string | null;
+  xPageUrl: string | null;
+  instagramPageUrl: string | null;
+  tiktokPageUrl: string | null;
   isActive: boolean;
   isDeleted: boolean;
   isReviewed: boolean;
@@ -25,6 +30,11 @@ export const profilesFactory = (profiles: RawProfile[]): Profile[] => {
       descriptionTranslations: profile.description_translations as Record<Locales, string>,
       slugTranslations: profile.slug_translations as Record<Locales, string>,
       bannerImage: profile.banner_image,
+      profileImage: profile.profile_image,
+      facebookPageUrl: profile.facebook_page_url,
+      xPageUrl: profile.x_page_url,
+      instagramPageUrl: profile.instagram_page_url,
+      tiktokPageUrl: profile.tiktok_page_url,
       isActive: profile.is_active ?? false,
       isDeleted: profile.is_deleted ?? false,
       isReviewed: profile.is_reviewed ?? false,

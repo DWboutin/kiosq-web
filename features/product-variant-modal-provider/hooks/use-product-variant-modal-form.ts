@@ -52,7 +52,6 @@ export const useProductVariantModalForm = ({ onSuccess }: UseProductVariantModal
     watch,
     formState: { errors },
     reset,
-    setValue,
   } = useForm<ProductVariantFormValues>({
     defaultValues,
     resolver: zodResolver(validationSchema) as Resolver<ProductVariantFormValues>,

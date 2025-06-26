@@ -1,5 +1,5 @@
-import { YourStore } from "@/components/client-pages/your-store/your-store";
+import { DashboardYourStore } from "@/components/client-pages/dashboard-your-store/dashboard-your-store";
 
 export default async function YourStorePage() {
-  return <YourStore />;
+  return <DashboardYourStore />;
 }
