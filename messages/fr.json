@@ -444,6 +444,8 @@
     "validationDescriptionMaxLength": "La description ne peut pas dépasser 500 caractères",
     "validationSlugRequired": "Le slug du commerce est requis",
     "validationSlugFormat": "Le slug doit contenir uniquement des lettres minuscules, des chiffres et des tirets",
+    "validationSlugAlreadyTaken": "Ce slug est déjà utilisé par un autre commerce",
+    "validationSlugTranslationAlreadyTaken": "Une ou plusieurs de ces traductions de slug sont déjà utilisées par un autre commerce",
     "updated": "Commerce \"{name}\" mis à jour avec succès",
     "updatedError": "Échec de la mise à jour du commerce, veuillez réessayer"
   }

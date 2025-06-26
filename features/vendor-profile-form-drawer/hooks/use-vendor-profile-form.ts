@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import {
   createVendorProfileFormSchema,
   VendorProfileFormValues,
+  checkSlugAvailability,
 } from "@/features/vendor-profile-form-drawer/utils/vendor-profile-validation-schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -62,6 +63,8 @@ export const useVendorProfileForm = ({ profileId }: UseVendorProfileFormProps) =
     handleSubmit,
     watch,
     reset,
+    setError,
+    clearErrors,
     formState: { errors },
   } = useForm<VendorProfileFormValues>({
     defaultValues,
@@ -70,8 +73,46 @@ export const useVendorProfileForm = ({ profileId }: UseVendorProfileFormProps) =
 
   const name = watch("name");
 
+  const validateSlugUniqueness = async (data: VendorProfileFormValues) => {
+    // Clear previous slug errors
+    clearErrors("slug");
+    clearErrors("slug_translations");
+
+    // Check main slug
+    const mainSlugAvailable = await checkSlugAvailability(data.slug, profileId, locale);
+    if (!mainSlugAvailable) {
+      setError("slug", {
+        type: "manual",
+        message: t("VendorProfileForm.validationSlugAlreadyTaken"),
+      });
+      return false;
+    }
+
+    // Check translated slugs
+    for (const [lang, slug] of Object.entries(data.slug_translations)) {
+      if (slug) {
+        const slugAvailable = await checkSlugAvailability(slug, profileId, lang);
+        if (!slugAvailable) {
+          setError("slug_translations", {
+            type: "manual",
+            message: t("VendorProfileForm.validationSlugTranslationAlreadyTaken"),
+          });
+          return false;
+        }
+      }
+    }
+
+    return true;
+  };
+
   const { mutate: submitProfile, isPending } = useMutation({
     mutationFn: async (data: VendorProfileFormValues) => {
+      // Validate slug uniqueness before submitting
+      const isSlugValid = await validateSlugUniqueness(data);
+      if (!isSlugValid) {
+        throw new Error("Slug validation failed");
+      }
+
       return updateVendorProfile({ ...data, profileId, locale });
     },
     onSuccess: async () => {
@@ -85,7 +126,19 @@ export const useVendorProfileForm = ({ profileId }: UseVendorProfileFormProps) =
 
       drawerRef.current?.close();
     },
-    onError: () => {
+    onError: (error: Error) => {
+      if (error.message === "Slug validation failed") {
+        // Slug validation error is already handled by setError above
+        return;
+      }
+      if (error.message === "SLUG_NOT_UNIQUE") {
+        // Handle database constraint violation as fallback
+        setError("slug", {
+          type: "manual",
+          message: t("VendorProfileForm.validationSlugAlreadyTaken"),
+        });
+        return;
+      }
       const message = t("VendorProfileForm.updatedError");
       toast.error(message);
     },

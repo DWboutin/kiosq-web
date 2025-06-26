@@ -48,6 +48,10 @@ export const updateVendorProfile = async (data: UpdateVendorProfileArgs) => {
     .single();
 
   if (error) {
+    // Handle slug uniqueness constraint violation
+    if (error.message?.includes("Profile slug must be unique")) {
+      throw new Error("SLUG_NOT_UNIQUE");
+    }
     throw error;
   }
 

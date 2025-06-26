@@ -104,6 +104,8 @@
     "validationDescriptionMaxLength": "Description cannot exceed 500 characters",
     "validationSlugRequired": "Store slug is required",
     "validationSlugFormat": "Slug must contain only lowercase letters, numbers, and hyphens",
+    "validationSlugAlreadyTaken": "This slug is already taken by another store",
+    "validationSlugTranslationAlreadyTaken": "One or more of these slug translations are already taken by another store",
     "updated": "Store \"{name}\" has been updated successfully",
     "updatedError": "Failed to update store, please try again"
   },
