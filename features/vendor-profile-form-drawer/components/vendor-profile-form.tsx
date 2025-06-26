@@ -75,6 +75,91 @@ export const VendorProfileForm: FC<VendorProfileFormProps> = ({ control, errors 
         />
       </FormInputContainer>
       <AddTranslationField name="slug" control={control} errors={errors} />
+
+      {/* Social Media URLs Section */}
+      <div className="flex flex-col gap-4 border-t pt-4 mt-4">
+        <h3 className="text-lg font-medium text-gray-900">{t("socialMediaTitle")}</h3>
+
+        <FormInputContainer
+          inputId="facebook_page_url"
+          label={t("facebookUrl")}
+          error={errors.facebook_page_url?.message}
+        >
+          <Controller
+            name="facebook_page_url"
+            control={control}
+            render={({ field }) => (
+              <Input
+                id="facebook_page_url"
+                type="url"
+                placeholder={t("facebookUrlPlaceholder")}
+                aria-invalid={!!errors.facebook_page_url}
+                {...field}
+              />
+            )}
+          />
+        </FormInputContainer>
+
+        <FormInputContainer
+          inputId="x_page_url"
+          label={t("xUrl")}
+          error={errors.x_page_url?.message}
+        >
+          <Controller
+            name="x_page_url"
+            control={control}
+            render={({ field }) => (
+              <Input
+                id="x_page_url"
+                type="url"
+                placeholder={t("xUrlPlaceholder")}
+                aria-invalid={!!errors.x_page_url}
+                {...field}
+              />
+            )}
+          />
+        </FormInputContainer>
+
+        <FormInputContainer
+          inputId="instagram_page_url"
+          label={t("instagramUrl")}
+          error={errors.instagram_page_url?.message}
+        >
+          <Controller
+            name="instagram_page_url"
+            control={control}
+            render={({ field }) => (
+              <Input
+                id="instagram_page_url"
+                type="url"
+                placeholder={t("instagramUrlPlaceholder")}
+                aria-invalid={!!errors.instagram_page_url}
+                {...field}
+              />
+            )}
+          />
+        </FormInputContainer>
+
+        <FormInputContainer
+          inputId="tiktok_page_url"
+          label={t("tiktokUrl")}
+          error={errors.tiktok_page_url?.message}
+        >
+          <Controller
+            name="tiktok_page_url"
+            control={control}
+            render={({ field }) => (
+              <Input
+                id="tiktok_page_url"
+                type="url"
+                placeholder={t("tiktokUrlPlaceholder")}
+                aria-invalid={!!errors.tiktok_page_url}
+                {...field}
+              />
+            )}
+          />
+        </FormInputContainer>
+      </div>
     </>
   );
 };

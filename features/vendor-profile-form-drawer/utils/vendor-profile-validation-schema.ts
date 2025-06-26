@@ -5,6 +5,12 @@ import {
 } from "@/features/add-translation-field/utils/add-translation-field-validation-schema";
 import { SLUG_REGEX } from "@/utils/constants";
 
+// Social media URL validation patterns
+const FACEBOOK_URL_REGEX = /^https?:\/\/(www\.)?(facebook\.com|m\.facebook\.com)\/.+$/i;
+const X_URL_REGEX = /^https?:\/\/(www\.)?(x\.com|twitter\.com)\/.+$/i;
+const INSTAGRAM_URL_REGEX = /^https?:\/\/(www\.)?instagram\.com\/.+$/i;
+const TIKTOK_URL_REGEX = /^https?:\/\/(www\.)?(tiktok\.com|vm\.tiktok\.com)\/.+$/i;
+
 export const createVendorProfileFormSchema = (locale: string, t: (key: string) => string) => {
   return z.object({
     name: z.string().min(1, t("VendorProfileForm.validationNameRequired")),
@@ -20,6 +26,34 @@ export const createVendorProfileFormSchema = (locale: string, t: (key: string) =
       .min(1, t("VendorProfileForm.validationSlugRequired"))
       .regex(SLUG_REGEX, t("VendorProfileForm.validationSlugFormat")),
     slug_translations: createSlugTranslationValidator(locale, t),
+    facebook_page_url: z
+      .string()
+      .optional()
+      .refine(
+        (value) => !value || value.trim() === "" || FACEBOOK_URL_REGEX.test(value),
+        t("VendorProfileForm.validationFacebookUrlFormat")
+      ),
+    x_page_url: z
+      .string()
+      .optional()
+      .refine(
+        (value) => !value || value.trim() === "" || X_URL_REGEX.test(value),
+        t("VendorProfileForm.validationXUrlFormat")
+      ),
+    instagram_page_url: z
+      .string()
+      .optional()
+      .refine(
+        (value) => !value || value.trim() === "" || INSTAGRAM_URL_REGEX.test(value),
+        t("VendorProfileForm.validationInstagramUrlFormat")
+      ),
+    tiktok_page_url: z
+      .string()
+      .optional()
+      .refine(
+        (value) => !value || value.trim() === "" || TIKTOK_URL_REGEX.test(value),
+        t("VendorProfileForm.validationTiktokUrlFormat")
+      ),
   });
 };
 

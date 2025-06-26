@@ -28,9 +28,11 @@ export const VendorStoreHeader: FC<VendorStoreHeaderProps> = ({
       <AdminVendorBannerImage bannerImageUrl={bannerImageUrl} profileId={profileId} />
       <div className="flex flex-row flex-1 gap-5 z-10">
         <AdminVendorProfileImage profileId={profileId} profileImageUrl={profileImageUrl} />
-        <div className="flex flex-col flex-1 py-5">
-          <h2 className="text-2xl font-bold text-neutral-black">{name}</h2>
-          <p className="text-sm text-neutral-medium">{description}</p>
+        <div className="flex flex-row gap-2 items-center justify-between">
+          <div className="flex flex-col flex-1 py-5">
+            <h2 className="text-2xl font-bold text-neutral-black">{name}</h2>
+            <p className="text-sm text-neutral-medium">{description}</p>
+          </div>
         </div>
       </div>
     </div>

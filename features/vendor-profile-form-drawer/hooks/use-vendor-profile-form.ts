@@ -31,6 +31,10 @@ const getVendorProfileDefaultValues = (
       description_translations: {},
       slug: "",
       slug_translations: {},
+      facebook_page_url: "",
+      x_page_url: "",
+      instagram_page_url: "",
+      tiktok_page_url: "",
     };
   }
 
@@ -41,6 +45,10 @@ const getVendorProfileDefaultValues = (
     description_translations: profile.descriptionTranslations || {},
     slug: profile.slugTranslations?.[locale] || "",
     slug_translations: profile.slugTranslations || {},
+    facebook_page_url: profile.facebookPageUrl || "",
+    x_page_url: profile.xPageUrl || "",
+    instagram_page_url: profile.instagramPageUrl || "",
+    tiktok_page_url: profile.tiktokPageUrl || "",
   };
 };
 
