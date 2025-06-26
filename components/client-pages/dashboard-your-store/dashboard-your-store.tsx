@@ -34,6 +34,10 @@ export const DashboardYourStore: FC = () => {
         profileImageUrl={firstVendorProfile.profileImage}
         nameTranslations={firstVendorProfile.nameTranslations}
         descriptionTranslations={firstVendorProfile.descriptionTranslations}
+        facebookPageUrl={firstVendorProfile.facebookPageUrl}
+        instagramPageUrl={firstVendorProfile.instagramPageUrl}
+        tiktokPageUrl={firstVendorProfile.tiktokPageUrl}
+        xPageUrl={firstVendorProfile.xPageUrl}
       />
       <pre>{JSON.stringify(vendorProfiles, null, 2)}</pre>
     </>
