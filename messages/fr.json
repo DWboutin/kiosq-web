@@ -87,6 +87,10 @@
     "title": "Votre commerce",
     "description": "Gestion de votre commerce"
   },
+  "DashboardYourKiosqsHeader": {
+    "title": "Vos kiosqs",
+    "description": "Gestion de vos kiosqs"
+  },
   "ProductCategoryFormDrawer": {
     "openingButton": "Ajouter une catégorie",
     "addTitle": "Ajouter une catégorie",

@@ -85,6 +85,10 @@
     "title": "Your store",
     "description": "Manage your store"
   },
+  "DashboardYourKiosqsHeader": {
+    "title": "Your kiosqs",
+    "description": "Manage your kiosqs"
+  },
   "VendorProfileFormDrawer": {
     "editTitle": "Edit your store",
     "editDescription": "Update your store information and click 'Save'.",
