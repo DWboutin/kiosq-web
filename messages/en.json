@@ -85,6 +85,28 @@
     "title": "Your store",
     "description": "Manage your store"
   },
+  "VendorProfileFormDrawer": {
+    "editTitle": "Edit your store",
+    "editDescription": "Update your store information and click 'Save'.",
+    "editButton": "Edit Store",
+    "cancelButton": "Cancel"
+  },
+  "VendorProfileForm": {
+    "name": "Store Name",
+    "namePlaceholder": "My Amazing Store",
+    "description": "Store Description",
+    "descriptionPlaceholder": "A brief description of your store and what you offer",
+    "slug": "Store Slug",
+    "slugPlaceholder": "my-amazing-store",
+    "validationNameRequired": "Store name is required",
+    "validationDescriptionRequired": "Store description is required",
+    "validationDescriptionMinLength": "Description must be at least 10 characters",
+    "validationDescriptionMaxLength": "Description cannot exceed 500 characters",
+    "validationSlugRequired": "Store slug is required",
+    "validationSlugFormat": "Slug must contain only lowercase letters, numbers, and hyphens",
+    "updated": "Store \"{name}\" has been updated successfully",
+    "updatedError": "Failed to update store, please try again"
+  },
   "ProductCategoryFormDrawer": {
     "openingButton": "Add a category",
     "addTitle": "Add a category",
