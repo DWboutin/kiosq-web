@@ -11,6 +11,7 @@
     "dashboard_events": "/tableau-de-bord/evenements",
     "dashboard_yourStore": "/tableau-de-bord/votre-commerce",
     "dashboard_yourKiosqs": "/tableau-de-bord/vos-kiosqs",
+    "dashboard_kiosq_id": "/tableau-de-bord/vos-kiosqs/[kiosqId]",
     "dashboard_reservations": "/tableau-de-bord/reservations",
     "dashboard_billing": "/tableau-de-bord/facturation",
     "dashboard_admin": "/tableau-de-bord/administration",

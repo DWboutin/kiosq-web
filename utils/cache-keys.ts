@@ -51,6 +51,18 @@ export const cacheKeys = {
     tag: `current-user-product-by-id-${productId}`,
     queryKey: ["currentUserProductById", productId] as const,
   }),
+  currentUserProfileIdKiosqs: {
+    list: (profileId: string): CacheKeyConfig => ({
+      revalidate: 86400, // 1 day
+      tag: `current-user-profile-id-kiosqs-${profileId}`,
+      queryKey: ["currentUserProfileIdKiosqs", "list", profileId] as const,
+    }),
+  },
+  currentUserKiosqById: (kiosqId: string): CacheKeyConfig => ({
+    revalidate: 86400, // 1 day
+    tag: `current-user-kiosq-by-id-${kiosqId}`,
+    queryKey: ["currentUserKiosqById", kiosqId] as const,
+  }),
 };
 
 export const getAllTagsForDomain = (domain: keyof typeof cacheKeys): string[] => {

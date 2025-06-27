@@ -17,6 +17,8 @@ export const createKiosqFormSchema = (locale: string, t: (key: string) => string
       .min(1, t("KiosqForm.validationCountryRequired"))
       .length(2, t("KiosqForm.validationCountryFormat"))
       .toUpperCase(),
+    latitude: z.string().optional(),
+    longitude: z.string().optional(),
     status: z.enum(KIOSQ_STATUSES, {
       required_error: t("KiosqForm.validationStatusRequired"),
     }),

@@ -11,6 +11,7 @@
     "dashboard_events": "/dashboard/events",
     "dashboard_yourStore": "/dashboard/your-store",
     "dashboard_yourKiosqs": "/dashboard/your-kiosqs",
+    "dashboard_kiosq_id": "/dashboard/your-kiosqs/[kiosqId]",
     "dashboard_reservations": "/dashboard/reservations",
     "dashboard_billing": "/dashboard/billing",
     "dashboard_admin": "/dashboard/admin",

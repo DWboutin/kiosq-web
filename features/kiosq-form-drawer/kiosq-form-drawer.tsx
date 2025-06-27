@@ -8,18 +8,24 @@ import { KiosqForm } from "@/features/kiosq-form-drawer/components/kiosq-form";
 import { useTranslations } from "next-intl";
 import { ButtonBrand } from "@/components/ui/button-brand";
 import { EditPencilIcon } from "@/components/ui/icons/edit-pencil-icon";
+import { AuthenticatedUserKiosq } from "@/utils/factories/authenticated-user-kiosq-factory";
 
 type KiosqFormDrawerProps = {
   editMode?: boolean;
   kiosqId?: string;
+  kiosqData?: AuthenticatedUserKiosq;
 };
 
-export const KiosqFormDrawer: FC<KiosqFormDrawerProps> = ({ editMode = false, kiosqId }) => {
+export const KiosqFormDrawer: FC<KiosqFormDrawerProps> = ({
+  editMode = false,
+  kiosqId,
+  kiosqData,
+}) => {
   const t = useTranslations("KiosqFormDrawer");
   const {
     selectors: { control, errors, isSubmitting, drawerRef },
     actions: { handleFormSubmit },
-  } = useKiosqForm({ editMode, kiosqId });
+  } = useKiosqForm({ editMode, kiosqId, kiosqData });
   const title = editMode ? t("editTitle") : t("addTitle");
   const description = editMode ? t("editDescription") : t("addDescription");
   const buttonSubmitLabel = editMode ? t("editButton") : t("addButton");

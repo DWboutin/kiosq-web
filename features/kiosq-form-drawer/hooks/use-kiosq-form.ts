@@ -6,16 +6,21 @@ import {
   createKiosqFormSchema,
   KiosqFormValues,
 } from "@/features/kiosq-form-drawer/utils/kiosq-form-validation-schema";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createKiosq } from "@/actions/create-kiosq";
 import { updateKiosq } from "@/actions/update-kiosq";
 import { toast } from "sonner";
 import { SideFormDrawerRef } from "@/components/ui/side-form-drawer";
 import { useRef } from "react";
+import { useCurrentUserKiosqById } from "@/hooks/use-current-user-kiosq-by-id";
+import { AuthenticatedUserKiosq } from "@/utils/factories/authenticated-user-kiosq-factory";
+import { cacheKeys } from "@/utils/cache-keys";
+import { Database } from "@/types/supabase";
 
 type UseKiosqFormProps = {
   editMode?: boolean;
   kiosqId?: string;
+  kiosqData?: AuthenticatedUserKiosq;
 };
 
 const kiosqDefaultValues: KiosqFormValues = {
@@ -34,14 +39,43 @@ const kiosqDefaultValues: KiosqFormValues = {
   image_url: "",
 };
 
-export const useKiosqForm = ({ editMode = false, kiosqId }: UseKiosqFormProps = {}) => {
+const fillKiosqFormValues = (kiosq: AuthenticatedUserKiosq, locale: Locales): KiosqFormValues => {
+  return {
+    ...kiosqDefaultValues,
+    name: kiosq?.nameTranslations[locale] || "",
+    name_translations: kiosq?.nameTranslations || {},
+    description: kiosq?.descriptionTranslations[locale] || "",
+    description_translations: kiosq?.descriptionTranslations || {},
+    address: kiosq?.address || "",
+    city: kiosq?.city || "",
+    state: kiosq?.state || "",
+    country: kiosq?.country || "",
+    latitude: kiosq?.latitude?.toString() || "",
+    longitude: kiosq?.longitude?.toString() || "",
+    status: kiosq?.status || "open",
+    is_default: kiosq?.is_default || false,
+    image_url: kiosq?.image_url || "",
+  };
+};
+
+export const useKiosqForm = ({ editMode = false, kiosqId, kiosqData }: UseKiosqFormProps = {}) => {
   const t = useTranslations();
   const drawerRef = useRef<SideFormDrawerRef>(null);
   const locale = useLocale() as Locales;
-
+  const queryClient = useQueryClient();
   const validationSchema = createKiosqFormSchema(locale, t);
+  const {
+    selectors: { kiosq },
+    actions: { refetch },
+  } = useCurrentUserKiosqById({ kiosqId, kiosqData });
 
-  const defaultValues: KiosqFormValues = kiosqDefaultValues;
+  console.log("kiosq", kiosq);
+
+  const defaultValues: KiosqFormValues = !kiosq
+    ? kiosqDefaultValues
+    : fillKiosqFormValues(kiosq, locale);
+
+  console.log("defaultValues", defaultValues);
 
   const {
     control,
@@ -59,7 +93,7 @@ export const useKiosqForm = ({ editMode = false, kiosqId }: UseKiosqFormProps = 
   const { mutate: submitKiosq, isPending } = useMutation({
     mutationFn: (data: KiosqFormValues) =>
       editMode ? updateKiosq({ ...data, locale, id: kiosqId! }) : createKiosq({ ...data, locale }),
-    onSuccess: async () => {
+    onSuccess: async (savedKiosq: Database["public"]["Tables"]["kiosqs"]["Row"]) => {
       const message = editMode
         ? t("KiosqForm.updated", { name })
         : t("KiosqForm.created", { name });
@@ -67,11 +101,16 @@ export const useKiosqForm = ({ editMode = false, kiosqId }: UseKiosqFormProps = 
       toast.success(message);
 
       if (editMode) {
-        // TODO: Add invalidation for specific kiosq query when implemented
+        await queryClient.invalidateQueries({
+          queryKey: cacheKeys.currentUserKiosqById(savedKiosq.id).queryKey,
+        });
+        refetch();
         drawerRef.current?.close();
       } else {
         reset();
-        // TODO: Add invalidation for kiosqs list query when implemented
+        queryClient.invalidateQueries({
+          queryKey: cacheKeys.currentUserProfileIdKiosqs.list(savedKiosq.profile_id).queryKey,
+        });
       }
     },
     onError: () => {
