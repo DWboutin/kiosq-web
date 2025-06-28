@@ -530,6 +530,9 @@
     "deleteModalTitle": "Supprimer le kiosq",
     "deleteModalDescription": "Êtes-vous sûr de vouloir supprimer ce kiosq ? Cette action ne peut pas être annulée.",
     "deleteModalButton": "Supprimer",
-    "cancelModalButton": "Annuler"
+    "cancelModalButton": "Annuler",
+    "published": "Publié",
+    "deleted": "Supprimé",
+    "draft": "Brouillon"
   }
 }

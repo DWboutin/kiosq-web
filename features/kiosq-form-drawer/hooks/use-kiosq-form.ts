@@ -34,8 +34,8 @@ const kiosqDefaultValues: KiosqFormValues = {
   latitude: "",
   longitude: "",
   storeStatus: "open",
-  is_default: false,
-  image_url: "",
+  isDefault: false,
+  imageUrl: "",
 };
 
 const fillKiosqFormValues = (kiosq: AuthenticatedUserKiosq, locale: Locales): KiosqFormValues => {
@@ -52,8 +52,8 @@ const fillKiosqFormValues = (kiosq: AuthenticatedUserKiosq, locale: Locales): Ki
     latitude: kiosq?.latitude?.toString() || "",
     longitude: kiosq?.longitude?.toString() || "",
     storeStatus: kiosq?.storeStatus || "open",
-    is_default: kiosq?.isDefault || false,
-    image_url: kiosq?.imageUrl || "",
+    isDefault: kiosq?.isDefault || false,
+    imageUrl: kiosq?.imageUrl || "",
   };
 };
 

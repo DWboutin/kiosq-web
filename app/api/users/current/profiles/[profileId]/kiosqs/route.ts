@@ -22,7 +22,8 @@ export const GET = async (
       .from("kiosqs")
       .select("*")
       .eq("profile_id", profileId)
-      .eq("is_deleted", false);
+      .eq("is_deleted", false)
+      .order("is_default", { ascending: false });
 
     if (kiosqsError) {
       console.error("Error fetching kiosqs", kiosqsError);

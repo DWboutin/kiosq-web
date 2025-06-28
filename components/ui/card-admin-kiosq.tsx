@@ -13,7 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { MapPinIcon, ClockIcon, TrashIcon } from "lucide-react";
 import { MapView } from "@/components/ui/map-view";
 import { useTranslations } from "next-intl";
-import { StoreStatus } from "@/types/app";
+import { PublishedStatus, StoreStatus } from "@/types/app";
 import { ButtonWithConfirmationModal } from "@/features/button-with-confirmation-modal/button-with-confirmation-modal";
 import { cacheKeys } from "@/utils/cache-keys";
 import { useQueryClient } from "@tanstack/react-query";
@@ -35,6 +35,7 @@ type CardAdminKiosqProps = {
   id: string;
   name: string;
   description: string;
+  status: PublishedStatus;
   storeStatus: StoreStatus;
   address?: string;
   city?: string;
@@ -50,6 +51,7 @@ export const CardAdminKiosq = ({
   id,
   name,
   description,
+  status,
   storeStatus,
   address,
   city,
@@ -85,15 +87,20 @@ export const CardAdminKiosq = ({
           <ClockIcon className="h-3 w-3 mr-1" />
           {t(storeStatus)}
         </Badge>
-        {isDefault && (
-          <Badge variant="outline" className="absolute top-2 left-2 bg-white">
-            {t("default")}
+        {status !== "published" && (
+          <Badge className="absolute top-2 left-2 bg-neutral-darker text-white">
+            {t(`${status}`)}
           </Badge>
         )}
       </div>
 
       <div className="flex-1 flex flex-col gap-4">
         <CardHeader className="gap-2 pb-2">
+          {isDefault && (
+            <Badge variant="outline" className="bg-white">
+              {t("default")}
+            </Badge>
+          )}
           <CardTitle className="text-lg">{name}</CardTitle>
           {description && <CardDescription className="line-clamp-2">{description}</CardDescription>}
         </CardHeader>

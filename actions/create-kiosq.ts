@@ -90,7 +90,7 @@ export const createKiosq = async (kiosq: CreateKiosqArgs) => {
       longitude: geocodeResult?.longitude || null,
       store_status: kiosq.storeStatus,
       is_default: shouldBeDefault,
-      image_url: kiosq.image_url || null,
+      image_url: kiosq.imageUrl || null,
       profile_id: profile.id,
     })
     .select()

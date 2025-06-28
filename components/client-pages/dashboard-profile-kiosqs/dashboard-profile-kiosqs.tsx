@@ -29,13 +29,14 @@ export const DashboardProfileKiosqs = ({ kiosqsData }: DashboardProfileKiosqsPro
   }
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div className="flex flex-wrap gap-6 justify-start mt-6">
       {kiosqsData.map((kiosq) => (
         <CardAdminKiosq
           key={kiosq.id}
           id={kiosq.id}
           name={kiosq.nameTranslations[locale]}
           description={kiosq.descriptionTranslations[locale]}
+          status={kiosq.status}
           storeStatus={kiosq.storeStatus}
           address={kiosq.address!}
           city={kiosq.city!}
