@@ -8,7 +8,7 @@ import { KiosqForm } from "@/features/kiosq-form-drawer/components/kiosq-form";
 import { useTranslations } from "next-intl";
 import { ButtonBrand } from "@/components/ui/button-brand";
 import { EditPencilIcon } from "@/components/ui/icons/edit-pencil-icon";
-import { AuthenticatedUserKiosq } from "@/utils/factories/authenticated-user-kiosq-factory";
+import { AuthenticatedUserKiosq } from "@/utils/factories/authenticated-user-kiosqs-factory";
 
 type KiosqFormDrawerProps = {
   editMode?: boolean;
@@ -57,7 +57,12 @@ export const KiosqFormDrawer: FC<KiosqFormDrawerProps> = ({
       }
     >
       <div className="flex flex-col gap-4">
-        <KiosqForm control={control} errors={errors} editMode={editMode} />
+        <KiosqForm
+          control={control}
+          errors={errors}
+          editMode={editMode}
+          isDefault={kiosqData?.isDefault}
+        />
       </div>
     </SideFormDrawer>
   );

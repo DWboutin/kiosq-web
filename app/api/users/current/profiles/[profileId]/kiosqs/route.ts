@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
+import { authenticatedUserKiosqsFactory } from "@/utils/factories/authenticated-user-kiosqs-factory";
 
 export const GET = async (
   request: Request,
@@ -29,7 +30,7 @@ export const GET = async (
     }
 
     return NextResponse.json({
-      kiosqs: kiosqs || [],
+      kiosqs: authenticatedUserKiosqsFactory(kiosqs || []),
     });
   } catch (error) {
     console.error("Error fetching kiosqs", error);

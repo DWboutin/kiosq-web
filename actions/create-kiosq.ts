@@ -33,6 +33,19 @@ export const createKiosq = async (kiosq: CreateKiosqArgs) => {
     throw new Error("Profile not found");
   }
 
+  // Check if user already has kiosqs to determine if this should be default
+  const { data: existingKiosqs, error: existingKiosqsError } = await supabase
+    .from("kiosqs")
+    .select("id")
+    .eq("profile_id", profile.id);
+
+  if (existingKiosqsError) {
+    throw existingKiosqsError;
+  }
+
+  // If this is the first kiosq, make it default regardless of the input
+  const shouldBeDefault = !existingKiosqs || existingKiosqs.length === 0 ? true : kiosq.is_default;
+
   // Geocode the address to get latitude and longitude
   const geocodeResult = await geocodeAddressWithFallback(
     kiosq.address,
@@ -61,7 +74,7 @@ export const createKiosq = async (kiosq: CreateKiosqArgs) => {
       latitude: geocodeResult?.latitude || null,
       longitude: geocodeResult?.longitude || null,
       status: kiosq.status,
-      is_default: kiosq.is_default,
+      is_default: shouldBeDefault,
       image_url: kiosq.image_url || null,
       profile_id: profile.id,
     })

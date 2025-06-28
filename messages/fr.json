@@ -60,6 +60,7 @@
     "dashboard": "Tableau de bord",
     "products": "Produits",
     "productDetails": "Détails du produit",
+    "kiosqDetails": "Détails du kiosq",
     "discounts": "Rabais",
     "orders": "Commandes",
     "settings": "Paramètres",
@@ -87,10 +88,6 @@
   "DashboardYourStoreHeader": {
     "title": "Votre commerce",
     "description": "Gestion de votre commerce"
-  },
-  "DashboardYourKiosqsHeader": {
-    "title": "Vos kiosqs",
-    "description": "Gestion de vos kiosqs"
   },
   "KiosqFormDrawer": {
     "openingButton": "Ajouter un kiosq",
@@ -408,6 +405,12 @@
     "title": "Produits",
     "description": "Gérer facilement vos produits, leurs inventaire et leur disponibilité selon la saison"
   },
+  "AdminKiosqPage": {
+    "title": "Kiosqs",
+    "description": "Gérer facilement vos kiosqs, leurs inventaire et leur disponibilité selon la saison",
+    "createdAt": "Créé le",
+    "updatedAt": "Mis à jour le"
+  },
   "AdminVendorProfilePage": {
     "createdAt": "Créé le",
     "updatedAt": "Mis à jour le"
@@ -515,5 +518,13 @@
     "validationSlugTranslationAlreadyTaken": "Une ou plusieurs de ces traductions de slug sont déjà utilisées par un autre commerce",
     "updated": "Commerce \"{name}\" mis à jour avec succès",
     "updatedError": "Échec de la mise à jour du commerce, veuillez réessayer"
+  },
+  "DashboardProfileKiosqById": {
+    "address": "Adresse",
+    "default": "défaut",
+    "open": "ouvert",
+    "temporaryClosed": "temporairement fermé",
+    "closed": "fermé",
+    "notAvailable": "Adresse non disponible"
   }
 }

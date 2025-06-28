@@ -1,8 +1,10 @@
 import { DashboardProfileKiosqById } from "@/components/client-pages/dashboard-profile-kiosq-by-id/dashboard-profile-kiosq-by-id";
+import { AdminKiosqIdCta } from "@/components/sections/admin-kiosq-id-cta";
 import { DashboardPageHeading } from "@/components/sections/dashboard-page-heading";
-import { KiosqFormDrawer } from "@/features/kiosq-form-drawer/kiosq-form-drawer";
+import { DashboardPageManagementHeading } from "@/components/sections/dashboard-page-management-heading";
 import { Locales, RawKiosq } from "@/types/app";
 import { cacheKeys } from "@/utils/cache-keys";
+import { authenticatedUserKiosqFactory } from "@/utils/factories/authenticated-user-kiosqs-factory";
 import { fetchServerAuthenticated } from "@/utils/fetch-server-authenticated";
 import { getBaseUrl } from "@/utils/get-base-url";
 import { getLocale } from "next-intl/server";
@@ -25,7 +27,7 @@ const getKiosq = async (kiosqId: string) => {
   const data = await response.json();
   const kiosq = data.kiosq;
 
-  return kiosq;
+  return authenticatedUserKiosqFactory(kiosq);
 };
 
 export const generateMetadata = async ({ params }: { params: Promise<{ kiosqId: string }> }) => {
@@ -33,28 +35,29 @@ export const generateMetadata = async ({ params }: { params: Promise<{ kiosqId: 
   const { kiosqId } = await params;
   const kiosq = await getKiosq(kiosqId);
 
-  const getKiosqName = (kiosq: RawKiosq) => {
-    const translations = kiosq.name_translations as Record<string, string>;
-    return translations[locale] || translations.en || translations.fr || "Unnamed Kiosq";
-  };
-
   return {
-    title: getKiosqName(kiosq),
-    description: kiosq.description_translations?.[locale] || "Kiosq details",
+    title: kiosq.nameTranslations[locale],
+    description: kiosq.descriptionTranslations[locale],
   };
 };
 
 export default async function KiosqPage({ params }: { params: Promise<{ kiosqId: string }> }) {
-  const locale = await getLocale();
   const { kiosqId } = await params;
   const kiosq = await getKiosq(kiosqId);
 
   return (
     <div className="flex flex-col flex-1 gap-10">
-      <DashboardPageHeading
-        title={kiosq.name_translations[locale]}
-        description={kiosq.description_translations[locale]}
-        cta={<KiosqFormDrawer editMode kiosqId={kiosqId} kiosqData={kiosq} />}
+      <DashboardPageManagementHeading
+        title={kiosq.nameTranslations}
+        description={kiosq.descriptionTranslations}
+        cta={
+          <AdminKiosqIdCta
+            kiosqId={kiosqId}
+            kiosqData={kiosq}
+            createdAt={kiosq.createdAt}
+            updatedAt={kiosq.updatedAt}
+          />
+        }
       />
       <DashboardProfileKiosqById kiosqData={kiosq} />
     </div>

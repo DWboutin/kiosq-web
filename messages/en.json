@@ -58,6 +58,7 @@
     "dashboard": "Dashboard",
     "products": "Products",
     "productDetails": "Product details",
+    "kiosqDetails": "Kiosq details",
     "discounts": "Discounts",
     "orders": "Orders",
     "settings": "Settings",
@@ -85,10 +86,6 @@
   "DashboardYourStoreHeader": {
     "title": "Your store",
     "description": "Manage your store"
-  },
-  "DashboardYourKiosqsHeader": {
-    "title": "Your kiosqs",
-    "description": "Manage your kiosqs"
   },
   "KiosqFormDrawer": {
     "openingButton": "Add a kiosq",
@@ -445,6 +442,12 @@
     "title": "Products",
     "description": "Manage your products, their inventory and their availability according to the season"
   },
+  "AdminKiosqPage": {
+    "title": "Kiosqs",
+    "description": "Manage your kiosqs, their inventory and their availability according to the season",
+    "createdAt": "Created at",
+    "updatedAt": "Updated at"
+  },
   "AdminVendorProfilePage": {
     "createdAt": "Created at",
     "updatedAt": "Updated at"
@@ -514,5 +517,13 @@
     "validationImageRequired": "The image is required",
     "success": "Profile image updated",
     "error": "Failed to update profile image, please try again"
+  },
+  "DashboardProfileKiosqById": {
+    "address": "Address",
+    "default": "default",
+    "open": "open",
+    "temporaryClosed": "temporary closed",
+    "closed": "closed",
+    "notAvailable": "Address not available"
   }
 }

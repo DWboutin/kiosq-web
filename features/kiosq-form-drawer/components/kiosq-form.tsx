@@ -20,9 +20,10 @@ type KiosqFormProps = {
   control: Control<KiosqFormValues>;
   errors: FieldErrors<KiosqFormValues>;
   editMode?: boolean;
+  isDefault?: boolean;
 };
 
-export const KiosqForm: FC<KiosqFormProps> = ({ control, errors }) => {
+export const KiosqForm: FC<KiosqFormProps> = ({ control, errors, isDefault }) => {
   const t = useTranslations("KiosqForm");
 
   return (
@@ -226,7 +227,12 @@ export const KiosqForm: FC<KiosqFormProps> = ({ control, errors }) => {
           name="is_default"
           control={control}
           render={({ field }) => (
-            <Checkbox id="is_default" checked={field.value} onCheckedChange={field.onChange} />
+            <Checkbox
+              id="is_default"
+              checked={field.value}
+              onCheckedChange={field.onChange}
+              disabled={isDefault}
+            />
           )}
         />
         <label

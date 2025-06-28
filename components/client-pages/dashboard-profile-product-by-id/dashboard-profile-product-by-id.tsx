@@ -44,7 +44,6 @@ export const DashboardProfileProductById: FC<DashboardProfileProductByIdProps> =
         <DashboardPageManagementHeading
           title={product.nameTranslations}
           description={product.descriptionTranslations}
-          productCategory={product.category}
           cta={
             <AdminProductIdCta
               productId={product.id}

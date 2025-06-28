@@ -10,7 +10,8 @@ import {
 import { DynamicLink } from "@/components/ui/dynamic-link";
 import { Badge } from "@/components/ui/badge";
 import { MapPinIcon, ClockIcon } from "lucide-react";
-import Image from "next/image";
+import { MapView } from "@/components/ui/map-view";
+import { useTranslations } from "next-intl";
 
 type CardAdminKiosqProps = {
   id: string;
@@ -21,7 +22,8 @@ type CardAdminKiosqProps = {
   city?: string;
   state?: string;
   country?: string;
-  imageUrl?: string;
+  latitude?: number;
+  longitude?: number;
   isDefault: boolean;
 };
 
@@ -34,9 +36,11 @@ export const CardAdminKiosq = ({
   city,
   state,
   country,
-  imageUrl,
+  latitude,
+  longitude,
   isDefault,
 }: CardAdminKiosqProps) => {
+  const t = useTranslations("DashboardProfileKiosqById");
   const getStatusColor = (status: string) => {
     switch (status) {
       case "open":
@@ -53,20 +57,20 @@ export const CardAdminKiosq = ({
   return (
     <Card className="flex flex-col overflow-hidden w-[280px] p-0 gap-4">
       <div className="relative">
-        <Image
-          src={imageUrl || "/placeholders/1200x400.jpg"}
-          alt={name}
+        <MapView
           width={280}
           height={160}
-          className="w-full h-40 object-cover"
+          latitude={latitude}
+          longitude={longitude}
+          className="w-full h-40 rounded-t-lg"
         />
         <Badge className={`absolute top-2 right-2 ${getStatusColor(status)}`}>
           <ClockIcon className="h-3 w-3 mr-1" />
-          {status}
+          {t(status)}
         </Badge>
         {isDefault && (
           <Badge variant="outline" className="absolute top-2 left-2 bg-white">
-            Default
+            {t("default")}
           </Badge>
         )}
       </div>

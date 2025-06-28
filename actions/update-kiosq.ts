@@ -4,6 +4,8 @@ import { KiosqFormValues } from "@/features/kiosq-form-drawer/utils/kiosq-form-v
 import { InsertWithLocale } from "@/types/app";
 import { createClient } from "@/utils/supabase/server";
 import { geocodeAddressWithFallback } from "@/utils/geocoding";
+import { revalidateTag } from "next/cache";
+import { cacheKeys } from "@/utils/cache-keys";
 
 type UpdateKiosqArgs = InsertWithLocale<KiosqFormValues> & { id: string };
 
@@ -41,6 +43,19 @@ export const updateKiosq = async (kiosq: UpdateKiosqArgs) => {
     kiosq.country
   );
 
+  // If setting this kiosq as default, first update all other kiosqs to not be default
+  if (kiosq.is_default) {
+    const { error: resetDefaultError } = await supabase
+      .from("kiosqs")
+      .update({ is_default: false })
+      .eq("profile_id", profile.id)
+      .neq("id", kiosq.id);
+
+    if (resetDefaultError) {
+      throw resetDefaultError;
+    }
+  }
+
   const { data: kiosqData, error: kiosqError } = await supabase
     .from("kiosqs")
     .update({
@@ -63,6 +78,7 @@ export const updateKiosq = async (kiosq: UpdateKiosqArgs) => {
       status: kiosq.status,
       is_default: kiosq.is_default,
       image_url: kiosq.image_url || null,
+      updated_at: new Date().toISOString(),
     })
     .eq("id", kiosq.id)
     .eq("profile_id", profile.id)
@@ -72,6 +88,8 @@ export const updateKiosq = async (kiosq: UpdateKiosqArgs) => {
   if (kiosqError) {
     throw kiosqError;
   }
+
+  revalidateTag(cacheKeys.currentUserKiosqById(kiosq.id).tag);
 
   return kiosqData;
 };

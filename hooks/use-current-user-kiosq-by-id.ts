@@ -2,8 +2,8 @@ import { cacheKeys } from "@/utils/cache-keys";
 import { getAuthenticatedUserKiosqById } from "@/utils/requests/get-authenticated-user-kiosq-by-id";
 import {
   AuthenticatedUserKiosq,
-  createAuthenticatedUserKiosqFactory,
-} from "@/utils/factories/authenticated-user-kiosq-factory";
+  authenticatedUserKiosqFactory,
+} from "@/utils/factories/authenticated-user-kiosqs-factory";
 import { useQuery } from "@tanstack/react-query";
 
 type UseCurrentUserKiosqByIdProps = {
@@ -12,10 +12,9 @@ type UseCurrentUserKiosqByIdProps = {
 };
 
 export function useCurrentUserKiosqById({ kiosqData, kiosqId }: UseCurrentUserKiosqByIdProps) {
-  console.log({ kiosqData, kiosqId });
   const queryKiosqId = (kiosqData?.id || kiosqId) as string;
   const {
-    data: rawKiosq = null,
+    data: kiosq = null,
     isLoading,
     error,
     refetch,
@@ -25,8 +24,6 @@ export function useCurrentUserKiosqById({ kiosqData, kiosqId }: UseCurrentUserKi
     initialData: kiosqData,
     enabled: !!queryKiosqId,
   });
-
-  const kiosq = rawKiosq ? createAuthenticatedUserKiosqFactory(rawKiosq) : null;
 
   return {
     selectors: {

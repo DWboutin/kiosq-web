@@ -5,14 +5,12 @@ import { useLocale, useTranslations } from "next-intl";
 import { BadgeTranslation } from "@/components/ui/badge-translation";
 import { BadgeWarning } from "@/components/ui/badge-warning";
 import { AppConfig } from "@/app-config";
-import { ProductCategory } from "@/utils/factories/product-category-with-parent-factory";
 import { TooltipContainer } from "@/components/ui/tooltip-container";
 import { WarningIcon } from "@/components/ui/icons/warning-icon";
 
 type DashboardPageManagementHeadingProps = {
   title: Record<Locales, string>;
   description: Record<Locales, string>;
-  productCategory: ProductCategory;
   cta?: React.ReactNode;
   headingLevel?: "h1" | "h2";
 };

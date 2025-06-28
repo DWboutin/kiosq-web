@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import { SideFormDrawerRef } from "@/components/ui/side-form-drawer";
 import { useRef } from "react";
 import { useCurrentUserKiosqById } from "@/hooks/use-current-user-kiosq-by-id";
-import { AuthenticatedUserKiosq } from "@/utils/factories/authenticated-user-kiosq-factory";
+import { AuthenticatedUserKiosq } from "@/utils/factories/authenticated-user-kiosqs-factory";
 import { cacheKeys } from "@/utils/cache-keys";
 import { Database } from "@/types/supabase";
 
@@ -53,8 +53,8 @@ const fillKiosqFormValues = (kiosq: AuthenticatedUserKiosq, locale: Locales): Ki
     latitude: kiosq?.latitude?.toString() || "",
     longitude: kiosq?.longitude?.toString() || "",
     status: kiosq?.status || "open",
-    is_default: kiosq?.is_default || false,
-    image_url: kiosq?.image_url || "",
+    is_default: kiosq?.isDefault || false,
+    image_url: kiosq?.imageUrl || "",
   };
 };
 
@@ -69,13 +69,9 @@ export const useKiosqForm = ({ editMode = false, kiosqId, kiosqData }: UseKiosqF
     actions: { refetch },
   } = useCurrentUserKiosqById({ kiosqId, kiosqData });
 
-  console.log("kiosq", kiosq);
-
   const defaultValues: KiosqFormValues = !kiosq
     ? kiosqDefaultValues
     : fillKiosqFormValues(kiosq, locale);
-
-  console.log("defaultValues", defaultValues);
 
   const {
     control,

@@ -1,17 +1,18 @@
 "use client";
 
-import { RawKiosq } from "@/types/app";
+import { AuthenticatedUserKiosq } from "@/utils/factories/authenticated-user-kiosqs-factory";
 import { CardAdminKiosq } from "@/components/ui/card-admin-kiosq";
 import { MapPinIcon } from "lucide-react";
 import { useLocale } from "next-intl";
+import { Locales } from "@/types/app";
 
 type DashboardProfileKiosqsProps = {
-  kiosqsData: RawKiosq[];
+  kiosqsData: AuthenticatedUserKiosq[];
   profileId: string;
 };
 
 export const DashboardProfileKiosqs = ({ kiosqsData }: DashboardProfileKiosqsProps) => {
-  const locale = useLocale();
+  const locale = useLocale() as Locales;
 
   if (!kiosqsData || kiosqsData.length === 0) {
     return (
@@ -27,31 +28,32 @@ export const DashboardProfileKiosqs = ({ kiosqsData }: DashboardProfileKiosqsPro
     );
   }
 
-  const getKiosqName = (kiosq: RawKiosq) => {
-    const translations = kiosq.name_translations as Record<string, string>;
-    return translations[locale] || translations.en || translations.fr || "Unnamed Kiosq";
-  };
-
-  const getKiosqDescription = (kiosq: RawKiosq) => {
-    const translations = kiosq.description_translations as Record<string, string>;
-    return translations[locale] || translations.en || translations.fr || "";
-  };
-
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {kiosqsData.map((kiosq) => (
         <CardAdminKiosq
           key={kiosq.id}
           id={kiosq.id}
-          name={getKiosqName(kiosq)}
-          description={getKiosqDescription(kiosq)}
+          name={
+            kiosq.nameTranslations[locale] ||
+            kiosq.nameTranslations.en ||
+            kiosq.nameTranslations.fr ||
+            "Unnamed Kiosq"
+          }
+          description={
+            kiosq.descriptionTranslations[locale] ||
+            kiosq.descriptionTranslations.en ||
+            kiosq.descriptionTranslations.fr ||
+            ""
+          }
           status={kiosq.status}
           address={kiosq.address || undefined}
           city={kiosq.city || undefined}
           state={kiosq.state || undefined}
           country={kiosq.country || undefined}
-          imageUrl={kiosq.image_url || undefined}
-          isDefault={kiosq.is_default}
+          latitude={kiosq.latitude || undefined}
+          longitude={kiosq.longitude || undefined}
+          isDefault={kiosq.isDefault}
         />
       ))}
     </div>

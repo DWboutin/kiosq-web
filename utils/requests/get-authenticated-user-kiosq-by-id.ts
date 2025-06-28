@@ -1,3 +1,4 @@
+import { authenticatedUserKiosqFactory } from "@/utils/factories/authenticated-user-kiosqs-factory";
 import { getBaseUrl } from "@/utils/get-base-url";
 
 export const getAuthenticatedUserKiosqById = async (kiosqId: string) => {
@@ -13,6 +14,6 @@ export const getAuthenticatedUserKiosqById = async (kiosqId: string) => {
   }
 
   const data = await response.json();
-  console.log("data", data);
-  return data.kiosq;
+
+  return authenticatedUserKiosqFactory(data.kiosq);
 };

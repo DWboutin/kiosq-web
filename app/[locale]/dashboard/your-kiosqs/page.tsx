@@ -46,13 +46,16 @@ const getUserProfileIdKiosqs = async (profileId: string) => {
   return kiosqs;
 };
 
-export const metadata = {
-  title: "Your Kiosqs",
-  description: "Manage your physical selling locations and kiosqs",
+export const generateMetadata = async () => {
+  const t = await getTranslations("AdminKiosqPage");
+  return {
+    title: t("title"),
+    description: t("description"),
+  };
 };
 
 export default async function YourKiosqsPage() {
-  const t = await getTranslations("DashboardYourKiosqsHeader");
+  const t = await getTranslations("AdminKiosqPage");
   const profiles = await getUserProfiles();
   const vendorProfiles = profiles.filter((profile: Profile) => profile.type === "vendor");
   const kiosqs = vendorProfiles[0]?.id ? await getUserProfileIdKiosqs(vendorProfiles[0].id) : [];

@@ -56,6 +56,14 @@ export const DASHBOARD_PRODUCT_ID: Record<string, DashboardLink> = {
   },
 };
 
+export const DASHBOARD_KIOSQ_ID: Record<string, DashboardLink> = {
+  importantInformation: {
+    pathKey: "Pathnames.dashboard_kiosq_id",
+    labelKey: "DashboardMenu.kiosqDetails",
+    showInMobileMenu: false,
+  },
+};
+
 export const DASHBOARD_LINKS: Record<string, DashboardLink> = {
   dashboard: {
     pathKey: "Pathnames.dashboard",
