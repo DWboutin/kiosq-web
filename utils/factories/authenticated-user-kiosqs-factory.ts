@@ -1,4 +1,10 @@
-import { RawKiosq, NameTranslations, DescriptionTranslations } from "@/types/app";
+import {
+  RawKiosq,
+  NameTranslations,
+  DescriptionTranslations,
+  PublishedStatus,
+  StoreStatus,
+} from "@/types/app";
 import { extractTranslations } from "@/utils/extract-translations";
 
 export type AuthenticatedUserKiosq = {
@@ -11,7 +17,8 @@ export type AuthenticatedUserKiosq = {
   country: string | null;
   latitude: number | null;
   longitude: number | null;
-  status: "open" | "temporary closed" | "closed";
+  status: PublishedStatus;
+  storeStatus: StoreStatus;
   isDefault: boolean;
   imageUrl: string | null;
   profileId: string;
@@ -33,7 +40,8 @@ export const authenticatedUserKiosqFactory = (kiosq: RawKiosq): AuthenticatedUse
     country: kiosq.country,
     latitude: kiosq.latitude,
     longitude: kiosq.longitude,
-    status: kiosq.status as "open" | "temporary closed" | "closed",
+    status: kiosq.status as PublishedStatus,
+    storeStatus: kiosq.store_status as StoreStatus,
     isDefault: kiosq.is_default,
     imageUrl: kiosq.image_url,
     profileId: kiosq.profile_id,

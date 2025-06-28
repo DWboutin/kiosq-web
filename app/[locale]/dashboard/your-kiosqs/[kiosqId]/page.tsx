@@ -1,8 +1,7 @@
 import { DashboardProfileKiosqById } from "@/components/client-pages/dashboard-profile-kiosq-by-id/dashboard-profile-kiosq-by-id";
 import { AdminKiosqIdCta } from "@/components/sections/admin-kiosq-id-cta";
-import { DashboardPageHeading } from "@/components/sections/dashboard-page-heading";
 import { DashboardPageManagementHeading } from "@/components/sections/dashboard-page-management-heading";
-import { Locales, RawKiosq } from "@/types/app";
+import { Locales } from "@/types/app";
 import { cacheKeys } from "@/utils/cache-keys";
 import { authenticatedUserKiosqFactory } from "@/utils/factories/authenticated-user-kiosqs-factory";
 import { fetchServerAuthenticated } from "@/utils/fetch-server-authenticated";

@@ -1,9 +1,6 @@
 import { cacheKeys } from "@/utils/cache-keys";
 import { getAuthenticatedUserKiosqById } from "@/utils/requests/get-authenticated-user-kiosq-by-id";
-import {
-  AuthenticatedUserKiosq,
-  authenticatedUserKiosqFactory,
-} from "@/utils/factories/authenticated-user-kiosqs-factory";
+import { AuthenticatedUserKiosq } from "@/utils/factories/authenticated-user-kiosqs-factory";
 import { useQuery } from "@tanstack/react-query";
 
 type UseCurrentUserKiosqByIdProps = {

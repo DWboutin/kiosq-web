@@ -4,6 +4,8 @@ import { KiosqFormValues } from "@/features/kiosq-form-drawer/utils/kiosq-form-v
 import { InsertWithLocale } from "@/types/app";
 import { createClient } from "@/utils/supabase/server";
 import { geocodeAddressWithFallback } from "@/utils/geocoding";
+import { revalidateTag } from "next/cache";
+import { cacheKeys } from "@/utils/cache-keys";
 
 type CreateKiosqArgs = InsertWithLocale<KiosqFormValues>;
 
@@ -34,17 +36,30 @@ export const createKiosq = async (kiosq: CreateKiosqArgs) => {
   }
 
   // Check if user already has kiosqs to determine if this should be default
-  const { data: existingKiosqs, error: existingKiosqsError } = await supabase
+  const { data: defaultKiosqs, error: defaultKiosqsError } = await supabase
     .from("kiosqs")
     .select("id")
+    .eq("is_default", true)
     .eq("profile_id", profile.id);
 
-  if (existingKiosqsError) {
-    throw existingKiosqsError;
+  if (defaultKiosqsError) {
+    throw defaultKiosqsError;
   }
 
   // If this is the first kiosq, make it default regardless of the input
-  const shouldBeDefault = !existingKiosqs || existingKiosqs.length === 0 ? true : kiosq.is_default;
+  const shouldBeDefault = !defaultKiosqs || defaultKiosqs.length === 0 ? true : kiosq.isDefault;
+
+  if (shouldBeDefault) {
+    const { error: updateError } = await supabase
+      .from("kiosqs")
+      .update({ is_default: false })
+      .eq("is_default", true)
+      .eq("profile_id", profile.id);
+
+    if (updateError) {
+      throw updateError;
+    }
+  }
 
   // Geocode the address to get latitude and longitude
   const geocodeResult = await geocodeAddressWithFallback(
@@ -73,7 +88,7 @@ export const createKiosq = async (kiosq: CreateKiosqArgs) => {
       country: kiosq.country,
       latitude: geocodeResult?.latitude || null,
       longitude: geocodeResult?.longitude || null,
-      status: kiosq.status,
+      store_status: kiosq.storeStatus,
       is_default: shouldBeDefault,
       image_url: kiosq.image_url || null,
       profile_id: profile.id,
@@ -84,6 +99,8 @@ export const createKiosq = async (kiosq: CreateKiosqArgs) => {
   if (kiosqError) {
     throw kiosqError;
   }
+
+  revalidateTag(cacheKeys.currentUserProfileIdKiosqs.list(profile.id).tag);
 
   return kiosqData;
 };

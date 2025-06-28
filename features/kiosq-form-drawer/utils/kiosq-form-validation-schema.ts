@@ -19,11 +19,11 @@ export const createKiosqFormSchema = (locale: string, t: (key: string) => string
       .toUpperCase(),
     latitude: z.string().optional(),
     longitude: z.string().optional(),
-    status: z.enum(KIOSQ_STATUSES, {
-      required_error: t("KiosqForm.validationStatusRequired"),
+    storeStatus: z.enum(KIOSQ_STATUSES, {
+      required_error: t("KiosqForm.validationStoreStatusRequired"),
     }),
-    is_default: z.boolean().default(false),
-    image_url: z.string().optional(),
+    isDefault: z.boolean().default(false),
+    imageUrl: z.string().optional(),
   });
 };
 

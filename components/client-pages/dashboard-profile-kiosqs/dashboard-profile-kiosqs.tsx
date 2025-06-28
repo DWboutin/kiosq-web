@@ -34,26 +34,17 @@ export const DashboardProfileKiosqs = ({ kiosqsData }: DashboardProfileKiosqsPro
         <CardAdminKiosq
           key={kiosq.id}
           id={kiosq.id}
-          name={
-            kiosq.nameTranslations[locale] ||
-            kiosq.nameTranslations.en ||
-            kiosq.nameTranslations.fr ||
-            "Unnamed Kiosq"
-          }
-          description={
-            kiosq.descriptionTranslations[locale] ||
-            kiosq.descriptionTranslations.en ||
-            kiosq.descriptionTranslations.fr ||
-            ""
-          }
-          status={kiosq.status}
-          address={kiosq.address || undefined}
-          city={kiosq.city || undefined}
-          state={kiosq.state || undefined}
-          country={kiosq.country || undefined}
-          latitude={kiosq.latitude || undefined}
-          longitude={kiosq.longitude || undefined}
+          name={kiosq.nameTranslations[locale]}
+          description={kiosq.descriptionTranslations[locale]}
+          storeStatus={kiosq.storeStatus}
+          address={kiosq.address!}
+          city={kiosq.city!}
+          state={kiosq.state!}
+          country={kiosq.country!}
+          latitude={kiosq.latitude!}
+          longitude={kiosq.longitude!}
           isDefault={kiosq.isDefault}
+          profileId={kiosq.profileId}
         />
       ))}
     </div>

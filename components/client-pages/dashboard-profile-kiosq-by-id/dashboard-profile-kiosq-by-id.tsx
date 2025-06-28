@@ -76,8 +76,8 @@ export const DashboardProfileKiosqById: FC<DashboardProfileKiosqByIdProps> = ({ 
               {fullAddress || t("notAvailable")}
             </h2>
             <div className="flex gap-2 flex-shrink-0">
-              <Badge className={`${getStatusColor(kiosq.status)} text-xs px-2 py-1`}>
-                {t(kiosq.status)}
+              <Badge className={`${getStatusColor(kiosq.storeStatus)} text-xs px-2 py-1`}>
+                {t(kiosq.storeStatus)}
               </Badge>
             </div>
           </div>

@@ -1,3 +1,4 @@
+import { deleteKiosq } from "@/actions/delete-kiosq";
 import { ButtonBrand } from "@/components/ui/button-brand";
 import {
   Card,
@@ -9,15 +10,32 @@ import {
 } from "@/components/ui/card";
 import { DynamicLink } from "@/components/ui/dynamic-link";
 import { Badge } from "@/components/ui/badge";
-import { MapPinIcon, ClockIcon } from "lucide-react";
+import { MapPinIcon, ClockIcon, TrashIcon } from "lucide-react";
 import { MapView } from "@/components/ui/map-view";
 import { useTranslations } from "next-intl";
+import { StoreStatus } from "@/types/app";
+import { ButtonWithConfirmationModal } from "@/features/button-with-confirmation-modal/button-with-confirmation-modal";
+import { cacheKeys } from "@/utils/cache-keys";
+import { useQueryClient } from "@tanstack/react-query";
+
+const getStatusColor = (status: string) => {
+  switch (status) {
+    case "open":
+      return "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400";
+    case "temporary closed":
+      return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400";
+    case "closed":
+      return "bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400";
+    default:
+      return "bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400";
+  }
+};
 
 type CardAdminKiosqProps = {
   id: string;
   name: string;
   description: string;
-  status: string;
+  storeStatus: StoreStatus;
   address?: string;
   city?: string;
   state?: string;
@@ -25,13 +43,14 @@ type CardAdminKiosqProps = {
   latitude?: number;
   longitude?: number;
   isDefault: boolean;
+  profileId: string;
 };
 
 export const CardAdminKiosq = ({
   id,
   name,
   description,
-  status,
+  storeStatus,
   address,
   city,
   state,
@@ -39,19 +58,17 @@ export const CardAdminKiosq = ({
   latitude,
   longitude,
   isDefault,
+  profileId,
 }: CardAdminKiosqProps) => {
   const t = useTranslations("DashboardProfileKiosqById");
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "open":
-        return "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400";
-      case "temporary closed":
-        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400";
-      case "closed":
-        return "bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400";
-      default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400";
-    }
+  const queryClient = useQueryClient();
+
+  const handleDeleteKiosq = async () => {
+    await deleteKiosq({ kiosqId: id });
+    // Invalidate queries to refresh the kiosq list
+    await queryClient.invalidateQueries({
+      queryKey: cacheKeys.currentUserProfileIdKiosqs.list(profileId).queryKey,
+    });
   };
 
   return (
@@ -64,9 +81,9 @@ export const CardAdminKiosq = ({
           longitude={longitude}
           className="w-full h-40 rounded-t-lg"
         />
-        <Badge className={`absolute top-2 right-2 ${getStatusColor(status)}`}>
+        <Badge className={`absolute top-2 right-2 ${getStatusColor(storeStatus)}`}>
           <ClockIcon className="h-3 w-3 mr-1" />
-          {t(status)}
+          {t(storeStatus)}
         </Badge>
         {isDefault && (
           <Badge variant="outline" className="absolute top-2 left-2 bg-white">
@@ -94,12 +111,26 @@ export const CardAdminKiosq = ({
         )}
       </div>
 
-      <CardFooter className="flex justify-end pt-0 pb-4">
-        <ButtonBrand asChild>
+      <CardFooter className="flex flex-col gap-2 pt-0 pb-4">
+        <ButtonBrand asChild className="w-full">
           <DynamicLink pathKey="Pathnames.dashboard_kiosq_id" id={id} prefetch>
             Edit
           </DynamicLink>
         </ButtonBrand>
+        {!isDefault && (
+          <ButtonWithConfirmationModal
+            title={t("deleteModalTitle")}
+            description={t("deleteModalDescription")}
+            confirmLabel={t("deleteModalButton")}
+            cancelLabel={t("cancelModalButton")}
+            action={handleDeleteKiosq}
+          >
+            <ButtonBrand className="w-full" variant="destructive">
+              <TrashIcon className="h-4 w-4 mr-2" />
+              {t("deleteKiosq")}
+            </ButtonBrand>
+          </ButtonWithConfirmationModal>
+        )}
       </CardFooter>
     </Card>
   );

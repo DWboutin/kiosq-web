@@ -85,7 +85,8 @@ export type Database = {
           name_translations: Json
           profile_id: string
           state: string | null
-          status: string
+          status: Database["public"]["Enums"]["product_status"] | null
+          store_status: string
           updated_at: string
         }
         Insert: {
@@ -103,7 +104,8 @@ export type Database = {
           name_translations?: Json
           profile_id: string
           state?: string | null
-          status?: string
+          status?: Database["public"]["Enums"]["product_status"] | null
+          store_status?: string
           updated_at?: string
         }
         Update: {
@@ -121,7 +123,8 @@ export type Database = {
           name_translations?: Json
           profile_id?: string
           state?: string | null
-          status?: string
+          status?: Database["public"]["Enums"]["product_status"] | null
+          store_status?: string
           updated_at?: string
         }
         Relationships: [

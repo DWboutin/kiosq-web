@@ -44,11 +44,12 @@ export const updateKiosq = async (kiosq: UpdateKiosqArgs) => {
   );
 
   // If setting this kiosq as default, first update all other kiosqs to not be default
-  if (kiosq.is_default) {
+  if (kiosq.isDefault) {
     const { error: resetDefaultError } = await supabase
       .from("kiosqs")
       .update({ is_default: false })
       .eq("profile_id", profile.id)
+      .eq("is_default", true)
       .neq("id", kiosq.id);
 
     if (resetDefaultError) {
@@ -75,9 +76,9 @@ export const updateKiosq = async (kiosq: UpdateKiosqArgs) => {
       country: kiosq.country,
       latitude: geocodeResult?.latitude || null,
       longitude: geocodeResult?.longitude || null,
-      status: kiosq.status,
-      is_default: kiosq.is_default,
-      image_url: kiosq.image_url || null,
+      store_status: kiosq.storeStatus,
+      is_default: kiosq.isDefault,
+      image_url: kiosq.imageUrl || null,
       updated_at: new Date().toISOString(),
     })
     .eq("id", kiosq.id)
@@ -90,6 +91,7 @@ export const updateKiosq = async (kiosq: UpdateKiosqArgs) => {
   }
 
   revalidateTag(cacheKeys.currentUserKiosqById(kiosq.id).tag);
+  revalidateTag(cacheKeys.currentUserProfileIdKiosqs.list(profile.id).tag);
 
   return kiosqData;
 };

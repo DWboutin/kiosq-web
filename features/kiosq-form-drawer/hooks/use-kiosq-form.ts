@@ -15,7 +15,6 @@ import { useRef } from "react";
 import { useCurrentUserKiosqById } from "@/hooks/use-current-user-kiosq-by-id";
 import { AuthenticatedUserKiosq } from "@/utils/factories/authenticated-user-kiosqs-factory";
 import { cacheKeys } from "@/utils/cache-keys";
-import { Database } from "@/types/supabase";
 
 type UseKiosqFormProps = {
   editMode?: boolean;
@@ -34,7 +33,7 @@ const kiosqDefaultValues: KiosqFormValues = {
   country: "",
   latitude: "",
   longitude: "",
-  status: "open",
+  storeStatus: "open",
   is_default: false,
   image_url: "",
 };
@@ -52,7 +51,7 @@ const fillKiosqFormValues = (kiosq: AuthenticatedUserKiosq, locale: Locales): Ki
     country: kiosq?.country || "",
     latitude: kiosq?.latitude?.toString() || "",
     longitude: kiosq?.longitude?.toString() || "",
-    status: kiosq?.status || "open",
+    storeStatus: kiosq?.storeStatus || "open",
     is_default: kiosq?.isDefault || false,
     image_url: kiosq?.imageUrl || "",
   };
@@ -89,7 +88,7 @@ export const useKiosqForm = ({ editMode = false, kiosqId, kiosqData }: UseKiosqF
   const { mutate: submitKiosq, isPending } = useMutation({
     mutationFn: (data: KiosqFormValues) =>
       editMode ? updateKiosq({ ...data, locale, id: kiosqId! }) : createKiosq({ ...data, locale }),
-    onSuccess: async (savedKiosq: Database["public"]["Tables"]["kiosqs"]["Row"]) => {
+    onSuccess: async (savedKiosq: AuthenticatedUserKiosq) => {
       const message = editMode
         ? t("KiosqForm.updated", { name })
         : t("KiosqForm.created", { name });
@@ -98,14 +97,14 @@ export const useKiosqForm = ({ editMode = false, kiosqId, kiosqData }: UseKiosqF
 
       if (editMode) {
         await queryClient.invalidateQueries({
-          queryKey: cacheKeys.currentUserKiosqById(savedKiosq.id).queryKey,
+          queryKey: cacheKeys.currentUserKiosqById(savedKiosq.id!).queryKey,
         });
         refetch();
         drawerRef.current?.close();
       } else {
         reset();
         queryClient.invalidateQueries({
-          queryKey: cacheKeys.currentUserProfileIdKiosqs.list(savedKiosq.profile_id).queryKey,
+          queryKey: cacheKeys.currentUserProfileIdKiosqs.list(savedKiosq!.profileId).queryKey,
         });
       }
     },

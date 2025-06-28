@@ -153,69 +153,24 @@ export const KiosqForm: FC<KiosqFormProps> = ({ control, errors, isDefault }) =>
         </FormInputContainer>
       </div>
 
-      <div className="flex gap-2">
-        <FormInputContainer
-          inputId="latitude"
-          label={t("latitude")}
-          error={errors.latitude?.message}
-          className="flex-1"
-        >
-          <Controller
-            name="latitude"
-            control={control}
-            render={({ field }) => (
-              <Input
-                id="latitude"
-                type="number"
-                step="any"
-                placeholder={t("latitudePlaceholder")}
-                aria-invalid={!!errors.latitude}
-                {...field}
-              />
-            )}
-          />
-        </FormInputContainer>
-        <FormInputContainer
-          inputId="longitude"
-          label={t("longitude")}
-          error={errors.longitude?.message}
-          className="flex-1"
-        >
-          <Controller
-            name="longitude"
-            control={control}
-            render={({ field }) => (
-              <Input
-                id="longitude"
-                type="number"
-                step="any"
-                placeholder={t("longitudePlaceholder")}
-                aria-invalid={!!errors.longitude}
-                {...field}
-              />
-            )}
-          />
-        </FormInputContainer>
-      </div>
-
       <FormInputContainer
-        inputId="status"
-        label={t("status")}
-        error={errors.status?.message}
+        inputId="storeStatus"
+        label={t("storeStatus")}
+        error={errors.storeStatus?.message}
         required
       >
         <Controller
-          name="status"
+          name="storeStatus"
           control={control}
           render={({ field }) => (
             <Select value={field.value} onValueChange={field.onChange}>
-              <SelectTrigger id="status" aria-invalid={!!errors.status}>
-                <SelectValue placeholder={t("statusPlaceholder")} />
+              <SelectTrigger id="storeStatus" aria-invalid={!!errors.storeStatus}>
+                <SelectValue placeholder={t("storeStatusPlaceholder")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="open">{t("statusOpen")}</SelectItem>
-                <SelectItem value="temporary closed">{t("statusTemporaryClosed")}</SelectItem>
-                <SelectItem value="closed">{t("statusClosed")}</SelectItem>
+                <SelectItem value="open">{t("storeStatusOpen")}</SelectItem>
+                <SelectItem value="temporary closed">{t("storeStatusTemporaryClosed")}</SelectItem>
+                <SelectItem value="closed">{t("storeStatusClosed")}</SelectItem>
               </SelectContent>
             </Select>
           )}
@@ -224,11 +179,11 @@ export const KiosqForm: FC<KiosqFormProps> = ({ control, errors, isDefault }) =>
 
       <div className="flex items-center space-x-2">
         <Controller
-          name="is_default"
+          name="isDefault"
           control={control}
           render={({ field }) => (
             <Checkbox
-              id="is_default"
+              id="isDefault"
               checked={field.value}
               onCheckedChange={field.onChange}
               disabled={isDefault}
@@ -236,7 +191,7 @@ export const KiosqForm: FC<KiosqFormProps> = ({ control, errors, isDefault }) =>
           )}
         />
         <label
-          htmlFor="is_default"
+          htmlFor="isDefault"
           className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
           {t("isDefault")}

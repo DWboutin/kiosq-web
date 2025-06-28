@@ -114,11 +114,11 @@
     "latitudePlaceholder": "45.5017",
     "longitude": "Longitude",
     "longitudePlaceholder": "-73.5673",
-    "status": "Status",
-    "statusPlaceholder": "Select status",
-    "statusOpen": "Open",
-    "statusTemporaryClosed": "Temporary Closed",
-    "statusClosed": "Closed",
+    "storeStatus": "Status",
+    "storeStatusPlaceholder": "Select status",
+    "storeStatusOpen": "Open",
+    "storeStatusTemporaryClosed": "Temporary Closed",
+    "storeStatusClosed": "Closed",
     "isDefault": "Set as default kiosq",
     "imageUrl": "Kiosq Image",
     "validationNameRequired": "The name is required",
@@ -130,7 +130,7 @@
     "validationCountryFormat": "Country must be a 2-letter ISO code",
     "validationLatitudeFormat": "Latitude must be a valid number between -90 and 90",
     "validationLongitudeFormat": "Longitude must be a valid number between -180 and 180",
-    "validationStatusRequired": "The status is required",
+    "validationStoreStatusRequired": "The status is required",
     "created": "Kiosq \"{name}\" has been created successfully",
     "createdError": "Failed to create kiosq, please try again",
     "updated": "Kiosq \"{name}\" has been updated successfully",
@@ -524,6 +524,11 @@
     "open": "open",
     "temporaryClosed": "temporary closed",
     "closed": "closed",
-    "notAvailable": "Address not available"
+    "notAvailable": "Address not available",
+    "deleteKiosq": "Delete kiosq",
+    "deleteModalTitle": "Delete kiosq",
+    "deleteModalDescription": "Are you sure you want to delete this kiosq? This action cannot be undone.",
+    "deleteModalButton": "Delete",
+    "cancelModalButton": "Cancel"
   }
 }
