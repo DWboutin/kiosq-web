@@ -21,7 +21,7 @@ export const DashboardProfileProducts = ({
   } = useCurrentUserProfileIdProducts(productsData, profileId);
 
   return (
-    <div className="flex flex-wrap gap-6 justify-start mt-6">
+    <div className="flex flex-wrap gap-6 justify-start">
       {products.map((product) => (
         <CardAdminProduct
           key={product.id}

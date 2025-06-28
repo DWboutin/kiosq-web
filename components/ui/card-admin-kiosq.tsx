@@ -96,11 +96,12 @@ export const CardAdminKiosq = ({
 
       <div className="flex-1 flex flex-col gap-4">
         <CardHeader className="gap-2 pb-2">
-          {isDefault && (
-            <Badge variant="outline" className="bg-white">
-              {t("default")}
-            </Badge>
-          )}
+          <Badge
+            variant="outline"
+            className={`${isDefault ? "bg-brand-medium text-white" : "bg-white"}`}
+          >
+            {t(isDefault ? "default" : "secondary")}
+          </Badge>
           <CardTitle className="text-lg">{name}</CardTitle>
           {description && <CardDescription className="line-clamp-2">{description}</CardDescription>}
         </CardHeader>

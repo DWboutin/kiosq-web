@@ -29,7 +29,7 @@ export const DashboardProfileKiosqs = ({ kiosqsData }: DashboardProfileKiosqsPro
   }
 
   return (
-    <div className="flex flex-wrap gap-6 justify-start mt-6">
+    <div className="flex flex-wrap gap-6 justify-start">
       {kiosqsData.map((kiosq) => (
         <CardAdminKiosq
           key={kiosq.id}

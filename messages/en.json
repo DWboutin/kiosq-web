@@ -521,6 +521,7 @@
   "DashboardProfileKiosqById": {
     "address": "Address",
     "default": "default",
+    "secondary": "secondary",
     "open": "open",
     "temporaryClosed": "temporary closed",
     "closed": "closed",
