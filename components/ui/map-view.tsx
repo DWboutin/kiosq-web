@@ -24,6 +24,7 @@ export const MapView = ({
 }: MapViewProps) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
+  const marker = useRef<mapboxgl.Marker | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -39,8 +40,8 @@ export const MapView = ({
     });
 
     // Add marker at the specified location
-    new mapboxgl.Marker({
-      color: "#3b82f6", // Blue color
+    marker.current = new mapboxgl.Marker({
+      color: "#3b82f6",
     })
       .setLngLat([longitude, latitude])
       .addTo(map.current);
@@ -49,31 +50,25 @@ export const MapView = ({
       setIsLoaded(true);
     });
 
-    // Cleanup
     return () => {
+      if (marker.current) {
+        marker.current.remove();
+      }
       if (map.current) {
         map.current.remove();
       }
     };
   }, [latitude, longitude]);
 
-  // Update map center when coordinates change
   useEffect(() => {
-    if (map.current && isLoaded) {
+    if (map.current && marker.current && isLoaded) {
       map.current.flyTo({
         center: [longitude, latitude],
-        duration: 2000, // Same as React Native version
+        duration: 2000,
       });
 
       // Update marker position
-      const markers = document.querySelectorAll(".mapboxgl-marker");
-      markers.forEach((marker) => marker.remove());
-
-      new mapboxgl.Marker({
-        color: "#3b82f6",
-      })
-        .setLngLat([longitude, latitude])
-        .addTo(map.current!);
+      marker.current.setLngLat([longitude, latitude]);
     }
   }, [latitude, longitude, isLoaded]);
 
