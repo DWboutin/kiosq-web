@@ -11,6 +11,7 @@
     "dashboard_events": "/dashboard/events",
     "dashboard_yourStore": "/dashboard/your-store",
     "dashboard_yourKiosqs": "/dashboard/your-kiosqs",
+    "dashboard_kiosq_id": "/dashboard/your-kiosqs/[kiosqId]",
     "dashboard_reservations": "/dashboard/reservations",
     "dashboard_billing": "/dashboard/billing",
     "dashboard_admin": "/dashboard/admin",
@@ -57,6 +58,7 @@
     "dashboard": "Dashboard",
     "products": "Products",
     "productDetails": "Product details",
+    "kiosqDetails": "Kiosq details",
     "discounts": "Discounts",
     "orders": "Orders",
     "settings": "Settings",
@@ -84,6 +86,55 @@
   "DashboardYourStoreHeader": {
     "title": "Your store",
     "description": "Manage your store"
+  },
+  "KiosqFormDrawer": {
+    "openingButton": "Add a kiosq",
+    "editButton": "Edit",
+    "addTitle": "Add a kiosq",
+    "addDescription": "Enter the kiosq information and click on 'Add'.",
+    "addButton": "Add",
+    "cancelButton": "Cancel",
+    "editTitle": "Edit a kiosq",
+    "editDescription": "Enter the kiosq information and click on 'Edit'."
+  },
+  "KiosqForm": {
+    "name": "Name",
+    "namePlaceholder": "My Local Kiosq",
+    "description": "Description",
+    "descriptionPlaceholder": "A brief description of your kiosq",
+    "address": "Address",
+    "addressPlaceholder": "123 Main Street",
+    "city": "City",
+    "cityPlaceholder": "Montreal",
+    "state": "State/Province",
+    "statePlaceholder": "Quebec",
+    "country": "Country",
+    "countryPlaceholder": "CA",
+    "latitude": "Latitude",
+    "latitudePlaceholder": "45.5017",
+    "longitude": "Longitude",
+    "longitudePlaceholder": "-73.5673",
+    "storeStatus": "Status",
+    "storeStatusPlaceholder": "Select status",
+    "storeStatusOpen": "Open",
+    "storeStatusTemporaryClosed": "Temporary Closed",
+    "storeStatusClosed": "Closed",
+    "isDefault": "Set as default kiosq",
+    "imageUrl": "Kiosq Image",
+    "validationNameRequired": "The name is required",
+    "validationDescriptionRequired": "The description is required",
+    "validationAddressRequired": "The address is required",
+    "validationCityRequired": "The city is required",
+    "validationStateRequired": "The state/province is required",
+    "validationCountryRequired": "The country is required",
+    "validationCountryFormat": "Country must be a 2-letter ISO code",
+    "validationLatitudeFormat": "Latitude must be a valid number between -90 and 90",
+    "validationLongitudeFormat": "Longitude must be a valid number between -180 and 180",
+    "validationStoreStatusRequired": "The status is required",
+    "created": "Kiosq \"{name}\" has been created successfully",
+    "createdError": "Failed to create kiosq, please try again",
+    "updated": "Kiosq \"{name}\" has been updated successfully",
+    "updatedError": "Failed to update kiosq, please try again"
   },
   "VendorProfileFormDrawer": {
     "editTitle": "Edit your store",
@@ -391,6 +442,12 @@
     "title": "Products",
     "description": "Manage your products, their inventory and their availability according to the season"
   },
+  "AdminKiosqPage": {
+    "title": "Kiosqs",
+    "description": "Manage your kiosqs, their inventory and their availability according to the season",
+    "createdAt": "Created at",
+    "updatedAt": "Updated at"
+  },
   "AdminVendorProfilePage": {
     "createdAt": "Created at",
     "updatedAt": "Updated at"
@@ -460,5 +517,21 @@
     "validationImageRequired": "The image is required",
     "success": "Profile image updated",
     "error": "Failed to update profile image, please try again"
+  },
+  "DashboardProfileKiosqById": {
+    "address": "Address",
+    "default": "default",
+    "open": "open",
+    "temporaryClosed": "temporary closed",
+    "closed": "closed",
+    "notAvailable": "Address not available",
+    "deleteKiosq": "Delete kiosq",
+    "deleteModalTitle": "Delete kiosq",
+    "deleteModalDescription": "Are you sure you want to delete this kiosq? This action cannot be undone.",
+    "deleteModalButton": "Delete",
+    "cancelModalButton": "Cancel",
+    "published": "Published",
+    "deleted": "Deleted",
+    "draft": "Draft"
   }
 }

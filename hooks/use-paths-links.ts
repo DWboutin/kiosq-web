@@ -5,6 +5,7 @@ import {
   DASHBOARD_UTILS_LINKS,
   DASHBOARD_LINKS,
   DashboardLink,
+  DASHBOARD_KIOSQ_ID,
 } from "@/utils/dashboard-navigation";
 import { useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
@@ -19,6 +20,7 @@ export const usePathLinks = (): DashboardLink[] => {
       ...Object.values(DASHBOARD_UTILS_LINKS),
       ...Object.values(DASHBOARD_ADMIN_TABS),
       ...Object.values(DASHBOARD_PRODUCT_ID),
+      ...Object.values(DASHBOARD_KIOSQ_ID),
     ],
     []
   );

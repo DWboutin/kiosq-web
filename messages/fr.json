@@ -11,6 +11,7 @@
     "dashboard_events": "/tableau-de-bord/evenements",
     "dashboard_yourStore": "/tableau-de-bord/votre-commerce",
     "dashboard_yourKiosqs": "/tableau-de-bord/vos-kiosqs",
+    "dashboard_kiosq_id": "/tableau-de-bord/vos-kiosqs/[kiosqId]",
     "dashboard_reservations": "/tableau-de-bord/reservations",
     "dashboard_billing": "/tableau-de-bord/facturation",
     "dashboard_admin": "/tableau-de-bord/administration",
@@ -59,6 +60,7 @@
     "dashboard": "Tableau de bord",
     "products": "Produits",
     "productDetails": "Détails du produit",
+    "kiosqDetails": "Détails du kiosq",
     "discounts": "Rabais",
     "orders": "Commandes",
     "settings": "Paramètres",
@@ -86,6 +88,55 @@
   "DashboardYourStoreHeader": {
     "title": "Votre commerce",
     "description": "Gestion de votre commerce"
+  },
+  "KiosqFormDrawer": {
+    "openingButton": "Ajouter un kiosq",
+    "editButton": "Modifier",
+    "addTitle": "Ajouter un kiosq",
+    "addDescription": "Entrez les informations du kiosq et cliquez sur 'Ajouter'.",
+    "addButton": "Ajouter",
+    "cancelButton": "Annuler",
+    "editTitle": "Modifier un kiosq",
+    "editDescription": "Entrez les informations du kiosq et cliquez sur 'Modifier'."
+  },
+  "KiosqForm": {
+    "name": "Nom",
+    "namePlaceholder": "Mon Kiosq Local",
+    "description": "Description",
+    "descriptionPlaceholder": "Une brève description de votre kiosq",
+    "address": "Adresse",
+    "addressPlaceholder": "123 Rue Principale",
+    "city": "Ville",
+    "cityPlaceholder": "Montréal",
+    "state": "Province",
+    "statePlaceholder": "Québec",
+    "country": "Pays",
+    "countryPlaceholder": "CA",
+    "latitude": "Latitude",
+    "latitudePlaceholder": "45.5017",
+    "longitude": "Longitude",
+    "longitudePlaceholder": "-73.5673",
+    "storeStatus": "Statut",
+    "storeStatusPlaceholder": "Sélectionner le statut",
+    "storeStatusOpen": "Ouvert",
+    "storeStatusTemporaryClosed": "Fermé temporairement",
+    "storeStatusClosed": "Fermé",
+    "isDefault": "Définir comme kiosq par défaut",
+    "imageUrl": "Image du kiosq",
+    "validationNameRequired": "Le nom est requis",
+    "validationDescriptionRequired": "La description est requise",
+    "validationAddressRequired": "L'adresse est requise",
+    "validationCityRequired": "La ville est requise",
+    "validationStateRequired": "La province est requise",
+    "validationCountryRequired": "Le pays est requis",
+    "validationCountryFormat": "Le pays doit être un code ISO à 2 lettres",
+    "validationLatitudeFormat": "La latitude doit être un nombre valide entre -90 et 90",
+    "validationLongitudeFormat": "La longitude doit être un nombre valide entre -180 et 180",
+    "validationStoreStatusRequired": "Le statut est requis",
+    "created": "Kiosq \"{name}\" a été créé avec succès",
+    "createdError": "Échec de la création du kiosq, veuillez réessayer",
+    "updated": "Kiosq \"{name}\" a été mis à jour avec succès",
+    "updatedError": "Échec de la mise à jour du kiosq, veuillez réessayer"
   },
   "ProductCategoryFormDrawer": {
     "openingButton": "Ajouter une catégorie",
@@ -354,6 +405,12 @@
     "title": "Produits",
     "description": "Gérer facilement vos produits, leurs inventaire et leur disponibilité selon la saison"
   },
+  "AdminKiosqPage": {
+    "title": "Kiosqs",
+    "description": "Gérer facilement vos kiosqs, leurs inventaire et leur disponibilité selon la saison",
+    "createdAt": "Créé le",
+    "updatedAt": "Mis à jour le"
+  },
   "AdminVendorProfilePage": {
     "createdAt": "Créé le",
     "updatedAt": "Mis à jour le"
@@ -461,5 +518,21 @@
     "validationSlugTranslationAlreadyTaken": "Une ou plusieurs de ces traductions de slug sont déjà utilisées par un autre commerce",
     "updated": "Commerce \"{name}\" mis à jour avec succès",
     "updatedError": "Échec de la mise à jour du commerce, veuillez réessayer"
+  },
+  "DashboardProfileKiosqById": {
+    "address": "Adresse",
+    "default": "défaut",
+    "open": "ouvert",
+    "temporaryClosed": "temporairement fermé",
+    "closed": "fermé",
+    "notAvailable": "Adresse non disponible",
+    "deleteKiosq": "Supprimer le kiosq",
+    "deleteModalTitle": "Supprimer le kiosq",
+    "deleteModalDescription": "Êtes-vous sûr de vouloir supprimer ce kiosq ? Cette action ne peut pas être annulée.",
+    "deleteModalButton": "Supprimer",
+    "cancelModalButton": "Annuler",
+    "published": "Publié",
+    "deleted": "Supprimé",
+    "draft": "Brouillon"
   }
 }

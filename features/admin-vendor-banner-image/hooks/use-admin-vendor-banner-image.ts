@@ -14,7 +14,7 @@ import { toast } from "sonner";
 
 type UseAdminVendorBannerImageProps = {
   profileId: string;
-  bannerImageUrl: string;
+  bannerImageUrl: string | null;
 };
 
 export const useAdminVendorBannerImage = ({
