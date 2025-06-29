@@ -23,16 +23,16 @@ type UseScheduleFormProps = {
   profileId: string;
 };
 
-// Convert number time (e.g., 900) to string time (e.g., "09:00")
-const convertTimeToString = (time: number): string => {
-  const hours = Math.floor(time / 100);
-  const minutes = time % 100;
-  return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+const convertTimeToString = (time: string | null | undefined): string => {
+  if (!time || typeof time !== "string" || !/^[0-2][0-9]:[0-5][0-9]$/.test(time)) {
+    return "09:00"; // Default fallback
+  }
+  return time;
 };
 
-// Convert PauseTime[] to PauseItem[]
 const convertPauseTimes = (pauses: PauseTime[] | null | undefined): PauseItem[] => {
   if (!pauses) return [];
+
   return pauses.map((pause) => ({
     start: convertTimeToString(pause.start),
     end: convertTimeToString(pause.end),
@@ -46,9 +46,17 @@ const getScheduleDefaultValues = ({
   scheduleValues: AuthenticatedUserSchedule | null;
   locale: Locales;
 }): ScheduleFormValues => {
+  const filteredNameTranslations = scheduleValues?.nameTranslations
+    ? Object.fromEntries(
+        Object.entries(scheduleValues.nameTranslations).filter(
+          ([key, value]) => key !== locale && value !== ""
+        )
+      )
+    : {};
+
   const defaultValues = {
     name: scheduleValues?.nameTranslations[locale] || "",
-    name_translations: scheduleValues?.nameTranslations || {},
+    name_translations: filteredNameTranslations,
     is_default: scheduleValues?.isDefault ?? false,
     timezone: scheduleValues?.timezone || "America/Toronto",
     monday_is_open: scheduleValues?.monday.isOpen ?? true,

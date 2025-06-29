@@ -2,8 +2,8 @@ import { RawSchedule, NameTranslations } from "@/types/app";
 import { extractTranslations } from "@/utils/extract-translations";
 
 export type PauseTime = {
-  start: number;
-  end: number;
+  start: string;
+  end: string;
 };
 
 export type DaySchedule = {
