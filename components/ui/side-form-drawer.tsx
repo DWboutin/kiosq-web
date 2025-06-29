@@ -1,6 +1,13 @@
 "use client";
 
-import { forwardRef, PropsWithChildren, useImperativeHandle, useState, useId } from "react";
+import {
+  forwardRef,
+  PropsWithChildren,
+  useImperativeHandle,
+  useState,
+  useId,
+  useEffect,
+} from "react";
 import {
   Drawer,
   DrawerClose,
@@ -25,6 +32,7 @@ type SideFormDrawerProps = {
   formHasErrors?: boolean;
   isSubmitting?: boolean;
   autoFocus?: boolean;
+  onStateChange?: (isOpen: boolean) => void;
 } & PropsWithChildren;
 
 export type SideFormDrawerRef = {
@@ -46,6 +54,7 @@ export const SideFormDrawer = forwardRef<SideFormDrawerRef, SideFormDrawerProps>
       formHasErrors,
       isSubmitting = false,
       autoFocus = true,
+      onStateChange,
     },
     ref
   ) => {
@@ -53,14 +62,34 @@ export const SideFormDrawer = forwardRef<SideFormDrawerRef, SideFormDrawerProps>
     const titleId = useId();
     const descriptionId = useId();
 
+    const handleOpenChange = (newOpen: boolean) => {
+      setOpen(newOpen);
+      onStateChange?.(newOpen);
+    };
+
     useImperativeHandle(ref, () => ({
       isOpen: open,
-      open: () => setOpen(true),
-      close: () => setOpen(false),
+      open: () => {
+        setOpen(true);
+        onStateChange?.(true);
+      },
+      close: () => {
+        setOpen(false);
+        onStateChange?.(false);
+      },
     }));
 
+    useEffect(() => {
+      onStateChange?.(open);
+    }, [open]);
+
     return (
-      <Drawer open={open} onOpenChange={setOpen} direction="right" autoFocus={autoFocus && open}>
+      <Drawer
+        open={open}
+        onOpenChange={handleOpenChange}
+        direction="right"
+        autoFocus={autoFocus && open}
+      >
         <DrawerTrigger asChild aria-haspopup="dialog" aria-expanded={open}>
           {trigger}
         </DrawerTrigger>

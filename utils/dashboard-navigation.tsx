@@ -10,6 +10,7 @@ import { KeyholeIcon } from "@/components/ui/icons/keyhole-icon";
 import { VideoIcon } from "@/components/ui/icons/video-icon";
 import { UserCircleIcon } from "@/components/ui/icons/user-circle-icon";
 import { UserRole } from "@/types/app";
+import { ScheduleIcon } from "@/components/ui/icons/schedule-icon";
 
 export type DashboardLink = {
   pathKey: string;
@@ -103,6 +104,13 @@ export const DASHBOARD_LINKS: Record<string, DashboardLink> = {
     pathKey: "Pathnames.dashboard_yourKiosqs",
     labelKey: "DashboardMenu.yourKiosqs",
     icon: <MapPinAreaIcon className="size-6" />,
+    role: ["admin", "vendor-admin", "vendor-manager"],
+    showInMobileMenu: true,
+  },
+  schedule: {
+    pathKey: "Pathnames.dashboard_schedules",
+    labelKey: "DashboardMenu.schedules",
+    icon: <ScheduleIcon className="size-6" />,
     role: ["admin", "vendor-admin", "vendor-manager"],
     showInMobileMenu: true,
   },
