@@ -80,7 +80,7 @@ export default async function SchedulePage() {
         }
       />
       <div className="flex flex-col flex-1">
-        <DashboardSchedules profilesData={profiles} schedulesData={schedules} />
+        <DashboardSchedules profileId={vendorProfiles[0].id} schedulesData={schedules} />
       </div>
     </div>
   );

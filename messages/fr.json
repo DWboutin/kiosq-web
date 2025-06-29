@@ -572,7 +572,8 @@
     "noScheduleDescription": "Créez votre premier horaire pour gérer les heures d'ouverture de votre commerce.",
     "scheduleTitle": "Votre horaire",
     "scheduleDescription": "Gérez les heures d'ouverture et la disponibilité de votre commerce.",
-    "scheduleContent": "L'affichage de l'horaire sera implémenté ici."
+    "scheduleContent": "L'affichage de l'horaire sera implémenté ici.",
+    "createProfileFirst": "Créez votre commerce d'abord"
   },
   "AdminProfileSchedulePage": {
     "createdAt": "Créé le",

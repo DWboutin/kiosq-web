@@ -226,7 +226,8 @@
     "noScheduleDescription": "Create your first schedule to manage your store's operating hours.",
     "scheduleTitle": "Your Schedule",
     "scheduleDescription": "Manage your store's operating hours and availability.",
-    "scheduleContent": "Schedule display will be implemented here."
+    "scheduleContent": "Schedule display will be implemented here.",
+    "createProfileFirst": "Create your store first"
   },
   "AdminProfileSchedulePage": {
     "createdAt": "Created",
