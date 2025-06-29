@@ -392,6 +392,132 @@ export type Database = {
           },
         ]
       }
+      schedules: {
+        Row: {
+          created_at: string
+          friday_close_time: number | null
+          friday_is_open: boolean
+          friday_open_time: number | null
+          friday_pauses: Json | null
+          id: string
+          monday_close_time: number | null
+          monday_is_open: boolean
+          monday_open_time: number | null
+          monday_pauses: Json | null
+          profile_id: string
+          saturday_close_time: number | null
+          saturday_is_open: boolean
+          saturday_open_time: number | null
+          saturday_pauses: Json | null
+          sunday_close_time: number | null
+          sunday_is_open: boolean
+          sunday_open_time: number | null
+          sunday_pauses: Json | null
+          thursday_close_time: number | null
+          thursday_is_open: boolean
+          thursday_open_time: number | null
+          thursday_pauses: Json | null
+          timezone: string
+          tuesday_close_time: number | null
+          tuesday_is_open: boolean
+          tuesday_open_time: number | null
+          tuesday_pauses: Json | null
+          updated_at: string
+          updated_by: string | null
+          wednesday_close_time: number | null
+          wednesday_is_open: boolean
+          wednesday_open_time: number | null
+          wednesday_pauses: Json | null
+        }
+        Insert: {
+          created_at?: string
+          friday_close_time?: number | null
+          friday_is_open?: boolean
+          friday_open_time?: number | null
+          friday_pauses?: Json | null
+          id?: string
+          monday_close_time?: number | null
+          monday_is_open?: boolean
+          monday_open_time?: number | null
+          monday_pauses?: Json | null
+          profile_id: string
+          saturday_close_time?: number | null
+          saturday_is_open?: boolean
+          saturday_open_time?: number | null
+          saturday_pauses?: Json | null
+          sunday_close_time?: number | null
+          sunday_is_open?: boolean
+          sunday_open_time?: number | null
+          sunday_pauses?: Json | null
+          thursday_close_time?: number | null
+          thursday_is_open?: boolean
+          thursday_open_time?: number | null
+          thursday_pauses?: Json | null
+          timezone?: string
+          tuesday_close_time?: number | null
+          tuesday_is_open?: boolean
+          tuesday_open_time?: number | null
+          tuesday_pauses?: Json | null
+          updated_at?: string
+          updated_by?: string | null
+          wednesday_close_time?: number | null
+          wednesday_is_open?: boolean
+          wednesday_open_time?: number | null
+          wednesday_pauses?: Json | null
+        }
+        Update: {
+          created_at?: string
+          friday_close_time?: number | null
+          friday_is_open?: boolean
+          friday_open_time?: number | null
+          friday_pauses?: Json | null
+          id?: string
+          monday_close_time?: number | null
+          monday_is_open?: boolean
+          monday_open_time?: number | null
+          monday_pauses?: Json | null
+          profile_id?: string
+          saturday_close_time?: number | null
+          saturday_is_open?: boolean
+          saturday_open_time?: number | null
+          saturday_pauses?: Json | null
+          sunday_close_time?: number | null
+          sunday_is_open?: boolean
+          sunday_open_time?: number | null
+          sunday_pauses?: Json | null
+          thursday_close_time?: number | null
+          thursday_is_open?: boolean
+          thursday_open_time?: number | null
+          thursday_pauses?: Json | null
+          timezone?: string
+          tuesday_close_time?: number | null
+          tuesday_is_open?: boolean
+          tuesday_open_time?: number | null
+          tuesday_pauses?: Json | null
+          updated_at?: string
+          updated_by?: string | null
+          wednesday_close_time?: number | null
+          wednesday_is_open?: boolean
+          wednesday_open_time?: number | null
+          wednesday_pauses?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "schedules_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "schedules_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       users: {
         Row: {
           created_at: string

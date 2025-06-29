@@ -91,6 +91,10 @@
     "title": "Votre commerce",
     "description": "Gestion de votre commerce"
   },
+  "DashboardScheduleHeader": {
+    "title": "Horaires",
+    "description": "Gérez les heures d'ouverture de votre magasin"
+  },
   "KiosqFormDrawer": {
     "openingButton": "Ajouter un kiosq",
     "editButton": "Modifier",
@@ -520,6 +524,54 @@
     "validationSlugTranslationAlreadyTaken": "Une ou plusieurs de ces traductions de slug sont déjà utilisées par un autre commerce",
     "updated": "Commerce \"{name}\" mis à jour avec succès",
     "updatedError": "Échec de la mise à jour du commerce, veuillez réessayer"
+  },
+  "ScheduleFormDrawer": {
+    "createTitle": "Créer un horaire",
+    "createDescription": "Configurez les heures d'ouverture de votre commerce et cliquez sur 'Créer'.",
+    "createButton": "Créer un horaire",
+    "editTitle": "Modifier l'horaire",
+    "editDescription": "Mettez à jour les heures d'ouverture de votre commerce et cliquez sur 'Enregistrer'.",
+    "editButton": "Modifier l'horaire",
+    "cancelButton": "Annuler"
+  },
+  "ScheduleForm": {
+    "timezone": "Fuseau horaire",
+    "selectTimezone": "Sélectionner un fuseau horaire",
+    "weeklySchedule": "Horaire hebdomadaire",
+    "monday": "Lundi",
+    "tuesday": "Mardi",
+    "wednesday": "Mercredi",
+    "thursday": "Jeudi",
+    "friday": "Vendredi",
+    "saturday": "Samedi",
+    "sunday": "Dimanche",
+    "open": "Ouvert",
+    "closed": "Fermé",
+    "openTime": "Heure d'ouverture",
+    "closeTime": "Heure de fermeture",
+    "pauseTimes": "Temps de pause",
+    "pauseTimesDescription": "Ajouter des périodes de pause pendant la journée (max 3)",
+    "addPause": "Ajouter une pause",
+    "startTime": "Heure de début",
+    "endTime": "Heure de fin",
+    "noPauses": "Aucune pause ajoutée",
+    "maxPausesReached": "Maximum 3 pauses autorisées par jour",
+    "validationTimezoneRequired": "Le fuseau horaire est requis",
+    "created": "Horaire créé avec succès",
+    "createdError": "Échec de la création de l'horaire, veuillez réessayer",
+    "updated": "Horaire mis à jour avec succès",
+    "updatedError": "Échec de la mise à jour de l'horaire, veuillez réessayer"
+  },
+  "DashboardSchedule": {
+    "noScheduleTitle": "Aucun horaire défini",
+    "noScheduleDescription": "Créez votre premier horaire pour gérer les heures d'ouverture de votre commerce.",
+    "scheduleTitle": "Votre horaire",
+    "scheduleDescription": "Gérez les heures d'ouverture et la disponibilité de votre commerce.",
+    "scheduleContent": "L'affichage de l'horaire sera implémenté ici."
+  },
+  "AdminProfileSchedulePage": {
+    "createdAt": "Créé le",
+    "updatedAt": "Dernière mise à jour"
   },
   "DashboardProfileKiosqById": {
     "address": "Adresse",

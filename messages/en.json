@@ -89,6 +89,10 @@
     "title": "Your store",
     "description": "Manage your store"
   },
+  "DashboardScheduleHeader": {
+    "title": "Schedule",
+    "description": "Manage your store's operating hours"
+  },
   "KiosqFormDrawer": {
     "openingButton": "Add a kiosq",
     "editButton": "Edit",
@@ -174,6 +178,54 @@
     "validationSlugTranslationAlreadyTaken": "One or more of these slug translations are already taken by another store",
     "updated": "Store \"{name}\" has been updated successfully",
     "updatedError": "Failed to update store, please try again"
+  },
+  "ScheduleFormDrawer": {
+    "createTitle": "Create Schedule",
+    "createDescription": "Set up your store's operating hours and click 'Create'.",
+    "createButton": "Create Schedule",
+    "editTitle": "Edit Schedule",
+    "editDescription": "Update your store's operating hours and click 'Save'.",
+    "editButton": "Edit Schedule",
+    "cancelButton": "Cancel"
+  },
+  "ScheduleForm": {
+    "timezone": "Timezone",
+    "selectTimezone": "Select timezone",
+    "weeklySchedule": "Weekly Schedule",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "open": "Open",
+    "closed": "Closed",
+    "openTime": "Open Time",
+    "closeTime": "Close Time",
+    "pauseTimes": "Pause Times",
+    "pauseTimesDescription": "Add break periods during the day (max 3)",
+    "addPause": "Add Pause",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "noPauses": "No pauses added",
+    "maxPausesReached": "Maximum 3 pauses allowed per day",
+    "validationTimezoneRequired": "Timezone is required",
+    "created": "Schedule created successfully",
+    "createdError": "Failed to create schedule, please try again",
+    "updated": "Schedule updated successfully",
+    "updatedError": "Failed to update schedule, please try again"
+  },
+  "DashboardSchedule": {
+    "noScheduleTitle": "No Schedule Set",
+    "noScheduleDescription": "Create your first schedule to manage your store's operating hours.",
+    "scheduleTitle": "Your Schedule",
+    "scheduleDescription": "Manage your store's operating hours and availability.",
+    "scheduleContent": "Schedule display will be implemented here."
+  },
+  "AdminProfileSchedulePage": {
+    "createdAt": "Created",
+    "updatedAt": "Last updated"
   },
   "ProductCategoryFormDrawer": {
     "openingButton": "Add a category",
