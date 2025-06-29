@@ -42,10 +42,27 @@ export type ScheduleFormValues = {
   sunday_pauses: PauseItem[];
 };
 
-const pauseItemSchema = z.object({
-  start: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format"),
-  end: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format"),
-});
+const timeStringToMinutes = (timeString: string): number => {
+  const [hours, minutes] = timeString.split(":").map(Number);
+  return hours * 60 + minutes;
+};
+
+const pauseItemSchema = z
+  .object({
+    start: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format"),
+    end: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format"),
+  })
+  .refine(
+    (data) => {
+      const startMinutes = timeStringToMinutes(data.start);
+      const endMinutes = timeStringToMinutes(data.end);
+      return endMinutes > startMinutes;
+    },
+    {
+      message: "End time must be after start time",
+      path: ["end"],
+    }
+  );
 
 const pausesArraySchema = z.array(pauseItemSchema).max(3, "Maximum 3 pauses allowed per day");
 
@@ -56,7 +73,7 @@ const timeValidation = z
   .refine((val) => val % 100 < 60, "Invalid time format: minutes must be less than 60");
 
 export const createScheduleFormSchema = (locale: Locales, t: (key: string) => string) => {
-  return z.object({
+  const baseSchema = z.object({
     name: z.string().min(1, t("ScheduleForm.validationNameRequired")),
     name_translations: createTranslationValidator(locale, t),
     is_default: z.boolean(),
@@ -90,4 +107,28 @@ export const createScheduleFormSchema = (locale: Locales, t: (key: string) => st
     sunday_close_time: timeValidation,
     sunday_pauses: pausesArraySchema,
   });
+
+  // Add cross-field validation for each day
+  const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+
+  return baseSchema.refine(
+    (data) => {
+      for (const day of days) {
+        const isOpen = data[`${day}_is_open` as keyof typeof data] as boolean;
+        if (!isOpen) continue; // Skip validation if day is closed
+
+        const openTime = data[`${day}_open_time` as keyof typeof data] as number;
+        const closeTime = data[`${day}_close_time` as keyof typeof data] as number;
+
+        if (closeTime <= openTime) {
+          return false;
+        }
+      }
+      return true;
+    },
+    {
+      message: t("ScheduleForm.validationCloseTimeAfterOpen"),
+      path: ["monday_close_time"], // This will be overridden by individual field validation
+    }
+  );
 };

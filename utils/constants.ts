@@ -152,3 +152,13 @@ export const UNITS = ["kg", "g", "L", "cl", "ml", "pcs"] as const;
 export const LOCALES = AppConfig.locales;
 
 export const SLUG_REGEX = /^[a-z0-9-]+$/;
+
+export const DAYS_OF_WEEK = [
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+  "sunday",
+] as const;

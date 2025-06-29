@@ -13,7 +13,14 @@ import {
 } from "@/components/ui/select";
 import { useTranslations } from "next-intl";
 import { FC } from "react";
-import { Control, Controller, FieldErrors, useFieldArray, FieldPath } from "react-hook-form";
+import {
+  Control,
+  Controller,
+  FieldErrors,
+  useFieldArray,
+  FieldPath,
+  useWatch,
+} from "react-hook-form";
 import { ScheduleFormValues } from "@/features/schedule-form-drawer/utils/schedule-form-validation-schema";
 
 type PauseFieldName =
@@ -46,6 +53,43 @@ const MINUTE_OPTIONS = [
   { value: "45", label: "45" },
 ];
 
+// Helper function to convert time string to minutes for comparison
+const timeStringToMinutes = (timeString: string): number => {
+  const [hours, minutes] = timeString.split(":").map(Number);
+  return hours * 60 + minutes;
+};
+
+// Helper function to filter end time hours based on start time
+const getFilteredEndHours = (startTime: string): typeof HOUR_OPTIONS => {
+  const startMinutes = timeStringToMinutes(startTime);
+  const startHour = Math.floor(startMinutes / 60);
+
+  return HOUR_OPTIONS.filter((option) => {
+    const optionHour = parseInt(option.value);
+    // Allow same hour and later hours
+    return optionHour >= startHour;
+  });
+};
+
+// Helper function to filter end time minutes based on start time and selected end hour
+const getFilteredEndMinutes = (startTime: string, endHour: string): typeof MINUTE_OPTIONS => {
+  const startMinutes = timeStringToMinutes(startTime);
+  const startHour = Math.floor(startMinutes / 60);
+  const startMinute = startMinutes % 60;
+  const endHourNum = parseInt(endHour);
+
+  // If end hour is the same as start hour, filter minutes
+  if (endHourNum === startHour) {
+    return MINUTE_OPTIONS.filter((option) => {
+      const optionMinute = parseInt(option.value);
+      return optionMinute > startMinute;
+    });
+  }
+
+  // If end hour is after start hour, all minutes are available
+  return MINUTE_OPTIONS;
+};
+
 export const SchedulePauseTimes: FC<SchedulePauseTimesProps> = ({
   day,
   control,
@@ -60,6 +104,9 @@ export const SchedulePauseTimes: FC<SchedulePauseTimesProps> = ({
     control,
     name: fieldName,
   });
+
+  // Watch form values for dynamic filtering
+  const watchedValues = useWatch({ control });
 
   const addPause = () => {
     if (fields.length < 3) {
@@ -105,143 +152,168 @@ export const SchedulePauseTimes: FC<SchedulePauseTimesProps> = ({
       </div>
 
       <div className="flex flex-col gap-3">
-        {fields.map((field, index) => (
-          <div key={field.id} className="border rounded-lg p-3 bg-gray-50">
-            <div className="flex items-end gap-2">
-              <div className="flex-1 grid grid-cols-2 gap-4">
-                {/* Start Time */}
-                <div className="space-y-2">
-                  <FormInputContainer
-                    inputId={`${day}_pause_${index}_start`}
-                    label={t("startTime")}
-                    error={getFieldError(index, "start")}
-                  >
-                    <div className="flex flex-row gap-2">
-                      <Controller
-                        name={`${fieldName}.${index}.start` as FieldPath<ScheduleFormValues>}
-                        control={control}
-                        render={({ field: controllerField }) => {
-                          const { hours, minutes } = parseTime(String(controllerField.value));
-                          return (
-                            <>
-                              <Select
-                                value={hours}
-                                onValueChange={(newHours) => {
-                                  controllerField.onChange(formatTime(newHours, minutes));
-                                }}
-                                disabled={disabled}
-                              >
-                                <SelectTrigger>
-                                  <SelectValue placeholder="HH" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  {HOUR_OPTIONS.map((option) => (
-                                    <SelectItem key={option.value} value={option.value}>
-                                      {option.label}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                              <Select
-                                value={minutes}
-                                onValueChange={(newMinutes) => {
-                                  controllerField.onChange(formatTime(hours, newMinutes));
-                                }}
-                                disabled={disabled}
-                              >
-                                <SelectTrigger>
-                                  <SelectValue placeholder="MM" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  {MINUTE_OPTIONS.map((option) => (
-                                    <SelectItem key={option.value} value={option.value}>
-                                      {option.label}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                            </>
-                          );
-                        }}
-                      />
-                    </div>
-                  </FormInputContainer>
+        {fields.map((field, index) => {
+          const currentPauseValues = watchedValues[fieldName] as Array<{
+            start: string;
+            end: string;
+          }>;
+          const currentPause = currentPauseValues?.[index];
+          const startTime = currentPause?.start || "12:00";
+
+          return (
+            <div key={field.id} className="border rounded-lg p-3 bg-gray-50">
+              <div className="flex items-end gap-2">
+                <div className="flex-1 grid grid-cols-2 gap-4">
+                  {/* Start Time */}
+                  <div className="space-y-2">
+                    <FormInputContainer
+                      inputId={`${day}_pause_${index}_start`}
+                      label={t("startTime")}
+                      error={getFieldError(index, "start")}
+                    >
+                      <div className="flex flex-row gap-2">
+                        <Controller
+                          name={`${fieldName}.${index}.start` as FieldPath<ScheduleFormValues>}
+                          control={control}
+                          render={({ field: controllerField }) => {
+                            const { hours, minutes } = parseTime(String(controllerField.value));
+                            return (
+                              <>
+                                <Select
+                                  value={hours}
+                                  onValueChange={(newHours) => {
+                                    // When hour changes, reset minutes to "00" for start time
+                                    const newStartTime = formatTime(newHours, "00");
+                                    controllerField.onChange(newStartTime);
+                                  }}
+                                  disabled={disabled}
+                                >
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="HH" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    {HOUR_OPTIONS.map((option) => (
+                                      <SelectItem key={option.value} value={option.value}>
+                                        {option.label}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                                <Select
+                                  value={minutes}
+                                  onValueChange={(newMinutes) => {
+                                    controllerField.onChange(formatTime(hours, newMinutes));
+                                  }}
+                                  disabled={disabled}
+                                >
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="MM" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    {MINUTE_OPTIONS.map((option) => (
+                                      <SelectItem key={option.value} value={option.value}>
+                                        {option.label}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </>
+                            );
+                          }}
+                        />
+                      </div>
+                    </FormInputContainer>
+                  </div>
+
+                  {/* End Time */}
+                  <div className="space-y-2">
+                    <FormInputContainer
+                      inputId={`${day}_pause_${index}_end`}
+                      label={t("endTime")}
+                      error={getFieldError(index, "end")}
+                    >
+                      <div className="flex flex-row gap-2">
+                        <Controller
+                          name={`${fieldName}.${index}.end` as FieldPath<ScheduleFormValues>}
+                          control={control}
+                          render={({ field: controllerField }) => {
+                            const { hours, minutes } = parseTime(String(controllerField.value));
+                            const filteredHourOptions = getFilteredEndHours(startTime);
+                            const filteredMinuteOptions = getFilteredEndMinutes(startTime, hours);
+
+                            return (
+                              <>
+                                <Select
+                                  value={hours}
+                                  onValueChange={(newHours) => {
+                                    // When hour changes, set minutes to first available option for end time
+                                    const newFilteredMinutes = getFilteredEndMinutes(
+                                      startTime,
+                                      newHours
+                                    );
+                                    const firstAvailableMinute =
+                                      newFilteredMinutes.length > 0
+                                        ? newFilteredMinutes[0].value
+                                        : "00";
+                                    controllerField.onChange(
+                                      formatTime(newHours, firstAvailableMinute)
+                                    );
+                                  }}
+                                  disabled={disabled}
+                                >
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="HH" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    {filteredHourOptions.map((option) => (
+                                      <SelectItem key={option.value} value={option.value}>
+                                        {option.label}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                                <Select
+                                  value={minutes}
+                                  onValueChange={(newMinutes) => {
+                                    controllerField.onChange(formatTime(hours, newMinutes));
+                                  }}
+                                  disabled={disabled}
+                                >
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="MM" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    {filteredMinuteOptions.map((option) => (
+                                      <SelectItem key={option.value} value={option.value}>
+                                        {option.label}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </>
+                            );
+                          }}
+                        />
+                      </div>
+                    </FormInputContainer>
+                  </div>
                 </div>
 
-                {/* End Time */}
-                <div className="space-y-2">
-                  <FormInputContainer
-                    inputId={`${day}_pause_${index}_end`}
-                    label={t("endTime")}
-                    error={getFieldError(index, "end")}
-                  >
-                    <div className="flex flex-row gap-2">
-                      <Controller
-                        name={`${fieldName}.${index}.end` as FieldPath<ScheduleFormValues>}
-                        control={control}
-                        render={({ field: controllerField }) => {
-                          const { hours, minutes } = parseTime(String(controllerField.value));
-                          return (
-                            <>
-                              <Select
-                                value={hours}
-                                onValueChange={(newHours) => {
-                                  controllerField.onChange(formatTime(newHours, minutes));
-                                }}
-                                disabled={disabled}
-                              >
-                                <SelectTrigger>
-                                  <SelectValue placeholder="HH" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  {HOUR_OPTIONS.map((option) => (
-                                    <SelectItem key={option.value} value={option.value}>
-                                      {option.label}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                              <Select
-                                value={minutes}
-                                onValueChange={(newMinutes) => {
-                                  controllerField.onChange(formatTime(hours, newMinutes));
-                                }}
-                                disabled={disabled}
-                              >
-                                <SelectTrigger>
-                                  <SelectValue placeholder="MM" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  {MINUTE_OPTIONS.map((option) => (
-                                    <SelectItem key={option.value} value={option.value}>
-                                      {option.label}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                            </>
-                          );
-                        }}
-                      />
-                    </div>
-                  </FormInputContainer>
-                </div>
+                {/* Remove Button */}
+                <ButtonBrand
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => remove(index)}
+                  disabled={disabled}
+                  className="mb-1"
+                >
+                  <CloseIcon className="size-4" />
+                </ButtonBrand>
               </div>
-
-              {/* Remove Button */}
-              <ButtonBrand
-                type="button"
-                variant="ghost"
-                size="icon"
-                onClick={() => remove(index)}
-                disabled={disabled}
-                className="mb-1"
-              >
-                <CloseIcon className="size-4" />
-              </ButtonBrand>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {fields.length === 0 && <p className="text-xs text-gray-500 italic">{t("noPauses")}</p>}

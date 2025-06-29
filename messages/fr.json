@@ -558,6 +558,7 @@
     "maxPausesReached": "Maximum 3 pauses autorisées par jour",
     "validationTimezoneRequired": "Le fuseau horaire est requis",
     "validationNameRequired": "Le nom de l'horaire est requis",
+    "validationCloseTimeAfterOpen": "L'heure de fermeture doit être après l'heure d'ouverture",
     "defaultSchedule": "Horaire par défaut",
     "setAsDefaultSchedule": "Définir comme horaire par défaut",
     "created": "Horaire créé avec succès",
@@ -583,7 +584,16 @@
     "deleteModalButton": "Supprimer",
     "cancelModalButton": "Annuler",
     "scheduleDeletedSuccess": "L'horaire \"{name}\" a été supprimé avec succès",
-    "scheduleDeletedError": "Échec de la suppression de l'horaire, veuillez réessayer"
+    "scheduleDeletedError": "Échec de la suppression de l'horaire, veuillez réessayer",
+    "closed": "Fermé",
+    "monday": "Lundi",
+    "tuesday": "Mardi",
+    "wednesday": "Mercredi",
+    "thursday": "Jeudi",
+    "friday": "Vendredi",
+    "saturday": "Samedi",
+    "sunday": "Dimanche",
+    "pauses": "Pauses"
   },
   "AdminProfileSchedulePage": {
     "createdAt": "Créé le",

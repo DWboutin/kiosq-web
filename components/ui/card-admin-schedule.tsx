@@ -38,10 +38,14 @@ const formatTime = (time: number | null) => {
   }
 };
 
-const getDaySchedule = (schedule: AuthenticatedUserSchedule, day: DayOfWeek) => {
+const getDaySchedule = (
+  schedule: AuthenticatedUserSchedule,
+  day: DayOfWeek,
+  t: ReturnType<typeof useTranslations>
+) => {
   const daySchedule = schedule[day];
 
-  if (!daySchedule?.isOpen) return "Closed";
+  if (!daySchedule?.isOpen) return t("closed");
   return `${formatTime(daySchedule.openTime)} - ${formatTime(daySchedule.closeTime)}`;
 };
 
@@ -74,14 +78,14 @@ const getPausesList = (schedule: AuthenticatedUserSchedule, day: DayOfWeek) => {
   );
 };
 
-const days: { key: DayOfWeek; label: string }[] = [
-  { key: "monday", label: "Monday" },
-  { key: "tuesday", label: "Tuesday" },
-  { key: "wednesday", label: "Wednesday" },
-  { key: "thursday", label: "Thursday" },
-  { key: "friday", label: "Friday" },
-  { key: "saturday", label: "Saturday" },
-  { key: "sunday", label: "Sunday" },
+const days: { key: DayOfWeek }[] = [
+  { key: "monday" },
+  { key: "tuesday" },
+  { key: "wednesday" },
+  { key: "thursday" },
+  { key: "friday" },
+  { key: "saturday" },
+  { key: "sunday" },
 ];
 
 export const CardAdminSchedule: FC<CardAdminScheduleProps> = ({ schedule }) => {
@@ -126,16 +130,16 @@ export const CardAdminSchedule: FC<CardAdminScheduleProps> = ({ schedule }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
           {days.map((day) => (
             <div key={day.key} className="flex justify-between items-center p-2 border rounded">
-              <span className="font-medium text-sm">{day.label}</span>
+              <span className="font-medium text-sm">{t(day.key)}</span>
               <div className="flex items-center gap-2">
                 <span className="text-xs text-muted-foreground">
-                  {getDaySchedule(schedule, day.key)}
+                  {getDaySchedule(schedule, day.key, t)}
                 </span>
                 {hasPauses(schedule, day.key) && (
                   <TooltipContainer
                     content={
                       <div className="space-y-1">
-                        <div className="font-medium text-sm">Pauses:</div>
+                        <div className="font-medium text-sm">{t("pauses")}:</div>
                         {getPausesList(schedule, day.key).map((pause, index) => (
                           <div key={index} className="text-xs">
                             {pause}

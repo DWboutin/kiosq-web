@@ -13,14 +13,32 @@ import { createSchedule } from "@/actions/create-schedule";
 import { updateSchedule } from "@/actions/update-schedule";
 import { cacheKeys } from "@/utils/cache-keys";
 import { useScheduleDrawerContext } from "@/features/schedule-drawer-provider/schedule-drawer-provider";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
+import { useWatch } from "react-hook-form";
 import {
   AuthenticatedUserSchedule,
   PauseTime,
 } from "@/utils/factories/authenticated-user-schedules-factory";
+import { DAYS_OF_WEEK } from "@/utils/constants";
 
 type UseScheduleFormProps = {
   profileId: string;
+};
+
+// Time management helper functions
+const timeToHours = (time: number): number => Math.floor(time / 100);
+const timeToMinutes = (time: number): number => time % 100;
+const hoursMinutesToTime = (hours: number, minutes: number): number => hours * 100 + minutes;
+
+// Helper function to convert time string to minutes for comparison
+const timeStringToMinutes = (timeString: string): number => {
+  const [hours, minutes] = timeString.split(":").map(Number);
+  return hours * 60 + minutes;
+};
+
+// Helper function to format time from hours and minutes
+const formatTime = (hours: string, minutes: string) => {
+  return `${hours}:${minutes}`;
 };
 
 const convertTimeToString = (time: string | null | undefined): string => {
@@ -106,11 +124,27 @@ export const useScheduleForm = ({ profileId }: UseScheduleFormProps) => {
     control,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<ScheduleFormValues>({
     defaultValues,
     resolver: zodResolver(validationSchema) as Resolver<ScheduleFormValues>,
   });
+
+  // Watch all form values for auto-adjustment logic
+  const watchedValues = useWatch({ control });
+  const openTimes = useMemo(
+    () => DAYS_OF_WEEK.map((day) => watchedValues[`${day}_open_time` as keyof ScheduleFormValues]),
+    [watchedValues]
+  );
+  const pauseStartTimes = useMemo(
+    () =>
+      DAYS_OF_WEEK.flatMap((day) => {
+        const pauses = watchedValues[`${day}_pauses` as keyof ScheduleFormValues] as PauseItem[];
+        return pauses ? pauses.map((pause) => pause.start) : [];
+      }),
+    [watchedValues]
+  );
 
   useEffect(() => {
     if (scheduleValues) {
@@ -160,6 +194,68 @@ export const useScheduleForm = ({ profileId }: UseScheduleFormProps) => {
       reset(defaultValues);
     }
   };
+
+  // Auto-adjust close times when open times change
+  useEffect(() => {
+    DAYS_OF_WEEK.forEach((day) => {
+      const openTime = watchedValues[`${day}_open_time` as keyof ScheduleFormValues] as number;
+      const closeTime = watchedValues[`${day}_close_time` as keyof ScheduleFormValues] as number;
+
+      if (openTime && closeTime && openTime >= closeTime) {
+        const openHour = timeToHours(openTime);
+        const openMinute = timeToMinutes(openTime);
+
+        // Set close time to at least 15 minutes after open time
+        let newCloseMinutes = openMinute + 15;
+        let newCloseHour = openHour;
+
+        if (newCloseMinutes >= 60) {
+          newCloseHour = Math.min(openHour + 1, 23);
+          newCloseMinutes = 0;
+        }
+
+        const newCloseTime = hoursMinutesToTime(newCloseHour, newCloseMinutes);
+        setValue(`${day}_close_time` as keyof ScheduleFormValues, newCloseTime);
+      }
+    });
+  }, [openTimes]);
+
+  // Auto-adjust pause end times when pause start times change
+  useEffect(() => {
+    DAYS_OF_WEEK.forEach((day) => {
+      const pauses = watchedValues[`${day}_pauses` as keyof ScheduleFormValues] as PauseItem[];
+
+      if (pauses && Array.isArray(pauses)) {
+        pauses.forEach((pause, index) => {
+          if (pause.start && pause.end) {
+            const startMinutes = timeStringToMinutes(pause.start);
+            const endMinutes = timeStringToMinutes(pause.end);
+
+            if (startMinutes >= endMinutes) {
+              // Calculate the original duration (or default to 15 minutes if invalid)
+              const originalDuration = endMinutes > startMinutes ? endMinutes - startMinutes : 15;
+
+              // Add the duration to the new start time
+              const newEndMinutes = startMinutes + originalDuration;
+              const newEndHour = Math.floor(newEndMinutes / 60);
+              const newEndMinute = newEndMinutes % 60;
+
+              // Ensure we don't go past 23:59
+              const finalEndHour = Math.min(newEndHour, 23);
+              const finalEndMinute = finalEndHour === 23 && newEndMinute > 59 ? 59 : newEndMinute;
+
+              const newEndTime = formatTime(
+                finalEndHour.toString().padStart(2, "0"),
+                finalEndMinute.toString().padStart(2, "0")
+              );
+
+              setValue(`${day}_pauses.${index}.end` as keyof ScheduleFormValues, newEndTime);
+            }
+          }
+        });
+      }
+    });
+  }, [pauseStartTimes]);
 
   return {
     selectors: { control, errors, isSubmitting: isPending, drawerRef, isEditMode },

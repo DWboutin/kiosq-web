@@ -212,6 +212,7 @@
     "maxPausesReached": "Maximum 3 pauses allowed per day",
     "validationTimezoneRequired": "Timezone is required",
     "validationNameRequired": "Schedule name is required",
+    "validationCloseTimeAfterOpen": "Close time must be after open time",
     "defaultSchedule": "Default Schedule",
     "setAsDefaultSchedule": "Set as default schedule",
     "created": "Schedule created successfully",
@@ -237,7 +238,16 @@
     "deleteModalButton": "Delete",
     "cancelModalButton": "Cancel",
     "scheduleDeletedSuccess": "Schedule \"{name}\" has been deleted successfully",
-    "scheduleDeletedError": "Failed to delete schedule, please try again"
+    "scheduleDeletedError": "Failed to delete schedule, please try again",
+    "closed": "Closed",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "pauses": "Pauses"
   },
   "AdminProfileSchedulePage": {
     "createdAt": "Created",
