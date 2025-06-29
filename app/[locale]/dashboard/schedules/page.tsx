@@ -1,4 +1,4 @@
-import { DashboardSchedule } from "@/components/client-pages/dashboard-schedule/dashboard-schedule";
+import { DashboardSchedules } from "@/components/client-pages/dashboard-schedules/dashboard-schedules";
 import { AdminProfileScheduleCta } from "@/components/sections/admin-profile-schedule-cta";
 import { DashboardPageHeading } from "@/components/sections/dashboard-page-heading";
 import { cacheKeys } from "@/utils/cache-keys";
@@ -80,7 +80,7 @@ export default async function SchedulePage() {
         }
       />
       <div className="flex flex-col flex-1">
-        <DashboardSchedule profilesData={profiles} schedulesData={schedules} />
+        <DashboardSchedules profilesData={profiles} schedulesData={schedules} />
       </div>
     </div>
   );

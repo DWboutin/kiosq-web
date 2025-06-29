@@ -221,7 +221,7 @@
     "name": "Name",
     "namePlaceholder": "Schedule name (e.g. Summer Hours)"
   },
-  "DashboardSchedule": {
+  "DashboardSchedules": {
     "noScheduleTitle": "No Schedule Set",
     "noScheduleDescription": "Create your first schedule to manage your store's operating hours.",
     "scheduleTitle": "Your Schedule",

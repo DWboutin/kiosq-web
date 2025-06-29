@@ -567,7 +567,7 @@
     "name": "Nom",
     "namePlaceholder": "Nom de l'horaire (ex: Horaire d'été)"
   },
-  "DashboardSchedule": {
+  "DashboardSchedules": {
     "noScheduleTitle": "Aucun horaire défini",
     "noScheduleDescription": "Créez votre premier horaire pour gérer les heures d'ouverture de votre commerce.",
     "scheduleTitle": "Votre horaire",

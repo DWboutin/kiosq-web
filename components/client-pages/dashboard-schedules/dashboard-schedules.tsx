@@ -9,13 +9,16 @@ import { RawSchedule } from "@/types/app";
 import { useTranslations } from "next-intl";
 import { FC } from "react";
 
-type DashboardScheduleProps = {
+type DashboardSchedulesProps = {
   profilesData: Profile[];
   schedulesData: RawSchedule[];
 };
 
-export const DashboardSchedule: FC<DashboardScheduleProps> = ({ profilesData, schedulesData }) => {
-  const t = useTranslations("DashboardSchedule");
+export const DashboardSchedules: FC<DashboardSchedulesProps> = ({
+  profilesData,
+  schedulesData,
+}) => {
+  const t = useTranslations("DashboardSchedules");
   const {
     selectors: { profiles, isLoading, error },
   } = useCurrentUserProfiles({ profilesData });
