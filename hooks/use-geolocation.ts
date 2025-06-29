@@ -17,8 +17,7 @@ export const useGeolocation = () => {
     },
     retry: 2,
     staleTime: 1000 * 60 * 60, // 1 hour
-    // enabled: !!coords?.latitude && !!coords?.longitude,
-    enabled: false,
+    enabled: !!coords?.latitude && !!coords?.longitude,
   });
 
   const handleRequestLocation = async () => {
