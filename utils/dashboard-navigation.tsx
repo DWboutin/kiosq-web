@@ -108,8 +108,8 @@ export const DASHBOARD_LINKS: Record<string, DashboardLink> = {
     showInMobileMenu: true,
   },
   schedule: {
-    pathKey: "Pathnames.dashboard_schedule",
-    labelKey: "DashboardMenu.schedule",
+    pathKey: "Pathnames.dashboard_schedules",
+    labelKey: "DashboardMenu.schedules",
     icon: <ScheduleIcon className="size-6" />,
     role: ["admin", "vendor-admin", "vendor-manager"],
     showInMobileMenu: true,
