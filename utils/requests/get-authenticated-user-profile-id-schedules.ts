@@ -1,9 +1,9 @@
 import { cacheKeys } from "@/utils/cache-keys";
-import { RawSchedule } from "@/types/app";
+import { AuthenticatedUserSchedule } from "@/utils/factories/authenticated-user-schedules-factory";
 
 export const getAuthenticatedUserProfileIdSchedules = async (
   profileId: string
-): Promise<RawSchedule[]> => {
+): Promise<AuthenticatedUserSchedule[]> => {
   try {
     const cacheInfo = cacheKeys.currentUserSchedules.list(profileId);
     const response = await fetch(`/api/users/current/profiles/${profileId}/schedules`, {

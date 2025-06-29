@@ -1,54 +1,56 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { RawSchedule } from "@/types/app";
-import { useTranslations } from "next-intl";
+import { Locales } from "@/types/app";
+import { AuthenticatedUserSchedule } from "@/utils/factories/authenticated-user-schedules-factory";
+import { useLocale, useTranslations } from "next-intl";
 import { FC } from "react";
 
 type CardAdminScheduleProps = {
-  schedule: RawSchedule;
+  schedule: AuthenticatedUserSchedule;
 };
 
+const formatTime = (time: number | null) => {
+  if (time === null) return "—";
+  const hours = Math.floor(time / 100);
+  const minutes = time % 100;
+
+  if (minutes === 0) {
+    return `${hours}h`;
+  } else {
+    return `${hours}h${minutes.toString().padStart(2, "0")}`;
+  }
+};
+
+const getDaySchedule = (schedule: AuthenticatedUserSchedule, day: string) => {
+  const daySchedule =
+    schedule[
+      day as keyof Pick<
+        AuthenticatedUserSchedule,
+        "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"
+      >
+    ];
+
+  if (!daySchedule?.isOpen) return "Closed";
+  return `${formatTime(daySchedule.openTime)} - ${formatTime(daySchedule.closeTime)}`;
+};
+
+const days = [
+  { key: "monday", label: "Monday" },
+  { key: "tuesday", label: "Tuesday" },
+  { key: "wednesday", label: "Wednesday" },
+  { key: "thursday", label: "Thursday" },
+  { key: "friday", label: "Friday" },
+  { key: "saturday", label: "Saturday" },
+  { key: "sunday", label: "Sunday" },
+];
+
 export const CardAdminSchedule: FC<CardAdminScheduleProps> = ({ schedule }) => {
+  const locale = useLocale() as Locales;
   const t = useTranslations("DashboardSchedules");
-
-  const formatTime = (time: number | null) => {
-    if (time === null) return "—";
-    const hours = Math.floor(time / 100);
-    const minutes = time % 100;
-
-    if (minutes === 0) {
-      return `${hours}h`;
-    } else {
-      return `${hours}h${minutes.toString().padStart(2, "0")}`;
-    }
-  };
-
-  const getDaySchedule = (schedule: RawSchedule, day: string) => {
-    const isOpenKey = `${day}_is_open` as keyof typeof schedule;
-    const openTimeKey = `${day}_open_time` as keyof typeof schedule;
-    const closeTimeKey = `${day}_close_time` as keyof typeof schedule;
-
-    const isOpen = schedule[isOpenKey] as boolean;
-    const openTime = schedule[openTimeKey] as number | null;
-    const closeTime = schedule[closeTimeKey] as number | null;
-
-    if (!isOpen) return "Closed";
-    return `${formatTime(openTime)} - ${formatTime(closeTime)}`;
-  };
-
-  const days = [
-    { key: "monday", label: "Monday" },
-    { key: "tuesday", label: "Tuesday" },
-    { key: "wednesday", label: "Wednesday" },
-    { key: "thursday", label: "Thursday" },
-    { key: "friday", label: "Friday" },
-    { key: "saturday", label: "Saturday" },
-    { key: "sunday", label: "Sunday" },
-  ];
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t("scheduleTitle")}</CardTitle>
+        <CardTitle>{schedule.nameTranslations[locale]}</CardTitle>
         <CardDescription>
           {t("scheduleDescription")} • Timezone: {schedule.timezone}
         </CardDescription>

@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
+import { authenticatedUserSchedulesFactory } from "@/utils/factories/authenticated-user-schedules-factory";
 
 export async function GET(
   request: NextRequest,
@@ -35,7 +36,8 @@ export async function GET(
       return NextResponse.json({ error: "Failed to fetch schedules" }, { status: 500 });
     }
 
-    return NextResponse.json({ schedules: schedules || [] });
+    const transformedSchedules = authenticatedUserSchedulesFactory(schedules || []);
+    return NextResponse.json({ schedules: transformedSchedules });
   } catch (error) {
     console.error("Unexpected error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

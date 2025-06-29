@@ -3,7 +3,7 @@ import { AdminProfileScheduleCta } from "@/components/sections/admin-profile-sch
 import { DashboardPageHeading } from "@/components/sections/dashboard-page-heading";
 import { cacheKeys } from "@/utils/cache-keys";
 import { Profile } from "@/utils/factories/profiles-factory";
-import { RawSchedule } from "@/types/app";
+import { AuthenticatedUserSchedule } from "@/utils/factories/authenticated-user-schedules-factory";
 import { fetchServerAuthenticated } from "@/utils/fetch-server-authenticated";
 import { getBaseUrl } from "@/utils/get-base-url";
 import { getTranslations } from "next-intl/server";
@@ -26,7 +26,7 @@ const getUserProfiles = async () => {
   return profiles;
 };
 
-const getUserProfileSchedules = async (profileId: string): Promise<RawSchedule[]> => {
+const getUserProfileSchedules = async (profileId: string): Promise<AuthenticatedUserSchedule[]> => {
   const response = await fetchServerAuthenticated(
     `${getBaseUrl()}/api/users/current/profiles/${profileId}/schedules`,
     {

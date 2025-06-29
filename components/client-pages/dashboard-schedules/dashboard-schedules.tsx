@@ -4,13 +4,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ScheduleFormDrawer } from "@/features/schedule-form-drawer/schedule-form-drawer";
 import { CardAdminSchedule } from "@/components/ui/card-admin-schedule";
 import { useCurrentUserProfileIdSchedules } from "@/hooks/use-current-user-profile-id-schedules";
-import { RawSchedule } from "@/types/app";
+import { AuthenticatedUserSchedule } from "@/utils/factories/authenticated-user-schedules-factory";
 import { useTranslations } from "next-intl";
 import { FC } from "react";
 
 type DashboardSchedulesProps = {
   profileId: string;
-  schedulesData: RawSchedule[];
+  schedulesData: AuthenticatedUserSchedule[];
 };
 
 export const DashboardSchedules: FC<DashboardSchedulesProps> = ({ profileId, schedulesData }) => {
