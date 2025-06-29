@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { ButtonWithConfirmationModal } from "@/features/button-with-confirmation-modal/button-with-confirmation-modal";
 import { useScheduleDrawerContext } from "@/features/schedule-drawer-provider/schedule-drawer-provider";
-import { Locales } from "@/types/app";
+import { Locales, DayOfWeek } from "@/types/app";
 import { AuthenticatedUserSchedule } from "@/utils/factories/authenticated-user-schedules-factory";
 import { useLocale, useTranslations } from "next-intl";
 import { FC } from "react";
@@ -19,6 +19,8 @@ import { deleteSchedule } from "@/actions/delete-schedule";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { cacheKeys } from "@/utils/cache-keys";
+import { EmptyHourglassIcon } from "@/components/ui/icons/empty-hourglass-icon";
+import { TooltipContainer } from "@/components/ui/tooltip-container";
 
 type CardAdminScheduleProps = {
   schedule: AuthenticatedUserSchedule;
@@ -36,20 +38,43 @@ const formatTime = (time: number | null) => {
   }
 };
 
-const getDaySchedule = (schedule: AuthenticatedUserSchedule, day: string) => {
-  const daySchedule =
-    schedule[
-      day as keyof Pick<
-        AuthenticatedUserSchedule,
-        "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"
-      >
-    ];
+const getDaySchedule = (schedule: AuthenticatedUserSchedule, day: DayOfWeek) => {
+  const daySchedule = schedule[day];
 
   if (!daySchedule?.isOpen) return "Closed";
   return `${formatTime(daySchedule.openTime)} - ${formatTime(daySchedule.closeTime)}`;
 };
 
-const days = [
+const hasPauses = (schedule: AuthenticatedUserSchedule, day: DayOfWeek) => {
+  const daySchedule = schedule[day];
+
+  return daySchedule?.pauses && daySchedule.pauses.length > 0;
+};
+
+const formatPauseTime = (time: string) => {
+  // Convert "HH:MM" format to display format
+  const [hours, minutes] = time.split(":");
+  const hour = parseInt(hours);
+  const min = parseInt(minutes);
+
+  if (min === 0) {
+    return `${hour}h`;
+  } else {
+    return `${hour}h${min.toString().padStart(2, "0")}`;
+  }
+};
+
+const getPausesList = (schedule: AuthenticatedUserSchedule, day: DayOfWeek) => {
+  const daySchedule = schedule[day];
+
+  if (!daySchedule?.pauses) return [];
+
+  return daySchedule.pauses.map(
+    (pause) => `${formatPauseTime(pause.start)} - ${formatPauseTime(pause.end)}`
+  );
+};
+
+const days: { key: DayOfWeek; label: string }[] = [
   { key: "monday", label: "Monday" },
   { key: "tuesday", label: "Tuesday" },
   { key: "wednesday", label: "Wednesday" },
@@ -102,9 +127,27 @@ export const CardAdminSchedule: FC<CardAdminScheduleProps> = ({ schedule }) => {
           {days.map((day) => (
             <div key={day.key} className="flex justify-between items-center p-2 border rounded">
               <span className="font-medium text-sm">{day.label}</span>
-              <span className="text-xs text-muted-foreground">
-                {getDaySchedule(schedule, day.key)}
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-muted-foreground">
+                  {getDaySchedule(schedule, day.key)}
+                </span>
+                {hasPauses(schedule, day.key) && (
+                  <TooltipContainer
+                    content={
+                      <div className="space-y-1">
+                        <div className="font-medium text-sm">Pauses:</div>
+                        {getPausesList(schedule, day.key).map((pause, index) => (
+                          <div key={index} className="text-xs">
+                            {pause}
+                          </div>
+                        ))}
+                      </div>
+                    }
+                  >
+                    <EmptyHourglassIcon className="h-4 w-4 text-yellow-500" />
+                  </TooltipContainer>
+                )}
+              </div>
             </div>
           ))}
         </div>

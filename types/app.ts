@@ -61,3 +61,11 @@ export type DescriptionTranslations = Record<Locales, string>;
 export type SlugTranslations = Record<Locales, string>;
 export type PublishedStatus = "draft" | "published" | "deleted";
 export type StoreStatus = "open" | "temporary closed" | "closed";
+export type DayOfWeek =
+  | "monday"
+  | "tuesday"
+  | "wednesday"
+  | "thursday"
+  | "friday"
+  | "saturday"
+  | "sunday";

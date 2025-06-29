@@ -19,13 +19,14 @@ import { useTranslations } from "next-intl";
 import { SchedulePauseTimes } from "./schedule-pause-times";
 import { AddTranslationField } from "@/features/add-translation-field/add-translation-field";
 import { Input } from "@/components/ui/input";
+import { DayOfWeek } from "@/types/app";
 
 type ScheduleFormProps = {
   control: Control<ScheduleFormValues>;
   errors: FieldErrors<ScheduleFormValues>;
 };
 
-const DAYS_OF_WEEK = [
+const DAYS_OF_WEEK: readonly DayOfWeek[] = [
   "monday",
   "tuesday",
   "wednesday",
@@ -33,7 +34,7 @@ const DAYS_OF_WEEK = [
   "friday",
   "saturday",
   "sunday",
-] as const;
+];
 
 const HOUR_OPTIONS = Array.from({ length: 24 }, (_, i) => ({
   value: i,
@@ -57,7 +58,6 @@ const TIMEZONE_OPTIONS = [
   { value: "America/St_Johns", label: "Newfoundland Time (St. John's)" },
 ];
 
-// Helper functions to convert between HHMM format and separate hours/minutes
 const timeToHours = (time: number): number => Math.floor(time / 100);
 const timeToMinutes = (time: number): number => time % 100;
 const hoursMinutesToTime = (hours: number, minutes: number): number => hours * 100 + minutes;
