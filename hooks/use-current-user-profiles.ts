@@ -1,8 +1,9 @@
 import { cacheKeys } from "@/utils/cache-keys";
+import { Profile } from "@/utils/factories/profiles-factory";
 import { getAuthenticatedUserProfiles } from "@/utils/requests/get-authenticated-user-profiles";
 import { useQuery } from "@tanstack/react-query";
 
-export function useCurrentUserProfiles() {
+export function useCurrentUserProfiles({ profilesData }: { profilesData?: Profile[] } = {}) {
   const {
     data: profiles = [],
     isLoading,
@@ -11,6 +12,7 @@ export function useCurrentUserProfiles() {
   } = useQuery({
     queryKey: cacheKeys.currentUserProfiles.list.queryKey,
     queryFn: getAuthenticatedUserProfiles,
+    initialData: profilesData,
   });
 
   return {

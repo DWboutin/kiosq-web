@@ -47,6 +47,7 @@ export const DashboardProfileProductById: FC<DashboardProfileProductByIdProps> =
           cta={
             <AdminProductIdCta
               productId={product.id}
+              profileId={product.profileId}
               entityName={product.nameTranslations[locale]}
               status={product.status}
               createdAt={product.createdAt}
