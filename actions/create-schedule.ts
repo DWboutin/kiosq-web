@@ -1,13 +1,14 @@
 "use server";
 
 import { ScheduleFormValues } from "@/features/schedule-form-drawer/utils/schedule-form-validation-schema";
+import { InsertWithLocale } from "@/types/app";
 import { createClient } from "@/utils/supabase/server";
 import { revalidateTag } from "next/cache";
 import { cacheKeys } from "@/utils/cache-keys";
 
 interface CreateScheduleArgs {
   profileId: string;
-  scheduleData: ScheduleFormValues;
+  scheduleData: InsertWithLocale<ScheduleFormValues>;
 }
 
 export const createSchedule = async ({ profileId, scheduleData }: CreateScheduleArgs) => {
@@ -22,8 +23,40 @@ export const createSchedule = async ({ profileId, scheduleData }: CreateSchedule
     throw new Error("User not found");
   }
 
+  // Check if user already has schedules to determine if this should be default
+  const { data: defaultSchedules, error: defaultSchedulesError } = await supabase
+    .from("schedules")
+    .select("id")
+    .eq("is_default", true)
+    .eq("profile_id", profileId);
+
+  if (defaultSchedulesError) {
+    throw defaultSchedulesError;
+  }
+
+  // If this is the first schedule, make it default regardless of the input
+  const shouldBeDefault =
+    !defaultSchedules || defaultSchedules.length === 0 ? true : scheduleData.is_default;
+
+  if (shouldBeDefault) {
+    const { error: updateError } = await supabase
+      .from("schedules")
+      .update({ is_default: false })
+      .eq("is_default", true)
+      .eq("profile_id", profileId);
+
+    if (updateError) {
+      throw updateError;
+    }
+  }
+
   const schedulePayload = {
     profile_id: profileId,
+    name_translations: {
+      [scheduleData.locale]: scheduleData.name,
+      ...scheduleData.name_translations,
+    },
+    is_default: shouldBeDefault,
     timezone: scheduleData.timezone,
 
     // Monday
@@ -81,6 +114,7 @@ export const createSchedule = async ({ profileId, scheduleData }: CreateSchedule
     .single();
 
   if (insertError) {
+    console.log("insertError", insertError);
     throw insertError;
   }
 

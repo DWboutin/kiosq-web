@@ -400,10 +400,12 @@ export type Database = {
           friday_open_time: number | null
           friday_pauses: Json | null
           id: string
+          is_default: boolean
           monday_close_time: number | null
           monday_is_open: boolean
           monday_open_time: number | null
           monday_pauses: Json | null
+          name_translations: Json
           profile_id: string
           saturday_close_time: number | null
           saturday_is_open: boolean
@@ -436,10 +438,12 @@ export type Database = {
           friday_open_time?: number | null
           friday_pauses?: Json | null
           id?: string
+          is_default?: boolean
           monday_close_time?: number | null
           monday_is_open?: boolean
           monday_open_time?: number | null
           monday_pauses?: Json | null
+          name_translations?: Json
           profile_id: string
           saturday_close_time?: number | null
           saturday_is_open?: boolean
@@ -472,10 +476,12 @@ export type Database = {
           friday_open_time?: number | null
           friday_pauses?: Json | null
           id?: string
+          is_default?: boolean
           monday_close_time?: number | null
           monday_is_open?: boolean
           monday_open_time?: number | null
           monday_pauses?: Json | null
+          name_translations?: Json
           profile_id?: string
           saturday_close_time?: number | null
           saturday_is_open?: boolean

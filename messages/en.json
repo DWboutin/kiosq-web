@@ -211,10 +211,15 @@
     "noPauses": "No pauses added",
     "maxPausesReached": "Maximum 3 pauses allowed per day",
     "validationTimezoneRequired": "Timezone is required",
+    "validationNameRequired": "Schedule name is required",
+    "defaultSchedule": "Default Schedule",
+    "setAsDefaultSchedule": "Set as default schedule",
     "created": "Schedule created successfully",
     "createdError": "Failed to create schedule, please try again",
     "updated": "Schedule updated successfully",
-    "updatedError": "Failed to update schedule, please try again"
+    "updatedError": "Failed to update schedule, please try again",
+    "name": "Name",
+    "namePlaceholder": "Schedule name (e.g. Summer Hours)"
   },
   "DashboardSchedule": {
     "noScheduleTitle": "No Schedule Set",

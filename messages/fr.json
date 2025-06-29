@@ -557,10 +557,15 @@
     "noPauses": "Aucune pause ajoutée",
     "maxPausesReached": "Maximum 3 pauses autorisées par jour",
     "validationTimezoneRequired": "Le fuseau horaire est requis",
+    "validationNameRequired": "Le nom de l'horaire est requis",
+    "defaultSchedule": "Horaire par défaut",
+    "setAsDefaultSchedule": "Définir comme horaire par défaut",
     "created": "Horaire créé avec succès",
     "createdError": "Échec de la création de l'horaire, veuillez réessayer",
     "updated": "Horaire mis à jour avec succès",
-    "updatedError": "Échec de la mise à jour de l'horaire, veuillez réessayer"
+    "updatedError": "Échec de la mise à jour de l'horaire, veuillez réessayer",
+    "name": "Nom",
+    "namePlaceholder": "Nom de l'horaire (ex: Horaire d'été)"
   },
   "DashboardSchedule": {
     "noScheduleTitle": "Aucun horaire défini",

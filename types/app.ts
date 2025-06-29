@@ -44,6 +44,7 @@ export type RawProductCategoryWithParent = RawProductCategory & {
   parent_category: RawProductCategory | null;
 };
 export type RawKiosq = Database["public"]["Tables"]["kiosqs"]["Row"];
+export type RawSchedule = Database["public"]["Tables"]["schedules"]["Row"];
 
 export type RawProductWithVariantsAndPrices = RawProduct & {
   categories: RawProductCategory & {

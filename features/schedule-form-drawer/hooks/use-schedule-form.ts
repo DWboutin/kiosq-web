@@ -19,34 +19,37 @@ type UseScheduleFormProps = {
 
 const getScheduleDefaultValues = (): ScheduleFormValues => {
   return {
+    name: "",
+    name_translations: {},
+    is_default: true,
     timezone: "America/Toronto",
     monday_is_open: true,
-    monday_open_time: 9,
-    monday_close_time: 17,
+    monday_open_time: 900, // 9:00 AM
+    monday_close_time: 1700, // 5:00 PM
     monday_pauses: [],
     tuesday_is_open: true,
-    tuesday_open_time: 9,
-    tuesday_close_time: 17,
+    tuesday_open_time: 900, // 9:00 AM
+    tuesday_close_time: 1700, // 5:00 PM
     tuesday_pauses: [],
     wednesday_is_open: true,
-    wednesday_open_time: 9,
-    wednesday_close_time: 17,
+    wednesday_open_time: 900, // 9:00 AM
+    wednesday_close_time: 1700, // 5:00 PM
     wednesday_pauses: [],
     thursday_is_open: true,
-    thursday_open_time: 9,
-    thursday_close_time: 21,
+    thursday_open_time: 900, // 9:00 AM
+    thursday_close_time: 2100, // 9:00 PM
     thursday_pauses: [],
     friday_is_open: true,
-    friday_open_time: 9,
-    friday_close_time: 21,
+    friday_open_time: 900, // 9:00 AM
+    friday_close_time: 2100, // 9:00 PM
     friday_pauses: [],
     saturday_is_open: true,
-    saturday_open_time: 9,
-    saturday_close_time: 17,
+    saturday_open_time: 900, // 9:00 AM
+    saturday_close_time: 1700, // 5:00 PM
     saturday_pauses: [],
-    sunday_is_open: true,
-    sunday_open_time: 9,
-    sunday_close_time: 17,
+    sunday_is_open: false,
+    sunday_open_time: 900, // 9:00 AM
+    sunday_close_time: 1700, // 5:00 PM
     sunday_pauses: [],
   };
 };
@@ -73,7 +76,7 @@ export const useScheduleForm = ({ profileId }: UseScheduleFormProps) => {
     mutationFn: async (data: ScheduleFormValues) => {
       return await createSchedule({
         profileId,
-        scheduleData: data,
+        scheduleData: { ...data, locale },
       });
     },
     onSuccess: async () => {
