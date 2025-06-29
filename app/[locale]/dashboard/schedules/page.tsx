@@ -7,6 +7,7 @@ import { AuthenticatedUserSchedule } from "@/utils/factories/authenticated-user-
 import { fetchServerAuthenticated } from "@/utils/fetch-server-authenticated";
 import { getBaseUrl } from "@/utils/get-base-url";
 import { getTranslations } from "next-intl/server";
+import { ScheduleDrawerProvider } from "@/features/schedule-drawer-provider/schedule-drawer-provider";
 
 const getUserProfiles = async () => {
   const response = await fetchServerAuthenticated(`${getBaseUrl()}/api/users/current/profiles`, {
@@ -65,23 +66,25 @@ export default async function SchedulePage() {
     : [];
 
   return (
-    <div className="flex flex-col flex-1 gap-10">
-      <DashboardPageHeading
-        title={t("title")}
-        description={t("description")}
-        cta={
-          vendorProfiles.length > 0 ? (
-            <AdminProfileScheduleCta
-              profileId={vendorProfiles[0].id}
-              createdAt={vendorProfiles[0].createdAt}
-              updatedAt={vendorProfiles[0].updatedAt}
-            />
-          ) : null
-        }
-      />
-      <div className="flex flex-col flex-1">
-        <DashboardSchedules profileId={vendorProfiles[0].id} schedulesData={schedules} />
+    <ScheduleDrawerProvider>
+      <div className="flex flex-col flex-1 gap-10">
+        <DashboardPageHeading
+          title={t("title")}
+          description={t("description")}
+          cta={
+            vendorProfiles.length > 0 ? (
+              <AdminProfileScheduleCta
+                profileId={vendorProfiles[0].id}
+                createdAt={vendorProfiles[0].createdAt}
+                updatedAt={vendorProfiles[0].updatedAt}
+              />
+            ) : null
+          }
+        />
+        <div className="flex flex-col flex-1">
+          <DashboardSchedules profileId={vendorProfiles[0].id} schedulesData={schedules} />
+        </div>
       </div>
-    </div>
+    </ScheduleDrawerProvider>
   );
 }

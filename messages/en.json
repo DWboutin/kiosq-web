@@ -227,7 +227,17 @@
     "scheduleTitle": "Your Schedule",
     "scheduleDescription": "Manage your store's operating hours and availability.",
     "scheduleContent": "Schedule display will be implemented here.",
-    "createProfileFirst": "Create your store first"
+    "createProfileFirst": "Create your store first",
+    "defaultSchedule": "Default schedule",
+    "timezone": "Timezone",
+    "editSchedule": "Edit Schedule",
+    "deleteSchedule": "Delete Schedule",
+    "deleteModalTitle": "Delete schedule",
+    "deleteModalDescription": "Are you sure you want to delete this schedule? This action cannot be undone.",
+    "deleteModalButton": "Delete",
+    "cancelModalButton": "Cancel",
+    "scheduleDeletedSuccess": "Schedule \"{name}\" has been deleted successfully",
+    "scheduleDeletedError": "Failed to delete schedule, please try again"
   },
   "AdminProfileSchedulePage": {
     "createdAt": "Created",

@@ -1,8 +1,24 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { ButtonBrand } from "@/components/ui/button-brand";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { ButtonWithConfirmationModal } from "@/features/button-with-confirmation-modal/button-with-confirmation-modal";
+import { useScheduleDrawerContext } from "@/features/schedule-drawer-provider/schedule-drawer-provider";
 import { Locales } from "@/types/app";
 import { AuthenticatedUserSchedule } from "@/utils/factories/authenticated-user-schedules-factory";
 import { useLocale, useTranslations } from "next-intl";
 import { FC } from "react";
+import { TrashIcon } from "lucide-react";
+import { deleteSchedule } from "@/actions/delete-schedule";
+import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
+import { cacheKeys } from "@/utils/cache-keys";
 
 type CardAdminScheduleProps = {
   schedule: AuthenticatedUserSchedule;
@@ -46,27 +62,70 @@ const days = [
 export const CardAdminSchedule: FC<CardAdminScheduleProps> = ({ schedule }) => {
   const locale = useLocale() as Locales;
   const t = useTranslations("DashboardSchedules");
+  const queryClient = useQueryClient();
+  const { drawerRef, handleSetScheduleValues } = useScheduleDrawerContext();
+
+  const handleEditSchedule = () => {
+    handleSetScheduleValues(schedule);
+    drawerRef.current?.open();
+  };
+
+  const handleDeleteSchedule = async () => {
+    try {
+      await deleteSchedule({ scheduleId: schedule.id });
+      toast.success(t("scheduleDeletedSuccess", { name: schedule.nameTranslations[locale] }));
+      await queryClient.invalidateQueries({
+        queryKey: cacheKeys.currentUserSchedules.list(schedule.profileId).queryKey,
+      });
+    } catch (error) {
+      console.error("Error deleting schedule:", error);
+      toast.error(t("scheduleDeletedError"));
+      throw error;
+    }
+  };
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{schedule.nameTranslations[locale]}</CardTitle>
+        <CardTitle className="flex flex-row items-center justify-between gap-2">
+          <div className="flex-1">{schedule.nameTranslations[locale]}</div>
+          {schedule.isDefault && (
+            <Badge className="bg-brand-medium text-white">{t("defaultSchedule")}</Badge>
+          )}
+        </CardTitle>
         <CardDescription>
-          {t("scheduleDescription")} • Timezone: {schedule.timezone}
+          {t("timezone")}: {schedule.timezone}
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
           {days.map((day) => (
-            <div key={day.key} className="flex justify-between items-center p-3 border rounded-lg">
-              <span className="font-medium">{day.label}</span>
-              <span className="text-sm text-muted-foreground">
+            <div key={day.key} className="flex justify-between items-center p-2 border rounded">
+              <span className="font-medium text-sm">{day.label}</span>
+              <span className="text-xs text-muted-foreground">
                 {getDaySchedule(schedule, day.key)}
               </span>
             </div>
           ))}
         </div>
       </CardContent>
+      <CardFooter className="flex justify-end gap-2">
+        {!schedule.isDefault && (
+          <ButtonWithConfirmationModal
+            title={t("deleteModalTitle")}
+            description={t("deleteModalDescription")}
+            confirmLabel={t("deleteModalButton")}
+            cancelLabel={t("cancelModalButton")}
+            action={handleDeleteSchedule}
+          >
+            <ButtonBrand variant="destructive">
+              <TrashIcon className="h-4 w-4 mr-2" />
+              {t("deleteSchedule")}
+            </ButtonBrand>
+          </ButtonWithConfirmationModal>
+        )}
+        <ButtonBrand onClick={handleEditSchedule}>{t("editSchedule")}</ButtonBrand>
+      </CardFooter>
     </Card>
   );
 };

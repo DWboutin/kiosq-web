@@ -29,7 +29,7 @@ export async function GET(
       .from("schedules")
       .select("*")
       .eq("profile_id", profileId)
-      .order("created_at", { ascending: false });
+      .order("is_default", { ascending: false });
 
     if (error) {
       console.error("Error fetching schedules:", error);
