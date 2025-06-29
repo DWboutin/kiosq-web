@@ -8,6 +8,9 @@ export const getCityFromCoords = async (
       headers: {
         "User-Agent": "Kiosq Web App", // Required by Nominatim's usage policy
       },
+      next: {
+        revalidate: 60 * 60 * 24, // 24 hours
+      },
     }
   );
 
