@@ -84,6 +84,7 @@ export type Database = {
           longitude: number | null
           name_translations: Json
           profile_id: string
+          schedule_id: string | null
           state: string | null
           status: Database["public"]["Enums"]["product_status"] | null
           store_status: string
@@ -103,6 +104,7 @@ export type Database = {
           longitude?: number | null
           name_translations?: Json
           profile_id: string
+          schedule_id?: string | null
           state?: string | null
           status?: Database["public"]["Enums"]["product_status"] | null
           store_status?: string
@@ -122,12 +124,20 @@ export type Database = {
           longitude?: number | null
           name_translations?: Json
           profile_id?: string
+          schedule_id?: string | null
           state?: string | null
           status?: Database["public"]["Enums"]["product_status"] | null
           store_status?: string
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "fk_kiosqs_schedule_id"
+            columns: ["schedule_id"]
+            isOneToOne: false
+            referencedRelation: "schedules"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "kiosqs_profile_id_fkey"
             columns: ["profile_id"]
@@ -511,7 +521,7 @@ export type Database = {
           {
             foreignKeyName: "schedules_profile_id_fkey"
             columns: ["profile_id"]
-            isOneToOne: true
+            isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },

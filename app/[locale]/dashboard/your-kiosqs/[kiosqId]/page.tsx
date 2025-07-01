@@ -3,7 +3,6 @@ import { AdminKiosqIdCta } from "@/components/sections/admin-kiosq-id-cta";
 import { DashboardPageManagementHeading } from "@/components/sections/dashboard-page-management-heading";
 import { Locales } from "@/types/app";
 import { cacheKeys } from "@/utils/cache-keys";
-import { authenticatedUserKiosqFactory } from "@/utils/factories/authenticated-user-kiosqs-factory";
 import { fetchServerAuthenticated } from "@/utils/fetch-server-authenticated";
 import { getBaseUrl } from "@/utils/get-base-url";
 import { getLocale } from "next-intl/server";
@@ -26,7 +25,7 @@ const getKiosq = async (kiosqId: string) => {
   const data = await response.json();
   const kiosq = data.kiosq;
 
-  return authenticatedUserKiosqFactory(kiosq);
+  return kiosq;
 };
 
 export const generateMetadata = async ({ params }: { params: Promise<{ kiosqId: string }> }) => {

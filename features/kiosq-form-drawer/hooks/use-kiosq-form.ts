@@ -34,6 +34,7 @@ const kiosqDefaultValues: KiosqFormValues = {
   latitude: "",
   longitude: "",
   storeStatus: "open",
+  scheduleId: "",
   isDefault: false,
   imageUrl: "",
 };
@@ -52,6 +53,7 @@ const fillKiosqFormValues = (kiosq: AuthenticatedUserKiosq, locale: Locales): Ki
     latitude: kiosq?.latitude?.toString() || "",
     longitude: kiosq?.longitude?.toString() || "",
     storeStatus: kiosq?.storeStatus || "open",
+    scheduleId: kiosq?.scheduleId || undefined,
     isDefault: kiosq?.isDefault || false,
     imageUrl: kiosq?.imageUrl || "",
   };

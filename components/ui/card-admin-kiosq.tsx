@@ -17,6 +17,8 @@ import { PublishedStatus, StoreStatus } from "@/types/app";
 import { ButtonWithConfirmationModal } from "@/features/button-with-confirmation-modal/button-with-confirmation-modal";
 import { cacheKeys } from "@/utils/cache-keys";
 import { useQueryClient } from "@tanstack/react-query";
+import { AuthenticatedUserSchedule } from "@/utils/factories/authenticated-user-schedules-factory";
+import { KiosqScheduleDisplay } from "@/components/sections/kiosq-schedule-display";
 
 const getStatusColor = (status: string) => {
   switch (status) {
@@ -45,6 +47,7 @@ type CardAdminKiosqProps = {
   longitude?: number;
   isDefault: boolean;
   profileId: string;
+  schedule: AuthenticatedUserSchedule | null;
 };
 
 export const CardAdminKiosq = ({
@@ -61,6 +64,7 @@ export const CardAdminKiosq = ({
   longitude,
   isDefault,
   profileId,
+  schedule,
 }: CardAdminKiosqProps) => {
   const t = useTranslations("DashboardProfileKiosqById");
   const queryClient = useQueryClient();

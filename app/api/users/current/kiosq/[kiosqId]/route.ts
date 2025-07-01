@@ -1,3 +1,4 @@
+import { authenticatedUserKiosqFactory } from "@/utils/factories/authenticated-user-kiosqs-factory";
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 
@@ -21,7 +22,7 @@ export const GET = async (
     // Get the specific kiosq
     const { data: kiosq, error: kiosqError } = await supabase
       .from("kiosqs")
-      .select("*")
+      .select("*, schedules(*)")
       .eq("id", kiosqId)
       .single();
 
@@ -36,7 +37,7 @@ export const GET = async (
       return NextResponse.json({ error: "Kiosq not found" }, { status: 404 });
     }
 
-    return NextResponse.json({ kiosq });
+    return NextResponse.json({ kiosq: authenticatedUserKiosqFactory(kiosq) });
   } catch (error) {
     console.error("Unexpected error in kiosq API:", error);
     return NextResponse.json({ error: "An unexpected error occurred" }, { status: 500 });

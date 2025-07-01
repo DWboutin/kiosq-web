@@ -65,7 +65,7 @@ export default async function YourKiosqsPage() {
       <DashboardPageHeading
         title={t("title")}
         description={t("description")}
-        cta={<KiosqFormDrawer />}
+        cta={<KiosqFormDrawer profileId={vendorProfiles[0]?.id} />}
       />
       <div className="flex flex-col flex-1">
         <DashboardProfileKiosqs kiosqsData={kiosqs} profileId={vendorProfiles[0]?.id} />

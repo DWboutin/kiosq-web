@@ -89,6 +89,7 @@ export const createKiosq = async (kiosq: CreateKiosqArgs) => {
       latitude: geocodeResult?.latitude || null,
       longitude: geocodeResult?.longitude || null,
       store_status: kiosq.storeStatus,
+      schedule_id: kiosq.scheduleId || null,
       is_default: shouldBeDefault,
       image_url: kiosq.imageUrl || null,
       profile_id: profile.id,

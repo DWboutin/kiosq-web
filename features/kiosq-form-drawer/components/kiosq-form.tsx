@@ -15,15 +15,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ScheduleDropdown } from "@/features/schedule-dropdown/schedule-dropdown";
 
 type KiosqFormProps = {
   control: Control<KiosqFormValues>;
   errors: FieldErrors<KiosqFormValues>;
   editMode?: boolean;
   isDefault?: boolean;
+  profileId: string;
 };
 
-export const KiosqForm: FC<KiosqFormProps> = ({ control, errors, isDefault }) => {
+export const KiosqForm: FC<KiosqFormProps> = ({ control, errors, isDefault, profileId }) => {
   const t = useTranslations("KiosqForm");
 
   return (
@@ -153,29 +155,52 @@ export const KiosqForm: FC<KiosqFormProps> = ({ control, errors, isDefault }) =>
         </FormInputContainer>
       </div>
 
-      <FormInputContainer
-        inputId="storeStatus"
-        label={t("storeStatus")}
-        error={errors.storeStatus?.message}
-        required
-      >
-        <Controller
-          name="storeStatus"
-          control={control}
-          render={({ field }) => (
-            <Select value={field.value} onValueChange={field.onChange}>
-              <SelectTrigger id="storeStatus" aria-invalid={!!errors.storeStatus}>
-                <SelectValue placeholder={t("storeStatusPlaceholder")} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="open">{t("storeStatusOpen")}</SelectItem>
-                <SelectItem value="temporary closed">{t("storeStatusTemporaryClosed")}</SelectItem>
-                <SelectItem value="closed">{t("storeStatusClosed")}</SelectItem>
-              </SelectContent>
-            </Select>
-          )}
-        />
-      </FormInputContainer>
+      <div className="flex flex-row gap-4">
+        <FormInputContainer
+          inputId="storeStatus"
+          label={t("storeStatus")}
+          error={errors.storeStatus?.message}
+          required
+        >
+          <Controller
+            name="storeStatus"
+            control={control}
+            render={({ field }) => (
+              <Select value={field.value} onValueChange={field.onChange}>
+                <SelectTrigger id="storeStatus" aria-invalid={!!errors.storeStatus}>
+                  <SelectValue placeholder={t("storeStatusPlaceholder")} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="open">{t("storeStatusOpen")}</SelectItem>
+                  <SelectItem value="temporary closed">
+                    {t("storeStatusTemporaryClosed")}
+                  </SelectItem>
+                  <SelectItem value="closed">{t("storeStatusClosed")}</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          />
+        </FormInputContainer>
+        <FormInputContainer
+          inputId="scheduleId"
+          label={t("schedule")}
+          error={errors.scheduleId?.message}
+          required
+        >
+          <Controller
+            name="scheduleId"
+            control={control}
+            render={({ field }) => (
+              <ScheduleDropdown
+                value={field.value}
+                onChange={field.onChange}
+                errors={errors}
+                profileId={profileId}
+              />
+            )}
+          />
+        </FormInputContainer>
+      </div>
 
       <div className="flex items-center space-x-2">
         <Controller

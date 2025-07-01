@@ -22,6 +22,7 @@ export const createKiosqFormSchema = (locale: string, t: (key: string) => string
     storeStatus: z.enum(KIOSQ_STATUSES, {
       required_error: t("KiosqForm.validationStoreStatusRequired"),
     }),
+    scheduleId: z.string().optional(),
     isDefault: z.boolean().default(false),
     imageUrl: z.string().optional(),
   });

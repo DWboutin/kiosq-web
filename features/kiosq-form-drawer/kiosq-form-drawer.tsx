@@ -14,12 +14,14 @@ type KiosqFormDrawerProps = {
   editMode?: boolean;
   kiosqId?: string;
   kiosqData?: AuthenticatedUserKiosq;
+  profileId: string;
 };
 
 export const KiosqFormDrawer: FC<KiosqFormDrawerProps> = ({
   editMode = false,
   kiosqId,
   kiosqData,
+  profileId,
 }) => {
   const t = useTranslations("KiosqFormDrawer");
   const {
@@ -62,6 +64,7 @@ export const KiosqFormDrawer: FC<KiosqFormDrawerProps> = ({
           errors={errors}
           editMode={editMode}
           isDefault={kiosqData?.isDefault}
+          profileId={profileId}
         />
       </div>
     </SideFormDrawer>

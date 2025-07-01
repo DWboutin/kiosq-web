@@ -77,6 +77,7 @@ export const updateKiosq = async (kiosq: UpdateKiosqArgs) => {
       latitude: geocodeResult?.latitude || null,
       longitude: geocodeResult?.longitude || null,
       store_status: kiosq.storeStatus,
+      schedule_id: kiosq.scheduleId || null,
       is_default: kiosq.isDefault,
       image_url: kiosq.imageUrl || null,
       updated_at: new Date().toISOString(),

@@ -7,6 +7,7 @@ import { useCurrentUserKiosqById } from "@/hooks/use-current-user-kiosq-by-id";
 import { AuthenticatedUserKiosq } from "@/utils/factories/authenticated-user-kiosqs-factory";
 import { FC } from "react";
 import { MapView } from "@/components/ui/map-view";
+import { KiosqScheduleDisplay } from "@/components/sections/kiosq-schedule-display";
 
 type DashboardProfileKiosqByIdProps = {
   kiosqData: AuthenticatedUserKiosq;
@@ -48,41 +49,48 @@ export const DashboardProfileKiosqById: FC<DashboardProfileKiosqByIdProps> = ({ 
     .join(", ");
 
   return (
-    <div className="flex flex-col lg:flex-row gap-4 w-full">
-      {kiosq.latitude && kiosq.longitude && (
-        <div className="relative flex flex-col gap-4 w-full lg:w-[400px] lg:flex-shrink-0">
-          <MapView
-            latitude={kiosq.latitude}
-            longitude={kiosq.longitude}
-            height={240}
-            className="rounded-lg shadow-sm w-full"
-          />
-          {kiosq.isDefault && (
-            <Badge
-              variant="secondary"
-              className="bg-brand-medium text-neutral-white absolute top-2 right-2 z-10"
-            >
-              {t("default")}
-            </Badge>
-          )}
-        </div>
-      )}
-
-      {/* Address Card */}
-      <Card className="flex-1 min-w-0">
-        <CardContent>
-          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-            <h2 className="text-lg font-semibold text-gray-900 leading-tight flex-1">
-              {fullAddress || t("notAvailable")}
-            </h2>
-            <div className="flex gap-2 flex-shrink-0">
-              <Badge className={`${getStatusColor(kiosq.storeStatus)} text-xs px-2 py-1`}>
-                {t(kiosq.storeStatus)}
+    <div className="flex flex-col gap-4 w-full">
+      <div className="flex flex-col lg:flex-row gap-4 w-full">
+        {kiosq.latitude && kiosq.longitude && (
+          <div className="relative flex flex-col gap-4 w-full lg:w-[400px] lg:flex-shrink-0">
+            <MapView
+              latitude={kiosq.latitude}
+              longitude={kiosq.longitude}
+              height={240}
+              className="rounded-lg shadow-sm w-full"
+            />
+            {kiosq.isDefault && (
+              <Badge
+                variant="secondary"
+                className="bg-brand-medium text-neutral-white absolute top-2 right-2 z-10"
+              >
+                {t("default")}
               </Badge>
-            </div>
+            )}
           </div>
-        </CardContent>
-      </Card>
+        )}
+
+        {/* Address Card */}
+        <Card className="flex-1 min-w-0">
+          <CardContent className="space-y-4">
+            <div>
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                <h2 className="text-lg font-semibold text-gray-900 leading-tight flex-1">
+                  {fullAddress || t("notAvailable")}
+                </h2>
+                <div className="flex gap-2 flex-shrink-0">
+                  <Badge className={`${getStatusColor(kiosq.storeStatus)} text-xs px-2 py-1`}>
+                    {t(kiosq.storeStatus)}
+                  </Badge>
+                </div>
+              </div>
+            </div>
+
+            {/* Schedule Display */}
+            {kiosq.schedule && <KiosqScheduleDisplay schedule={kiosq.schedule} />}
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };

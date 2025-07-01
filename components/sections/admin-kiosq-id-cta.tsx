@@ -64,7 +64,12 @@ export const AdminKiosqIdCta: FC<AdminKiosqIdCtaProps> = ({
           entityName={kiosqData.nameTranslations[locale as Locales]}
           onStatusChange={handleStatusChange}
         />
-        <KiosqFormDrawer editMode kiosqId={kiosqId} kiosqData={kiosqData} />
+        <KiosqFormDrawer
+          editMode
+          kiosqId={kiosqId}
+          kiosqData={kiosqData}
+          profileId={kiosqData.profileId}
+        />
       </div>
       <div className="flex flex-row justify-end items-center gap-2">
         <span className="text-sm font-inter italic text-neutral-darker">

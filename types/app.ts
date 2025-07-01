@@ -45,6 +45,9 @@ export type RawProductCategoryWithParent = RawProductCategory & {
 };
 export type RawKiosq = Database["public"]["Tables"]["kiosqs"]["Row"];
 export type RawSchedule = Database["public"]["Tables"]["schedules"]["Row"];
+export type RawKiosqWithSchedule = RawKiosq & {
+  schedules: RawSchedule | null;
+};
 
 export type RawProductWithVariantsAndPrices = RawProduct & {
   categories: RawProductCategory & {

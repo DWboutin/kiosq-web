@@ -17,7 +17,7 @@ export const DashboardPageHeading: FC<DashboardPageHeadingProps> = ({
   const Heading = headingLevel === "h1" ? "h1" : "h2";
 
   return (
-    <div className="flex flex-row max-md:flex-col justify-between items-start gap-4 pt-8">
+    <div className="flex flex-row max-md:flex-col-reverse justify-between items-start gap-4 pt-8">
       <div className="flex flex-col gap-2">
         <Heading
           className={classNames(
@@ -29,7 +29,7 @@ export const DashboardPageHeading: FC<DashboardPageHeadingProps> = ({
         </Heading>
         <p className="text-sm font-inter text-neutral-darker">{description}</p>
       </div>
-      {cta && <div className="flex flex-row gap-2">{cta}</div>}
+      {cta && <div className="flex flex-row gap-2 ml-auto max-md:ml-0 max-md:self-end">{cta}</div>}
     </div>
   );
 };

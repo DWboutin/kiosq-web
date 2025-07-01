@@ -1,7 +1,9 @@
-import { authenticatedUserKiosqFactory } from "@/utils/factories/authenticated-user-kiosqs-factory";
 import { getBaseUrl } from "@/utils/get-base-url";
+import { AuthenticatedUserKiosq } from "@/utils/factories/authenticated-user-kiosqs-factory";
 
-export const getAuthenticatedUserKiosqById = async (kiosqId: string) => {
+export const getAuthenticatedUserKiosqById = async (
+  kiosqId: string
+): Promise<AuthenticatedUserKiosq> => {
   const response = await fetch(`${getBaseUrl()}/api/users/current/kiosq/${kiosqId}`, {
     method: "GET",
     headers: {
@@ -15,5 +17,5 @@ export const getAuthenticatedUserKiosqById = async (kiosqId: string) => {
 
   const data = await response.json();
 
-  return authenticatedUserKiosqFactory(data.kiosq);
+  return data.kiosq;
 };

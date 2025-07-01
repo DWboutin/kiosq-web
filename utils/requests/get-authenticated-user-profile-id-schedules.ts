@@ -19,7 +19,7 @@ export const getAuthenticatedUserProfileIdSchedules = async (
 
     const data = await response.json();
 
-    return data.schedules;
+    return data.schedules as AuthenticatedUserSchedule[];
   } catch (error) {
     console.error("Error fetching authenticated user's profile's schedules:", error);
     throw new Error("Failed request for authenticated user's profile's schedules");

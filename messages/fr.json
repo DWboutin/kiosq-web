@@ -129,6 +129,7 @@
     "storeStatusClosed": "Fermé",
     "isDefault": "Définir comme kiosq par défaut",
     "imageUrl": "Image du kiosq",
+    "schedule": "Horaire",
     "validationNameRequired": "Le nom est requis",
     "validationDescriptionRequired": "La description est requise",
     "validationAddressRequired": "L'adresse est requise",
@@ -593,7 +594,9 @@
     "friday": "Vendredi",
     "saturday": "Samedi",
     "sunday": "Dimanche",
-    "pauses": "Pauses"
+    "pauses": "Pauses",
+    "schedule": "Horaire",
+    "weeklySchedule": "Horaire hebdomadaire"
   },
   "AdminProfileSchedulePage": {
     "createdAt": "Créé le",
@@ -614,6 +617,10 @@
     "cancelModalButton": "Annuler",
     "published": "Publié",
     "deleted": "Supprimé",
-    "draft": "Brouillon"
+    "draft": "Brouillon",
+    "schedule": "Horaire"
+  },
+  "ScheduleDropdown": {
+    "placeholder": "Sélectionner un horaire"
   }
 }

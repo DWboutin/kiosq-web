@@ -17,7 +17,7 @@ export const DashboardSchedules: FC<DashboardSchedulesProps> = ({ profileId, sch
   const t = useTranslations("DashboardSchedules");
   const {
     selectors: { schedules },
-  } = useCurrentUserProfileIdSchedules(schedulesData, profileId);
+  } = useCurrentUserProfileIdSchedules({ schedulesData, profileId });
 
   const hasSchedule = schedules.length > 0;
 
