@@ -20,6 +20,7 @@ import {
   PauseTime,
 } from "@/utils/factories/authenticated-user-schedules-factory";
 import { DAYS_OF_WEEK } from "@/utils/constants";
+import { filterTranslations } from "@/utils/filter-translations";
 
 type UseScheduleFormProps = {
   profileId: string;
@@ -57,20 +58,14 @@ const convertPauseTimes = (pauses: PauseTime[] | null | undefined): PauseItem[] 
   }));
 };
 
-const getScheduleDefaultValues = ({
+const fillScheduleDefaultValues = ({
   scheduleValues,
   locale,
 }: {
   scheduleValues: AuthenticatedUserSchedule | null;
   locale: Locales;
 }): ScheduleFormValues => {
-  const filteredNameTranslations = scheduleValues?.nameTranslations
-    ? Object.fromEntries(
-        Object.entries(scheduleValues.nameTranslations).filter(
-          ([key, value]) => key !== locale && value !== ""
-        )
-      )
-    : {};
+  const filteredNameTranslations = filterTranslations(scheduleValues?.nameTranslations, locale);
 
   const defaultValues = {
     name: scheduleValues?.nameTranslations[locale] || "",
@@ -118,7 +113,7 @@ export const useScheduleForm = ({ profileId }: UseScheduleFormProps) => {
   const validationSchema = createScheduleFormSchema(locale, t);
   const isEditMode = !!scheduleValues;
 
-  const defaultValues = getScheduleDefaultValues({ scheduleValues, locale });
+  const defaultValues = fillScheduleDefaultValues({ scheduleValues, locale });
 
   const {
     control,

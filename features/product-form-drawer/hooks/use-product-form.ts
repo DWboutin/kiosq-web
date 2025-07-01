@@ -15,6 +15,7 @@ import { cacheKeys } from "@/utils/cache-keys";
 import { SideFormDrawerRef } from "@/components/ui/side-form-drawer";
 import { useRef } from "react";
 import { AuthenticatedUserProductWithVariantsAndPrices } from "@/utils/factories/authenticated-user-product-factory";
+import { filterTranslations } from "@/utils/filter-translations";
 
 type UseProductFormProps = {
   editMode?: boolean;
@@ -38,12 +39,18 @@ const fillProductFormValues = (
   product: AuthenticatedUserProductWithVariantsAndPrices,
   locale: Locales
 ) => {
+  const filteredNameTranslations = filterTranslations(product?.nameTranslations, locale);
+  const filteredDescriptionTranslations = filterTranslations(
+    product?.descriptionTranslations,
+    locale
+  );
+
   return {
     ...productDefaultValues,
     name: product?.nameTranslations[locale],
-    name_translations: product?.nameTranslations,
+    name_translations: filteredNameTranslations,
     description: product?.descriptionTranslations[locale],
-    description_translations: product?.descriptionTranslations,
+    description_translations: filteredDescriptionTranslations,
     category:
       product?.category.parentCategory === null
         ? product?.category.id

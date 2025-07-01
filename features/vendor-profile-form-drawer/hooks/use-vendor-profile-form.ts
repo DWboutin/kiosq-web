@@ -14,12 +14,13 @@ import { useEffect, useRef } from "react";
 import { useCurrentUserProfiles } from "@/hooks/use-current-user-profiles";
 import { updateVendorProfile } from "@/actions/update-vendor-profile";
 import { Profile } from "@/utils/factories/profiles-factory";
+import { filterTranslations } from "@/utils/filter-translations";
 
 type UseVendorProfileFormProps = {
   profileId: string;
 };
 
-const getVendorProfileDefaultValues = (
+const fillVendorProfileDefaultValues = (
   profile: Profile | undefined,
   locale: Locales
 ): VendorProfileFormValues => {
@@ -38,11 +39,17 @@ const getVendorProfileDefaultValues = (
     };
   }
 
+  const filteredNameTranslations = filterTranslations(profile.nameTranslations, locale);
+  const filteredDescriptionTranslations = filterTranslations(
+    profile.descriptionTranslations,
+    locale
+  );
+
   return {
     name: profile.nameTranslations?.[locale] || "",
-    name_translations: profile.nameTranslations || {},
+    name_translations: filteredNameTranslations,
     description: profile.descriptionTranslations?.[locale] || "",
-    description_translations: profile.descriptionTranslations || {},
+    description_translations: filteredDescriptionTranslations,
     slug: profile.slugTranslations?.[locale] || "",
     slug_translations: profile.slugTranslations || {},
     facebook_page_url: profile.facebookPageUrl || "",
@@ -64,7 +71,7 @@ export const useVendorProfileForm = ({ profileId }: UseVendorProfileFormProps) =
   } = useCurrentUserProfiles();
 
   const vendorProfile = profiles?.find((p) => p.id === profileId && p.type === "vendor");
-  const defaultValues = getVendorProfileDefaultValues(vendorProfile, locale);
+  const defaultValues = fillVendorProfileDefaultValues(vendorProfile, locale);
 
   const {
     control,

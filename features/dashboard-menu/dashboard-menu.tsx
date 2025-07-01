@@ -59,7 +59,7 @@ export const DashboardMenu: FC = () => {
   return (
     <div
       className={classNames(
-        "relative z-10 flex flex-col py-5 px-4 bg-neutral-white rounded-xl max-md:rounded-l-none group",
+        "relative z-50 flex flex-col py-5 px-4 bg-neutral-white rounded-xl max-md:rounded-l-none group",
         { "is-open shadow-lg shadow-neutral-400/20": isOpen, "shadow-none": !isOpen }
       )}
       role="navigation"

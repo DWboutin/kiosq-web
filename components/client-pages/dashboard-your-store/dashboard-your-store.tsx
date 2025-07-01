@@ -16,8 +16,6 @@ export const DashboardYourStore: FC<DashboardYourStoreProps> = ({ profilesData }
   } = useCurrentUserProfiles({ profilesData });
   const vendorProfiles = profiles.filter((profile) => profile.type === "vendor");
 
-  console.log(profiles);
-
   if (isLoading) {
     return <div>Loading...</div>;
   }

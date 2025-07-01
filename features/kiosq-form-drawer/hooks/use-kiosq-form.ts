@@ -15,6 +15,7 @@ import { useRef } from "react";
 import { useCurrentUserKiosqById } from "@/hooks/use-current-user-kiosq-by-id";
 import { AuthenticatedUserKiosq } from "@/utils/factories/authenticated-user-kiosqs-factory";
 import { cacheKeys } from "@/utils/cache-keys";
+import { filterTranslations } from "@/utils/filter-translations";
 
 type UseKiosqFormProps = {
   editMode?: boolean;
@@ -40,12 +41,18 @@ const kiosqDefaultValues: KiosqFormValues = {
 };
 
 const fillKiosqFormValues = (kiosq: AuthenticatedUserKiosq, locale: Locales): KiosqFormValues => {
+  const filteredNameTranslations = filterTranslations(kiosq?.nameTranslations, locale);
+  const filteredDescriptionTranslations = filterTranslations(
+    kiosq?.descriptionTranslations,
+    locale
+  );
+
   return {
     ...kiosqDefaultValues,
     name: kiosq?.nameTranslations[locale] || "",
-    name_translations: kiosq?.nameTranslations || {},
+    name_translations: filteredNameTranslations,
     description: kiosq?.descriptionTranslations[locale] || "",
-    description_translations: kiosq?.descriptionTranslations || {},
+    description_translations: filteredDescriptionTranslations,
     address: kiosq?.address || "",
     city: kiosq?.city || "",
     state: kiosq?.state || "",
