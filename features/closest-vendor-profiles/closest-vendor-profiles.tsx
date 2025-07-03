@@ -36,6 +36,7 @@ export const ClosestVendorProfiles = () => {
         vendor.kiosqAddress || vendor.kiosqCity || ""
       }`,
       id: vendor.kiosqId,
+      imageUrl: vendor.profileImage ?? undefined,
     }));
   }, [vendorProfiles, locale]);
 
