@@ -622,5 +622,13 @@
   },
   "ScheduleDropdown": {
     "placeholder": "Sélectionner un horaire"
+  },
+  "ClosestVendorProfiles": {
+    "title": "Vos producteurs",
+    "subTitle": "(en ordre de proximité)",
+    "loading": "Récupération de votre emplacement...",
+    "error": "Impossible de récupérer votre emplacement: {error}",
+    "noVendors": "Aucun vendeur trouvé dans votre zone",
+    "tryExpanding": "Essayez d'étendre votre rayon de recherche"
   }
 }

@@ -1,4 +1,5 @@
 import { getAuthenticatedUserData } from "@/actions/get-authenticated-user-data";
+import { ClosestVendorProfiles } from "@/features/closest-vendor-profiles/closest-vendor-profiles";
 import dynamic from "next/dynamic";
 
 const UserOnboarding = dynamic(() =>
@@ -9,7 +10,7 @@ export default async function Home() {
   const userData = await getAuthenticatedUserData();
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 px-5">
       {userData.is_onboarded ? (
         <div>
           <h1>
@@ -19,6 +20,7 @@ export default async function Home() {
       ) : (
         <UserOnboarding />
       )}
+      <ClosestVendorProfiles />
     </div>
   );
 }

@@ -621,5 +621,13 @@
   },
   "ScheduleDropdown": {
     "placeholder": "Select a schedule"
+  },
+  "ClosestVendorProfiles": {
+    "title": "Your vendors",
+    "subTitle": "(in order of proximity)",
+    "loading": "Getting profiles...",
+    "error": "Unable to get profiles: {error}",
+    "noVendors": "No vendors found in your area",
+    "tryExpanding": "Try expanding your search radius"
   }
 }
