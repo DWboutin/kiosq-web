@@ -27,6 +27,8 @@ type MapViewProps = {
   showUserLocation?: boolean;
   userLatitude?: number;
   userLongitude?: number;
+  interactive?: boolean;
+  withNavigationControl?: boolean;
 };
 
 export const MapView = ({
@@ -39,6 +41,8 @@ export const MapView = ({
   showUserLocation = false,
   userLatitude,
   userLongitude,
+  interactive = false,
+  withNavigationControl = false,
 }: MapViewProps) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
@@ -55,9 +59,20 @@ export const MapView = ({
       style: "mapbox://styles/mapbox/streets-v12",
       center: [longitude, latitude],
       zoom: 10,
-      interactive: true,
+      interactive,
       attributionControl: false,
     });
+
+    // Add navigation control (zoom buttons only, no rotation)
+    if (withNavigationControl) {
+      map.current.addControl(
+        new mapboxgl.NavigationControl({
+          showCompass: false,
+          showZoom: true,
+        }),
+        "top-right"
+      );
+    }
 
     map.current.on("load", () => {
       setIsLoaded(true);

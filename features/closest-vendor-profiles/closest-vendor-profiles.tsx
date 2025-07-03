@@ -99,7 +99,7 @@ export const ClosestVendorProfiles = () => {
           </div>
         </div>
       </div>
-      <div className="w-1/2 max-md:w-full">
+      <div className="w-1/2 max-md:w-full shadow-md rounded-lg overflow-hidden">
         <MapView
           width="100%"
           height={300}
@@ -108,6 +108,8 @@ export const ClosestVendorProfiles = () => {
           userLatitude={coords?.latitude}
           userLongitude={coords?.longitude}
           className="border border-gray-200"
+          withNavigationControl
+          interactive
         />
       </div>
     </div>
