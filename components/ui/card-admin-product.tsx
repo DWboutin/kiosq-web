@@ -77,7 +77,32 @@ export const CardAdminProduct = ({
           <CardDescription>{description}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
-          <p>Product content</p>
+          {variants.length > 0 ? (
+            <div className="space-y">
+              <p className="text-sm font-medium text-muted-foreground">
+                Variants ({variants.length})
+              </p>
+              {variants.map((variant) => (
+                <div key={variant.id} className="flex justify-between items-center text-sm">
+                  <div className="flex flex-col">
+                    <span className="truncate">
+                      {variant.quantity} {variant.unit}
+                    </span>
+                    {variant.sku && (
+                      <span className="text-xs text-muted-foreground">SKU: {variant.sku}</span>
+                    )}
+                  </div>
+                  <span className="font-medium">
+                    {variant.productPrices.length > 0
+                      ? `$${variant.productPrices[0].basePrice.toFixed(2)}`
+                      : "No price"}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-muted-foreground">No variants</p>
+          )}
         </CardContent>
       </div>
       <CardFooter className="flex justify-end pt-0 pb-4">

@@ -59,7 +59,7 @@ export default async function DashboardProductsPage() {
   const products = await getUserProfileIdProducts(vendorProfiles[0]?.id);
 
   return (
-    <div className="flex flex-col flex-1">
+    <div className="flex flex-col flex-1 gap-4">
       <DashboardPageHeading
         title={t("title")}
         description={t("description")}

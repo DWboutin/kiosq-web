@@ -41,6 +41,7 @@ export const ScheduleDropdown: FC<ScheduleDropdownProps> = ({
         {schedules.map((schedule) => (
           <TooltipContainer
             key={schedule.id}
+            contentProps={{ side: "right" }}
             content={<ScheduleTooltipDisplay schedule={schedule} compact />}
           >
             <SelectItem value={schedule.id}>{schedule.nameTranslations[locale]}</SelectItem>
