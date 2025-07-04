@@ -257,10 +257,6 @@ export const MapView = ({
   };
 
   return (
-    <div
-      ref={mapContainer}
-      className={`overflow-hidden rounded-lg ${className}`}
-      style={containerStyle}
-    />
+    <div ref={mapContainer} className={`overflow-hidden ${className}`} style={containerStyle} />
   );
 };
