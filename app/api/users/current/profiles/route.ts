@@ -1,4 +1,4 @@
-import { profilesFactory } from "@/utils/factories/profiles-factory";
+import { authenticatedUserProfilesFactory } from "@/utils/factories/authenticated-user-profiles-factory";
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 
@@ -27,7 +27,7 @@ export const GET = async () => {
     }
 
     return NextResponse.json({
-      profiles: profilesFactory(profileData),
+      profiles: authenticatedUserProfilesFactory(profileData),
     });
   } catch (error) {
     console.error("Unexpected error in users API:", error);

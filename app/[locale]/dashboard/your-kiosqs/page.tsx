@@ -2,12 +2,13 @@ import { DashboardProfileKiosqs } from "@/components/client-pages/dashboard-prof
 import { DashboardPageHeading } from "@/components/sections/dashboard-page-heading";
 import { KiosqFormDrawer } from "@/features/kiosq-form-drawer/kiosq-form-drawer";
 import { cacheKeys } from "@/utils/cache-keys";
-import { Profile } from "@/utils/factories/profiles-factory";
+import { AuthenticatedUserKiosq } from "@/utils/factories/authenticated-user-kiosqs-factory";
+import { AuthenticatedUserProfile } from "@/utils/factories/authenticated-user-profiles-factory";
 import { fetchServerAuthenticated } from "@/utils/fetch-server-authenticated";
 import { getBaseUrl } from "@/utils/get-base-url";
 import { getTranslations } from "next-intl/server";
 
-const getUserProfiles = async () => {
+const getUserProfiles = async (): Promise<AuthenticatedUserProfile[]> => {
   const response = await fetchServerAuthenticated(`${getBaseUrl()}/api/users/current/profiles`, {
     next: {
       tags: [cacheKeys.currentUserProfiles.list.tag],
@@ -25,7 +26,7 @@ const getUserProfiles = async () => {
   return profiles;
 };
 
-const getUserProfileIdKiosqs = async (profileId: string) => {
+const getUserProfileIdKiosqs = async (profileId: string): Promise<AuthenticatedUserKiosq[]> => {
   const response = await fetchServerAuthenticated(
     `${getBaseUrl()}/api/users/current/profiles/${profileId}/kiosqs`,
     {
@@ -57,7 +58,9 @@ export const generateMetadata = async () => {
 export default async function YourKiosqsPage() {
   const t = await getTranslations("AdminKiosqPage");
   const profiles = await getUserProfiles();
-  const vendorProfiles = profiles.filter((profile: Profile) => profile.type === "vendor");
+  const vendorProfiles = profiles.filter(
+    (profile: AuthenticatedUserProfile) => profile.type === "vendor"
+  );
   const kiosqs = vendorProfiles[0]?.id ? await getUserProfileIdKiosqs(vendorProfiles[0].id) : [];
 
   return (

@@ -18,7 +18,8 @@
     "dashboard_admin": "/tableau-de-bord/administration",
     "dashboard_admin_categories": "/tableau-de-bord/administration/categories",
     "dashboard_training": "/tableau-de-bord/formation",
-    "dashboard_account": "/tableau-de-bord/compte"
+    "dashboard_account": "/tableau-de-bord/compte",
+    "vendor_slug": "/marchands/[slug]"
   },
   "Global": {
     "thereWasAnError": "Une erreur est survenue, veuillez contacter le support",

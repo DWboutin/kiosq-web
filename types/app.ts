@@ -33,7 +33,7 @@ export type ProductCategoryWithTranslations = Omit<
 };
 export type ProductCategoryInsert = Database["public"]["Tables"]["categories"]["Insert"];
 
-export type Profile = Database["public"]["Tables"]["profiles"]["Row"];
+export type RawProfile = Database["public"]["Tables"]["profiles"]["Row"];
 export type ProfileType = Database["public"]["Enums"]["profile_type"];
 
 export type RawProduct = Database["public"]["Tables"]["products"]["Row"];
@@ -47,6 +47,9 @@ export type RawKiosq = Database["public"]["Tables"]["kiosqs"]["Row"];
 export type RawSchedule = Database["public"]["Tables"]["schedules"]["Row"];
 export type RawKiosqWithSchedule = RawKiosq & {
   schedules: RawSchedule | null;
+};
+export type RawProfileWithKiosqs = RawProfile & {
+  kiosqs: RawKiosq[];
 };
 
 export type RawProductWithVariantsAndPrices = RawProduct & {

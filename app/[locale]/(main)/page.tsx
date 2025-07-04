@@ -1,6 +1,8 @@
 import { getAuthenticatedUserData } from "@/actions/get-authenticated-user-data";
 import { ClosestVendorProfiles } from "@/features/closest-vendor-profiles/closest-vendor-profiles";
+import { ClosestVendorProfilesLoading } from "@/features/closest-vendor-profiles/closest-vendor-profiles-loading";
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 const UserOnboarding = dynamic(() =>
   import("@/features/user-onboarding/user-onboarding").then((mod) => mod.UserOnboarding)
@@ -20,7 +22,9 @@ export default async function Home() {
       ) : (
         <UserOnboarding />
       )}
-      <ClosestVendorProfiles />
+      <Suspense fallback={<ClosestVendorProfilesLoading />}>
+        <ClosestVendorProfiles />
+      </Suspense>
     </div>
   );
 }

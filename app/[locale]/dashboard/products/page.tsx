@@ -2,7 +2,7 @@ import { DashboardProfileProducts } from "@/components/client-pages/dashboard-pr
 import { DashboardPageHeading } from "@/components/sections/dashboard-page-heading";
 import { ProductFormDrawer } from "@/features/product-form-drawer/product-form-drawer";
 import { cacheKeys } from "@/utils/cache-keys";
-import { Profile } from "@/utils/factories/profiles-factory";
+import { AuthenticatedUserProfile } from "@/utils/factories/authenticated-user-profiles-factory";
 import { fetchServerAuthenticated } from "@/utils/fetch-server-authenticated";
 import { getBaseUrl } from "@/utils/get-base-url";
 import { getTranslations } from "next-intl/server";
@@ -55,7 +55,9 @@ export const metadata = {
 export default async function DashboardProductsPage() {
   const t = await getTranslations("AdminProductPage");
   const profiles = await getUserProfiles();
-  const vendorProfiles = profiles.filter((profile: Profile) => profile.type === "vendor");
+  const vendorProfiles = profiles.filter(
+    (profile: AuthenticatedUserProfile) => profile.type === "vendor"
+  );
   const products = await getUserProfileIdProducts(vendorProfiles[0]?.id);
 
   return (

@@ -18,7 +18,8 @@
     "dashboard_admin": "/dashboard/admin",
     "dashboard_admin_categories": "/dashboard/admin/categories",
     "dashboard_training": "/dashboard/training",
-    "dashboard_account": "/dashboard/account"
+    "dashboard_account": "/dashboard/account",
+    "vendor_slug": "/vendors/[slug]"
   },
   "Global": {
     "thereWasAnError": "There was an error, please contact support",

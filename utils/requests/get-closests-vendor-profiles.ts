@@ -33,7 +33,7 @@ export const getClosestVendorProfiles = async (
     limit: limit.toString(),
   });
 
-  const response = await fetch(`/api/profiles/vendors?${searchParams}`);
+  const response = await fetch(`/api/profiles/vendors/closests?${searchParams}`);
 
   if (!response.ok) {
     throw new Error("Failed to fetch closest vendor profiles");

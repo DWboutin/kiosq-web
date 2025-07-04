@@ -8,12 +8,14 @@ import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { useMemo } from "react";
 import { MapView } from "@/components/ui/map-view";
+import { ClosestVendorProfilesLoading } from "./closest-vendor-profiles-loading";
+import { DynamicLink } from "@/components/ui/dynamic-link";
 
 export const ClosestVendorProfiles = () => {
   const t = useTranslations("ClosestVendorProfiles");
   const locale = useLocale() as Locales;
   const {
-    selectors: { vendorProfiles, isLoading, error },
+    selectors: { vendorProfiles, isLoading, error, isFetched },
   } = useClosestVendorProfiles();
   const {
     selectors: { coords },
@@ -40,21 +42,13 @@ export const ClosestVendorProfiles = () => {
     }));
   }, [vendorProfiles, locale]);
 
-  // Loading state
   if (isLoading) {
-    return (
-      <div className="p-4">
-        <h2 className="text-lg font-semibold mb-4">
-          {t("title")} <span className="text-neutral-medium font-normal">{t("subTitle")}</span>
-        </h2>
-        <p className="text-gray-600">{t("loading")}</p>
-      </div>
-    );
+    return <ClosestVendorProfilesLoading />;
   }
 
   if (error) {
     return (
-      <div className="p-4">
+      <div className="flex flex-row gap-4 max-md:flex-col container mx-auto">
         <h2 className="text-lg font-semibold mb-4">
           {t("title")} <span className="text-neutral-medium font-normal">{t("subTitle")}</span>
         </h2>
@@ -63,18 +57,32 @@ export const ClosestVendorProfiles = () => {
     );
   }
 
-  if (uniqueVendorProfiles.length === 0) {
+  if (uniqueVendorProfiles.length === 0 && isFetched) {
     return (
-      <div className="p-4">
-        <h2 className="text-lg font-semibold mb-4">{t("title")}</h2>
-        <p>{t("noVendors")}</p>
+      <div className="flex flex-row gap-4 max-md:flex-col container mx-auto">
+        <div className="flex flex-col w-1/2 gap-4 max-md:w-full">
+          <h2 className="text-lg font-semibold mb-4">{t("title")}</h2>
+          <p>{t("noVendors")}</p>
+        </div>
+        <div className="w-1/2 max-md:w-full shadow-md rounded-lg overflow-hidden">
+          <MapView
+            width="100%"
+            height={300}
+            showUserLocation={true}
+            userLatitude={coords?.latitude}
+            userLongitude={coords?.longitude}
+            className="border border-gray-200"
+            withNavigationControl
+            interactive
+          />
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-row gap-4 max-md:flex-col">
-      <div className="flex flex-col w-1/2 gap-4 max-md:w-full">
+    <div className="flex flex-row gap-4 max-lg:flex-col container mx-auto">
+      <div className="flex flex-col w-1/2 gap-4 max-lg:w-full">
         <h2 className="text-lg font-semibold mb-4">
           {t("title")} <span className="text-neutral-medium font-normal">{t("subTitle")}</span>
         </h2>
@@ -82,8 +90,9 @@ export const ClosestVendorProfiles = () => {
         <div className="flex flex-row flex-wrap gap-4">
           <div className="flex flex-row flex-wrap gap-4">
             {uniqueVendorProfiles.map((vendor) => (
-              <Link
-                href={`/profiles/${vendor.profileSlugTranslations[locale]}`}
+              <DynamicLink
+                pathKey="Pathnames.vendor_slug"
+                id={vendor.profileSlugTranslations[locale]}
                 key={`${vendor.profileId}-${vendor.kiosqId}`}
                 className="rounded-full shadow-md"
               >
@@ -94,12 +103,12 @@ export const ClosestVendorProfiles = () => {
                   height={86}
                   className="rounded-full"
                 />
-              </Link>
+              </DynamicLink>
             ))}
           </div>
         </div>
       </div>
-      <div className="w-1/2 max-md:w-full shadow-md rounded-lg overflow-hidden">
+      <div className="w-1/2 max-lg:w-full shadow-md rounded-lg overflow-hidden">
         <MapView
           width="100%"
           height={300}

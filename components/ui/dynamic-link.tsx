@@ -1,6 +1,7 @@
 import { usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
-import { useTranslations } from "next-intl";
+import { Locales } from "@/types/app";
+import { useLocale, useTranslations } from "next-intl";
 import Link, { LinkProps } from "next/link";
 import { PropsWithChildren } from "react";
 
@@ -20,6 +21,7 @@ export const DynamicLink = ({
   children,
   ...props
 }: DynamicLinkProps) => {
+  const locale = useLocale() as Locales;
   const pathname = usePathname();
   const t = useTranslations();
   const path = t(pathKey);
@@ -27,7 +29,11 @@ export const DynamicLink = ({
   const isActive = pathname === path;
 
   return (
-    <Link href={href} className={cn(className, isActive && activeClassName)} {...props}>
+    <Link
+      href={`/${locale}${href}`}
+      className={cn(className, isActive && activeClassName)}
+      {...props}
+    >
       {children}
     </Link>
   );

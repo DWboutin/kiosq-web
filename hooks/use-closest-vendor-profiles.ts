@@ -12,6 +12,7 @@ export const useClosestVendorProfiles = () => {
     data: vendorProfiles,
     isLoading: isProfilesLoading,
     error: profilesError,
+    isFetched,
     refetch,
   } = useQuery({
     queryKey:
@@ -34,6 +35,7 @@ export const useClosestVendorProfiles = () => {
       vendorProfiles,
       isLoading: isProfilesLoading || isLocationLoading,
       error: profilesError || locationError,
+      isFetched,
     },
     actions: {
       refetch,
