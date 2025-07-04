@@ -4,6 +4,8 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useResizeObserver } from "../../hooks/use-resize-observer";
+import { useLocale } from "next-intl";
+import { Locales } from "@/types/app";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoidG9vc2FsdHkiLCJhIjoiY204OTZlYmdvMHpodDJyb21md2Y3dW5hcyJ9.dGMXtSJp5OpLhyWzPpG0IA";
@@ -49,6 +51,7 @@ export const MapView = ({
   const markers = useRef<mapboxgl.Marker[]>([]);
   const userMarker = useRef<mapboxgl.Marker | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const locale = useLocale() as Locales;
 
   // Initialize map
   useEffect(() => {
@@ -61,6 +64,7 @@ export const MapView = ({
       zoom: 10,
       interactive,
       attributionControl: false,
+      language: locale,
     });
 
     // Add navigation control (zoom buttons only, no rotation)

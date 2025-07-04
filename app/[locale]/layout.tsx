@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import { ReactQueryProvider } from "@/features/providers/react-query-provider";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { LocaleDropdownProvider } from "@/features/locale-dropdown/locale-dropdown-provider";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -48,7 +49,9 @@ export default async function RootLayout({
     <html lang={locale}>
       <body className={`${nunito.className} ${lato.className} ${inter.className} antialiased`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <ReactQueryProvider>{children}</ReactQueryProvider>
+          <LocaleDropdownProvider>
+            <ReactQueryProvider>{children}</ReactQueryProvider>
+          </LocaleDropdownProvider>
         </NextIntlClientProvider>
         <Toaster />
       </body>

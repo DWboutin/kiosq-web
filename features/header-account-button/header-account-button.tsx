@@ -20,6 +20,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { LOCALES } from "@/utils/constants";
 import { ButtonBrand } from "@/components/ui/button-brand";
+import { useLocaleDropdownContext } from "@/features/locale-dropdown/locale-dropdown-provider";
 
 export const HeaderAccountButton: FC = memo(() => {
   const t = useTranslations();
@@ -27,6 +28,7 @@ export const HeaderAccountButton: FC = memo(() => {
   const pathname = usePathname();
   const otherLocales = useMemo(() => LOCALES.filter((l) => l !== locale), [locale]);
   const disconnectUser = useUserStore((state) => state.disconnectUser);
+  const { localizedPathnames } = useLocaleDropdownContext();
 
   return (
     <DropdownMenu>
@@ -50,7 +52,7 @@ export const HeaderAccountButton: FC = memo(() => {
               <DropdownMenuSubContent>
                 {otherLocales.map((otherLocale) => (
                   <DropdownMenuItem key={otherLocale} asChild>
-                    <Link href={pathname} locale={otherLocale}>
+                    <Link href={localizedPathnames?.[otherLocale] ?? pathname} locale={otherLocale}>
                       {t(`Locales.${otherLocale}`)}
                     </Link>
                   </DropdownMenuItem>

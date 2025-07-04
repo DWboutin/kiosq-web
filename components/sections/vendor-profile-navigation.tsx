@@ -38,7 +38,7 @@ const vendorProfileNavigationLinks = [
 
 const vendorProfileNavigationLinkClassName = "text-neutral-darker hover:text-neutral-black";
 const vendorProfileNavigationLinkLargeClassName =
-  "min-md:font-medium min-md:py-4 min-md:px-3 min-md:border-b-4 min-md:border-transparent min-md:hover:border-brand-dark";
+  "min-md:font-medium min-md:py-4 min-md:px-3 min-md:border-b-4 min-md:border-transparent min-md:hover:border-neutral-light";
 const vendorProfileNavigationLinkSmallClassName =
   "max-md:text-sm max-md:font-semibold max-md:py-2 max-md:px-3 max-md:rounded-full";
 
@@ -58,7 +58,7 @@ const VendorProfileNavigationLink = ({
         vendorProfileNavigationLinkLargeClassName,
         vendorProfileNavigationLinkSmallClassName
       )}
-      activeClassName="min-md:border-brand-medium max-md:bg-neutral-lightest"
+      activeClassName="min-md:border-brand-medium min-md:hover:border-brand-medium max-md:bg-neutral-lightest"
     >
       {children}
     </DynamicLink>

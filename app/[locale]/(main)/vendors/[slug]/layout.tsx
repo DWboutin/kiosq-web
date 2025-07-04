@@ -3,6 +3,7 @@ import { Locales } from "@/types/app";
 import { getVendorProfileFromSlug } from "@/utils/requests/get-vendor-profile-from-slug";
 import { VendorProfileHeader } from "@/components/sections/vendor-profile-header";
 import { VendorProfileNavigation } from "@/components/sections/vendor-profile-navigation";
+import { LocaleDropdownSlugManager } from "@/features/locale-dropdown/locale-dropdown-slug-manager";
 
 export default async function VendorProfileLayout({
   params,
@@ -16,6 +17,7 @@ export default async function VendorProfileLayout({
 
   return (
     <>
+      <LocaleDropdownSlugManager currentSlug={slug} slugTranslations={vendor.slugTranslations} />
       <div className="flex flex-col gap-4 min-md:border-b-8 min-md:border-neutral-lightest">
         <VendorProfileHeader
           kiosqs={vendor.kiosqs}
