@@ -1,8 +1,10 @@
 "use server";
 
+import { cacheKeys } from "@/utils/cache-keys";
+import { LOCALES } from "@/utils/constants";
 import { createClient } from "@/utils/supabase/server";
 import { uploadImage } from "@/utils/upload-image";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 interface UpdateProfileImageArgs {
   profileId: string;
@@ -24,7 +26,7 @@ export const updateProfileImage = async (data: UpdateProfileImageArgs) => {
   // Verify the profile belongs to the current user and get current profile image
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
-    .select("id, user_id, profile_image")
+    .select("id, user_id, profile_image, slug_translations")
     .eq("id", data.profileId)
     .eq("user_id", user.user.id)
     .single();
@@ -73,6 +75,11 @@ export const updateProfileImage = async (data: UpdateProfileImageArgs) => {
       }
 
       revalidatePath("/dashboard/your-store");
+      LOCALES.forEach((locale) => {
+        revalidateTag(
+          cacheKeys.vendorProfileFromSlug(profile.slug_translations[locale], locale).tag
+        );
+      });
 
       return updatedProfile;
     }
@@ -121,6 +128,9 @@ export const updateProfileImage = async (data: UpdateProfileImageArgs) => {
     }
 
     revalidatePath("/dashboard/your-store");
+    LOCALES.forEach((locale) => {
+      revalidateTag(cacheKeys.vendorProfileFromSlug(profile.slug_translations[locale], locale).tag);
+    });
 
     return updatedProfile;
   } catch (error) {

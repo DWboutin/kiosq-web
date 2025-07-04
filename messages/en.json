@@ -19,7 +19,10 @@
     "dashboard_admin_categories": "/dashboard/admin/categories",
     "dashboard_training": "/dashboard/training",
     "dashboard_account": "/dashboard/account",
-    "vendor_slug": "/vendors/[slug]"
+    "vendor_slug": "/vendors/[slug]",
+    "vendor_slug_company": "/vendors/[slug]/our-company",
+    "vendor_slug_schedule": "/vendors/[slug]/schedule",
+    "vendor_slug_events": "/vendors/[slug]/events"
   },
   "Global": {
     "thereWasAnError": "There was an error, please contact support",
@@ -630,5 +633,11 @@
     "error": "Unable to get profiles: {error}",
     "noVendors": "No vendors found in your area",
     "tryExpanding": "Try expanding your search radius"
+  },
+  "VendorPageNavigation": {
+    "ourProducts": "Our products",
+    "ourCompany": "Our company",
+    "schedule": "Schedule",
+    "events": "Events"
   }
 }

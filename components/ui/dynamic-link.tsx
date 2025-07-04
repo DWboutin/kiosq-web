@@ -1,3 +1,5 @@
+"use client";
+
 import { usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { Locales } from "@/types/app";
@@ -26,7 +28,8 @@ export const DynamicLink = ({
   const t = useTranslations();
   const path = t(pathKey);
   const href = path.replace(/\[[^\]]+\]/g, id);
-  const isActive = pathname === path;
+  const pathRegex = new RegExp(`^${path.replace(/\[[^\]]+\]/g, "[^/]+")}$`);
+  const isActive = pathRegex.test(pathname);
 
   return (
     <Link

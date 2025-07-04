@@ -40,9 +40,9 @@ export const VendorProfileHeader: FC<VendorProfileHeaderProps> = ({
         height={1000}
         className="w-full h-70 object-cover object-bottom"
       />
-      <div className="container mx-auto relative max-sm:px-4">
+      <div className="container mx-auto relative">
         <div className="flex flex-row max-xl:flex-col gap-4 justify-between">
-          <div className="flex flex-1 flex-row gap-4 max-lg:flex-col justify-between">
+          <div className="flex flex-1 flex-row gap-4 max-lg:flex-col justify-between max-sm:px-4">
             <div className="flex flex-1 flex-row gap-4 justify-between relative">
               <div className="w-[182px] h-[182px] rounded-full absolute top-[-44px] left-0 shadow-md overflow-hidden flex-shrink-0">
                 <Image
@@ -97,7 +97,7 @@ export const VendorProfileHeader: FC<VendorProfileHeaderProps> = ({
               }
               interactive={true}
               withNavigationControl={true}
-              className="rounded-lg shadow-md mt-[-90px] max-xl:mt-0 xl:max-w-[320px]"
+              className="min-sm:rounded-lg min-sm:shadow-md mt-[-90px] max-xl:mt-0 xl:max-w-[320px]"
             />
           </div>
         </div>

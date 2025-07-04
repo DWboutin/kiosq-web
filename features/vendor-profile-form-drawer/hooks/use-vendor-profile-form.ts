@@ -15,6 +15,7 @@ import { useCurrentUserProfiles } from "@/hooks/use-current-user-profiles";
 import { updateVendorProfile } from "@/actions/update-vendor-profile";
 import { AuthenticatedUserProfile } from "@/utils/factories/authenticated-user-profiles-factory";
 import { filterTranslations } from "@/utils/filter-translations";
+import { cacheKeys } from "@/utils/cache-keys";
 
 type UseVendorProfileFormProps = {
   profileId: string;
@@ -136,7 +137,7 @@ export const useVendorProfileForm = ({ profileId }: UseVendorProfileFormProps) =
 
       // Invalidate and refetch profiles
       await queryClient.invalidateQueries({
-        queryKey: ["currentUserProfiles"],
+        queryKey: cacheKeys.currentUserProfiles.list.queryKey,
       });
 
       drawerRef.current?.close();

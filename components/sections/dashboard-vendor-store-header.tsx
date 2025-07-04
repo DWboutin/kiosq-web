@@ -1,10 +1,5 @@
 import { AdminVendorBannerImage } from "@/features/admin-vendor-banner-image/admin-vendor-banner-image";
 import { AdminVendorProfileImage } from "@/features/admin-vendor-profile-image/admin-vendor-profile-image";
-import { SocialButton } from "@/components/ui/social-button";
-import { FacebookIcon } from "@/components/ui/icons/facebook-icon";
-import { InstagramIcon } from "@/components/ui/icons/instagram-icon";
-import { TikTokIcon } from "@/components/ui/icons/tiktok-icon";
-import { XIcon } from "@/components/ui/icons/x-icon";
 import { Locales } from "@/types/app";
 import { useLocale } from "next-intl";
 import { FC } from "react";
