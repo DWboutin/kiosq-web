@@ -8,8 +8,9 @@ import { XIcon } from "@/components/ui/icons/x-icon";
 import { Locales } from "@/types/app";
 import { useLocale } from "next-intl";
 import { FC } from "react";
+import { SocialLinks } from "./social-links";
 
-type VendorStoreHeaderProps = {
+type DashboardVendorStoreHeaderProps = {
   profileId: string;
   bannerImageUrl: string | null;
   profileImageUrl: string | null;
@@ -21,7 +22,7 @@ type VendorStoreHeaderProps = {
   xPageUrl: string | null;
 };
 
-export const VendorStoreHeader: FC<VendorStoreHeaderProps> = ({
+export const DashboardVendorStoreHeader: FC<DashboardVendorStoreHeaderProps> = ({
   profileId,
   bannerImageUrl,
   profileImageUrl,
@@ -46,28 +47,13 @@ export const VendorStoreHeader: FC<VendorStoreHeaderProps> = ({
             <h2 className="text-2xl font-bold text-neutral-black">{name}</h2>
             <p className="text-sm text-neutral-medium">{description}</p>
           </div>
-          <div className="flex flex-row gap-2 items-start py-5 pr-5">
-            {facebookPageUrl && (
-              <SocialButton platform="facebook" href={facebookPageUrl}>
-                <FacebookIcon className="size-6" color="white" />
-              </SocialButton>
-            )}
-            {instagramPageUrl && (
-              <SocialButton platform="instagram" href={instagramPageUrl}>
-                <InstagramIcon className="size-6" color="white" />
-              </SocialButton>
-            )}
-            {tiktokPageUrl && (
-              <SocialButton platform="tiktok" href={tiktokPageUrl}>
-                <TikTokIcon className="size-6" color="white" />
-              </SocialButton>
-            )}
-            {xPageUrl && (
-              <SocialButton platform="x" href={xPageUrl}>
-                <XIcon className="size-6" color="white" />
-              </SocialButton>
-            )}
-          </div>
+          <SocialLinks
+            facebookPageUrl={facebookPageUrl}
+            instagramPageUrl={instagramPageUrl}
+            tiktokPageUrl={tiktokPageUrl}
+            xPageUrl={xPageUrl}
+            className="py-5 pr-5"
+          />
         </div>
       </div>
     </div>

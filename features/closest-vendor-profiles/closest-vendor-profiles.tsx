@@ -48,7 +48,7 @@ export const ClosestVendorProfiles = () => {
 
   if (error) {
     return (
-      <div className="flex flex-row gap-4 max-md:flex-col container mx-auto">
+      <div className="flex flex-row gap-4 max-md:flex-col container mx-auto max-sm:px-4">
         <h2 className="text-lg font-semibold mb-4">
           {t("title")} <span className="text-neutral-medium font-normal">{t("subTitle")}</span>
         </h2>
@@ -59,7 +59,7 @@ export const ClosestVendorProfiles = () => {
 
   if (uniqueVendorProfiles.length === 0 && isFetched) {
     return (
-      <div className="flex flex-row gap-4 max-md:flex-col container mx-auto">
+      <div className="flex flex-row gap-4 max-md:flex-col container mx-auto max-sm:px-4">
         <div className="flex flex-col w-1/2 gap-4 max-md:w-full">
           <h2 className="text-lg font-semibold mb-4">{t("title")}</h2>
           <p>{t("noVendors")}</p>
@@ -81,7 +81,7 @@ export const ClosestVendorProfiles = () => {
   }
 
   return (
-    <div className="flex flex-row gap-4 max-lg:flex-col container mx-auto">
+    <div className="flex flex-row gap-4 max-lg:flex-col container mx-auto max-sm:px-4">
       <div className="flex flex-col w-1/2 gap-4 max-lg:w-full">
         <h2 className="text-lg font-semibold mb-4">
           {t("title")} <span className="text-neutral-medium font-normal">{t("subTitle")}</span>

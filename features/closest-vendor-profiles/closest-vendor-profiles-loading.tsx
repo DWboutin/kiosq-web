@@ -5,7 +5,7 @@ export const ClosestVendorProfilesLoading = () => {
   const t = useTranslations("ClosestVendorProfiles");
 
   return (
-    <div className="flex flex-row gap-4 max-md:flex-col container mx-auto">
+    <div className="flex flex-row gap-4 max-md:flex-col container mx-auto max-sm:px-4">
       {/* Left side - Vendor profiles section */}
       <div className="flex flex-col w-1/2 gap-4 max-md:w-full">
         {/* Title and subtitle skeleton */}

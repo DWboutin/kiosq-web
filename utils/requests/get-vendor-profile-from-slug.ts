@@ -1,8 +1,12 @@
 import { Locales } from "@/types/app";
 import { cacheKeys } from "@/utils/cache-keys";
 import { getBaseUrl } from "@/utils/get-base-url";
+import { ProfileWithKiosqs } from "@/utils/factories/profiles-with-kiosqs-factory";
 
-export const getVendorProfileFromSlug = async (slug: string, locale: Locales) => {
+export const getVendorProfileFromSlug = async (
+  slug: string,
+  locale: Locales
+): Promise<ProfileWithKiosqs> => {
   try {
     const response = await fetch(`${getBaseUrl()}/api/profiles/vendors/${locale}/${slug}`, {
       next: {

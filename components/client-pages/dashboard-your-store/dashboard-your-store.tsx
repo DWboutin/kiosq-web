@@ -1,6 +1,6 @@
 "use client";
 
-import { VendorStoreHeader } from "@/components/sections/vendor-store-header";
+import { DashboardVendorStoreHeader } from "@/components/sections/dashboard-vendor-store-header";
 import { CreateProfileWizard } from "@/features/create-profile-wizard/create-profile-wizard";
 import { useCurrentUserProfiles } from "@/hooks/use-current-user-profiles";
 import { AuthenticatedUserProfile } from "@/utils/factories/authenticated-user-profiles-factory";
@@ -33,7 +33,7 @@ export const DashboardYourStore: FC<DashboardYourStoreProps> = ({ profilesData }
   return (
     <>
       {vendorProfiles.length === 0 && <CreateProfileWizard />}
-      <VendorStoreHeader
+      <DashboardVendorStoreHeader
         profileId={firstVendorProfile.id}
         bannerImageUrl={firstVendorProfile.bannerImage}
         profileImageUrl={firstVendorProfile.profileImage}
