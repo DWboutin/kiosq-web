@@ -640,5 +640,10 @@
     "ourCompany": "Notre entreprise",
     "schedule": "Horaire",
     "events": "Événements"
+  },
+  "DistanceAwayFromUser": {
+    "distanceUnavailable": "Distance indisponible",
+    "lessThan1Km": "Moins de 1 km",
+    "kmAway": "{distance} km"
   }
 }

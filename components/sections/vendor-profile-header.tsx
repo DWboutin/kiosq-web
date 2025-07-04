@@ -5,6 +5,7 @@ import Image from "next/image";
 import { FC } from "react";
 import { Kiosq } from "@/utils/factories/kiosqs-factory";
 import { Locales } from "@/types/app";
+import { DistanceAwayFromUser } from "@/features/distance-away-from-user/distance-away-from-user";
 
 type VendorProfileHeaderProps = {
   kiosqs?: Kiosq[];
@@ -60,13 +61,13 @@ export const VendorProfileHeader: FC<VendorProfileHeaderProps> = ({
                   <div className="flex flex-row gap-4 items-center">
                     <div className="flex flex-row gap-2 items-center">
                       <LocationPinIcon className="w-5 h-5 text-neutral-medium" />
-                      <p className="text-md text-neutral-medium">1 km away</p>
+                      <DistanceAwayFromUser
+                        latitude={defaultKiosq?.latitude}
+                        longitude={defaultKiosq?.longitude}
+                        className="text-md text-neutral-medium"
+                      />
                     </div>
                     <div className="w-1 h-1 bg-neutral-light rounded-full" />
-                    <div className="flex flex-row gap-2 items-center">
-                      <LocationPinIcon className="w-5 h-5 text-neutral-medium" />
-                      <p className="text-md text-neutral-medium">1 km away</p>
-                    </div>
                   </div>
                 </div>
               </div>
