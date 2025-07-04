@@ -11,6 +11,8 @@ import { LOCALES } from "@/utils/constants";
 import { DropdownMenu } from "@/components/ui/dropdown-menu";
 import { CaretRightIcon } from "@/components/ui/icons/caret-right-icon";
 import classNames from "classnames";
+import { useLocaleDropdownContext } from "@/features/locale-dropdown/locale-dropdown-provider";
+import { Locales } from "@/types/app";
 
 type LocaleDropdownProps = {
   className?: string;
@@ -21,7 +23,8 @@ export const LocaleDropdown: FC<LocaleDropdownProps> = ({ className, short = fal
   const t = useTranslations();
   const locale = useLocale();
   const pathname = usePathname();
-  const otherLocales = useMemo(() => LOCALES.filter((l) => l !== locale), [locale]);
+  const otherLocales = useMemo(() => LOCALES.filter((l) => l !== locale), [locale]) as Locales[];
+  const { localizedPathnames } = useLocaleDropdownContext();
 
   return (
     <DropdownMenu>
@@ -36,7 +39,7 @@ export const LocaleDropdown: FC<LocaleDropdownProps> = ({ className, short = fal
       <DropdownMenuContent>
         {otherLocales.map((otherLocale) => (
           <DropdownMenuItem key={otherLocale} asChild>
-            <Link href={pathname} locale={otherLocale}>
+            <Link href={localizedPathnames?.[otherLocale] ?? pathname} locale={otherLocale}>
               {t(`Locales.${otherLocale}`)}
             </Link>
           </DropdownMenuItem>

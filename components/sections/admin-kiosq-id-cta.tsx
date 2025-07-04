@@ -48,6 +48,9 @@ export const AdminKiosqIdCta: FC<AdminKiosqIdCtaProps> = ({
         queryClient.invalidateQueries({
           queryKey: cacheKeys.currentUserKiosqById(kiosqId).queryKey,
         });
+        queryClient.invalidateQueries({
+          queryKey: cacheKeys.closestVendorProfiles.all.queryKey,
+        });
         toast.success("Status updated successfully");
       }
     } catch (error) {

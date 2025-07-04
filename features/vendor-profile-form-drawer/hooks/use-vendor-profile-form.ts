@@ -13,15 +13,16 @@ import { SideFormDrawerRef } from "@/components/ui/side-form-drawer";
 import { useEffect, useRef } from "react";
 import { useCurrentUserProfiles } from "@/hooks/use-current-user-profiles";
 import { updateVendorProfile } from "@/actions/update-vendor-profile";
-import { Profile } from "@/utils/factories/profiles-factory";
+import { AuthenticatedUserProfile } from "@/utils/factories/authenticated-user-profiles-factory";
 import { filterTranslations } from "@/utils/filter-translations";
+import { cacheKeys } from "@/utils/cache-keys";
 
 type UseVendorProfileFormProps = {
   profileId: string;
 };
 
 const fillVendorProfileDefaultValues = (
-  profile: Profile | undefined,
+  profile: AuthenticatedUserProfile | undefined,
   locale: Locales
 ): VendorProfileFormValues => {
   if (!profile) {
@@ -136,7 +137,7 @@ export const useVendorProfileForm = ({ profileId }: UseVendorProfileFormProps) =
 
       // Invalidate and refetch profiles
       await queryClient.invalidateQueries({
-        queryKey: ["currentUserProfiles"],
+        queryKey: cacheKeys.currentUserProfiles.list.queryKey,
       });
 
       drawerRef.current?.close();

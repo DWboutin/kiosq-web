@@ -34,6 +34,7 @@ export const updateKiosqPublishedStatus = async (
 
     revalidateTag(cacheKeys.currentUserKiosqById(kiosqId).tag);
     revalidateTag(cacheKeys.currentUserProfileIdKiosqs.list(profileId).tag);
+    revalidateTag(cacheKeys.closestVendorProfiles.all.tag);
 
     return true;
   } catch (error) {

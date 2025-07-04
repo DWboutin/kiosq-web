@@ -45,6 +45,7 @@ export const useGeolocation = () => {
   return {
     selectors: {
       city,
+      coords,
       isLoading,
       error: error?.message ?? null,
     },

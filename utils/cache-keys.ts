@@ -1,3 +1,5 @@
+import { Locales } from "@/types/app";
+
 type CacheKeyConfig = {
   /** Cache tag for Next.js revalidation */
   tag: string;
@@ -70,6 +72,23 @@ export const cacheKeys = {
       queryKey: ["currentUserSchedules", "list", profileId] as const,
     }),
   },
+  closestVendorProfiles: {
+    all: {
+      revalidate: 86400, // 1 day
+      tag: "closest-vendor-profiles",
+      queryKey: ["closestVendorProfiles"] as const,
+    } satisfies CacheKeyConfig,
+    list: (latitude: number, longitude: number): CacheKeyConfig => ({
+      revalidate: 86400, // 1 day
+      tag: `closest-vendor-profiles-${latitude}-${longitude}`,
+      queryKey: ["closestVendorProfiles", "list", latitude, longitude] as const,
+    }),
+  },
+  vendorProfileFromSlug: (slug: string, locale: Locales): CacheKeyConfig => ({
+    revalidate: 86400, // 1 day
+    tag: `vendor-profile-from-slug-${slug}-${locale}`,
+    queryKey: ["vendorProfileFromSlug", slug, locale] as const,
+  }),
 };
 
 export const getAllTagsForDomain = (domain: keyof typeof cacheKeys): string[] => {

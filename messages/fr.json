@@ -18,7 +18,11 @@
     "dashboard_admin": "/tableau-de-bord/administration",
     "dashboard_admin_categories": "/tableau-de-bord/administration/categories",
     "dashboard_training": "/tableau-de-bord/formation",
-    "dashboard_account": "/tableau-de-bord/compte"
+    "dashboard_account": "/tableau-de-bord/compte",
+    "vendor_slug": "/marchands/[slug]",
+    "vendor_slug_company": "/marchands/[slug]/notre-entreprise",
+    "vendor_slug_schedule": "/marchands/[slug]/horaires",
+    "vendor_slug_events": "/marchands/[slug]/evenements"
   },
   "Global": {
     "thereWasAnError": "Une erreur est survenue, veuillez contacter le support",
@@ -622,5 +626,24 @@
   },
   "ScheduleDropdown": {
     "placeholder": "Sélectionner un horaire"
+  },
+  "ClosestVendorProfiles": {
+    "title": "Vos producteurs",
+    "subTitle": "(en ordre de proximité)",
+    "loading": "Récupération de votre emplacement...",
+    "error": "Impossible de récupérer votre emplacement: {error}",
+    "noVendors": "Aucun vendeur trouvé dans votre zone",
+    "tryExpanding": "Essayez d'étendre votre rayon de recherche"
+  },
+  "VendorPageNavigation": {
+    "ourProducts": "Nos produits",
+    "ourCompany": "Notre entreprise",
+    "schedule": "Horaire",
+    "events": "Événements"
+  },
+  "DistanceAwayFromUser": {
+    "distanceUnavailable": "Distance indisponible",
+    "lessThan1Km": "Moins de 1 km",
+    "kmAway": "{distance} km"
   }
 }
