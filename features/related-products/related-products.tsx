@@ -46,6 +46,7 @@ export const RelatedProducts = async ({ productId }: RelatedProductsProps) => {
                 description={product.descriptionTranslations[locale]}
                 status={product.status}
                 variants={product.productVariants}
+                profileName={product.profileNameTranslations[locale]}
                 className="shadow-none"
               />
             </CarouselItem>

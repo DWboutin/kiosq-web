@@ -29,6 +29,7 @@ type CardProductProps = {
   description: string;
   status: PublishedStatus;
   variants: ProductVariantWithPrices[];
+  profileName?: string;
   className?: string;
 };
 
@@ -38,6 +39,7 @@ export const CardProduct = ({
   description,
   status,
   variants,
+  profileName,
   className,
 }: CardProductProps) => {
   const t = useTranslations("Global");
@@ -82,7 +84,10 @@ export const CardProduct = ({
       <div className="flex-1 flex flex-col gap-4">
         <CardHeader className="gap-2">
           <CardTitle>
-            <Link href={href}>{title}</Link>
+            <div className="flex flex-col gap-1">
+              <div className="text-sm font-normal text-neutral-darker">{profileName}</div>
+              <Link href={href}>{title}</Link>
+            </div>
           </CardTitle>
           <CardDescription>{description}</CardDescription>
         </CardHeader>
