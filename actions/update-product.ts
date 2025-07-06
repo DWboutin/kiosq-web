@@ -1,5 +1,6 @@
 "use server";
 
+import { productRevalidator } from "@/actions/revalidators/product-revalidator";
 import { ProductFormValues } from "@/features/product-form-drawer/utils/product-form-validation-schema";
 import { UpdateWithLocale } from "@/types/app";
 import { cacheKeys } from "@/utils/cache-keys";
@@ -41,14 +42,18 @@ export const updateProduct = async (product: UpdateProductArgs) => {
         updated_by: user.user.id,
       })
       .eq("id", product.id)
-      .select()
+      .select("*, profile:profiles(slug_translations)")
       .single();
 
     if (productError) {
       throw productError;
     }
 
-    revalidateTag(cacheKeys.currentUserProductById(product.id).tag);
+    productRevalidator({
+      productId: product.id,
+      profileId: productData.profile_id,
+      slugTranslations: productData.profile.slug_translations,
+    });
 
     return productData;
   } catch (error) {

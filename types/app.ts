@@ -75,3 +75,13 @@ export type DayOfWeek =
   | "friday"
   | "saturday"
   | "sunday";
+
+export type Pagination = {
+  totalItems: number;
+  totalPages: number;
+  currentPage: number;
+  limit: number;
+  skip: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+};
