@@ -21,6 +21,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { ProductVariantWithPrices } from "@/utils/factories/product-factory";
 import { slugify } from "@/utils/slugify";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 type CardProductProps = {
   id: string;
@@ -28,9 +29,17 @@ type CardProductProps = {
   description: string;
   status: PublishedStatus;
   variants: ProductVariantWithPrices[];
+  className?: string;
 };
 
-export const CardProduct = ({ id, title, description, status, variants }: CardProductProps) => {
+export const CardProduct = ({
+  id,
+  title,
+  description,
+  status,
+  variants,
+  className,
+}: CardProductProps) => {
   const t = useTranslations("Global");
   const locale = useLocale() as Locales;
   const variantImages = variants
@@ -42,7 +51,7 @@ export const CardProduct = ({ id, title, description, status, variants }: CardPr
   const href = `/${locale}/products/${slugify(title)}/${id}`;
 
   return (
-    <Card className="flex flex-col overflow-hidden w-[240px] p-0 gap-4">
+    <Card className={cn("flex flex-col overflow-hidden w-[240px] p-0 gap-4", className)}>
       <div className="relative">
         <Carousel>
           <CarouselContent>

@@ -646,5 +646,8 @@
     "distanceUnavailable": "Distance indisponible",
     "lessThan1Km": "Moins de 1 km",
     "kmAway": "{distance} km"
+  },
+  "RelatedProducts": {
+    "title": "Produits liés"
   }
 }
