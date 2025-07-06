@@ -28,7 +28,6 @@ export const GET = async (
     // Calculate range indices for Supabase
     const from = skip;
     const to = skip + limit - 1;
-
     // Fetch products with pagination
     const {
       data: products,
@@ -46,6 +45,11 @@ export const GET = async (
           product_variants (
             *,
             product_prices(*)
+          ),
+          profiles (
+            name_translations,
+            slug_translations,
+            profile_image
           )
         `,
         { count: "exact" }

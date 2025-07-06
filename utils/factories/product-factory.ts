@@ -6,6 +6,8 @@ import {
   PublishedStatus,
   RawProductVariant,
   RawProductPrice,
+  RawProductWithVariantsAndPricesAndProfile,
+  SlugTranslations,
 } from "@/types/app";
 import { extractTranslations } from "@/utils/extract-translations";
 import { productCategoryWithParentFactory } from "@/utils/factories/product-category-with-parent-factory";
@@ -38,7 +40,7 @@ export type ProductVariantWithPrices = ProductVariant & {
   productPrices: ProductPrice[];
 };
 
-export type ProductWithVariantsAndPrices = {
+export type ProductWithVariantsPricesAndProfile = {
   id: string;
   categoryId: string;
   nameTranslations: NameTranslations;
@@ -49,11 +51,14 @@ export type ProductWithVariantsAndPrices = {
   status: PublishedStatus;
   category: ProductCategory;
   productVariants: ProductVariantWithPrices[];
+  profileImageUrl: string | null;
+  profileNameTranslations: NameTranslations;
+  profileSlugTranslations: SlugTranslations;
 };
 
 export const productFactory = (
-  product: RawProductWithVariantsAndPrices
-): ProductWithVariantsAndPrices => {
+  product: RawProductWithVariantsAndPricesAndProfile
+): ProductWithVariantsPricesAndProfile => {
   const nameTranslations = extractTranslations(product, "name_translations");
   const descriptionTranslations = extractTranslations(product, "description_translations");
 
@@ -109,9 +114,12 @@ export const productFactory = (
           };
         })
       : [],
+    profileImageUrl: product.profiles.profile_image,
+    profileNameTranslations: product.profiles.name_translations,
+    profileSlugTranslations: product.profiles.slug_translations,
   };
 };
 
-export const productsFactory = (products: RawProductWithVariantsAndPrices[]) => {
+export const productsFactory = (products: RawProductWithVariantsAndPricesAndProfile[]) => {
   return products.map((product) => productFactory(product));
 };

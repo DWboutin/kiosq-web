@@ -15,10 +15,12 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Image from "next/image";
-import { PublishedStatus } from "@/types/app";
+import { Locales, PublishedStatus } from "@/types/app";
 import { Badge } from "@/components/ui/badge";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { ProductVariantWithPrices } from "@/utils/factories/product-factory";
+import { slugify } from "@/utils/slugify";
+import Link from "next/link";
 
 type CardProductProps = {
   id: string;
@@ -30,12 +32,14 @@ type CardProductProps = {
 
 export const CardProduct = ({ id, title, description, status, variants }: CardProductProps) => {
   const t = useTranslations("Global");
+  const locale = useLocale() as Locales;
   const variantImages = variants
     .filter((variant) => variant.imageUrl)
     .map((variant) => ({
       id: variant.id,
       imageUrl: variant.imageUrl || "/placeholders/240x140.jpg",
     }));
+  const href = `/${locale}/products/${slugify(title)}/${id}`;
 
   return (
     <Card className="flex flex-col overflow-hidden w-[240px] p-0 gap-4">
@@ -68,7 +72,9 @@ export const CardProduct = ({ id, title, description, status, variants }: CardPr
       </div>
       <div className="flex-1 flex flex-col gap-4">
         <CardHeader className="gap-2">
-          <CardTitle>{title}</CardTitle>
+          <CardTitle>
+            <Link href={href}>{title}</Link>
+          </CardTitle>
           <CardDescription>{description}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">

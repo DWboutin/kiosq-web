@@ -62,6 +62,14 @@ export type RawProductWithVariantsAndPrices = RawProduct & {
     }[];
 };
 
+export type RawProductWithVariantsAndPricesAndProfile = RawProductWithVariantsAndPrices & {
+  profiles: {
+    profile_image: string | null;
+    name_translations: Record<Locales, string>;
+    slug_translations: Record<Locales, string>;
+  };
+};
+
 export type NameTranslations = Record<Locales, string>;
 export type DescriptionTranslations = Record<Locales, string>;
 export type SlugTranslations = Record<Locales, string>;

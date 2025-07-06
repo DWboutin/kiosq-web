@@ -19,7 +19,7 @@ export const getProductFromVendorId = async ({
 }): Promise<GetProductFromVendorIdResponse> => {
   try {
     const response = await fetch(
-      `${getBaseUrl()}/api/products/${vendorId}?limit=${limit}&skip=${skip}`,
+      `${getBaseUrl()}/api/profiles/${vendorId}/products?limit=${limit}&skip=${skip}`,
       {
         next: {
           revalidate: cacheKeys.vendorProfileProducts(vendorId).revalidate,
