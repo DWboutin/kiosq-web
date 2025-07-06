@@ -7,7 +7,6 @@ export const useClosestVendorProfiles = () => {
   const {
     selectors: { coords, isLoading: isLocationLoading, error: locationError },
   } = useGeolocation();
-
   const {
     data: vendorProfiles,
     isLoading: isProfilesLoading,
@@ -20,12 +19,9 @@ export const useClosestVendorProfiles = () => {
         ? cacheKeys.closestVendorProfiles.list(coords.latitude, coords.longitude).queryKey
         : [],
     queryFn: () => {
-      if (!coords?.latitude || !coords?.longitude) {
-        throw new Error("Location coordinates not available");
-      }
-      return getClosestVendorProfiles(coords.latitude, coords.longitude);
+      return getClosestVendorProfiles(coords?.latitude, coords?.longitude);
     },
-    enabled: !!coords?.latitude && !!coords?.longitude,
+    enabled: (!!coords?.latitude && !!coords?.longitude) || !isLocationLoading,
     staleTime: 1000 * 60 * 60, // 1 hour
     retry: 2,
   });
