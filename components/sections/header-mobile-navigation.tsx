@@ -19,19 +19,26 @@ import { KiosqLogo } from "@/components/ui/kiosq-logo/kiosq-logo";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { useProductCategories } from "@/hooks/use-product-categories";
-import { LocaleDropdown } from "@/features/locale-dropdown/locale-dropdown";
-import { ConnectionHeaderUtils } from "@/features/connection-header-utils/connection-header-utils";
 import { useLocale } from "next-intl";
 import { Locales } from "@/types/app";
 import { CloseIcon } from "@/components/ui/icons/close-icon";
+import { LOCALES } from "@/utils/constants";
+import { usePathname } from "@/i18n/navigation";
+import { useLocaleDropdownContext } from "@/features/locale-dropdown/locale-dropdown-provider";
+import { useMemo } from "react";
 
 export default function HeaderMobileNavigation() {
   const t = useTranslations();
   const locale = useLocale() as Locales;
+  const pathname = usePathname();
+  const { localizedPathnames } = useLocaleDropdownContext();
   const {
     selectors: { categories },
   } = useProductCategories();
   const parentCategories = categories?.filter((cat) => !cat.parentId) || [];
+
+  // Get all locales except the current one for the accordion
+  const otherLocales = useMemo(() => LOCALES.filter((l) => l !== locale), [locale]) as Locales[];
 
   return (
     <Drawer direction="left">
@@ -63,7 +70,7 @@ export default function HeaderMobileNavigation() {
           <Link
             href="/"
             aria-label={t("Header.logoLinkAriaLabel")}
-            className="flex items-center gap-2 py-2 px-2 rounded-md text-base font-medium text-brand-medium hover:bg-neutral-lightest focus-visible:ring-2 focus-visible:ring-brand-medium outline-none"
+            className="flex items-center gap-2 py-2 px-2 rounded-md text-base font-medium text-neutral-darker hover:bg-neutral-lightest focus-visible:ring-2 focus-visible:ring-brand-medium outline-none"
           >
             {t("Header.logoLinkAriaLabel")}
           </Link>
@@ -71,7 +78,7 @@ export default function HeaderMobileNavigation() {
           <div className="mt-2">
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="categories" className="border-b border-neutral-lightest">
-                <AccordionTrigger className="px-2 py-2 text-left hover:bg-neutral-lightest focus-visible:ring-2 focus-visible:ring-brand-medium rounded-md hover:no-underline">
+                <AccordionTrigger className="flex items-center gap-2 py-2 px-2 rounded-md text-base font-medium text-neutral-darker hover:bg-neutral-lightest focus-visible:ring-2 focus-visible:ring-brand-medium outline-none hover:no-underline">
                   Categories
                 </AccordionTrigger>
                 <AccordionContent className="px-2 pb-2">
@@ -92,11 +99,41 @@ export default function HeaderMobileNavigation() {
           </div>
 
           <div className="mt-4">
-            <LocaleDropdown />
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="languages" className="border-b border-neutral-lightest">
+                <AccordionTrigger className="flex items-center gap-2 py-2 px-2 rounded-md text-base font-medium text-neutral-darker hover:bg-neutral-lightest focus-visible:ring-2 focus-visible:ring-brand-medium outline-none hover:no-underline">
+                  Languages
+                </AccordionTrigger>
+                <AccordionContent className="px-2 pb-2">
+                  <div className="flex flex-col gap-1">
+                    {/* Current locale - shown but not clickable */}
+                    <div className="block py-2 px-2 rounded text-neutral-dark bg-neutral-lightest text-sm font-medium">
+                      {t(`Locales.${locale}`)} (Current)
+                    </div>
+                    {/* Other locales - clickable */}
+                    {otherLocales.map((otherLocale) => (
+                      <Link
+                        key={otherLocale}
+                        href={localizedPathnames?.[otherLocale] ?? pathname}
+                        locale={otherLocale}
+                        className="block py-2 px-2 rounded text-neutral-dark hover:bg-neutral-lightest focus-visible:ring-2 focus-visible:ring-brand-medium outline-none text-sm"
+                      >
+                        {t(`Locales.${otherLocale}`)}
+                      </Link>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
 
           <div className="mt-4">
-            <ConnectionHeaderUtils />
+            <Link
+              href="/auth/sign-in"
+              className="flex items-center gap-2 group py-2 px-2 rounded-md text-base font-medium text-neutral-darker hover:bg-neutral-lightest focus-visible:ring-2 focus-visible:ring-brand-medium outline-none"
+            >
+              {t("Header.connectionButton")}
+            </Link>
           </div>
         </nav>
       </DrawerContent>
