@@ -12,7 +12,7 @@ export default async function ProductPage({
   const product = await getProductById(productId);
 
   return (
-    <div className="flex flex-col gap-20">
+    <div className="flex flex-col min-md:gap-20 max-md:gap-10">
       <div className="container mx-auto max-sm:px-4 py-5">
         <ProductDetailsProvider product={product}>
           <ProductDetails product={product} />

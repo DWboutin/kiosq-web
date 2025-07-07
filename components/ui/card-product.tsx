@@ -85,7 +85,7 @@ export const CardProduct = ({
         <CardHeader className="gap-2">
           <CardTitle>
             <div className="flex flex-col gap-1">
-              <div className="text-sm font-normal text-neutral-darker">{profileName}</div>
+              <div className="text-sm font-normal text-neutral-medium">{profileName}</div>
               <Link href={href}>{title}</Link>
             </div>
           </CardTitle>

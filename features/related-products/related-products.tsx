@@ -28,7 +28,7 @@ export const RelatedProducts = async ({ productId }: RelatedProductsProps) => {
   const showNavigation = relatedProducts.length > 4;
 
   return (
-    <div className="space-y-4">
+    <div className="max-md:py-4 min-md:py-8 flex flex-col gap-4">
       <h2 className="text-xl font-bold text-neutral-darker">{t("title")}</h2>
       <Carousel
         opts={{

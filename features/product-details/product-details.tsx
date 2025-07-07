@@ -13,10 +13,9 @@ interface ProductDetailsProps {
 
 export const ProductDetails = ({ product }: ProductDetailsProps) => {
   const locale = useLocale() as Locales;
-  const firstVariant = product.productVariants[0];
 
   return (
-    <div className="flex flex-row gap-4">
+    <div className="flex flex-row min-xl:gap-20 max-xl:gap-10 max-md:flex-col">
       <ProductDetailsVariantImage productName={product.nameTranslations[locale]} />
       <div className="flex flex-col gap-2">
         <div className="flex flex-row gap-4 items-center">

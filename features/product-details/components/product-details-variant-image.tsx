@@ -11,13 +11,13 @@ export const ProductDetailsVariantImage = ({ productName }: ProductDetailsVarian
   const { selectedVariant } = useProductDetailsContext();
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 max-md:w-full max-md:items-center">
       <Image
         src={selectedVariant.imageUrl || "/placeholders/240x140.jpg"}
         alt={productName}
-        width={500}
-        height={500}
-        className="rounded-lg"
+        width={240}
+        height={140}
+        className="rounded-lg min-md:w-[480px] min-md:max-h-[280px] max-md:max-h-[140px]"
       />
     </div>
   );
