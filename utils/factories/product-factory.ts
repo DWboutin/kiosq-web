@@ -1,5 +1,4 @@
 import {
-  RawProductWithVariantsAndPrices,
   NameTranslations,
   DescriptionTranslations,
   Locales,

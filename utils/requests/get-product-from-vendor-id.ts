@@ -1,10 +1,10 @@
 import { Pagination } from "@/types/app";
 import { cacheKeys } from "@/utils/cache-keys";
-import { ProductWithVariantsAndPrices } from "@/utils/factories/product-factory";
+import { ProductWithVariantsPricesAndProfile } from "@/utils/factories/product-factory";
 import { getBaseUrl } from "@/utils/get-base-url";
 
 export type GetProductFromVendorIdResponse = {
-  products: ProductWithVariantsAndPrices[];
+  products: ProductWithVariantsPricesAndProfile[];
   pagination: Pagination;
 };
 

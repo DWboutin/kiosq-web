@@ -6,9 +6,8 @@ import { FC, PropsWithChildren } from "react";
 import React from "react";
 import { cva } from "class-variance-authority";
 import { ConnectionHeaderUtils } from "@/features/connection-header-utils/connection-header-utils";
-import { MobileMenuIcon } from "@/components/ui/icons/mobile-menu-icon";
 import { getTranslations } from "next-intl/server";
-import { ButtonBrand } from "@/components/ui/button-brand";
+import HeaderMobileNavigation from "@/components/sections/header-mobile-navigation";
 
 const headerStyles = cva(
   "flex flex-col items-center justify-between border-b border-neutral-light",
@@ -38,14 +37,7 @@ export const Header: FC<PropsWithChildren> = async ({ children }) => {
             <KiosqLogo />
             <span className="text-xl font-lato text-brand-medium">kiosq</span>
           </Link>
-          <ButtonBrand
-            variant="ghost"
-            size="icon"
-            aria-label={t("mobileMenuButtonAriaLabel")}
-            className="min-md:hidden"
-          >
-            <MobileMenuIcon className="text-neutral-dark size-6" />
-          </ButtonBrand>
+          <HeaderMobileNavigation />
           <div className="flex min-md:flex-1 items-center gap-2">
             <SearchInput />
           </div>

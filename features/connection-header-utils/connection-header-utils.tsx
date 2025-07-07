@@ -17,7 +17,10 @@ export const ConnectionHeaderUtils: FC = () => {
   if (!user) {
     return (
       <div className="flex flex-row items-center gap-2">
-        <LocaleDropdown className="text-neutral-dark group-hover:text-brand-medium" short />
+        <LocaleDropdown
+          className="text-neutral-dark group-hover:text-brand-medium max-sm:hidden"
+          short
+        />
         <Link href="/auth/sign-in" className="flex items-center gap-2 group px-2 py-3.5">
           <span className="text-base font-medium text-neutral-dark group-hover:text-brand-medium">
             {t("connectionButton")}

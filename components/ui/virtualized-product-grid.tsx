@@ -3,11 +3,11 @@
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { useRef, useEffect, useState, useCallback } from "react";
 import { CardProduct } from "@/components/ui/card-product";
-import { ProductWithVariantsAndPrices } from "@/utils/factories/product-factory";
+import { ProductWithVariantsPricesAndProfile } from "@/utils/factories/product-factory";
 import { cn } from "@/lib/utils";
 
 type VirtualizedProductGridProps = {
-  products: ProductWithVariantsAndPrices[];
+  products: ProductWithVariantsPricesAndProfile[];
   onLoadMore?: () => void;
   hasNextPage?: boolean;
   isFetchingNextPage?: boolean;

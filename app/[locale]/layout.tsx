@@ -47,7 +47,9 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={`${nunito.className} ${lato.className} ${inter.className} antialiased`}>
+      <body
+        className={`${nunito.className} ${lato.className} ${inter.className} antialiased min-w-[380px]`}
+      >
         <NextIntlClientProvider locale={locale} messages={messages}>
           <LocaleDropdownProvider>
             <ReactQueryProvider>{children}</ReactQueryProvider>

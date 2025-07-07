@@ -1,5 +1,4 @@
 import { cacheKeys } from "@/utils/cache-keys";
-import { ProductWithVariantsAndPrices } from "@/utils/factories/product-factory";
 import {
   getProductFromVendorId,
   GetProductFromVendorIdResponse,
