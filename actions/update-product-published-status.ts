@@ -1,9 +1,10 @@
 "use server";
 
-import { PublishedStatus } from "@/types/app";
+import { productRevalidator } from "@/actions/revalidators/product-revalidator";
+import { Locales, PublishedStatus } from "@/types/app";
 import { cacheKeys } from "@/utils/cache-keys";
 import { createClient } from "@/utils/supabase/server";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export const updateProductPublishedStatus = async (productId: string, status: PublishedStatus) => {
   try {
@@ -19,18 +20,46 @@ export const updateProductPublishedStatus = async (productId: string, status: Pu
       throw new Error("User not found");
     }
 
-    const { error: productError } = await supabase
+    const { data: updatedProduct, error: productError } = await supabase
       .from("products")
       .update({ status, updated_at: new Date().toISOString(), updated_by: user.user.id })
-      .eq("id", productId);
+      .eq("id", productId)
+      .select(
+        `
+        id,
+        profile_id,
+        profiles!inner(
+          id,
+          slug_translations
+        )
+      `
+      )
+      .single();
 
     if (productError) {
       throw productError;
     }
 
-    revalidateTag(cacheKeys.currentUserProductById(productId).tag);
+    // Type assertion for the single profile object returned by inner join with .single()
+    type UpdatedProductWithProfile = {
+      id: string;
+      profile_id: string;
+      profiles: {
+        id: string;
+        slug_translations: Record<Locales, string>;
+      };
+    };
+    const typedUpdatedProduct = updatedProduct as unknown as UpdatedProductWithProfile;
 
-    return true;
+    productRevalidator({
+      productId,
+      profileId: typedUpdatedProduct.profile_id,
+      slugTranslations: typedUpdatedProduct.profiles.slug_translations,
+    });
+
+    return {
+      success: true,
+    };
   } catch (error) {
     console.error(error);
     throw error;

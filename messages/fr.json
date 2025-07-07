@@ -22,7 +22,8 @@
     "vendor_slug": "/marchands/[slug]",
     "vendor_slug_company": "/marchands/[slug]/notre-entreprise",
     "vendor_slug_schedule": "/marchands/[slug]/horaires",
-    "vendor_slug_events": "/marchands/[slug]/evenements"
+    "vendor_slug_events": "/marchands/[slug]/evenements",
+    "product_id": "/produits/[slug]/[productId]"
   },
   "Global": {
     "thereWasAnError": "Une erreur est survenue, veuillez contacter le support",
@@ -645,5 +646,8 @@
     "distanceUnavailable": "Distance indisponible",
     "lessThan1Km": "Moins de 1 km",
     "kmAway": "{distance} km"
+  },
+  "RelatedProducts": {
+    "title": "Produits liés"
   }
 }

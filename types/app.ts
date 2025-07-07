@@ -62,6 +62,14 @@ export type RawProductWithVariantsAndPrices = RawProduct & {
     }[];
 };
 
+export type RawProductWithVariantsAndPricesAndProfile = RawProductWithVariantsAndPrices & {
+  profiles: {
+    profile_image: string | null;
+    name_translations: Record<Locales, string>;
+    slug_translations: Record<Locales, string>;
+  };
+};
+
 export type NameTranslations = Record<Locales, string>;
 export type DescriptionTranslations = Record<Locales, string>;
 export type SlugTranslations = Record<Locales, string>;
@@ -75,3 +83,13 @@ export type DayOfWeek =
   | "friday"
   | "saturday"
   | "sunday";
+
+export type Pagination = {
+  totalItems: number;
+  totalPages: number;
+  currentPage: number;
+  limit: number;
+  skip: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+};

@@ -22,7 +22,8 @@
     "vendor_slug": "/vendors/[slug]",
     "vendor_slug_company": "/vendors/[slug]/our-company",
     "vendor_slug_schedule": "/vendors/[slug]/schedule",
-    "vendor_slug_events": "/vendors/[slug]/events"
+    "vendor_slug_events": "/vendors/[slug]/events",
+    "product_id": "/products/[productId]"
   },
   "Global": {
     "thereWasAnError": "There was an error, please contact support",
@@ -644,5 +645,8 @@
     "distanceUnavailable": "Distance unavailable",
     "lessThan1Km": "Less than 1 km away",
     "kmAway": "{distance} km away"
+  },
+  "RelatedProducts": {
+    "title": "Related products"
   }
 }

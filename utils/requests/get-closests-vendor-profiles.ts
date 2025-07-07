@@ -21,14 +21,14 @@ export type RawClosestVendorProfile = {
 };
 
 export const getClosestVendorProfiles = async (
-  latitude: number,
-  longitude: number,
+  latitude: number | undefined,
+  longitude: number | undefined,
   radius: number = 50,
   limit: number = 20
 ): Promise<ClosestVendorProfile[]> => {
   const searchParams = new URLSearchParams({
-    latitude: latitude.toString(),
-    longitude: longitude.toString(),
+    latitude: latitude?.toString() ?? "",
+    longitude: longitude?.toString() ?? "",
     radius: radius.toString(),
     limit: limit.toString(),
   });

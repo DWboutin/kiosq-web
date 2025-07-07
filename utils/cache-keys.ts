@@ -89,6 +89,21 @@ export const cacheKeys = {
     tag: `vendor-profile-from-slug-${slug}-${locale}`,
     queryKey: ["vendorProfileFromSlug", slug, locale] as const,
   }),
+  vendorProfileProducts: (profileId: string): CacheKeyConfig => ({
+    revalidate: 86400, // 1 day
+    tag: `vendor-profile-products-${profileId}`,
+    queryKey: ["vendorProfileProducts", profileId] as const,
+  }),
+  productById: (productId: string): CacheKeyConfig => ({
+    revalidate: 86400, // 1 day
+    tag: `product-by-id-${productId}`,
+    queryKey: ["productById", productId] as const,
+  }),
+  relatedProducts: (productId: string): CacheKeyConfig => ({
+    revalidate: 86400, // 1 day
+    tag: `related-products-${productId}`,
+    queryKey: ["relatedProducts", productId] as const,
+  }),
 };
 
 export const getAllTagsForDomain = (domain: keyof typeof cacheKeys): string[] => {

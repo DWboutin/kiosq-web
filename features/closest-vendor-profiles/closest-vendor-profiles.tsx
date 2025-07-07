@@ -2,7 +2,6 @@
 
 import { useClosestVendorProfiles } from "@/hooks/use-closest-vendor-profiles";
 import { useGeolocation } from "@/hooks/use-geolocation";
-import { Link } from "@/i18n/navigation";
 import { Locales } from "@/types/app";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";

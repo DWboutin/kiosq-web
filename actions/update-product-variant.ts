@@ -1,10 +1,9 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { revalidateTag } from "next/cache";
-import { cacheKeys } from "@/utils/cache-keys";
 import { uploadImage } from "@/utils/upload-image";
 import { RawProductVariant } from "@/types/app";
+import { productRevalidator } from "@/actions/revalidators/product-revalidator";
 
 export type UpdateProductVariantParams = {
   id: string;
@@ -32,7 +31,7 @@ export const updateProductVariant = async (params: UpdateProductVariantParams) =
 
   const { data: currentVariant, error: currentVariantError } = await supabase
     .from("product_variants")
-    .select("*, product:products(profile_id)")
+    .select("*, product:products(profile_id, profiles(slug_translations))")
     .eq("id", id)
     .single();
 
@@ -121,7 +120,11 @@ export const updateProductVariant = async (params: UpdateProductVariantParams) =
     throw priceError;
   }
 
-  revalidateTag(cacheKeys.currentUserProductById(currentVariant.product_id).tag);
+  productRevalidator({
+    productId: currentVariant.product_id,
+    profileId: currentVariant.product.profile_id,
+    slugTranslations: currentVariant.product.profiles.slug_translations,
+  });
 
   const { data: productVariant } = await supabase
     .from("product_variants")
