@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { useGeolocation } from "@/hooks/use-geolocation";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { useLocationManagerContext } from "@/features/location-manager/location-manager-provider";
 
 type DistanceAwayFromUserProps = {
   latitude?: number | null;
@@ -36,17 +37,15 @@ export const DistanceAwayFromUser = ({
   className,
 }: DistanceAwayFromUserProps) => {
   const t = useTranslations("DistanceAwayFromUser");
-  const {
-    selectors: { coords },
-  } = useGeolocation();
+  const { userLocation } = useLocationManagerContext();
 
   const distance = useMemo(() => {
-    if (!latitude || !longitude || !coords?.latitude || !coords?.longitude) {
+    if (!latitude || !longitude || !userLocation?.latitude || !userLocation?.longitude) {
       return null;
     }
 
-    return getDistance(coords?.latitude, coords?.longitude, latitude, longitude);
-  }, [coords, latitude, longitude]);
+    return getDistance(userLocation?.latitude, userLocation?.longitude, latitude, longitude);
+  }, [userLocation, latitude, longitude]);
 
   if (distance === null) {
     return <div className={cn(className)}>{t("distanceUnavailable")}</div>;

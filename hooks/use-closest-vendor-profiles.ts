@@ -1,12 +1,10 @@
-import { useGeolocation } from "@/hooks/use-geolocation";
+import { useLocationManagerContext } from "@/features/location-manager/location-manager-provider";
 import { cacheKeys } from "@/utils/cache-keys";
 import { getClosestVendorProfiles } from "@/utils/requests/get-closests-vendor-profiles";
 import { useQuery } from "@tanstack/react-query";
 
 export const useClosestVendorProfiles = () => {
-  const {
-    selectors: { coords, isLoading: isLocationLoading, error: locationError },
-  } = useGeolocation();
+  const { userLocation, isLoading: isLocationLoading } = useLocationManagerContext();
   const {
     data: vendorProfiles,
     isLoading: isProfilesLoading,
@@ -15,13 +13,14 @@ export const useClosestVendorProfiles = () => {
     refetch,
   } = useQuery({
     queryKey:
-      coords?.latitude !== undefined && coords?.longitude !== undefined
-        ? cacheKeys.closestVendorProfiles.list(coords.latitude, coords.longitude).queryKey
+      userLocation?.latitude !== undefined && userLocation?.longitude !== undefined
+        ? cacheKeys.closestVendorProfiles.list(userLocation.latitude, userLocation.longitude)
+            .queryKey
         : [],
     queryFn: () => {
-      return getClosestVendorProfiles(coords?.latitude, coords?.longitude);
+      return getClosestVendorProfiles(userLocation?.latitude, userLocation?.longitude);
     },
-    enabled: (!!coords?.latitude && !!coords?.longitude) || !isLocationLoading,
+    enabled: (!!userLocation?.latitude && !!userLocation?.longitude) || !isLocationLoading,
     staleTime: 1000 * 60 * 60, // 1 hour
     retry: 2,
   });
@@ -30,7 +29,7 @@ export const useClosestVendorProfiles = () => {
     selectors: {
       vendorProfiles,
       isLoading: isProfilesLoading || isLocationLoading,
-      error: profilesError || locationError,
+      error: profilesError,
       isFetched,
     },
     actions: {

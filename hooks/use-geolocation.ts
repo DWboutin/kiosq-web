@@ -1,14 +1,19 @@
-import { getGeolocation, type UserGeolocation } from "@/utils/get-geolocation";
+import {
+  getGeolocation,
+  type UserGeolocation,
+  type GeolocationError,
+} from "@/utils/get-geolocation";
 import { getCityFromCoords } from "@/utils/requests/get-city-from-coord";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 export const useGeolocation = () => {
   const [coords, setCoords] = useState<UserGeolocation | null>(null);
+  const [geolocationError, setGeolocationError] = useState<GeolocationError | null>(null);
   const {
-    data: city,
+    data: city = null,
     isLoading,
-    error,
+    error: cityError,
   } = useQuery({
     queryKey: ["geolocation"],
     queryFn: () => {
@@ -22,6 +27,7 @@ export const useGeolocation = () => {
 
   const handleRequestLocation = async () => {
     try {
+      setGeolocationError(null);
       const localCoords = await getGeolocation();
 
       if (!localCoords) {
@@ -34,7 +40,8 @@ export const useGeolocation = () => {
 
       setCoords(localCoords);
     } catch (error) {
-      throw error;
+      const geolocationError = error as GeolocationError;
+      setGeolocationError(geolocationError);
     }
   };
 
@@ -47,7 +54,11 @@ export const useGeolocation = () => {
       city,
       coords,
       isLoading,
-      error: error?.message ?? null,
+      cityError: cityError?.message ?? null,
+      geolocationError,
+      canRetryLocation:
+        geolocationError?.type !== "PERMISSION_DENIED" &&
+        geolocationError?.type !== "NOT_SUPPORTED",
     },
     actions: {
       handleRequestLocation,
