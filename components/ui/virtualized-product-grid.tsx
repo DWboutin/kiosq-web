@@ -23,6 +23,7 @@ export const VirtualizedProductGrid = ({
 }: VirtualizedProductGridProps) => {
   const listRef = useRef<HTMLDivElement | null>(null);
   const [itemsPerRow, setItemsPerRow] = useState(4);
+  const parentOffsetRef = useRef(0);
 
   // Calculate items per row based on screen size
   const getItemsPerRow = useCallback(() => {
@@ -45,13 +46,18 @@ export const VirtualizedProductGrid = ({
     return () => window.removeEventListener("resize", updateItemsPerRow);
   }, [getItemsPerRow]);
 
+  // Update parent offset for scroll margin
+  useEffect(() => {
+    parentOffsetRef.current = listRef.current?.offsetTop ?? 0;
+  }, []);
+
   const totalRows = Math.ceil(products.length / itemsPerRow);
 
   const virtualizer = useWindowVirtualizer({
     count: totalRows,
-    estimateSize: () => 400, // Estimated height of each row (card height + gap)
+    estimateSize: () => 400, // Initial estimate - will be dynamically measured
     overscan: 2,
-    scrollMargin: listRef.current?.offsetTop ?? 0,
+    scrollMargin: parentOffsetRef.current,
   });
 
   // Load more when approaching the end
@@ -85,16 +91,17 @@ export const VirtualizedProductGrid = ({
             return (
               <div
                 key={virtualRow.key}
+                data-index={virtualRow.index}
+                ref={virtualizer.measureElement}
                 style={{
                   position: "absolute",
                   top: 0,
                   left: 0,
                   width: "100%",
-                  height: `${virtualRow.size}px`,
                   transform: `translateY(${virtualRow.start - virtualizer.options.scrollMargin}px)`,
                 }}
               >
-                <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
+                <div className="flex flex-wrap gap-4 justify-center sm:justify-start p-4">
                   {rowProducts.map((product) => (
                     <CardProduct
                       key={product.id}

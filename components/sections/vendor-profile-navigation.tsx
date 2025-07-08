@@ -70,8 +70,8 @@ export const VendorProfileNavigation = ({ slug, locale }: VendorProfileNavigatio
   const t = useTranslations("VendorPageNavigation");
 
   return (
-    <div className="max-sm:container max-sm:mx-auto">
-      <div className="flex flex-row max-md:gap-2 overflow-x-auto scrollbar-hide max-sm:px-4">
+    <div className="min-sm:container min-sm:mx-auto">
+      <div className="flex flex-row max-md:gap-2 overflow-x-auto no-scrollbar max-sm:px-4">
         {vendorProfileNavigationLinks.map((link) => (
           <VendorProfileNavigationLink
             slug={slug}
