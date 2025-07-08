@@ -36,7 +36,8 @@ const vendorProfileNavigationLinks = [
   },
 ];
 
-const vendorProfileNavigationLinkClassName = "text-neutral-darker hover:text-neutral-black";
+const vendorProfileNavigationLinkClassName =
+  "text-neutral-darker hover:text-neutral-black whitespace-nowrap";
 const vendorProfileNavigationLinkLargeClassName =
   "min-md:font-medium min-md:py-4 min-md:px-3 min-md:border-b-4 min-md:border-transparent min-md:hover:border-neutral-light";
 const vendorProfileNavigationLinkSmallClassName =
@@ -69,8 +70,8 @@ export const VendorProfileNavigation = ({ slug, locale }: VendorProfileNavigatio
   const t = useTranslations("VendorPageNavigation");
 
   return (
-    <div className="container mx-auto max-sm:px-4">
-      <div className="flex flex-row max-md:gap-2">
+    <div className="max-sm:container max-sm:mx-auto">
+      <div className="flex flex-row max-md:gap-2 overflow-x-auto scrollbar-hide max-sm:px-4">
         {vendorProfileNavigationLinks.map((link) => (
           <VendorProfileNavigationLink
             slug={slug}
