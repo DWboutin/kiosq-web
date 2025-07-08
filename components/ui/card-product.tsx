@@ -44,12 +44,10 @@ export const CardProduct = ({
 }: CardProductProps) => {
   const t = useTranslations("Global");
   const locale = useLocale() as Locales;
-  const variantImages = variants
-    .filter((variant) => variant.imageUrl)
-    .map((variant) => ({
-      id: variant.id,
-      imageUrl: variant.imageUrl || "/placeholders/240x140.jpg",
-    }));
+  const variantImages = variants.map((variant) => ({
+    id: variant.id,
+    imageUrl: variant.imageUrl || "/placeholders/general-category-placeholder.png",
+  }));
   const href = `/${locale}/products/${slugify(title)}/${id}`;
 
   return (
