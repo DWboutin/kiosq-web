@@ -26,18 +26,19 @@ import { LOCALES } from "@/utils/constants";
 import { usePathname } from "@/i18n/navigation";
 import { useLocaleDropdownContext } from "@/features/locale-dropdown/locale-dropdown-provider";
 import { useMemo } from "react";
+import { useUserStore } from "@/stores/user-store";
+import { SignOutIcon } from "@/components/ui/icons/sign-out-icon";
 
 export default function HeaderMobileNavigation() {
   const t = useTranslations();
   const locale = useLocale() as Locales;
   const pathname = usePathname();
+  const user = useUserStore((state) => state.user);
   const { localizedPathnames } = useLocaleDropdownContext();
   const {
     selectors: { categories },
   } = useProductCategories();
   const parentCategories = categories?.filter((cat) => !cat.parentId) || [];
-
-  // Get all locales except the current one for the accordion
   const otherLocales = useMemo(() => LOCALES.filter((l) => l !== locale), [locale]) as Locales[];
 
   return (
@@ -52,8 +53,8 @@ export default function HeaderMobileNavigation() {
           <MobileMenuIcon className="text-neutral-dark size-6" />
         </ButtonBrand>
       </DrawerTrigger>
-      <DrawerContent className="w-full max-w-xs p-0 flex flex-col min-h-screen">
-        <DrawerHeader className="border-b border-neutral-lightest flex flex-row items-center gap-2 py-4 max-md:pb-4">
+      <DrawerContent className="w-full max-w-xs p-0 flex flex-col min-h-screen overflow-y-auto no-scrollbar">
+        <DrawerHeader className="border-b border-neutral-lightest flex flex-row items-center gap-2 py-4 max-md:pb-4 sticky top-0 bg-neutral-white z-10">
           <>
             <div className="flex-1 flex flex-row items-center gap-2">
               <KiosqLogo />
@@ -66,16 +67,16 @@ export default function HeaderMobileNavigation() {
             </DrawerClose>
           </>
         </DrawerHeader>
-        <nav className="flex flex-col gap-2 p-4" aria-label="Mobile navigation">
-          <Link
-            href="/"
-            aria-label={t("Header.logoLinkAriaLabel")}
-            className="flex items-center gap-2 py-2 px-2 rounded-md text-base font-medium text-neutral-darker hover:bg-neutral-lightest focus-visible:ring-2 focus-visible:ring-brand-medium outline-none"
-          >
-            {t("Header.logoLinkAriaLabel")}
-          </Link>
+        <nav className="flex flex-col gap-4 p-4 h-full flex-1" aria-label="Mobile navigation">
+          <div className="flex flex-col gap-4 flex-1">
+            <Link
+              href="/"
+              aria-label={t("Header.logoLinkAriaLabel")}
+              className="flex items-center gap-2 py-2 px-2 rounded-md text-base font-medium text-neutral-darker hover:bg-neutral-lightest focus-visible:ring-2 focus-visible:ring-brand-medium outline-none"
+            >
+              {t("Header.logoLinkAriaLabel")}
+            </Link>
 
-          <div className="mt-2">
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="categories" className="border-b border-neutral-lightest">
                 <AccordionTrigger className="flex items-center gap-2 py-2 px-2 rounded-md text-base font-medium text-neutral-darker hover:bg-neutral-lightest focus-visible:ring-2 focus-visible:ring-brand-medium outline-none hover:no-underline">
@@ -96,9 +97,7 @@ export default function HeaderMobileNavigation() {
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
-          </div>
 
-          <div className="mt-4">
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="languages" className="border-b border-neutral-lightest">
                 <AccordionTrigger className="flex items-center gap-2 py-2 px-2 rounded-md text-base font-medium text-neutral-darker hover:bg-neutral-lightest focus-visible:ring-2 focus-visible:ring-brand-medium outline-none hover:no-underline">
@@ -126,14 +125,24 @@ export default function HeaderMobileNavigation() {
               </AccordionItem>
             </Accordion>
           </div>
-
-          <div className="mt-4">
-            <Link
-              href="/auth/sign-in"
-              className="flex items-center gap-2 group py-2 px-2 rounded-md text-base font-medium text-neutral-darker hover:bg-neutral-lightest focus-visible:ring-2 focus-visible:ring-brand-medium outline-none"
-            >
-              {t("Header.connectionButton")}
-            </Link>
+          <div className="mt-auto flex flex-col gap-2">
+            {!user && (
+              <Link
+                href="/auth/sign-in"
+                className="flex items-center gap-2 group py-2 px-2 rounded-md text-base font-medium text-neutral-darker hover:bg-neutral-lightest focus-visible:ring-2 focus-visible:ring-brand-medium outline-none"
+              >
+                {t("Header.connectionButton")}
+              </Link>
+            )}
+            {user && (
+              <Link
+                href="/auth/sign-out"
+                className="flex flex-row justify-between items-center gap-2 group py-2 px-2 rounded-md text-base font-medium text-neutral-darker hover:bg-neutral-lightest focus-visible:ring-2 focus-visible:ring-brand-medium outline-none"
+              >
+                {t("Header.signOutButton")}
+                <SignOutIcon className="text-neutral-dark size-5" />
+              </Link>
+            )}
           </div>
         </nav>
       </DrawerContent>
