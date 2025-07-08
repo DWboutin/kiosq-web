@@ -9,6 +9,7 @@ import { useMemo } from "react";
 import { MapView } from "@/components/ui/map-view";
 import { ClosestVendorProfilesLoading } from "./closest-vendor-profiles-loading";
 import { DynamicLink } from "@/components/ui/dynamic-link";
+import { useLocationManagerContext } from "@/features/location-manager/location-manager-provider";
 
 export const ClosestVendorProfiles = () => {
   const t = useTranslations("ClosestVendorProfiles");
@@ -16,9 +17,7 @@ export const ClosestVendorProfiles = () => {
   const {
     selectors: { vendorProfiles, isLoading, error, isFetched },
   } = useClosestVendorProfiles();
-  const {
-    selectors: { coords },
-  } = useGeolocation();
+  const { userLocation } = useLocationManagerContext();
 
   const uniqueVendorProfiles = useMemo(() => {
     return (vendorProfiles ?? [])
@@ -68,8 +67,8 @@ export const ClosestVendorProfiles = () => {
             width="100%"
             height={300}
             showUserLocation={true}
-            userLatitude={coords?.latitude}
-            userLongitude={coords?.longitude}
+            userLatitude={userLocation?.latitude}
+            userLongitude={userLocation?.longitude}
             className="border border-gray-200"
             withNavigationControl
             interactive
@@ -113,8 +112,8 @@ export const ClosestVendorProfiles = () => {
           height={300}
           locations={mapLocations}
           showUserLocation={true}
-          userLatitude={coords?.latitude}
-          userLongitude={coords?.longitude}
+          userLatitude={userLocation?.latitude}
+          userLongitude={userLocation?.longitude}
           className="border border-gray-200"
           withNavigationControl
           interactive

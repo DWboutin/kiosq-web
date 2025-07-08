@@ -9,6 +9,7 @@ import { ReactQueryProvider } from "@/features/providers/react-query-provider";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { LocaleDropdownProvider } from "@/features/locale-dropdown/locale-dropdown-provider";
+import { LocationManagerProvider } from "@/features/location-manager/location-manager-provider";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -52,7 +53,9 @@ export default async function RootLayout({
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
           <LocaleDropdownProvider>
-            <ReactQueryProvider>{children}</ReactQueryProvider>
+            <ReactQueryProvider>
+              <LocationManagerProvider>{children}</LocationManagerProvider>
+            </ReactQueryProvider>
           </LocaleDropdownProvider>
         </NextIntlClientProvider>
         <Toaster />
