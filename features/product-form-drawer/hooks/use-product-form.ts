@@ -16,6 +16,7 @@ import { SideFormDrawerRef } from "@/components/ui/side-form-drawer";
 import { useRef } from "react";
 import { AuthenticatedUserProductWithVariantsAndPrices } from "@/utils/factories/authenticated-user-product-factory";
 import { filterTranslations } from "@/utils/filter-translations";
+import { useProductsInvalidator } from "@/utils/invalidators-hooks/use-products-invalidator";
 
 type UseProductFormProps = {
   editMode?: boolean;
@@ -74,6 +75,7 @@ export const useProductForm = ({ editMode = false, productId }: UseProductFormPr
     selectors: { product },
     actions: { refetch },
   } = useCurrentUserProductById({ productId });
+  const { revalidate: revalidateProducts } = useProductsInvalidator();
 
   const defaultValues: ProductFormValues = !product
     ? productDefaultValues
@@ -110,17 +112,13 @@ export const useProductForm = ({ editMode = false, productId }: UseProductFormPr
 
       toast.success(message);
 
+      await revalidateProducts({ productId: savedProduct.id, profileId: savedProduct.profile_id });
+
       if (editMode) {
-        await queryClient.invalidateQueries({
-          queryKey: cacheKeys.currentUserProductById(savedProduct.id).queryKey,
-        });
         refetch();
         drawerRef.current?.close();
       } else {
         reset();
-        queryClient.invalidateQueries({
-          queryKey: cacheKeys.currentUserProfileIdProducts.list(savedProduct.profile_id).queryKey,
-        });
       }
     },
     onError: () => {

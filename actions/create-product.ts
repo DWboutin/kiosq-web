@@ -1,5 +1,6 @@
 "use server";
 
+import { productRevalidator } from "@/actions/revalidators/product-revalidator";
 import { ProductFormValues } from "@/features/product-form-drawer/utils/product-form-validation-schema";
 import { InsertWithLocale } from "@/types/app";
 import { createClient } from "@/utils/supabase/server";
@@ -85,6 +86,12 @@ export const createProduct = async (product: AddProductArgs) => {
   if (productPriceError) {
     throw productPriceError;
   }
+
+  productRevalidator({
+    productId: productData.id,
+    profileId: profile.id,
+    slugTranslations: productData.slug_translations,
+  });
 
   return {
     product: productData,

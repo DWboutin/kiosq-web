@@ -5,8 +5,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { EditPencilIcon } from "@/components/ui/icons/edit-pencil-icon";
 import { ButtonWithConfirmationModal } from "@/features/button-with-confirmation-modal/button-with-confirmation-modal";
 import { useProductVariantModalContext } from "@/features/product-variant-modal-provider/product-variant-modal-provider";
-import { cacheKeys } from "@/utils/cache-keys";
-import { useQueryClient } from "@tanstack/react-query";
+import { useProductsInvalidator } from "@/utils/invalidators-hooks/use-products-invalidator";
 import { TrashIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -35,7 +34,7 @@ export const CardAdminProductVariant = ({
   const title = `${quantity} ${unit}`;
   const params = useParams();
   const productId = params.productId as string;
-  const queryClient = useQueryClient();
+  const { revalidate: revalidateProducts } = useProductsInvalidator();
   const { handleSetVariantValues } = useProductVariantModalContext();
 
   const handleEditVariant = () => {
@@ -44,9 +43,7 @@ export const CardAdminProductVariant = ({
 
   const handleDeleteVariant = async () => {
     await deleteProductVariant({ variantId: id, productId });
-    await queryClient.invalidateQueries({
-      queryKey: cacheKeys.currentUserProductById(productId).queryKey,
-    });
+    await revalidateProducts({ productId });
   };
 
   return (

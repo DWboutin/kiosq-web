@@ -3,6 +3,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { revalidateTag } from "next/cache";
 import { cacheKeys } from "@/utils/cache-keys";
+import { productRevalidator } from "@/actions/revalidators/product-revalidator";
 
 export type DeleteProductVariantParams = {
   variantId: string;
@@ -37,7 +38,7 @@ export const deleteProductVariant = async (params: DeleteProductVariantParams) =
 
   const { data: productData, error: productError } = await supabase
     .from("products")
-    .select("id, profile_id")
+    .select("id, profile_id, slug_translations")
     .eq("id", variantData.product_id)
     .single();
 
@@ -102,7 +103,11 @@ export const deleteProductVariant = async (params: DeleteProductVariantParams) =
     throw deleteError;
   }
 
-  revalidateTag(cacheKeys.currentUserProductById(productId).tag);
+  productRevalidator({
+    productId,
+    profileId: productData.profile_id,
+    slugTranslations: productData.slug_translations,
+  });
 
   return { success: true, deletedVariantId: variantId };
 };
