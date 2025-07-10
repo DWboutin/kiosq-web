@@ -3,8 +3,7 @@
 import { ScheduleFormValues } from "@/features/schedule-form-drawer/utils/schedule-form-validation-schema";
 import { InsertWithLocale } from "@/types/app";
 import { createClient } from "@/utils/supabase/server";
-import { revalidateTag } from "next/cache";
-import { cacheKeys } from "@/utils/cache-keys";
+import { scheduleRevalidator } from "@/actions/revalidators/shedules-revalidator";
 
 interface CreateScheduleArgs {
   profileId: string;
@@ -118,8 +117,7 @@ export const createSchedule = async ({ profileId, scheduleData }: CreateSchedule
     throw insertError;
   }
 
-  // Revalidate cache
-  revalidateTag(cacheKeys.currentUserSchedules.list(profileId).tag);
+  scheduleRevalidator({ profileId });
 
   return newSchedule;
 };
