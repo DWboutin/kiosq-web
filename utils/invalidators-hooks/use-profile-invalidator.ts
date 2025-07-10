@@ -1,29 +1,20 @@
 import { cacheKeys } from "@/utils/cache-keys";
 import { useQueryClient } from "@tanstack/react-query";
 
-export const useProductsInvalidator = () => {
+export const useProfileInvalidator = () => {
   const queryClient = useQueryClient();
 
-  const invalidate = async ({
-    productId,
-    profileId,
-  }: {
-    productId: string;
-    profileId?: string;
-  }) => {
+  const invalidate = async ({ profileId }: { profileId?: string } = {}) => {
     await queryClient.invalidateQueries({
-      queryKey: cacheKeys.currentUserProductById(productId).queryKey,
+      queryKey: cacheKeys.currentUserProfiles.list.queryKey,
     });
     await queryClient.invalidateQueries({
-      queryKey: cacheKeys.relatedProducts(productId).queryKey,
+      queryKey: cacheKeys.closestVendorProfiles.all.queryKey,
     });
 
     if (profileId) {
       await queryClient.invalidateQueries({
         queryKey: cacheKeys.currentUserProfileIdProducts.list(profileId).queryKey,
-      });
-      await queryClient.invalidateQueries({
-        queryKey: cacheKeys.vendorProfileProducts(profileId).queryKey,
       });
     }
   };

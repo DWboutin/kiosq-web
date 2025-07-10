@@ -16,6 +16,7 @@ import { updateVendorProfile } from "@/actions/update-vendor-profile";
 import { AuthenticatedUserProfile } from "@/utils/factories/authenticated-user-profiles-factory";
 import { filterTranslations } from "@/utils/filter-translations";
 import { cacheKeys } from "@/utils/cache-keys";
+import { useProfileInvalidator } from "@/utils/invalidators-hooks/use-profile-invalidator";
 
 type UseVendorProfileFormProps = {
   profileId: string;
@@ -66,10 +67,10 @@ export const useVendorProfileForm = ({ profileId }: UseVendorProfileFormProps) =
   const locale = useLocale() as Locales;
   const queryClient = useQueryClient();
   const validationSchema = createVendorProfileFormSchema(locale, t);
-
   const {
     selectors: { profiles },
   } = useCurrentUserProfiles();
+  const { invalidate: invalidateProfile } = useProfileInvalidator();
 
   const vendorProfile = profiles?.find((p) => p.id === profileId && p.type === "vendor");
   const defaultValues = fillVendorProfileDefaultValues(vendorProfile, locale);
@@ -135,10 +136,7 @@ export const useVendorProfileForm = ({ profileId }: UseVendorProfileFormProps) =
       const message = t("VendorProfileForm.updated", { name });
       toast.success(message);
 
-      // Invalidate and refetch profiles
-      await queryClient.invalidateQueries({
-        queryKey: cacheKeys.currentUserProfiles.list.queryKey,
-      });
+      await invalidateProfile({ profileId });
 
       drawerRef.current?.close();
     },

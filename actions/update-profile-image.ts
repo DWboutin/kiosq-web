@@ -1,10 +1,8 @@
 "use server";
 
-import { cacheKeys } from "@/utils/cache-keys";
-import { LOCALES } from "@/utils/constants";
+import { profileRevalidator } from "@/actions/revalidators/profile-revalidator";
 import { createClient } from "@/utils/supabase/server";
 import { uploadImage } from "@/utils/upload-image";
-import { revalidatePath, revalidateTag } from "next/cache";
 
 interface UpdateProfileImageArgs {
   profileId: string;
@@ -74,11 +72,9 @@ export const updateProfileImage = async (data: UpdateProfileImageArgs) => {
         throw updateError;
       }
 
-      revalidatePath("/dashboard/your-store");
-      LOCALES.forEach((locale) => {
-        revalidateTag(
-          cacheKeys.vendorProfileFromSlug(profile.slug_translations[locale], locale).tag
-        );
+      profileRevalidator({
+        profileId: data.profileId,
+        slugTranslations: profile.slug_translations,
       });
 
       return updatedProfile;
@@ -127,10 +123,7 @@ export const updateProfileImage = async (data: UpdateProfileImageArgs) => {
       throw updateError;
     }
 
-    revalidatePath("/dashboard/your-store");
-    LOCALES.forEach((locale) => {
-      revalidateTag(cacheKeys.vendorProfileFromSlug(profile.slug_translations[locale], locale).tag);
-    });
+    profileRevalidator({ profileId: data.profileId, slugTranslations: profile.slug_translations });
 
     return updatedProfile;
   } catch (error) {

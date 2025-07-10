@@ -1,5 +1,6 @@
 "use server";
 
+import { profileRevalidator } from "@/actions/revalidators/profile-revalidator";
 import { cacheKeys } from "@/utils/cache-keys";
 import { LOCALES } from "@/utils/constants";
 import { createClient } from "@/utils/supabase/server";
@@ -127,10 +128,7 @@ export const updateProfileBannerImage = async (data: UpdateProfileBannerImageArg
       throw updateError;
     }
 
-    revalidatePath("/dashboard/your-store");
-    LOCALES.forEach((locale) => {
-      revalidateTag(cacheKeys.vendorProfileFromSlug(profile.slug_translations[locale], locale).tag);
-    });
+    profileRevalidator({ profileId: data.profileId, slugTranslations: profile.slug_translations });
 
     return updatedProfile;
   } catch (error) {

@@ -5,6 +5,7 @@ import { Locales } from "@/types/app";
 import { cacheKeys } from "@/utils/cache-keys";
 import { LOCALES } from "@/utils/constants";
 import { revalidateTag } from "next/cache";
+import { profileRevalidator } from "@/actions/revalidators/profile-revalidator";
 
 interface UpdateVendorProfileArgs {
   profileId: string;
@@ -70,9 +71,7 @@ export const updateVendorProfile = async (data: UpdateVendorProfileArgs) => {
     throw error;
   }
 
-  LOCALES.forEach((locale) => {
-    revalidateTag(cacheKeys.vendorProfileFromSlug(profile.slug_translations[locale], locale).tag);
-  });
+  profileRevalidator({ profileId: data.profileId, slugTranslations: profile.slug_translations });
 
   return profile;
 };

@@ -11,19 +11,19 @@ import { Locales } from "@/types/app";
 import { slugify } from "@/utils/slugify";
 import { SubmitHandler } from "react-hook-form";
 import { createUserVendorProfile } from "@/actions/create-user-vendor-profile";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "@/i18n/navigation";
-import { cacheKeys } from "@/utils/cache-keys";
+import { useProfileInvalidator } from "@/utils/invalidators-hooks/use-profile-invalidator";
 
 export const useCreateProfileWizard = (steps: { id: string; label: string }[]) => {
   const t = useTranslations();
   const router = useRouter();
   const locale = useLocale() as Locales;
-  const queryClient = useQueryClient();
   const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(steps[0].id);
   const vendorProfileSchema = createProfileWizardSchema(locale, t);
+  const { invalidate: invalidateProfile } = useProfileInvalidator();
 
   const mutation = useMutation({
     mutationFn: createUserVendorProfile,
@@ -31,7 +31,7 @@ export const useCreateProfileWizard = (steps: { id: string; label: string }[]) =
       // Handle success, e.g., show notification or redirect
       toast.success(t("CreateProfileWizard.creationSuccess"));
       setIsSuccessDialogOpen(true);
-      queryClient.invalidateQueries({ queryKey: cacheKeys.currentUserProfiles.list.queryKey });
+      invalidateProfile();
     },
     onError: (error) => {
       console.error("Error submitting form:", error);
