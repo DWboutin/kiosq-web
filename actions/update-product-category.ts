@@ -1,5 +1,6 @@
 "use server";
 
+import { categoriesRevalidator } from "@/actions/revalidators/categories-revalidator";
 import { ProductCategoryFormValues } from "@/features/product-category-form-drawer/hooks/use-product-category-form";
 import { UpdateWithLocale } from "@/types/app";
 import { cacheKeys } from "@/utils/cache-keys";
@@ -50,7 +51,7 @@ export const updateProductCategory = async (category: UpdateProductCategoryArgs)
       throw new Error(error.message);
     }
 
-    revalidateTag(cacheKeys.productCategories.list.tag);
+    categoriesRevalidator();
 
     return data;
   } catch (error) {

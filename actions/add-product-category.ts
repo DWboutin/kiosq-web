@@ -1,10 +1,9 @@
 "use server";
 
+import { categoriesRevalidator } from "@/actions/revalidators/categories-revalidator";
 import { ProductCategoryFormValues } from "@/features/product-category-form-drawer/hooks/use-product-category-form";
 import { InsertWithLocale } from "@/types/app";
-import { cacheKeys } from "@/utils/cache-keys";
 import { createClient } from "@/utils/supabase/server";
-import { revalidateTag } from "next/cache";
 
 type AddProductCategoryArgs = InsertWithLocale<ProductCategoryFormValues>;
 
@@ -37,7 +36,7 @@ export const addProductCategory = async (category: AddProductCategoryArgs) => {
       throw new Error(error.message);
     }
 
-    revalidateTag(cacheKeys.productCategories.list.tag);
+    categoriesRevalidator();
 
     return data;
   } catch (error) {

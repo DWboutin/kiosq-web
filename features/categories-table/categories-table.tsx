@@ -14,6 +14,7 @@ import { LocaleFullDate } from "@/components/ui/locale-date";
 import { useCategoriesTable } from "@/features/categories-table/hooks/use-categories-table";
 import { ButtonWithConfirmationModal } from "@/features/button-with-confirmation-modal/button-with-confirmation-modal";
 import { ButtonBrand } from "@/components/ui/button-brand";
+import { useCategoriesInvalidator } from "@/utils/invalidators-hooks/use-categories-invalidator";
 
 type CategoriesTableProps = {
   data: AdminProductCategory[];
@@ -25,6 +26,7 @@ export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
     selectors: { flattenedData, expandedRows },
     actions: { handleRowClick, toggleExpand },
   } = useCategoriesTable({ data });
+  const { revalidate: revalidateCategories } = useCategoriesInvalidator();
 
   const handleDelete = async (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -38,6 +40,7 @@ export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
 
     try {
       await deleteProductCategory(rowId);
+      await revalidateCategories();
       toast.success(t("CategoriesTable.categoryDeleted"));
     } catch (error) {
       console.error(error);
