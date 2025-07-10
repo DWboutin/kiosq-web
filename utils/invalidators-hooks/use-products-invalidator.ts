@@ -4,7 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 export const useProductsInvalidator = () => {
   const queryClient = useQueryClient();
 
-  const revalidate = async ({
+  const invalidate = async ({
     productId,
     profileId,
   }: {
@@ -22,5 +22,5 @@ export const useProductsInvalidator = () => {
     }
   };
 
-  return { revalidate };
+  return { invalidate };
 };

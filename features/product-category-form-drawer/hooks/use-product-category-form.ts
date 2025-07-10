@@ -45,7 +45,7 @@ export const useProductCategoryForm = (
   const [drawerOpen, setDrawerOpen] = useState(false);
   const previousDrawerOpen = usePrevious(drawerOpen);
   const validationSchema = createProductCategorySchema(locale, t);
-  const { revalidate: revalidateCategories } = useCategoriesInvalidator();
+  const { invalidate: invalidateCategories } = useCategoriesInvalidator();
 
   const {
     control,
@@ -85,7 +85,7 @@ export const useProductCategoryForm = (
           locale,
         });
       }
-      await revalidateCategories();
+      await invalidateCategories();
       sideDrawerRef?.current?.close();
       reset();
       resetCategory();

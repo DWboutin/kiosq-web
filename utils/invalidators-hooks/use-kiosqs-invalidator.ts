@@ -4,7 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 export const useKiosqsInvalidator = () => {
   const queryClient = useQueryClient();
 
-  const revalidate = async ({ kiosqId, profileId }: { kiosqId: string; profileId: string }) => {
+  const invalidate = async ({ kiosqId, profileId }: { kiosqId: string; profileId: string }) => {
     if (kiosqId) {
       await queryClient.invalidateQueries({
         queryKey: cacheKeys.currentUserKiosqById(kiosqId).queryKey,
@@ -20,5 +20,5 @@ export const useKiosqsInvalidator = () => {
     });
   };
 
-  return { revalidate };
+  return { invalidate };
 };

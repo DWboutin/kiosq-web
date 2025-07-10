@@ -35,7 +35,7 @@ export const useProductVariantModalForm = ({ onSuccess }: UseProductVariantModal
   const { variantValues } = useProductVariantModalContext();
   const params = useParams();
   const productId = params.productId as string;
-  const { revalidate: revalidateProducts } = useProductsInvalidator();
+  const { invalidate: invalidateProducts } = useProductsInvalidator();
 
   const defaultValues: ProductVariantFormValues = variantValues?.id
     ? {
@@ -90,7 +90,7 @@ export const useProductVariantModalForm = ({ onSuccess }: UseProductVariantModal
 
       toast.success(message);
 
-      revalidateProducts({ productId });
+      invalidateProducts({ productId });
 
       reset(formDefaultValues);
 

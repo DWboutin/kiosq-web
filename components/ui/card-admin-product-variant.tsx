@@ -34,7 +34,7 @@ export const CardAdminProductVariant = ({
   const title = `${quantity} ${unit}`;
   const params = useParams();
   const productId = params.productId as string;
-  const { revalidate: revalidateProducts } = useProductsInvalidator();
+  const { invalidate: invalidateProducts } = useProductsInvalidator();
   const { handleSetVariantValues } = useProductVariantModalContext();
 
   const handleEditVariant = () => {
@@ -43,7 +43,7 @@ export const CardAdminProductVariant = ({
 
   const handleDeleteVariant = async () => {
     await deleteProductVariant({ variantId: id, productId });
-    await revalidateProducts({ productId });
+    await invalidateProducts({ productId });
   };
 
   return (

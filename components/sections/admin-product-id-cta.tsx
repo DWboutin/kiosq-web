@@ -39,14 +39,14 @@ export const AdminProductIdCta: FC<AdminProductIdCtaProps> = ({
     hour: "numeric",
     minute: "numeric",
   });
-  const { revalidate: revalidateProducts } = useProductsInvalidator();
+  const { invalidate: invalidateProducts } = useProductsInvalidator();
 
   const handleStatusChange = async (status: PublishedStatus) => {
     try {
       const success = await updateProductPublishedStatus(productId, status);
 
       if (success) {
-        revalidateProducts({ productId, profileId });
+        invalidateProducts({ productId, profileId });
         toast.success("Status updated successfully");
       }
     } catch (error) {

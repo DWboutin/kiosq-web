@@ -62,11 +62,11 @@ export const CardAdminKiosq = ({
   profileId,
 }: CardAdminKiosqProps) => {
   const t = useTranslations("DashboardProfileKiosqById");
-  const { revalidate: revalidateKiosqs } = useKiosqsInvalidator();
+  const { invalidate: invalidateKiosqs } = useKiosqsInvalidator();
 
   const handleDeleteKiosq = async () => {
     await deleteKiosq({ kiosqId: id });
-    await revalidateKiosqs({ kiosqId: id, profileId });
+    await invalidateKiosqs({ kiosqId: id, profileId });
   };
 
   return (

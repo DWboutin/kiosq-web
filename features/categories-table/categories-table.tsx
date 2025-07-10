@@ -26,7 +26,7 @@ export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
     selectors: { flattenedData, expandedRows },
     actions: { handleRowClick, toggleExpand },
   } = useCategoriesTable({ data });
-  const { revalidate: revalidateCategories } = useCategoriesInvalidator();
+  const { invalidate: invalidateCategories } = useCategoriesInvalidator();
 
   const handleDelete = async (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -40,7 +40,7 @@ export const CategoriesTable: FC<CategoriesTableProps> = ({ data }) => {
 
     try {
       await deleteProductCategory(rowId);
-      await revalidateCategories();
+      await invalidateCategories();
       toast.success(t("CategoriesTable.categoryDeleted"));
     } catch (error) {
       console.error(error);

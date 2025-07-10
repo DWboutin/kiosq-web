@@ -1,8 +1,6 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { revalidateTag } from "next/cache";
-import { cacheKeys } from "@/utils/cache-keys";
 import { productRevalidator } from "@/actions/revalidators/product-revalidator";
 
 export type DeleteProductVariantParams = {

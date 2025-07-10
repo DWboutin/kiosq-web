@@ -37,14 +37,14 @@ export const AdminKiosqIdCta: FC<AdminKiosqIdCtaProps> = ({
     hour: "numeric",
     minute: "numeric",
   });
-  const { revalidate: revalidateKiosqs } = useKiosqsInvalidator();
+  const { invalidate: invalidateKiosqs } = useKiosqsInvalidator();
 
   const handleStatusChange = async (status: PublishedStatus) => {
     try {
       const success = await updateKiosqPublishedStatus(kiosqId, kiosqData.profileId, status);
 
       if (success) {
-        await revalidateKiosqs({ kiosqId, profileId: kiosqData.profileId });
+        await invalidateKiosqs({ kiosqId, profileId: kiosqData.profileId });
         toast.success("Status updated successfully");
       }
     } catch (error) {

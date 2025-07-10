@@ -69,13 +69,12 @@ export const useProductForm = ({ editMode = false, productId }: UseProductFormPr
   const t = useTranslations();
   const drawerRef = useRef<SideFormDrawerRef>(null);
   const locale = useLocale() as Locales;
-  const queryClient = useQueryClient();
   const validationSchema = createProductFormSchema(locale, t, editMode);
   const {
     selectors: { product },
     actions: { refetch },
   } = useCurrentUserProductById({ productId });
-  const { revalidate: revalidateProducts } = useProductsInvalidator();
+  const { invalidate: invalidateProducts } = useProductsInvalidator();
 
   const defaultValues: ProductFormValues = !product
     ? productDefaultValues
@@ -112,7 +111,7 @@ export const useProductForm = ({ editMode = false, productId }: UseProductFormPr
 
       toast.success(message);
 
-      await revalidateProducts({ productId: savedProduct.id, profileId: savedProduct.profile_id });
+      await invalidateProducts({ productId: savedProduct.id, profileId: savedProduct.profile_id });
 
       if (editMode) {
         refetch();

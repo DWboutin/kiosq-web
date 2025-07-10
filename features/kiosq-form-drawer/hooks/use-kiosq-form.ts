@@ -71,13 +71,12 @@ export const useKiosqForm = ({ editMode = false, kiosqId, kiosqData }: UseKiosqF
   const t = useTranslations();
   const drawerRef = useRef<SideFormDrawerRef>(null);
   const locale = useLocale() as Locales;
-  const queryClient = useQueryClient();
   const validationSchema = createKiosqFormSchema(locale, t);
   const {
     selectors: { kiosq },
     actions: { refetch },
   } = useCurrentUserKiosqById({ kiosqId, kiosqData });
-  const { revalidate: revalidateKiosqs } = useKiosqsInvalidator();
+  const { invalidate: invalidateKiosqs } = useKiosqsInvalidator();
 
   const defaultValues: KiosqFormValues = !kiosq
     ? kiosqDefaultValues
@@ -106,7 +105,7 @@ export const useKiosqForm = ({ editMode = false, kiosqId, kiosqData }: UseKiosqF
 
       toast.success(message);
 
-      await revalidateKiosqs({
+      await invalidateKiosqs({
         kiosqId: savedKiosq.id!,
         profileId: savedKiosq.profileId!,
       });
