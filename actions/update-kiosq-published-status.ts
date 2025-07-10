@@ -1,9 +1,8 @@
 "use server";
 
+import { kiosqsRevalidator } from "@/actions/revalidators/kiosqs-revalidator";
 import { PublishedStatus } from "@/types/app";
-import { cacheKeys } from "@/utils/cache-keys";
 import { createClient } from "@/utils/supabase/server";
-import { revalidateTag } from "next/cache";
 
 export const updateKiosqPublishedStatus = async (
   kiosqId: string,
@@ -32,9 +31,7 @@ export const updateKiosqPublishedStatus = async (
       throw kiosqError;
     }
 
-    revalidateTag(cacheKeys.currentUserKiosqById(kiosqId).tag);
-    revalidateTag(cacheKeys.currentUserProfileIdKiosqs.list(profileId).tag);
-    revalidateTag(cacheKeys.closestVendorProfiles.all.tag);
+    kiosqsRevalidator({ profileId, kiosqId });
 
     return true;
   } catch (error) {

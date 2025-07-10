@@ -15,8 +15,7 @@ import { MapView } from "@/components/ui/map-view";
 import { useTranslations } from "next-intl";
 import { PublishedStatus, StoreStatus } from "@/types/app";
 import { ButtonWithConfirmationModal } from "@/features/button-with-confirmation-modal/button-with-confirmation-modal";
-import { cacheKeys } from "@/utils/cache-keys";
-import { useQueryClient } from "@tanstack/react-query";
+import { useKiosqsInvalidator } from "@/utils/invalidators-hooks/use-kiosqs-invalidator";
 
 const getStatusColor = (status: string) => {
   switch (status) {
@@ -63,14 +62,11 @@ export const CardAdminKiosq = ({
   profileId,
 }: CardAdminKiosqProps) => {
   const t = useTranslations("DashboardProfileKiosqById");
-  const queryClient = useQueryClient();
+  const { revalidate: revalidateKiosqs } = useKiosqsInvalidator();
 
   const handleDeleteKiosq = async () => {
     await deleteKiosq({ kiosqId: id });
-    // Invalidate queries to refresh the kiosq list
-    await queryClient.invalidateQueries({
-      queryKey: cacheKeys.currentUserProfileIdKiosqs.list(profileId).queryKey,
-    });
+    await revalidateKiosqs({ kiosqId: id, profileId });
   };
 
   return (

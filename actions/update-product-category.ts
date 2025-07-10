@@ -3,9 +3,7 @@
 import { categoriesRevalidator } from "@/actions/revalidators/categories-revalidator";
 import { ProductCategoryFormValues } from "@/features/product-category-form-drawer/hooks/use-product-category-form";
 import { UpdateWithLocale } from "@/types/app";
-import { cacheKeys } from "@/utils/cache-keys";
 import { createClient } from "@/utils/supabase/server";
-import { revalidateTag } from "next/cache";
 
 type UpdateProductCategoryArgs = UpdateWithLocale<ProductCategoryFormValues>;
 
