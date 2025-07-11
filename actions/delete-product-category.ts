@@ -1,8 +1,7 @@
 "use server";
 
-import { cacheKeys } from "@/utils/cache-keys";
+import { categoriesRevalidator } from "@/actions/revalidators/categories-revalidator";
 import { createClient } from "@/utils/supabase/admin";
-import { revalidateTag } from "next/cache";
 
 export const deleteProductCategory = async (categoryId: string) => {
   try {
@@ -16,7 +15,7 @@ export const deleteProductCategory = async (categoryId: string) => {
       throw new Error(error.message);
     }
 
-    revalidateTag(cacheKeys.productCategories.list.tag);
+    categoriesRevalidator();
 
     return data;
   } catch (error) {

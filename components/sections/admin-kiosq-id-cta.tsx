@@ -7,9 +7,8 @@ import { TooltipContainer } from "@/components/ui/tooltip-container";
 import { KiosqFormDrawer } from "@/features/kiosq-form-drawer/kiosq-form-drawer";
 import { PublishedStatusManagement } from "@/features/published-status-management/published-status-management";
 import { Locales, PublishedStatus } from "@/types/app";
-import { cacheKeys } from "@/utils/cache-keys";
 import { AuthenticatedUserKiosq } from "@/utils/factories/authenticated-user-kiosqs-factory";
-import { useQueryClient } from "@tanstack/react-query";
+import { useKiosqsInvalidator } from "@/utils/invalidators-hooks/use-kiosqs-invalidator";
 import { useFormatter, useLocale, useTranslations } from "next-intl";
 import { FC } from "react";
 import { toast } from "sonner";
@@ -38,19 +37,14 @@ export const AdminKiosqIdCta: FC<AdminKiosqIdCtaProps> = ({
     hour: "numeric",
     minute: "numeric",
   });
-  const queryClient = useQueryClient();
+  const { invalidate: invalidateKiosqs } = useKiosqsInvalidator();
 
   const handleStatusChange = async (status: PublishedStatus) => {
     try {
       const success = await updateKiosqPublishedStatus(kiosqId, kiosqData.profileId, status);
 
       if (success) {
-        queryClient.invalidateQueries({
-          queryKey: cacheKeys.currentUserKiosqById(kiosqId).queryKey,
-        });
-        queryClient.invalidateQueries({
-          queryKey: cacheKeys.closestVendorProfiles.all.queryKey,
-        });
+        await invalidateKiosqs({ kiosqId, profileId: kiosqData.profileId });
         toast.success("Status updated successfully");
       }
     } catch (error) {

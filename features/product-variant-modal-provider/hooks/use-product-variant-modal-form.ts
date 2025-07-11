@@ -13,6 +13,8 @@ import { useProductVariantModalContext } from "@/features/product-variant-modal-
 import { useEffect } from "react";
 import { createProductVariant } from "@/actions/create-product-variant";
 import { useParams } from "next/navigation";
+import { productRevalidator } from "@/actions/revalidators/product-revalidator";
+import { useProductsInvalidator } from "@/utils/invalidators-hooks/use-products-invalidator";
 
 type UseProductVariantModalFormProps = {
   onSuccess?: () => void;
@@ -29,11 +31,11 @@ const formDefaultValues: ProductVariantFormValues = {
 
 export const useProductVariantModalForm = ({ onSuccess }: UseProductVariantModalFormProps = {}) => {
   const t = useTranslations();
-  const queryClient = useQueryClient();
   const validationSchema = createProductVariantFormSchema(t);
   const { variantValues } = useProductVariantModalContext();
   const params = useParams();
   const productId = params.productId as string;
+  const { invalidate: invalidateProducts } = useProductsInvalidator();
 
   const defaultValues: ProductVariantFormValues = variantValues?.id
     ? {
@@ -82,15 +84,13 @@ export const useProductVariantModalForm = ({ onSuccess }: UseProductVariantModal
         isDefault: data.isDefault,
       });
     },
-    onSuccess: async (result) => {
+    onSuccess: async () => {
       const variantTitle = `${quantity} ${unit}`;
       const message = t("ProductVariantForm.updated", { variant: variantTitle });
 
       toast.success(message);
 
-      await queryClient.invalidateQueries({
-        queryKey: cacheKeys.currentUserProductById(result.product_id).queryKey,
-      });
+      invalidateProducts({ productId });
 
       reset(formDefaultValues);
 

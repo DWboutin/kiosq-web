@@ -2,9 +2,7 @@
 
 import { productRevalidator } from "@/actions/revalidators/product-revalidator";
 import { Locales, PublishedStatus } from "@/types/app";
-import { cacheKeys } from "@/utils/cache-keys";
 import { createClient } from "@/utils/supabase/server";
-import { revalidatePath, revalidateTag } from "next/cache";
 
 export const updateProductPublishedStatus = async (productId: string, status: PublishedStatus) => {
   try {

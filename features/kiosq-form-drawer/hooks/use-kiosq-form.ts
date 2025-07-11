@@ -16,6 +16,7 @@ import { useCurrentUserKiosqById } from "@/hooks/use-current-user-kiosq-by-id";
 import { AuthenticatedUserKiosq } from "@/utils/factories/authenticated-user-kiosqs-factory";
 import { cacheKeys } from "@/utils/cache-keys";
 import { filterTranslations } from "@/utils/filter-translations";
+import { useKiosqsInvalidator } from "@/utils/invalidators-hooks/use-kiosqs-invalidator";
 
 type UseKiosqFormProps = {
   editMode?: boolean;
@@ -70,12 +71,12 @@ export const useKiosqForm = ({ editMode = false, kiosqId, kiosqData }: UseKiosqF
   const t = useTranslations();
   const drawerRef = useRef<SideFormDrawerRef>(null);
   const locale = useLocale() as Locales;
-  const queryClient = useQueryClient();
   const validationSchema = createKiosqFormSchema(locale, t);
   const {
     selectors: { kiosq },
     actions: { refetch },
   } = useCurrentUserKiosqById({ kiosqId, kiosqData });
+  const { invalidate: invalidateKiosqs } = useKiosqsInvalidator();
 
   const defaultValues: KiosqFormValues = !kiosq
     ? kiosqDefaultValues
@@ -104,17 +105,16 @@ export const useKiosqForm = ({ editMode = false, kiosqId, kiosqData }: UseKiosqF
 
       toast.success(message);
 
+      await invalidateKiosqs({
+        kiosqId: savedKiosq.id!,
+        profileId: savedKiosq.profileId!,
+      });
+
       if (editMode) {
-        await queryClient.invalidateQueries({
-          queryKey: cacheKeys.currentUserKiosqById(savedKiosq.id!).queryKey,
-        });
         refetch();
         drawerRef.current?.close();
       } else {
         reset();
-        queryClient.invalidateQueries({
-          queryKey: cacheKeys.currentUserProfileIdKiosqs.list(savedKiosq!.profileId).queryKey,
-        });
       }
     },
     onError: () => {

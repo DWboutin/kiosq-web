@@ -4,8 +4,7 @@ import { KiosqFormValues } from "@/features/kiosq-form-drawer/utils/kiosq-form-v
 import { InsertWithLocale } from "@/types/app";
 import { createClient } from "@/utils/supabase/server";
 import { geocodeAddressWithFallback } from "@/utils/geocoding";
-import { revalidateTag } from "next/cache";
-import { cacheKeys } from "@/utils/cache-keys";
+import { kiosqsRevalidator } from "@/actions/revalidators/kiosqs-revalidator";
 
 type UpdateKiosqArgs = InsertWithLocale<KiosqFormValues> & { id: string };
 
@@ -91,8 +90,7 @@ export const updateKiosq = async (kiosq: UpdateKiosqArgs) => {
     throw kiosqError;
   }
 
-  revalidateTag(cacheKeys.currentUserKiosqById(kiosq.id).tag);
-  revalidateTag(cacheKeys.currentUserProfileIdKiosqs.list(profile.id).tag);
+  kiosqsRevalidator({ profileId: profile.id, kiosqId: kiosq.id });
 
   return kiosqData;
 };

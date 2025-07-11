@@ -13,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createProductCategorySchema } from "@/features/product-category-form-drawer/utils/product-category-validation-schema";
 import { slugify } from "@/utils/slugify";
 import { toast } from "sonner";
+import { useCategoriesInvalidator } from "@/utils/invalidators-hooks/use-categories-invalidator";
 
 export type ProductCategoryFormValues = z.infer<ReturnType<typeof createProductCategorySchema>>;
 
@@ -44,6 +45,7 @@ export const useProductCategoryForm = (
   const [drawerOpen, setDrawerOpen] = useState(false);
   const previousDrawerOpen = usePrevious(drawerOpen);
   const validationSchema = createProductCategorySchema(locale, t);
+  const { invalidate: invalidateCategories } = useCategoriesInvalidator();
 
   const {
     control,
@@ -83,6 +85,7 @@ export const useProductCategoryForm = (
           locale,
         });
       }
+      await invalidateCategories();
       sideDrawerRef?.current?.close();
       reset();
       resetCategory();

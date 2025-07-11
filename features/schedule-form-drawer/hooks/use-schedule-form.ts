@@ -21,6 +21,7 @@ import {
 } from "@/utils/factories/authenticated-user-schedules-factory";
 import { DAYS_OF_WEEK } from "@/utils/constants";
 import { filterTranslations } from "@/utils/filter-translations";
+import { useSchedulesInvalidator } from "@/utils/invalidators-hooks/use-schedules-invalidator";
 
 type UseScheduleFormProps = {
   profileId: string;
@@ -112,6 +113,7 @@ export const useScheduleForm = ({ profileId }: UseScheduleFormProps) => {
   const queryClient = useQueryClient();
   const validationSchema = createScheduleFormSchema(locale, t);
   const isEditMode = !!scheduleValues;
+  const { invalidate: invalidateSchedules } = useSchedulesInvalidator();
 
   const defaultValues = fillScheduleDefaultValues({ scheduleValues, locale });
 
@@ -164,11 +166,8 @@ export const useScheduleForm = ({ profileId }: UseScheduleFormProps) => {
     },
     onSuccess: async () => {
       const message = isEditMode ? t("ScheduleForm.updated") : t("ScheduleForm.created");
+      await invalidateSchedules({ profileId });
       toast.success(message);
-
-      await queryClient.invalidateQueries({
-        queryKey: cacheKeys.currentUserSchedules.list(profileId).queryKey,
-      });
 
       drawerRef.current?.close();
     },

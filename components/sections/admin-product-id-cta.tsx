@@ -7,8 +7,7 @@ import { TooltipContainer } from "@/components/ui/tooltip-container";
 import { ProductFormDrawer } from "@/features/product-form-drawer/product-form-drawer";
 import { PublishedStatusManagement } from "@/features/published-status-management/published-status-management";
 import { PublishedStatus } from "@/types/app";
-import { cacheKeys } from "@/utils/cache-keys";
-import { useQueryClient } from "@tanstack/react-query";
+import { useProductsInvalidator } from "@/utils/invalidators-hooks/use-products-invalidator";
 import { useFormatter, useTranslations } from "next-intl";
 import { FC } from "react";
 import { toast } from "sonner";
@@ -40,19 +39,14 @@ export const AdminProductIdCta: FC<AdminProductIdCtaProps> = ({
     hour: "numeric",
     minute: "numeric",
   });
-  const queryClient = useQueryClient();
+  const { invalidate: invalidateProducts } = useProductsInvalidator();
 
   const handleStatusChange = async (status: PublishedStatus) => {
     try {
       const success = await updateProductPublishedStatus(productId, status);
 
       if (success) {
-        queryClient.invalidateQueries({
-          queryKey: cacheKeys.currentUserProductById(productId).queryKey,
-        });
-        queryClient.invalidateQueries({
-          queryKey: cacheKeys.currentUserProfileIdProducts.list(profileId).queryKey,
-        });
+        invalidateProducts({ productId, profileId });
         toast.success("Status updated successfully");
       }
     } catch (error) {

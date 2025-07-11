@@ -17,10 +17,9 @@ import { FC } from "react";
 import { TrashIcon } from "lucide-react";
 import { deleteSchedule } from "@/actions/delete-schedule";
 import { toast } from "sonner";
-import { useQueryClient } from "@tanstack/react-query";
-import { cacheKeys } from "@/utils/cache-keys";
 import { EmptyHourglassIcon } from "@/components/ui/icons/empty-hourglass-icon";
 import { TooltipContainer } from "@/components/ui/tooltip-container";
+import { useSchedulesInvalidator } from "@/utils/invalidators-hooks/use-schedules-invalidator";
 
 type CardAdminScheduleProps = {
   schedule: AuthenticatedUserSchedule;
@@ -91,8 +90,8 @@ const days: { key: DayOfWeek }[] = [
 export const CardAdminSchedule: FC<CardAdminScheduleProps> = ({ schedule }) => {
   const locale = useLocale() as Locales;
   const t = useTranslations("DashboardSchedules");
-  const queryClient = useQueryClient();
   const { drawerRef, handleSetScheduleValues } = useScheduleDrawerContext();
+  const { invalidate: invalidateSchedules } = useSchedulesInvalidator();
 
   const handleEditSchedule = () => {
     handleSetScheduleValues(schedule);
@@ -103,9 +102,7 @@ export const CardAdminSchedule: FC<CardAdminScheduleProps> = ({ schedule }) => {
     try {
       await deleteSchedule({ scheduleId: schedule.id });
       toast.success(t("scheduleDeletedSuccess", { name: schedule.nameTranslations[locale] }));
-      await queryClient.invalidateQueries({
-        queryKey: cacheKeys.currentUserSchedules.list(schedule.profileId).queryKey,
-      });
+      await invalidateSchedules({ profileId: schedule.profileId });
     } catch (error) {
       console.error("Error deleting schedule:", error);
       toast.error(t("scheduleDeletedError"));

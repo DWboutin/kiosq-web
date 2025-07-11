@@ -1,8 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { revalidateTag } from "next/cache";
-import { cacheKeys } from "@/utils/cache-keys";
+import { kiosqsRevalidator } from "@/actions/revalidators/kiosqs-revalidator";
 
 export type DeleteKiosqParams = {
   kiosqId: string;
@@ -87,8 +86,7 @@ export const deleteKiosq = async (params: DeleteKiosqParams) => {
   }
 
   // Revalidate cache
-  revalidateTag(cacheKeys.currentUserKiosqById(kiosqId).tag);
-  revalidateTag(cacheKeys.currentUserProfileIdKiosqs.list(userProfile.id).tag);
+  kiosqsRevalidator({ profileId: userProfile.id, kiosqId });
 
   return { success: true, deletedKiosqId: kiosqId };
 };

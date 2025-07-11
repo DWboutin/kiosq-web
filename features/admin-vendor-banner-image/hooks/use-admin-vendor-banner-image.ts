@@ -5,6 +5,7 @@ import {
   createAdminVendorBannerImageFormSchema,
 } from "@/features/admin-vendor-banner-image/utils/admin-vendor-banner-image-validation-schema";
 import { cacheKeys } from "@/utils/cache-keys";
+import { useProfileInvalidator } from "@/utils/invalidators-hooks/use-profile-invalidator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
@@ -37,6 +38,7 @@ export const useAdminVendorBannerImage = ({
       createAdminVendorBannerImageFormSchema(t)
     ) as Resolver<AdminVendorBannerImageFormValues>,
   });
+  const { invalidate: invalidateProfile } = useProfileInvalidator();
 
   const { mutate: submitBannerImage, isPending } = useMutation({
     mutationFn: (data: AdminVendorBannerImageFormValues) => {
@@ -48,9 +50,7 @@ export const useAdminVendorBannerImage = ({
     onSuccess: async () => {
       toast.success(t("success"));
 
-      await queryClient.invalidateQueries({
-        queryKey: cacheKeys.currentUserProfiles.list.queryKey,
-      });
+      await invalidateProfile({ profileId });
 
       reset({
         imageUrl: "",

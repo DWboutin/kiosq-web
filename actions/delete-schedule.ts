@@ -1,8 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { revalidateTag } from "next/cache";
-import { cacheKeys } from "@/utils/cache-keys";
+import { scheduleRevalidator } from "@/actions/revalidators/shedules-revalidator";
 
 export type DeleteScheduleParams = {
   scheduleId: string;
@@ -64,8 +63,7 @@ export const deleteSchedule = async (params: DeleteScheduleParams) => {
     throw deleteError;
   }
 
-  // Revalidate cache
-  revalidateTag(cacheKeys.currentUserSchedules.list(userProfile.id).tag);
+  scheduleRevalidator({ profileId: userProfile.id });
 
   return { success: true, deletedScheduleId: scheduleId };
 };
