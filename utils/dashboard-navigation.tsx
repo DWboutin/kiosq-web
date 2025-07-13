@@ -11,6 +11,7 @@ import { VideoIcon } from "@/components/ui/icons/video-icon";
 import { UserCircleIcon } from "@/components/ui/icons/user-circle-icon";
 import { UserRole } from "@/types/app";
 import { ScheduleIcon } from "@/components/ui/icons/schedule-icon";
+import { GearIcon } from "@/components/ui/icons/gear-icon";
 
 export type DashboardLink = {
   pathKey: string;
@@ -133,6 +134,12 @@ export const DASHBOARD_LINKS: Record<string, DashboardLink> = {
     icon: <KeyholeIcon className="size-6" />,
     role: "admin" as UserRole,
     children: DASHBOARD_ADMIN_TABS,
+    showInMobileMenu: true,
+  },
+  settings: {
+    pathKey: "Pathnames.dashboard_settings",
+    labelKey: "DashboardMenu.settings",
+    icon: <GearIcon className="size-6" />,
     showInMobileMenu: true,
   },
 };
