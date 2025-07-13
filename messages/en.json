@@ -19,6 +19,7 @@
     "dashboard_admin_categories": "/dashboard/admin/categories",
     "dashboard_training": "/dashboard/training",
     "dashboard_account": "/dashboard/account",
+    "dashboard_settings": "/dashboard/settings",
     "vendor_slug": "/vendors/[slug]",
     "vendor_slug_company": "/vendors/[slug]/our-company",
     "vendor_slug_schedule": "/vendors/[slug]/schedule",
@@ -126,6 +127,10 @@
   "DashboardScheduleHeader": {
     "title": "Schedule",
     "description": "Manage your store's operating hours"
+  },
+  "DashboardSettings": {
+    "title": "Settings",
+    "description": "Manage your account settings"
   },
   "KiosqFormDrawer": {
     "openingButton": "Add a kiosq",
@@ -677,5 +682,10 @@
   },
   "RelatedProducts": {
     "title": "Related products"
+  },
+  "SettingsReservationForm": {
+    "isReservationEnabled": "Enable reservations for your store",
+    "isReservationEnabledDescription": "This allows customers to reserve products directly on your store page. You need to connect your bank account to use this feature.",
+    "createAVendorProfile": "Create a vendor profile"
   }
 }

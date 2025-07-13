@@ -19,6 +19,7 @@
     "dashboard_admin_categories": "/tableau-de-bord/administration/categories",
     "dashboard_training": "/tableau-de-bord/formation",
     "dashboard_account": "/tableau-de-bord/compte",
+    "dashboard_settings": "/tableau-de-bord/parametres",
     "vendor_slug": "/marchands/[slug]",
     "vendor_slug_company": "/marchands/[slug]/notre-entreprise",
     "vendor_slug_schedule": "/marchands/[slug]/horaires",
@@ -128,6 +129,10 @@
   "DashboardScheduleHeader": {
     "title": "Horaires",
     "description": "Gérez les heures d'ouverture de votre magasin"
+  },
+  "DashboardSettings": {
+    "title": "Paramètres",
+    "description": "Gestion des paramètres de votre compte"
   },
   "KiosqFormDrawer": {
     "openingButton": "Ajouter un kiosq",
@@ -678,5 +683,10 @@
   },
   "RelatedProducts": {
     "title": "Produits liés"
+  },
+  "SettingsReservationForm": {
+    "isReservationEnabled": "Activer les réservations pour votre commerce",
+    "isReservationEnabledDescription": "Ceci permet aux clients de réserver des produits directement sur votre page de commerce. Vous auez besoin de connecter vos informations bancaires pour utiliser cette fonctionnalité.",
+    "createAVendorProfile": "Créer un profil de vendeur"
   }
 }

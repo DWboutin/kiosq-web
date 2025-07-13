@@ -13,6 +13,7 @@ export type AuthenticatedUserProfile = {
   xPageUrl: string | null;
   instagramPageUrl: string | null;
   tiktokPageUrl: string | null;
+  stripeAccountId: string | null;
   isActive: boolean;
   isDeleted: boolean;
   isReviewed: boolean;
@@ -34,6 +35,7 @@ export const authenticatedUserProfileFactory = (profile: RawProfile): Authentica
     xPageUrl: profile.x_page_url,
     instagramPageUrl: profile.instagram_page_url,
     tiktokPageUrl: profile.tiktok_page_url,
+    stripeAccountId: profile.stripe_account_id,
     isActive: profile.is_active ?? false,
     isDeleted: profile.is_deleted ?? false,
     isReviewed: profile.is_reviewed ?? false,
