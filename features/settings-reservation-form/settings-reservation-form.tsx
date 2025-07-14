@@ -8,6 +8,7 @@ import { useCurrentUserProfiles } from "@/hooks/use-current-user-profiles";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { Controller, useForm } from "react-hook-form";
+import { StripeConnect } from "@/features/stripe-connect/stripe-connect";
 
 export const SettingsReservationForm = () => {
   const t = useTranslations("SettingsReservationForm");
@@ -25,10 +26,9 @@ export const SettingsReservationForm = () => {
     },
   });
   const vendorProfile = profiles.find((profile) => profile.type === "vendor");
-  console.log(vendorProfile);
 
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col gap-4">
       <FormInputContainer
         inputId="isReservationEnabled"
         label={t("isReservationEnabled")}
@@ -58,6 +58,7 @@ export const SettingsReservationForm = () => {
         </div>
       </FormInputContainer>
       <Separator orientation="horizontal" />
+      <StripeConnect />
     </div>
   );
 };

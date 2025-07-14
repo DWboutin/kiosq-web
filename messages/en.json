@@ -687,5 +687,14 @@
     "isReservationEnabled": "Enable reservations for your store",
     "isReservationEnabledDescription": "This allows customers to reserve products directly on your store page. You need to connect your bank account to use this feature.",
     "createAVendorProfile": "Create a vendor profile"
+  },
+  "StripeConnect": {
+    "title": "Payment Processing",
+    "description": "Connect your Stripe account to accept payments for reservations and orders. This is required to enable the reservation feature.",
+    "connectButton": "Connect with Stripe",
+    "connecting": "Connecting...",
+    "connected": "Connected",
+    "accountId": "Account ID",
+    "connectionFailed": "Failed to connect to Stripe. Please try again."
   }
 }

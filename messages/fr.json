@@ -688,5 +688,14 @@
     "isReservationEnabled": "Activer les réservations pour votre commerce",
     "isReservationEnabledDescription": "Ceci permet aux clients de réserver des produits directement sur votre page de commerce. Vous auez besoin de connecter vos informations bancaires pour utiliser cette fonctionnalité.",
     "createAVendorProfile": "Créer un profil de vendeur"
+  },
+  "StripeConnect": {
+    "title": "Traitement des paiements",
+    "description": "Connectez votre compte Stripe pour accepter les paiements pour les réservations et commandes. Ceci est requis pour activer la fonctionnalité de réservation.",
+    "connectButton": "Connecter avec Stripe",
+    "connecting": "Connexion...",
+    "connected": "Connecté",
+    "accountId": "ID de compte",
+    "connectionFailed": "Échec de connexion à Stripe. Veuillez réessayer."
   }
 }
