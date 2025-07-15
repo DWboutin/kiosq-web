@@ -696,5 +696,22 @@
     "connected": "Connected",
     "accountId": "Account ID",
     "connectionFailed": "Failed to connect to Stripe. Please try again."
+  },
+  "ReservationButton": {
+    "buttonText": "Reserve",
+    "modalTitle": "Reserve {productName} - {variantName}",
+    "modalDescription": "from {profileName}",
+    "modalConfirmLabel": "Reserve",
+    "modalCancelLabel": "Cancel",
+    "modalLoading": "Reserving...",
+    "modalError": "Failed to reserve, please try again",
+    "productNotFound": "Product not found",
+    "quantityLabel": "Quantity",
+    "quantityMinError": "Quantity must be at least 1",
+    "decreaseQuantityAriaLabel": "Decrease quantity",
+    "increaseQuantityAriaLabel": "Increase quantity",
+    "quantityAriaLabel": "Quantity",
+    "totalPrice": "Total Price:",
+    "contextError": "useReservationButtonContext must be used within ReservationButtonProvider"
   }
 }

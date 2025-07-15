@@ -11,16 +11,16 @@ import {
 } from "@/components/ui/select";
 
 interface ProductDetailsVariantPricesProps {
-  productVariant: ProductVariantWithPrices[];
+  productVariants: ProductVariantWithPrices[];
 }
 
 export const ProductDetailsVariantPrices = ({
-  productVariant,
+  productVariants,
 }: ProductDetailsVariantPricesProps) => {
   const { selectedVariant, handleSelectVariant } = useProductDetailsContext();
 
   const handleVariantChange = (variantId: string) => {
-    const variant = productVariant.find((v) => v.id === variantId);
+    const variant = productVariants.find((v) => v.id === variantId);
     if (variant) {
       handleSelectVariant(variant);
     }
@@ -43,7 +43,7 @@ export const ProductDetailsVariantPrices = ({
             <SelectValue placeholder="Select size" />
           </SelectTrigger>
           <SelectContent>
-            {productVariant.map((variant) => (
+            {productVariants.map((variant) => (
               <SelectItem key={variant.id} value={variant.id}>
                 {getVariantLabel(variant)}
               </SelectItem>

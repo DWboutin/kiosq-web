@@ -1,13 +1,11 @@
 import { FC, useMemo } from "react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
-import { UserOnboardingValues } from "../utils/create-user-onboarding-schema";
 import { FormInputContainer } from "@/components/ui/form-utils/form-input-container";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
+import { RadioGroup } from "@/components/ui/radio-group";
 import { UserSquare2, Building, Store } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { cn } from "@/lib/utils";
 import { UserOnboardingUserButton } from "@/features/user-onboarding/components/user-onboarding-user-button";
+import { UserOnboardingValues } from "@/features/user-onboarding/utils/create-user-onboarding-schema";
 
 interface UserOnboardingStepFourProps {
   control: Control<UserOnboardingValues>;

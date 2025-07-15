@@ -6,7 +6,7 @@ import { useUserStore } from "@/stores/user-store";
 import {
   createUserOnboardingSchema,
   UserOnboardingValues,
-} from "../utils/create-user-onboarding-schema";
+} from "@/features/user-onboarding/utils/create-user-onboarding-schema";
 import { useTranslations } from "next-intl";
 import { useMutation } from "@tanstack/react-query";
 import { setUserOnboardingValues } from "@/actions/set-user-onboarding-values";

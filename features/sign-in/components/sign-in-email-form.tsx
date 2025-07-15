@@ -4,7 +4,7 @@ import { FC } from "react";
 import { Controller } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { FormInputContainer } from "@/components/ui/form-utils/form-input-container";
-import { useSignInEmailForm } from "../hooks/use-sign-in-email-form";
+import { useSignInEmailForm } from "@/features/sign-in/hooks/use-sign-in-email-form";
 import { useTranslations } from "next-intl";
 import { ButtonBrand } from "@/components/ui/button-brand";
 

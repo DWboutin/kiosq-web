@@ -18,6 +18,7 @@ export const SettingsReservationForm = () => {
   const {
     control,
     formState: { errors },
+    watch,
   } = useForm<{
     isReservationEnabled: boolean;
   }>({
@@ -25,6 +26,7 @@ export const SettingsReservationForm = () => {
       isReservationEnabled: false,
     },
   });
+  const isReservationEnabled = watch("isReservationEnabled");
   const vendorProfile = profiles.find((profile) => profile.type === "vendor");
 
   return (
@@ -57,8 +59,13 @@ export const SettingsReservationForm = () => {
           )}
         </div>
       </FormInputContainer>
-      <Separator orientation="horizontal" />
-      <StripeConnect />
+
+      {isReservationEnabled && (
+        <>
+          <Separator orientation="horizontal" />
+          <StripeConnect />
+        </>
+      )}
     </div>
   );
 };

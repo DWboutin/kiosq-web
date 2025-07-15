@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import { Control, Controller, FieldErrors, useWatch } from "react-hook-form";
 import { FormInputContainer } from "@/components/ui/form-utils/form-input-container";
 import { Input } from "@/components/ui/input";
-import { UserOnboardingValues } from "../utils/create-user-onboarding-schema";
+import { UserOnboardingValues } from "@/features/user-onboarding/utils/create-user-onboarding-schema";
 import { Slider } from "@/components/ui/slider";
 import { MapPin } from "lucide-react";
 import { UserGeolocation } from "@/utils/get-geolocation";

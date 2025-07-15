@@ -1,6 +1,7 @@
 import { CheckIcon } from "@/components/ui/icons/check-icon";
 import { ProductDetailsVariantImage } from "@/features/product-details/components/product-details-variant-image";
 import { ProductDetailsVariantPrices } from "@/features/product-details/components/product-details-variant-prices";
+import { ReservationButton } from "@/features/reservation-button/reservation-button";
 import { Locales } from "@/types/app";
 import { ProductWithVariantsPricesAndProfile } from "@/utils/factories/product-factory";
 import { useLocale } from "next-intl";
@@ -45,7 +46,8 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
             </div>
           ))}
         </div>
-        <ProductDetailsVariantPrices productVariant={product.productVariants} />
+        <ProductDetailsVariantPrices productVariants={product.productVariants} />
+        <ReservationButton />
       </div>
     </div>
   );

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { useResizeObserver } from "../../hooks/use-resize-observer";
+import { useResizeObserver } from "@/hooks/use-resize-observer";
 import { useLocale } from "next-intl";
 import { Locales } from "@/types/app";
 

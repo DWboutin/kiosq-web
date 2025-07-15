@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Control, Controller, FieldErrors, useWatch } from "react-hook-form";
-import { UserOnboardingValues } from "../utils/create-user-onboarding-schema";
+import { UserOnboardingValues } from "@/features/user-onboarding/utils/create-user-onboarding-schema";
 import { FormInputContainer } from "@/components/ui/form-utils/form-input-container";
 import { CATEGORIES_ORDER } from "@/utils/constants";
 import { UserOnboardingCategoryButton } from "@/features/user-onboarding/components/user-onboarding-category-button";

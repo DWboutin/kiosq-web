@@ -2,7 +2,6 @@
 
 import { Locales } from "@/types/app";
 import { createClient } from "@/utils/supabase/server";
-import { randomBytes } from "crypto";
 import { cookies } from "next/headers";
 
 export async function getStripeConnectLink({ locale }: { locale: Locales }) {

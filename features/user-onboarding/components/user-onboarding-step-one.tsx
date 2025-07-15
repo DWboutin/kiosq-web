@@ -2,8 +2,8 @@ import { FC } from "react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import { FormInputContainer } from "@/components/ui/form-utils/form-input-container";
 import { Input } from "@/components/ui/input";
-import { UserOnboardingValues } from "../utils/create-user-onboarding-schema";
 import { useTranslations } from "next-intl";
+import { UserOnboardingValues } from "@/features/user-onboarding/utils/create-user-onboarding-schema";
 
 interface UserOnboardingStepOneProps {
   control: Control<UserOnboardingValues>;

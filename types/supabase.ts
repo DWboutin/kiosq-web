@@ -221,14 +221,12 @@ export type Database = {
           created_at: string
           customer_id: string
           id: string
-          is_deleted: boolean
           kiosq_id: string | null
+          max_time: string | null
           notes: string | null
           order_time: string
           reservation_id: string | null
-          schedule_id: string | null
           status: string
-          stripe_account_id: string | null
           stripe_payment_intent_id: string | null
           total_amount: number
           updated_at: string
@@ -238,14 +236,12 @@ export type Database = {
           created_at?: string
           customer_id: string
           id?: string
-          is_deleted?: boolean
           kiosq_id?: string | null
+          max_time?: string | null
           notes?: string | null
           order_time: string
           reservation_id?: string | null
-          schedule_id?: string | null
           status?: string
-          stripe_account_id?: string | null
           stripe_payment_intent_id?: string | null
           total_amount: number
           updated_at?: string
@@ -255,14 +251,12 @@ export type Database = {
           created_at?: string
           customer_id?: string
           id?: string
-          is_deleted?: boolean
           kiosq_id?: string | null
+          max_time?: string | null
           notes?: string | null
           order_time?: string
           reservation_id?: string | null
-          schedule_id?: string | null
           status?: string
-          stripe_account_id?: string | null
           stripe_payment_intent_id?: string | null
           total_amount?: number
           updated_at?: string
@@ -288,13 +282,6 @@ export type Database = {
             columns: ["reservation_id"]
             isOneToOne: false
             referencedRelation: "reservations"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "orders_schedule_id_fkey"
-            columns: ["schedule_id"]
-            isOneToOne: false
-            referencedRelation: "schedules"
             referencedColumns: ["id"]
           },
           {
@@ -564,6 +551,87 @@ export type Database = {
           },
         ]
       }
+      reservation_proposed_changes: {
+        Row: {
+          change_type: string
+          changed_by: string
+          created_at: string
+          id: string
+          kiosq_id: string | null
+          message: string | null
+          order_id: string
+          product_variant_id: string
+          quantity: number
+          reservation_id: string
+          unit: string
+          unit_price: number
+        }
+        Insert: {
+          change_type: string
+          changed_by: string
+          created_at?: string
+          id?: string
+          kiosq_id?: string | null
+          message?: string | null
+          order_id: string
+          product_variant_id: string
+          quantity: number
+          reservation_id: string
+          unit: string
+          unit_price: number
+        }
+        Update: {
+          change_type?: string
+          changed_by?: string
+          created_at?: string
+          id?: string
+          kiosq_id?: string | null
+          message?: string | null
+          order_id?: string
+          product_variant_id?: string
+          quantity?: number
+          reservation_id?: string
+          unit?: string
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reservation_proposed_changes_changed_by_fkey"
+            columns: ["changed_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reservation_proposed_changes_kiosq_id_fkey"
+            columns: ["kiosq_id"]
+            isOneToOne: false
+            referencedRelation: "kiosqs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reservation_proposed_changes_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reservation_proposed_changes_product_variant_id_fkey"
+            columns: ["product_variant_id"]
+            isOneToOne: false
+            referencedRelation: "product_variants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reservation_proposed_changes_reservation_id_fkey"
+            columns: ["reservation_id"]
+            isOneToOne: false
+            referencedRelation: "reservations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reservations: {
         Row: {
           created_at: string
@@ -572,12 +640,9 @@ export type Database = {
           is_deleted: boolean
           kiosq_id: string | null
           notes: string | null
-          proposed_changes: Json | null
-          reservation_time: string
           schedule_id: string | null
           status: string
           stripe_account_id: string | null
-          stripe_payment_intent_id: string | null
           updated_at: string
           vendor_profile_id: string
         }
@@ -588,12 +653,9 @@ export type Database = {
           is_deleted?: boolean
           kiosq_id?: string | null
           notes?: string | null
-          proposed_changes?: Json | null
-          reservation_time: string
           schedule_id?: string | null
           status?: string
           stripe_account_id?: string | null
-          stripe_payment_intent_id?: string | null
           updated_at?: string
           vendor_profile_id: string
         }
@@ -604,12 +666,9 @@ export type Database = {
           is_deleted?: boolean
           kiosq_id?: string | null
           notes?: string | null
-          proposed_changes?: Json | null
-          reservation_time?: string
           schedule_id?: string | null
           status?: string
           stripe_account_id?: string | null
-          stripe_payment_intent_id?: string | null
           updated_at?: string
           vendor_profile_id?: string
         }
