@@ -12,6 +12,7 @@ export const kiosqsRevalidator = ({
 }) => {
   revalidateTag(cacheKeys.closestVendorProfiles.all.tag);
   revalidateTag(cacheKeys.currentUserProfileIdKiosqs.list(profileId).tag);
+  revalidateTag(cacheKeys.kiosqs.list(profileId).tag);
 
   if (kiosqId) {
     revalidateTag(cacheKeys.currentUserKiosqById(kiosqId).tag);

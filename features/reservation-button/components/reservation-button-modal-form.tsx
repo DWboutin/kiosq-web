@@ -8,6 +8,7 @@ import { useMemo } from "react";
 import { FormInputContainer } from "@/components/ui/form-utils/form-input-container";
 import { ButtonBrand } from "@/components/ui/button-brand";
 import { useTranslations } from "next-intl";
+import { ReservationButtonModalKiosqsDropdown } from "@/features/reservation-button/components/reservation-button-modal-kiosqs-dropdown";
 
 export const ReservationButtonModalForm = () => {
   const t = useTranslations("ReservationButton");
@@ -15,6 +16,7 @@ export const ReservationButtonModalForm = () => {
 
   const reservationSchema = z.object({
     quantity: z.number().min(1, t("quantityMinError")),
+    kiosqId: z.string().min(1, t("kiosqIdRequiredError")),
   });
 
   type ReservationFormData = z.infer<typeof reservationSchema>;
@@ -27,6 +29,7 @@ export const ReservationButtonModalForm = () => {
     resolver: zodResolver(reservationSchema),
     defaultValues: {
       quantity: 1,
+      kiosqId: "",
     },
   });
 
@@ -52,6 +55,25 @@ export const ReservationButtonModalForm = () => {
     <div>
       <ReservationButtonModalContent product={product} variant={selectedVariant} />
       <form className="mt-6 space-y-4">
+        <FormInputContainer
+          inputId="kiosqId"
+          label={t("kiosqLabel")}
+          error={errors.kiosqId?.message}
+          required
+        >
+          <Controller
+            name="kiosqId"
+            control={control}
+            render={({ field }) => (
+              <ReservationButtonModalKiosqsDropdown
+                profileId={product.profileId}
+                value={field.value}
+                onValueChange={field.onChange}
+                placeholder={t("selectKiosqPlaceholder")}
+              />
+            )}
+          />
+        </FormInputContainer>
         <FormInputContainer
           inputId="quantity"
           label={t("quantityLabel")}
@@ -99,6 +121,7 @@ export const ReservationButtonModalForm = () => {
             )}
           />
         </FormInputContainer>
+
         <div className="flex justify-between items-center pt-4 border-t">
           <span className="text-lg font-semibold">{t("totalPrice")}</span>
           <span className="text-xl font-bold">
