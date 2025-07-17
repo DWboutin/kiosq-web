@@ -5,6 +5,8 @@ import { ModalRef } from "@/components/ui/modal";
 import { useProductDetailsContext } from "@/features/product-details/product-details-provider";
 import { ReservationButtonModal } from "@/features/reservation-button/components/reservation-button-modal";
 import { useProductById } from "@/hooks/use-product-by-id";
+import { useState } from "react";
+import { StripePaymentProvider } from "@/features/stripe-payment/stripe-payment-provider";
 import {
   ProductVariantWithPrices,
   ProductWithVariantsPricesAndProfile,
@@ -16,6 +18,8 @@ interface ReservationButtonContextValues {
   modalRef: React.RefObject<ModalRef | null>;
   product: ProductWithVariantsPricesAndProfile | null;
   selectedVariant: ProductVariantWithPrices;
+  purchaseData: { quantity: number; kiosqId: string };
+  setPurchaseData: (data: { quantity: number; kiosqId: string }) => void;
 }
 
 const ReservationButtonContext = createContext({} as ReservationButtonContextValues);
@@ -35,6 +39,7 @@ export const ReservationButton = () => {
   const t = useTranslations("ReservationButton");
   const modalRef = useRef<ModalRef | null>(null);
   const { selectedVariant } = useProductDetailsContext();
+  const [purchaseData, setPurchaseData] = useState({ quantity: 1, kiosqId: "" });
   const {
     selectors: { product = null, isLoading, error },
   } = useProductById(selectedVariant.productId);
@@ -44,11 +49,15 @@ export const ReservationButton = () => {
   };
 
   return (
-    <ReservationButtonContext.Provider value={{ modalRef, product, selectedVariant }}>
+    <ReservationButtonContext.Provider
+      value={{ modalRef, product, selectedVariant, purchaseData, setPurchaseData }}
+    >
       <ButtonBrand onClick={handleOpenModal} disabled={isLoading || !!error}>
         {t("buttonText")}
       </ButtonBrand>
-      <ReservationButtonModal />
+      <StripePaymentProvider>
+        <ReservationButtonModal />
+      </StripePaymentProvider>
     </ReservationButtonContext.Provider>
   );
 };

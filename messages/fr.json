@@ -701,21 +701,27 @@
   "ReservationButton": {
     "buttonText": "Réserver",
     "modalTitle": "Réserver {productName} - {variantName}",
-    "modalDescription": "de {profileName}",
-    "modalConfirmLabel": "Réserver",
+    "modalDescription": "Complétez votre réservation avec {profileName}",
+    "modalConfirmLabel": "Procéder au paiement",
     "modalCancelLabel": "Annuler",
-    "modalLoading": "Réservation...",
-    "modalError": "Échec de la réservation, veuillez réessayer",
-    "productNotFound": "Produit introuvable",
+    "contextError": "useReservationButtonContext doit être utilisé dans un ReservationButton",
+    "quantityMinError": "La quantité doit être au moins 1",
+    "kiosqIdRequiredError": "Veuillez sélectionner un kiosque",
+    "kiosqLabel": "Sélectionner un kiosque",
+    "selectKiosqPlaceholder": "Choisir un emplacement de kiosque",
     "quantityLabel": "Quantité",
-    "quantityMinError": "La quantité doit être d'au moins 1",
-    "kiosqLabel": "Lieu de récupération",
-    "kiosqIdRequiredError": "Veuillez sélectionner un lieu de récupération",
-    "selectKiosqPlaceholder": "Sélectionner un lieu de récupération...",
     "decreaseQuantityAriaLabel": "Diminuer la quantité",
     "increaseQuantityAriaLabel": "Augmenter la quantité",
-    "quantityAriaLabel": "Quantité",
-    "totalPrice": "Prix total:",
-    "contextError": "useReservationButtonContext doit être utilisé dans ReservationButtonProvider"
+    "quantityAriaLabel": "Quantité du produit",
+    "totalPrice": "Total:",
+    "productNotFound": "Produit non trouvé"
+  },
+  "StripePayment": {
+    "title": "Finaliser le paiement",
+    "description": "Entrez vos informations de paiement pour finaliser votre réservation",
+    "cancel": "Annuler",
+    "pay": "Payer maintenant",
+    "processing": "Traitement...",
+    "paymentError": "Le paiement a échoué. Veuillez réessayer."
   }
 }

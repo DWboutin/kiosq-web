@@ -4,7 +4,7 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Input } from "@/components/ui/input";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { FormInputContainer } from "@/components/ui/form-utils/form-input-container";
 import { ButtonBrand } from "@/components/ui/button-brand";
 import { useTranslations } from "next-intl";
@@ -12,7 +12,7 @@ import { ReservationButtonModalKiosqsDropdown } from "@/features/reservation-but
 
 export const ReservationButtonModalForm = () => {
   const t = useTranslations("ReservationButton");
-  const { selectedVariant, product } = useReservationButtonContext();
+  const { selectedVariant, product, setPurchaseData } = useReservationButtonContext();
 
   const reservationSchema = z.object({
     quantity: z.number().min(1, t("quantityMinError")),
@@ -34,6 +34,11 @@ export const ReservationButtonModalForm = () => {
   });
 
   const quantity = watch("quantity");
+  const kiosqId = watch("kiosqId");
+
+  useEffect(() => {
+    setPurchaseData({ quantity, kiosqId });
+  }, [quantity, kiosqId, setPurchaseData]);
 
   // Calculate total price based on quantity
   const totalPrice = useMemo(() => {
