@@ -93,3 +93,15 @@ export type Pagination = {
   hasNextPage: boolean;
   hasPrevPage: boolean;
 };
+
+export type RawReservation = Database["public"]["Tables"]["reservations"]["Row"];
+export type RawOrder = Database["public"]["Tables"]["orders"]["Row"];
+export type RawOrderItem = Database["public"]["Tables"]["order_items"]["Row"];
+
+export type RawReservationWithOrders = RawReservation & {
+  orders: RawOrderWithOrderItems[];
+};
+
+export type RawOrderWithOrderItems = RawOrder & {
+  order_items: RawOrderItem[];
+};

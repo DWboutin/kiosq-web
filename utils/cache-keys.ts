@@ -111,6 +111,13 @@ export const cacheKeys = {
       queryKey: ["kiosqs", `profileId-${profileId}`] as const,
     }),
   },
+  currentUserReservations: {
+    list: {
+      revalidate: 86400, // 1 day
+      tag: "current-user-reservations",
+      queryKey: ["currentUserReservations", "list"] as const,
+    } satisfies CacheKeyConfig,
+  },
 };
 
 export const getAllTagsForDomain = (domain: keyof typeof cacheKeys): string[] => {

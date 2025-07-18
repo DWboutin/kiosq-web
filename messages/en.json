@@ -722,5 +722,9 @@
     "pay": "Pay Now",
     "processing": "Processing...",
     "paymentError": "Payment failed. Please try again."
+  },
+  "DashboardReservationsHeader": {
+    "title": "Reservations",
+    "description": "Manage your reservations"
   }
 }
