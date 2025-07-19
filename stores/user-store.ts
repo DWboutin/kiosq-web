@@ -87,6 +87,8 @@ export const useUserStore = create<UserStore>()(
             state.isAuthenticating = true;
           });
 
+          console.log("connectWithOtp", email, code);
+
           const session = await verifyOtpCode(email, code);
           const userData = await getAuthenticatedUserData();
 

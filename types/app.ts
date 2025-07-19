@@ -97,6 +97,7 @@ export type Pagination = {
 export type RawReservation = Database["public"]["Tables"]["reservations"]["Row"];
 export type RawOrder = Database["public"]["Tables"]["orders"]["Row"];
 export type RawOrderItem = Database["public"]["Tables"]["order_items"]["Row"];
+export type RawUser = Database["public"]["Tables"]["users"]["Row"];
 
 export type RawReservationWithOrders = RawReservation & {
   orders: RawOrderWithOrderItems[];
@@ -104,4 +105,11 @@ export type RawReservationWithOrders = RawReservation & {
 
 export type RawOrderWithOrderItems = RawOrder & {
   order_items: RawOrderItem[];
+};
+
+export type RawReservationWithOrdersAndRelations = RawReservation & {
+  orders: RawOrderWithOrderItems[];
+  kiosqs: RawKiosq | null;
+  profiles: RawProfile | null;
+  customers: RawUser | null;
 };

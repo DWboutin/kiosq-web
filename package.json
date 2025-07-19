@@ -7,9 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "update-types": "npx supabase gen types typescript --project-id \"sauzpiomootgmjmeuynq\" --schema public > types/supabase.ts",
-    "db:push": "npx supabase db push",
-    "db:reset": "echo \"y\" | npx supabase db reset --linked",
+    "update-types": "npx supabase@beta gen types typescript --project-id \"llqcfgktqphheqkphleu\" --schema public > types/supabase.ts",
+    "db:push": "npx supabase@beta db push",
+    "db:reset": "echo \"y\" | npx supabase@beta db reset --linked",
     "db:disable-trigger": "npx supabase db execute --file ./supabase/scripts/disable_trigger.sql",
     "db:enable-trigger": "npx supabase db execute --file ./supabase/scripts/reenable_trigger.sql"
   },

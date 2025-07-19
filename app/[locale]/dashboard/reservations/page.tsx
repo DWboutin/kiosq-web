@@ -29,6 +29,8 @@ export default async function DashboardReservationsPage() {
   const t = await getTranslations("DashboardReservationsHeader");
   const reservations = await getUserReservations();
 
+  console.log(reservations);
+
   return (
     <div className="flex flex-col gap-6">
       <DashboardPageHeading title={t("title")} description={t("description")} headingLevel="h2" />

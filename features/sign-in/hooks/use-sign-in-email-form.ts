@@ -37,7 +37,7 @@ export const useSignInEmailForm = () => {
 
       await signInWithOtp(data.email);
 
-      router.push(`/auth/verify-otp?email=${data.email}`);
+      router.push(`/auth/verify-otp?email=${encodeURIComponent(data.email)}`);
     } catch (error) {
       console.error("Error signing in:", error);
     } finally {
