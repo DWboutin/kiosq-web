@@ -134,6 +134,7 @@ BEGIN
           created_at,
           updated_at,
           is_active,
+          is_reviewed,
           is_deleted
         )
         VALUES (
@@ -143,6 +144,7 @@ BEGIN
           '{}'::jsonb,
           NOW(),
           NOW(),
+          TRUE,
           TRUE,
           FALSE
         );

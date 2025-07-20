@@ -7,7 +7,7 @@ export const getAuthenticatedUserData = async () => {
   const { data: user, error } = await supabase.auth.getUser();
 
   if (error) {
-    if (error.message === "Auth session missing!") {
+    if (error.code === "user_not_found") {
       return false;
     }
     throw new Error(error.message);
