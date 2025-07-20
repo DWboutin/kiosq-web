@@ -2,9 +2,6 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { Locales } from "@/types/app";
-import { cacheKeys } from "@/utils/cache-keys";
-import { LOCALES } from "@/utils/constants";
-import { revalidateTag } from "next/cache";
 import { profileRevalidator } from "@/actions/revalidators/profile-revalidator";
 
 interface UpdateVendorProfileArgs {

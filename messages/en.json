@@ -726,5 +726,14 @@
   "DashboardReservationsHeader": {
     "title": "Reservations",
     "description": "Manage your reservations"
+  },
+  "SetVendorProfileForReviewButton": {
+    "title": "Set vendor profile for review",
+    "description": "Are you sure you want to set this vendor profile for review?",
+    "confirmLabel": "Set for review",
+    "cancelLabel": "Cancel",
+    "button": "Set for review",
+    "buttonWaiting": "Waiting for review",
+    "reviewed": "Reviewed"
   }
 }

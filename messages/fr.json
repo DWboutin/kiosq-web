@@ -727,5 +727,14 @@
   "DashboardReservationsHeader": {
     "title": "Réservations",
     "description": "Gérez vos réservations"
+  },
+  "SetVendorProfileForReviewButton": {
+    "title": "Mettre le profil de vendeur en attente de validation",
+    "description": "Êtes-vous sûr de vouloir mettre ce profil de vendeur en attente de validation ?",
+    "confirmLabel": "Mettre en attente de validation",
+    "cancelLabel": "Annuler",
+    "button": "Mettre en attente de validation",
+    "buttonWaiting": "En attente de validation",
+    "reviewed": "Validé"
   }
 }

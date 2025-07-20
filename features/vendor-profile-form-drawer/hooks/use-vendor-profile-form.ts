@@ -17,6 +17,7 @@ import { AuthenticatedUserProfile } from "@/utils/factories/authenticated-user-p
 import { filterTranslations } from "@/utils/filter-translations";
 import { cacheKeys } from "@/utils/cache-keys";
 import { useProfileInvalidator } from "@/utils/invalidators-hooks/use-profile-invalidator";
+import { slugify } from "@/utils/slugify";
 
 type UseVendorProfileFormProps = {
   profileId: string;
@@ -65,7 +66,6 @@ export const useVendorProfileForm = ({ profileId }: UseVendorProfileFormProps) =
   const t = useTranslations();
   const drawerRef = useRef<SideFormDrawerRef>(null);
   const locale = useLocale() as Locales;
-  const queryClient = useQueryClient();
   const validationSchema = createVendorProfileFormSchema(locale, t);
   const {
     selectors: { profiles },
@@ -81,6 +81,7 @@ export const useVendorProfileForm = ({ profileId }: UseVendorProfileFormProps) =
     watch,
     reset,
     setError,
+    setValue,
     clearErrors,
     formState: { errors },
   } = useForm<VendorProfileFormValues>({
@@ -89,6 +90,7 @@ export const useVendorProfileForm = ({ profileId }: UseVendorProfileFormProps) =
   });
 
   const name = watch("name");
+  const name_translations = watch("name_translations");
 
   const validateSlugUniqueness = async (data: VendorProfileFormValues) => {
     // Clear previous slug errors
@@ -165,6 +167,24 @@ export const useVendorProfileForm = ({ profileId }: UseVendorProfileFormProps) =
   useEffect(() => {
     reset(defaultValues);
   }, [vendorProfile]);
+
+  useEffect(() => {
+    if (name) {
+      setValue("slug", slugify(name));
+    }
+  }, [name]);
+
+  useEffect(() => {
+    if (name_translations) {
+      setValue(
+        "slug_translations",
+        Object.keys(name_translations).reduce((acc, key) => {
+          acc[key] = slugify(name_translations[key]);
+          return acc;
+        }, {} as Record<string, string>)
+      );
+    }
+  }, [name_translations]);
 
   return {
     selectors: { control, errors, isSubmitting: isPending, drawerRef },

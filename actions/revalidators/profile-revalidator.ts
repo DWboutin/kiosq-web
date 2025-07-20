@@ -8,11 +8,14 @@ export const profileRevalidator = ({
   slugTranslations,
 }: {
   profileId: string;
-  slugTranslations: Record<Locales, string>;
+  slugTranslations?: Record<Locales, string>;
 }) => {
   revalidatePath("/dashboard/your-store");
   revalidateTag(cacheKeys.kiosqs.list(profileId).tag);
-  LOCALES.forEach((locale) => {
-    revalidateTag(cacheKeys.vendorProfileFromSlug(slugTranslations[locale], locale).tag);
-  });
+  revalidateTag(cacheKeys.currentUserProfiles.list.tag);
+  if (slugTranslations) {
+    LOCALES.forEach((locale) => {
+      revalidateTag(cacheKeys.vendorProfileFromSlug(slugTranslations[locale], locale).tag);
+    });
+  }
 };

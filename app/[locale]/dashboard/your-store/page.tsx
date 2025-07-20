@@ -1,5 +1,6 @@
 import { DashboardYourStore } from "@/components/client-pages/dashboard-your-store/dashboard-your-store";
 import { AdminVendorProfileCta } from "@/components/sections/admin-vendor-profile-cta";
+import { SetVendorProfileForReviewButton } from "@/features/set-vendor-profile-for-review-button/set-vendor-profile-for-review-button";
 import { DashboardPageHeading } from "@/components/sections/dashboard-page-heading";
 import { cacheKeys } from "@/utils/cache-keys";
 import { AuthenticatedUserProfile } from "@/utils/factories/authenticated-user-profiles-factory";
@@ -37,7 +38,7 @@ export const generateMetadata = async () => {
 export default async function YourStorePage() {
   const t = await getTranslations("DashboardYourStoreHeader");
   const profiles = await getUserProfiles();
-  const vendorProfiles = profiles.filter(
+  const vendorProfiles = profiles.find(
     (profile: AuthenticatedUserProfile) => profile.type === "vendor"
   );
 
@@ -47,13 +48,20 @@ export default async function YourStorePage() {
         title={t("title")}
         description={t("description")}
         cta={
-          vendorProfiles.length > 0 ? (
-            <AdminVendorProfileCta
-              profileId={vendorProfiles[0].id}
-              createdAt={vendorProfiles[0].createdAt}
-              updatedAt={vendorProfiles[0].updatedAt}
-            />
-          ) : null
+          vendorProfiles && (
+            <div className="flex flex-row gap-4 items-start">
+              <SetVendorProfileForReviewButton
+                profileId={vendorProfiles.id}
+                isActive={vendorProfiles.isActive}
+                isReviewed={vendorProfiles.isReviewed}
+              />
+              <AdminVendorProfileCta
+                profileId={vendorProfiles.id}
+                createdAt={vendorProfiles.createdAt}
+                updatedAt={vendorProfiles.updatedAt}
+              />
+            </div>
+          )
         }
       />
       <div className="flex flex-col flex-1">
