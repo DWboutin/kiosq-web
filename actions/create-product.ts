@@ -90,7 +90,6 @@ export const createProduct = async (product: AddProductArgs) => {
   productRevalidator({
     productId: productData.id,
     profileId: profile.id,
-    slugTranslations: productData.slug_translations,
   });
 
   return {

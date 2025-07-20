@@ -111,7 +111,10 @@ export const useProductForm = ({ editMode = false, productId }: UseProductFormPr
 
       toast.success(message);
 
-      await invalidateProducts({ productId: savedProduct.id, profileId: savedProduct.profile_id });
+      await invalidateProducts({
+        productId: savedProduct.product.id,
+        profileId: savedProduct.product.profile_id,
+      });
 
       if (editMode) {
         refetch();

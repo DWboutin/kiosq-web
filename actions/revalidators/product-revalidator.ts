@@ -8,14 +8,17 @@ export const productRevalidator = ({
 }: {
   productId: string;
   profileId: string;
-  slugTranslations: Record<string, string>;
+  slugTranslations?: Record<string, string>;
 }) => {
   revalidateTag(cacheKeys.currentUserProductById(productId).tag);
   revalidateTag(cacheKeys.vendorProfileProducts(profileId).tag);
+  revalidateTag(cacheKeys.currentUserProfileIdProducts.list(profileId).tag);
   revalidateTag(cacheKeys.productById(productId).tag);
 
-  Object.entries(slugTranslations).forEach(([locale, slug]) => {
-    const path = `/${locale}/vendors/${slug}`;
-    revalidatePath(path);
-  });
+  if (slugTranslations) {
+    Object.entries(slugTranslations).forEach(([locale, slug]) => {
+      const path = `/${locale}/vendors/${slug}`;
+      revalidatePath(path);
+    });
+  }
 };
