@@ -1,7 +1,7 @@
 "use client";
 
 import { Link } from "@/i18n/navigation";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { MessageBubble } from "@/components/ui/icons/message-bubble";
 import { HeaderAccountButton } from "@/features/header-account-button/header-account-button";
 import { useUserStore } from "@/stores/user-store";
@@ -13,6 +13,11 @@ import { ButtonBrand } from "@/components/ui/button-brand";
 export const ConnectionHeaderUtils: FC = () => {
   const t = useTranslations("Header");
   const user = useUserStore((state) => state.user);
+  const getUser = useUserStore((state) => state.getUser);
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   if (!user) {
     return (

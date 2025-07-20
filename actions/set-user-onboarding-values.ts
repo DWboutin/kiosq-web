@@ -41,6 +41,30 @@ export const setUserOnboardingValues = async (values: UserOnboardingValues) => {
       .eq("id", user.user.id)
       .select();
 
+    const isVendor = values.userType === "Vendor";
+
+    if (isVendor) {
+      const { data: vendorData } = await supabase
+        .from("profiles")
+        .select()
+        .eq("user_id", user.user.id)
+        .eq("type", "vendor")
+        .single();
+
+      if (!vendorData) {
+        const { error: insertVendorError } = await supabase.from("profiles").insert({
+          user_id: user.user.id,
+          type: "vendor",
+          is_reviewed: false,
+          is_active: false,
+        });
+
+        if (insertVendorError) {
+          throw new Error(insertVendorError.message);
+        }
+      }
+    }
+
     if (error) {
       throw new Error(error.message);
     }

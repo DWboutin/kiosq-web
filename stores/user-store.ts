@@ -21,6 +21,7 @@ type UserState = {
 type UserActions = {
   updateUser: (user: User | null) => void;
   getUser: () => Promise<void>;
+  getUserData: () => Promise<void>;
   signInWithOtp: (email: string) => Promise<void>;
   connectWithOtp: (email: string, code: string) => Promise<void>;
   disconnectUser: () => Promise<void>;
@@ -50,11 +51,18 @@ export const useUserStore = create<UserStore>()(
         });
       },
       getUser: async () => {
-        const user = await getUser();
+        try {
+          const user = await getUser();
 
-        set((state) => {
-          state.user = user;
-        });
+          set((state) => {
+            state.user = user;
+          });
+        } catch (error) {
+          console.error(error);
+          set((state) => {
+            state.user = null;
+          });
+        }
       },
       getUserData: async () => {
         const userData = await getAuthenticatedUserData();
@@ -86,8 +94,6 @@ export const useUserStore = create<UserStore>()(
           set((state) => {
             state.isAuthenticating = true;
           });
-
-          console.log("connectWithOtp", email, code);
 
           const session = await verifyOtpCode(email, code);
           const userData = await getAuthenticatedUserData();

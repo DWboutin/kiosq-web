@@ -13,7 +13,7 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col gap-5 px-5">
-      {userData.is_onboarded && (
+      {userData && userData.is_onboarded && (
         <div>
           <h1>
             Welcome {userData.first_name} {userData.last_name}

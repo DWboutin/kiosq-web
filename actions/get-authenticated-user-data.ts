@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { clearSupabaseSession } from "@/actions/session-cleanup";
 
 export const getAuthenticatedUserData = async () => {
   const supabase = await createClient();
@@ -8,7 +9,12 @@ export const getAuthenticatedUserData = async () => {
 
   if (error) {
     if (error.code === "user_not_found") {
-      return false;
+      return null;
+    }
+    // Handle "Auth session missing!" error gracefully
+    if (error.message.includes("Auth session missing") || error.message.includes("session")) {
+      await clearSupabaseSession();
+      return null;
     }
     throw new Error(error.message);
   }

@@ -107,21 +107,30 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- Add RLS policy that only allows admins to change user roles
-CREATE POLICY update_own_user_data ON users
+-- Add RLS policy that allows admins and system operations to update user data
+CREATE POLICY update_user_data_for_admin ON users
   FOR UPDATE
-  USING (auth.uid() = id OR has_role_permission(auth.uid(), 'admin'::user_role));
+  USING (
+    auth.uid() = id OR 
+    has_role_permission(auth.uid(), 'admin'::user_role) OR
+    auth.uid() IS NULL  -- Allow system/dashboard operations
+  );
 
--- Create a trigger function to enforce role change restrictions
+-- Create a trigger function to enforce role change restrictions (updated for dashboard access)
 CREATE OR REPLACE FUNCTION check_role_change()
 RETURNS TRIGGER AS $$
 BEGIN
+  -- Skip all checks if this is a system operation (dashboard, etc.)
+  IF auth.uid() IS NULL THEN
+    RETURN NEW;
+  END IF;
+  
   -- Users can't change their own role
   IF NEW.id = auth.uid() AND OLD.role <> NEW.role THEN
     RAISE EXCEPTION 'You cannot change your own role';
   END IF;
   
-  -- Only admins can change roles
+  -- Only admins can change roles (when authenticated)
   IF OLD.role <> NEW.role AND NOT has_role_permission(auth.uid(), 'admin'::user_role) THEN
     RAISE EXCEPTION 'Only administrators can change user roles';
   END IF;
