@@ -13,6 +13,7 @@ import {
 } from "@/utils/factories/product-factory";
 import { createContext, useContext, useRef } from "react";
 import { useTranslations } from "next-intl";
+import { useVendorReservationSettings } from "@/hooks/use-vendor-reservation-settings";
 
 interface ReservationButtonContextValues {
   modalRef: React.RefObject<ModalRef | null>;
@@ -43,10 +44,17 @@ export const ReservationButton = () => {
   const {
     selectors: { product = null, isLoading, error },
   } = useProductById(selectedVariant.productId);
+  const {
+    selectors: { hasReservationSettings },
+  } = useVendorReservationSettings(product?.profileId);
 
   const handleOpenModal = async () => {
     modalRef.current?.open();
   };
+
+  if (!hasReservationSettings) {
+    return null;
+  }
 
   return (
     <ReservationButtonContext.Provider

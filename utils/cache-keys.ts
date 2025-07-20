@@ -118,6 +118,11 @@ export const cacheKeys = {
       queryKey: ["currentUserReservations", "list"] as const,
     } satisfies CacheKeyConfig,
   },
+  vendorProfileReservationSettings: (profileId: string): CacheKeyConfig => ({
+    revalidate: 86400, // 1 day
+    tag: `vendor-profile-reservation-settings-${profileId}`,
+    queryKey: ["vendorProfileReservationSettings", profileId] as const,
+  }),
 };
 
 export const getAllTagsForDomain = (domain: keyof typeof cacheKeys): string[] => {

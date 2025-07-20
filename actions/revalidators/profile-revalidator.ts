@@ -13,6 +13,8 @@ export const profileRevalidator = ({
   revalidatePath("/dashboard/your-store");
   revalidateTag(cacheKeys.kiosqs.list(profileId).tag);
   revalidateTag(cacheKeys.currentUserProfiles.list.tag);
+  revalidateTag(cacheKeys.vendorProfileReservationSettings(profileId).tag);
+
   if (slugTranslations) {
     LOCALES.forEach((locale) => {
       revalidateTag(cacheKeys.vendorProfileFromSlug(slugTranslations[locale], locale).tag);

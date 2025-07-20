@@ -16,6 +16,9 @@ export const useProfileInvalidator = () => {
       await queryClient.invalidateQueries({
         queryKey: cacheKeys.currentUserProfileIdProducts.list(profileId).queryKey,
       });
+      await queryClient.invalidateQueries({
+        queryKey: cacheKeys.vendorProfileReservationSettings(profileId).queryKey,
+      });
     }
   };
 
