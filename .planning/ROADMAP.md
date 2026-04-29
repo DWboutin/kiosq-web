@@ -33,9 +33,19 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 3 plans
 
 Plans:
+**Wave 1**
 - [ ] 01-01: Define money, currency, snapshot, ledger, and reservation lifecycle schema/RPC foundations.
+
+**Wave 2 *(blocked on Wave 1 completion)***
 - [ ] 01-02: Add guarded status transitions, activity history writes, and generated type updates.
+
+**Wave 3 *(blocked on Wave 1 and Wave 2 completion)***
 - [ ] 01-03: Add database uniqueness, idempotency keys, indexes, and migration verification for financial transitions.
+
+Cross-cutting constraints:
+- Store authoritative money as integer minor units with currency; keep legacy numeric money non-authoritative.
+- Expose client/producer history through visibility-scoped ledger/activity entries, not raw financial tables.
+- Require deterministic idempotency keys for financial transitions and a blocking schema push/type refresh before final verification.
 
 ### Phase 2: Checkout and Webhook-Owned Payment Finalization
 **Goal**: Clients can create a one-producer reservation checkout, pay through Stripe, and rely on signed webhooks to mark paid reservations as reserved.
