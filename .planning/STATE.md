@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to discuss/plan
-stopped_at: Phase 1 context gathered
-last_updated: "2026-04-29T18:30:32.347Z"
+stopped_at: Phase 1 UI-SPEC approved
+last_updated: "2026-04-29T18:39:45.983Z"
 last_activity: 2026-04-29 - Created roadmap and state artifacts for the reservation pickup payments milestone.
 progress:
   total_phases: 6
@@ -93,6 +93,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-04-29T18:30:32.344Z
-Stopped at: Phase 1 context gathered
-Resume file: .planning/phases/01-reservation-ledger-and-status-model/01-CONTEXT.md
+Last session: 2026-04-29T18:39:45.979Z
+Stopped at: Phase 1 UI-SPEC approved
+Resume file: .planning/phases/01-reservation-ledger-and-status-model/01-UI-SPEC.md
