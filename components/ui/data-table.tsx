@@ -158,7 +158,7 @@ function DataTableComponent<TData, TValue>({
       columnVisibility: isClient ? columnVisibility : {},
     },
     // Disable manual sorting as we're providing pre-sorted data
-    manualSorting: true,
+    manualSorting: false,
   });
 
   const selectedRows = table.getSelectedRowModel().rows.map((row) => row.original);

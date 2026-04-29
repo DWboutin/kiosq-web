@@ -4,11 +4,11 @@ import {
   RawOrder,
   RawKiosq,
   RawProfile,
-  RawUser,
 } from "@/types/app";
 
 export type AuthenticatedUserReservation = {
   id: string;
+  ownReservation: boolean;
   customerId: string;
   vendorProfileId: string;
   kiosqId: string | null;
@@ -19,25 +19,9 @@ export type AuthenticatedUserReservation = {
   orders: AuthenticatedUserOrder[];
   kiosq: AuthenticatedUserKiosq | null;
   profile: AuthenticatedUserProfile | null;
-  customer: AuthenticatedUserCustomer | null;
   isDeleted: boolean;
   createdAt: string;
   updatedAt: string;
-};
-
-export type AuthenticatedUserCustomer = {
-  id: string;
-  email: string;
-  displayName: string | null;
-  firstName: string | null;
-  lastName: string | null;
-  postalCode: string | null;
-  latitude: number | null;
-  longitude: number | null;
-  searchRadius: number;
-  interests: string[];
-  isOnboarded: boolean;
-  role: string;
 };
 
 export type AuthenticatedUserKiosq = {
@@ -129,21 +113,6 @@ const authenticatedUserOrderFactory = (
   vendorProfileId: order.vendor_profile_id,
 });
 
-const authenticatedUserCustomerFactory = (customer: RawUser): AuthenticatedUserCustomer => ({
-  id: customer.id,
-  email: customer.email,
-  displayName: customer.display_name,
-  firstName: customer.first_name,
-  lastName: customer.last_name,
-  postalCode: customer.postal_code,
-  latitude: customer.latitude,
-  longitude: customer.longitude,
-  searchRadius: customer.search_radius || 100,
-  interests: customer.interests,
-  isOnboarded: customer.is_onboarded,
-  role: customer.role,
-});
-
 const authenticatedUserKiosqFactory = (kiosq: RawKiosq): AuthenticatedUserKiosq => ({
   id: kiosq.id,
   nameTranslations: kiosq.name_translations as Record<string, string>,
@@ -170,9 +139,11 @@ const authenticatedUserProfileFactory = (profile: RawProfile): AuthenticatedUser
 });
 
 const authenticatedUserReservationFactory = (
-  reservation: RawReservationWithOrdersAndRelations
+  reservation: RawReservationWithOrdersAndRelations,
+  userId: string
 ): AuthenticatedUserReservation => ({
   id: reservation.id,
+  ownReservation: reservation.customer_id === userId,
   customerId: reservation.customer_id,
   vendorProfileId: reservation.vendor_profile_id,
   kiosqId: reservation.kiosq_id,
@@ -183,14 +154,16 @@ const authenticatedUserReservationFactory = (
   orders: reservation.orders.map(authenticatedUserOrderFactory),
   kiosq: reservation.kiosqs ? authenticatedUserKiosqFactory(reservation.kiosqs) : null,
   profile: reservation.profiles ? authenticatedUserProfileFactory(reservation.profiles) : null,
-  customer: reservation.customers ? authenticatedUserCustomerFactory(reservation.customers) : null,
   isDeleted: reservation.is_deleted,
   createdAt: reservation.created_at,
   updatedAt: reservation.updated_at,
 });
 
 export const authenticatedUserReservationsFactory = (
-  reservations: RawReservationWithOrdersAndRelations[]
+  reservations: RawReservationWithOrdersAndRelations[],
+  userId: string
 ): AuthenticatedUserReservation[] => {
-  return reservations.map(authenticatedUserReservationFactory);
+  return reservations.map((reservation) =>
+    authenticatedUserReservationFactory(reservation, userId)
+  );
 };

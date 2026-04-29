@@ -14,7 +14,47 @@ export const GET = async () => {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    // Fetch reservations for the current user, including order, order_items, kiosqs, profiles, and customer info
+    const { data: userData, error: userError } = await supabase
+      .from("users")
+      .select("*")
+      .eq("id", user.id)
+      .single();
+
+    if (userError || !userData) {
+      console.error("Error fetching user:", userError);
+      return NextResponse.json(
+        { error: "Error fetching user", details: userError?.message },
+        { status: 500 }
+      );
+    }
+
+    // First, get the vendor profile IDs that belong to the current user
+    const { data: userProfileIds, error: profileError } = await supabase
+      .from("profiles")
+      .select("id")
+      .eq("user_id", userData?.id);
+
+    if (profileError) {
+      console.error("Error fetching user profiles:", profileError);
+      return NextResponse.json(
+        { error: "Error fetching user profiles", details: profileError.message },
+        { status: 500 }
+      );
+    }
+
+    const userProfileIdList = userProfileIds?.map((profile) => profile.id) || [];
+
+    // Build the OR condition based on whether user has profiles
+    let orCondition;
+    if (userProfileIdList.length > 0) {
+      orCondition = `customer_id.eq.${userData?.id},vendor_profile_id.in.(${userProfileIdList
+        .map((id) => `"${id}"`)
+        .join(",")})`;
+    } else {
+      orCondition = `customer_id.eq.${userData?.id}`;
+    }
+
+    // Fetch reservations for the current user, including order, order_items, kiosqs, and profiles
     const { data: reservations, error: reservationsError } = await supabase
       .from("reservations")
       .select(
@@ -37,30 +77,17 @@ export const GET = async () => {
         ),
         profiles:vendor_profile_id(
           id,
+          user_id,
           name_translations,
           slug_translations,
           description_translations,
           banner_image,
           type,
           stripe_account_id
-        ),
-        customers:customer_id(
-          id,
-          email,
-          display_name,
-          first_name,
-          last_name,
-          postal_code,
-          latitude,
-          longitude,
-          search_radius,
-          interests,
-          is_onboarded,
-          role
         )
       `
       )
-      .eq("customer_id", user.id)
+      .or(orCondition)
       .eq("is_deleted", false)
       .order("created_at", { ascending: false });
 
@@ -72,7 +99,9 @@ export const GET = async () => {
       );
     }
 
-    return NextResponse.json({ reservations: authenticatedUserReservationsFactory(reservations) });
+    return NextResponse.json({
+      reservations: authenticatedUserReservationsFactory(reservations, userData.id),
+    });
   } catch (error) {
     console.error("Unexpected error in reservations API:", error);
     return NextResponse.json({ error: "An unexpected error occurred" }, { status: 500 });
